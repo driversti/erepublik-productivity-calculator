@@ -36,11 +36,12 @@
             <button class="nav-tab" id="tab-weapons">Weapon Industry</button>
             <button class="nav-tab" id="tab-houses">House Industry</button>
             <button class="nav-tab" id="tab-aircraft">Aircraft Industry</button>
+            <button class="nav-tab" id="tab-holdings">🗂️ Holdings</button>
         </div>
     </nav>
 
     <!-- Main Content Container -->
-    <main class="app-container">
+    <main class="app-container" id="industry-view">
         <!-- Sidebar: Config & Market Parameters -->
         <aside class="sidebar">
             <!-- Summary Card -->
@@ -316,6 +317,78 @@
                 </div>
             </div>
         </section>
+    </main>
+
+    <main class="app-container" id="holdings-view" style="display:none;">
+        <div class="holdings-toolbar">
+            <div class="holdings-picker">
+                <label class="control-label" for="hld-select">Holding</label>
+                <select id="hld-select" class="market-input"></select>
+            </div>
+            <div class="holdings-actions">
+                <button id="hld-new" class="btn btn-primary">+ New</button>
+                <button id="hld-rename" class="btn btn-secondary">Rename</button>
+                <button id="hld-delete" class="btn btn-secondary">Delete</button>
+            </div>
+        </div>
+
+        <div id="hld-empty" class="holdings-empty">No holdings yet. Click <strong>+ New</strong> to create one.</div>
+
+        <div id="hld-content" class="holdings-content" style="display:none;">
+            <section class="holdings-workspace">
+                <div class="card">
+                    <div class="card-body holdings-location-bar">
+                        <div class="control-group">
+                            <label class="control-label" for="hld-country">Holding Country</label>
+                            <select id="hld-country" class="market-input"><option value="">-- Select Country --</option></select>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="hld-region">Holding Region</label>
+                            <select id="hld-region" class="market-input" disabled><option value="">-- Select Region --</option></select>
+                        </div>
+                        <div class="control-group toggle-container">
+                            <span class="control-label">Tycoon (+20%)</span>
+                            <label class="switch"><input type="checkbox" id="hld-tycoon"><span class="switch-slider"></span></label>
+                        </div>
+                        <div class="control-group toggle-container">
+                            <span class="control-label">WAM</span>
+                            <label class="switch"><input type="checkbox" id="hld-wam"><span class="switch-slider"></span></label>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="hld-offered-salary">Offered Salary (CC)</label>
+                            <input type="number" id="hld-offered-salary" class="market-input" step="1" min="0" value="0.0">
+                        </div>
+                        <div class="control-group holdings-sync-col">
+                            <span id="hld-sync-status" class="sync-status" style="font-size:11px;font-weight:600;color:var(--text-secondary);">Auto-sync: Not configured</span>
+                            <button id="hld-sync-prices" class="btn btn-primary">Sync Live Prices</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="hld-sections"></div>
+            </section>
+
+            <aside class="holdings-summary">
+                <div class="card summary-card">
+                    <div class="card-header"><h2>Holding Summary</h2></div>
+                    <div class="card-body">
+                        <div class="kpi-block">
+                            <span class="kpi-label">Net Profit / day</span>
+                            <span class="kpi-value" id="hld-net-profit">0.00 CC</span>
+                        </div>
+                        <hr class="kpi-divider">
+                        <div class="kpi-block-inline"><span class="kpi-label">Total Companies</span><span class="kpi-value-small" id="hld-total-companies">0</span></div>
+                        <div class="kpi-block"><span class="kpi-label">Daily Revenue</span><span class="kpi-value kpi-blue" id="hld-revenue">0.00 CC</span></div>
+                        <div class="kpi-block"><span class="kpi-label">Raw Material (net)</span><span class="kpi-value kpi-gold" id="hld-rm-net">0.00 CC</span></div>
+                        <div class="kpi-block"><span class="kpi-label">Work Tax</span><span class="kpi-value kpi-red" id="hld-work-tax">0.00 CC</span></div>
+                        <div class="kpi-block"><span class="kpi-label">Salaries</span><span class="kpi-value kpi-red" id="hld-salary">0.00 CC</span></div>
+                        <hr class="section-divider">
+                        <h3 class="details-title">Per industry</h3>
+                        <ul class="breakdown-list" id="hld-breakdown"></ul>
+                        <p class="subtitle" style="margin-top:10px;font-size:11px;">Product &amp; raw-material prices are shared with the industry tabs. Use "Sync Live Prices" or edit them on those tabs.</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
     </main>
 
     <!-- Footer -->
