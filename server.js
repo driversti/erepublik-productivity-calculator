@@ -2,7 +2,6 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
 
 const PORT = 8080;
 const PUBLIC_DIR = __dirname;
@@ -26,8 +25,17 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-    const parsedUrl = url.parse(req.url, true);
-    const pathname = parsedUrl.pathname;
+    // Use WHATWG URL API — no legacy url.parse()
+    let reqUrl;
+    try {
+        reqUrl = new URL(req.url, `http://localhost:${PORT}`);
+    } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.end('Bad Request');
+        return;
+    }
+
+    const pathname = reqUrl.pathname;
 
     // CORS Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -42,7 +50,7 @@ const server = http.createServer((req, res) => {
 
     // Proxy endpoint
     if (pathname === '/proxy') {
-        const targetUrl = parsedUrl.query.url;
+        const targetUrl = reqUrl.searchParams.get('url');
         if (!targetUrl) {
             res.writeHead(400, { 'Content-Type': 'text/plain' });
             res.end('Missing URL parameter');
@@ -77,9 +85,11 @@ const server = http.createServer((req, res) => {
             res.writeHead(proxyRes.statusCode, { 'Content-Type': proxyRes.headers['content-type'] });
             proxyRes.pipe(res);
         }).on('error', (err) => {
-            console.error('Proxy request error:', err);
-            res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Proxy error: ' + err.message);
+            console.error('Proxy request error:', err.message);
+            if (!res.headersSent) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Proxy error: ' + err.message);
+            }
         });
         return;
     }
@@ -99,8 +109,7 @@ const server = http.createServer((req, res) => {
 
     // Prevent directory traversal: the resolved path must stay strictly
     // inside PUBLIC_DIR. A path.relative result that escapes upward ('..')
-    // or is absolute means the request reached outside the served root —
-    // this also rejects sibling dirs that share PUBLIC_DIR as a name prefix.
+    // or is absolute means the request reached outside the served root.
     const relative = path.relative(PUBLIC_DIR, filePath);
     if (relative === '' || relative.startsWith('..') || path.isAbsolute(relative)) {
         res.writeHead(403, { 'Content-Type': 'text/plain' });
@@ -125,6 +134,19 @@ const server = http.createServer((req, res) => {
             res.end(content, 'utf-8');
         }
     });
+});
+
+server.on('error', (err) => {
+    console.error('Server error:', err.message);
+});
+
+// Prevent silent crashes from unhandled errors
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught exception:', err.message);
+});
+
+process.on('unhandledRejection', (reason) => {
+    console.error('Unhandled rejection:', reason);
 });
 
 server.listen(PORT, () => {
