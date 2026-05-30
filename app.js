@@ -1536,7 +1536,7 @@ function renderHiredLaborModule(moduleKey) {
     netProfitEl.className = displayNet >= 0 ? "kpi-value text-success" : "kpi-value text-danger";
 
     const breakdownList = document.getElementById("factory-breakdown-list");
-    breakdownList.innerHTML = breakdownHtml === "" ? `<li class="info-text" style="text-align:center;font-style:italic;">No ${cfg.productNounPluralCard.toLowerCase()} companies configured yet.</li>` : breakdownHtml;
+    breakdownList.innerHTML = breakdownHtml === "" ? `<li class="info-text" style="text-align:center;font-style:italic;">No ${cfg.productNounPlural.toLowerCase()} companies configured yet.</li>` : breakdownHtml;
 
     // --- Strategy comparison panel ---
     document.getElementById("total-grain-produced").textContent = `${totalHrmProduced.toFixed(2)} ${cfg.rmNoun}`;
