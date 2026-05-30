@@ -839,8 +839,7 @@ function render() {
     if (stratProduceTitle) stratProduceTitle.textContent = isFood ? "Option B: Produce Grain" : "Option B: Produce WRM";
     
     // Sync modifier inputs visuals with state
-    document.getElementById("country-bonus-slider").value = moduleState.countryBonus;
-    document.getElementById("country-bonus-value").textContent = `${moduleState.countryBonus}%`;
+    document.getElementById("input-country-bonus").value = moduleState.countryBonus;
     document.getElementById("tycoon-toggle").checked = state.hasTycoon;
     const wamToggleFW = document.getElementById("wam-toggle");
     if (wamToggleFW) wamToggleFW.checked = state.wamEnabled;
@@ -1391,8 +1390,7 @@ function renderHiredLaborModule(moduleKey) {
     if (wamGroupH) wamGroupH.style.display = "none";
 
     // --- Sync modifier/market inputs with houses state ---
-    document.getElementById("country-bonus-slider").value = h.countryBonus;
-    document.getElementById("country-bonus-value").textContent = `${h.countryBonus}%`;
+    document.getElementById("input-country-bonus").value = h.countryBonus;
     document.getElementById("tycoon-toggle").checked = state.hasTycoon;
     document.getElementById("input-region-bonus").value = h.regionBonus;
     document.getElementById("input-average-salary").value = h.averageSalary.toFixed(2);
@@ -1732,27 +1730,8 @@ function setupListeners() {
         };
     }
 
-    // Country Bonus Slider
-    const slider = document.getElementById("country-bonus-slider");
-    if (slider) {
-        slider.oninput = function() {
-            const active = state.activeModule;
-            state[active].countryBonus = parseInt(this.value, 10);
-            document.getElementById("country-bonus-value").textContent = `${this.value}%`;
-            
-            // De-sync location since user modified manual inputs (active module only)
-            activeLoc().selectedCountryId = "";
-            activeLoc().selectedRegionPermalink = "";
-            const syncStatus = document.getElementById("sync-status");
-            if (syncStatus) {
-                syncStatus.textContent = "Auto-sync: De-synced (Manual)";
-                syncStatus.style.color = "var(--text-secondary)";
-            }
-
-            saveState();
-            render();
-        };
-    }
+    // Country Bonus is read-only — auto-synced from the selected country.
+    // Its value is written to the read-only input inside render(); no listener needed.
 
     // Tycoon Pack Toggle
     const toggle = document.getElementById("tycoon-toggle");
