@@ -582,7 +582,8 @@ async function syncRegionModifiers() {
     const moduleSyncCfg = {
         food:    { industryId: "1", industryToken: "FOOD",   resourceRegexStr: 'data-resourceId="([1-5])"',          maxQuality: 7 },
         weapons: { industryId: "2", industryToken: "WEAPON", resourceRegexStr: 'data-resourceId="(6|7|8|9|10)"',     maxQuality: 7 },
-        houses:  { industryId: "4", industryToken: "HOUSE",  resourceRegexStr: 'data-resourceId="(11|12|13|14|15)"', maxQuality: 5 }
+        houses:  { industryId: "4", industryToken: "HOUSE",  resourceRegexStr: 'data-resourceId="(11|12|13|14|15)"', maxQuality: 5 },
+        aircraft: { industryId: "23", industryToken: "AIRCRAFT", resourceRegexStr: 'data-resourceId="(16|17|18|19|20)"', maxQuality: 5 }
     };
     const cfg = moduleSyncCfg[state.activeModule] || moduleSyncCfg.food;
     const industryId = cfg.industryId;
@@ -1891,14 +1892,17 @@ function setupListeners() {
         grainPriceInput.onchange = function() {
             let val = parseFloat(this.value);
             if (isNaN(val) || val < 0) {
-                val = state.activeModule === "houses" ? 1535.00 : 50.00;
+                val = state.activeModule === "houses" ? 1535.00
+                    : state.activeModule === "aircraft" ? 1415.00 : 50.00;
             }
             if (state.activeModule === "food") {
                 state.frmPrice = val;
             } else if (state.activeModule === "weapons") {
                 state.wrmPrice = val;
-            } else {
+            } else if (state.activeModule === "houses") {
                 state.hrmPrice = val;
+            } else {
+                state.armPrice = val;
             }
             saveState();
             render();
@@ -2066,17 +2070,23 @@ async function syncLivePrices() {
 document.getElementById("btn-reset-all").onclick = function() {
     const active = state.activeModule;
 
-    if (active === "houses") {
+    if (active === "houses" || active === "aircraft") {
+        const m = state[active];
         for (let q = 1; q <= 5; q++) {
-            state.houses.factories[q] = { companies: 0, workers: 0 };
-            state.houses.rm[q] = { companies: 0, workers: 0 };
+            m.factories[q] = { companies: 0, workers: 0 };
+            m.rm[q] = { companies: 0, workers: 0 };
         }
-        state.houses.countryBonus = 100;
-        state.houses.regionBonus = 0;
-        state.houses.pollution = 0;
-        state.houses.qualityPollution = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-        state.houses.prices = { 1: 29000, 2: 63500, 3: 129850, 4: 263498, 5: 315999 };
-        state.hrmPrice = 1535.00;
+        m.countryBonus = 100;
+        m.regionBonus = 0;
+        m.pollution = 0;
+        m.qualityPollution = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        if (active === "houses") {
+            m.prices = { 1: 29000, 2: 63500, 3: 129850, 4: 263498, 5: 315999 };
+            state.hrmPrice = 1535.00;
+        } else {
+            m.prices = { 1: 963.00, 2: 900.00, 3: 1485.00, 4: 1800.00, 5: 2179.00 };
+            state.armPrice = 1415.00;
+        }
         state.hasTycoon = false;
         state.averageSalary = 0.0;
         state.selectedCountryId = "";
