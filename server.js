@@ -4,7 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 8080;
-const PUBLIC_DIR = __dirname;
+// Serve the Vite production build (run `npm run build` first). The legacy vanilla
+// app remains on disk (index.legacy.html / app.js) for rollback + parity checks
+// but is no longer served from "/". Falls back to the repo root for assets that
+// live outside dist (e.g. favicon.svg) so existing references keep working.
+const DIST_DIR = path.join(__dirname, "dist");
+const PUBLIC_DIR = fs.existsSync(DIST_DIR) ? DIST_DIR : __dirname;
 
 // Proxy targets are matched against this exact-hostname allowlist (https only).
 const ALLOWED_PROXY_HOSTS = new Set([

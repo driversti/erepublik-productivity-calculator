@@ -2,15 +2,38 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-eRepublik **Productivity / Profit Calculator** — a zero-dependency, single-page web app that estimates daily profit for food and weapon factories. Pure vanilla JS (ES modules), no framework, no build step, no tests, no `package.json`. Calculation runs entirely client-side; the bundled Node server exists only to serve files and proxy game requests around CORS.
+eRepublik **Productivity / Profit Calculator** — a single-page web app that estimates daily profit across four industries (food, weapons, houses, aircraft) plus a multi-industry Holdings mode. Calculation runs entirely client-side; the bundled Node server serves the build and proxies game requests around CORS.
+
+> **Migration in progress (branch `feat/react-migration`).** The app has been
+> rewritten from vanilla JS to **Vite + React 19 + TypeScript** (the original
+> zero-build philosophy was intentionally dropped — see
+> `docs/superpowers/specs/2026-05-30-react-migration-design.md`). The new app
+> lives in `src/`. The legacy vanilla app (`app.js`, `holdingsCalc.mjs`,
+> `index.legacy.html`) is kept on disk for rollback + parity until the final
+> cutover; see `MIGRATION_STATUS.md` for what remains (golden-snapshot swap,
+> legacy deletion, merge).
 
 ## Run
 
 ```bash
-node server.js   # serves the app + /proxy on http://localhost:8080
+npm install
+npm run dev      # Vite dev server (HMR) on http://localhost:5173; proxies /proxy → 8080
+npm run build    # tsc --noEmit && vite build → dist/
+node server.js   # serves dist/ + /proxy on http://localhost:8080
+npm test         # vitest (calc golden-parity, state, components, views)
 ```
 
-The app needs the server: `app.js` is loaded as `<script type="module">` (so opening `index.html` via `file://` breaks ES-module imports), and all live data fetches go through the server's `/proxy` endpoint to bypass CORS. There is no install, build, lint, or test command — open `http://localhost:8080` and reload after edits.
+Dev: run `npm run dev` and `node server.js` together (Vite serves the UI with
+HMR; the Node server provides the `/proxy` endpoint). Production: `npm run build`
+then `node server.js` serves the built app from `dist/`. All live data fetches go
+through `/proxy` to bypass CORS.
+
+### Legacy (vanilla) app
+
+The pre-migration app is preserved as `index.legacy.html` + `app.js` +
+`holdingsCalc.mjs` (vanilla ES modules, no build). It is no longer served from
+`/` once `dist/` exists. The sections below describe the legacy architecture and
+remain accurate for those files until the cutover removes them.
 
 ## Architecture
 
