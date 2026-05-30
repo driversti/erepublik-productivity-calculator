@@ -1,6 +1,7 @@
 // eRepublik Food Factories Data Structure
 // baseRM is normalized to Marketplace Units (1 unit of FRM = 100 individual Grain)
 import { countries } from './travelData.js';
+import { roundNumber, gameRawProduction } from './holdingsCalc.mjs';
 
 const foodFactoriesData = [
     { quality: 1, name: "Grain Bakery (Q1)", baseOutput: 100, baseRM: 1, energyPerItem: 2, maxEmployees: 1 },
@@ -78,19 +79,9 @@ const aircraftRawMaterialsData = [
     { quality: 5, name: "Neodymium Mine (Q5)",     baseOutput: 250, maxEmployees: 5 }
 ];
 
-// --- eRepublik rounding helpers (mirror the game's own myCompanies math) ---
-// Standard round-to-N-decimals, identical to the game's roundNumber().
-function roundNumber(number, digits = 2) {
-    const multiplier = Math.pow(10, digits);
-    return Math.round(parseFloat(number) * multiplier) / multiplier;
-}
-
-// Raw-material production per company: the game rounds to 3 decimals then drops the
-// 3rd decimal (floor to 2dp), i.e. roundNumber(x,3).toFixed(3).slice(0,-1).
-// e.g. 3.685 -> "3.68" (NOT 3.69). See calculateProduction() on /economy/myCompanies.
-function gameRawProduction(value) {
-    return Number(roundNumber(value, 3).toFixed(3).slice(0, -1));
-}
+// --- eRepublik rounding helpers live in holdingsCalc.mjs (roundNumber, gameRawProduction) ---
+// They are imported at the top of this file so the Holdings math and the per-industry
+// render() share one rounding implementation.
 
 // --- Real eRepublik building/product icons (served from its CDN, no auth) ---
 // Finished products use the quality-tiered industry icon; raw-material companies

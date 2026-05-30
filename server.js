@@ -16,6 +16,7 @@ const MIME_TYPES = {
     '.html': 'text/html',
     '.css': 'text/css',
     '.js': 'application/javascript',
+    '.mjs': 'application/javascript',
     '.json': 'application/json',
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
