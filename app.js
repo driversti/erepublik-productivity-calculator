@@ -700,7 +700,6 @@ function render() {
     const wamToggleFW = document.getElementById("wam-toggle");
     if (wamToggleFW) wamToggleFW.checked = state.wamEnabled;
     document.getElementById("input-region-bonus").value = moduleState.regionBonus;
-    document.getElementById("input-pollution").value = moduleState.pollution;
     document.getElementById("input-work-tax").value = state.workTaxRate.toFixed(2);
     document.getElementById("input-average-salary").value = state.averageSalary.toFixed(2);
     document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
@@ -1258,7 +1257,6 @@ function renderHouses() {
     document.getElementById("country-bonus-value").textContent = `${h.countryBonus}%`;
     document.getElementById("tycoon-toggle").checked = state.hasTycoon;
     document.getElementById("input-region-bonus").value = h.regionBonus;
-    document.getElementById("input-pollution").value = h.pollution;
     document.getElementById("input-average-salary").value = state.averageSalary.toFixed(2);
     document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
     document.getElementById("select-country").value = state.selectedCountryId || "";
@@ -1680,39 +1678,6 @@ function setupListeners() {
             render();
         };
         regionBonusInput.onkeydown = function(e) {
-            if (e.key === "Enter") this.blur();
-        };
-    }
-
-    // Region Pollution Input
-    const pollutionInput = document.getElementById("input-pollution");
-    if (pollutionInput) {
-        pollutionInput.onchange = function() {
-            const active = state.activeModule;
-            let val = parseInt(this.value, 10);
-            if (isNaN(val) || val < 0) {
-                val = 0;
-            }
-            state[active].pollution = Math.min(val, 100);
-            // Overwrite quality pollution keys with this manual value (houses only has Q0-Q5)
-            const maxPollutionQ = active === "houses" ? 5 : 7;
-            for (let q = 0; q <= maxPollutionQ; q++) {
-                state[active].qualityPollution[q] = state[active].pollution;
-            }
-            
-            // De-sync location since user modified manual inputs
-            state.selectedCountryId = "";
-            state.selectedRegionPermalink = "";
-            const syncStatus = document.getElementById("sync-status");
-            if (syncStatus) {
-                syncStatus.textContent = "Auto-sync: De-synced (Manual)";
-                syncStatus.style.color = "var(--text-secondary)";
-            }
-            
-            saveState();
-            render();
-        };
-        pollutionInput.onkeydown = function(e) {
             if (e.key === "Enter") this.blur();
         };
     }
