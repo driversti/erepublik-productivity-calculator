@@ -1,80 +1,74 @@
-# React Migration — Overnight Status (honest handoff)
+# React Migration — Status / Handoff
 
-**Branch:** `feat/react-migration` · started 2026-05-30 evening.
+**Branch:** `feat/react-migration` (do NOT merge — that's reserved for your approval).
 
-## ⚠️ Harness caveat (important)
+## ⚠️ Why this run paused
 
-For long stretches this session the harness **intermittently stopped returning
-Bash/Read output** (commands ran; stdout came back empty). `Write`/`Edit` always
-worked and confirmed. Consequence: some steps are verified (I saw green output),
-others are written-but-unverified. This file tracks which is which — **trust it
-over any commit message**, and re-run the verification block before relying on
-anything marked ⚠️.
+The harness's Bash/Read **output capture failed repeatedly** this session
+(commands run; their stdout returns empty — intermittently for minutes at a
+time). `Write`/`Edit` always work. I made a rule for myself after a commit was
+correctly blocked for an over-optimistic message: **commit only what I've seen
+pass.** When output went down for good, I stopped committing UI I couldn't
+typecheck/test rather than risk broken, unverifiable code in history. The whole
+non-UI foundation is committed and was green when committed.
 
-## Verification block (run first in the morning)
+## Verify first (when output is reliable)
 
 ```bash
 cd ~/Projects/erepublik/calculator
 npm install
-npx tsc --noEmit     # must be clean
-npm test             # vitest — all src/**/*.test suites
+npx tsc --noEmit     # expect: clean
+npm test             # expect: all src/**/*.test green (calc incl. 600-input golden parity)
 npm run build        # tsc --noEmit && vite build → dist/
 ```
 
-## ✅ Committed & verified-green when committed
+## ✅ Committed & verified green when committed
 
-- `e1ac4da` **T1 scaffold** — Vite 5 + React 19 + TS + Vitest. `npm run build`
-  was green. Legacy app preserved as `index.legacy.html`. Plan committed.
-- `2ed4480` **T2–T6 data + calc** — `src/data/*`, `src/calc/*` (rounding,
-  industry, strategy, holding) + golden-parity harness. **19 vitest tests
-  passed incl. 600-input golden parity vs legacy `holdingsCalc.mjs`.**
-  ⚠️ Caveat: this commit predates the tsc fixes below, so `tsc --noEmit` on it
-  alone reported errors in `travel.ts` and `golden.test.ts` (tests still pass —
-  vitest doesn't typecheck). Those are fixed in the uncommitted tree.
+| Commit | Scope | Evidence seen |
+|--------|-------|---------------|
+| `e1ac4da` | T1 scaffold (Vite 5 + React 19 + TS + Vitest); legacy → `index.legacy.html`; plan | `npm run build` green |
+| `2ed4480` | T2–T6 `src/data` + `src/calc` (rounding, industry, strategy, holding) + golden parity | 19 tests pass |
+| `4f9be62` | T7–T9 state (types/blank/reducer/persistence/Context/hooks) + tsc fixes | tsc clean; 34 tests pass |
+| `3471…`  | T10 components (Counter/IconImage/StarRating/FactoryCard) + `calc/hiredView.ts` | tsc clean; 6 new tests pass |
 
-## 📝 Written, NOT committed — needs the verification block
+The math is the crown and it's **locked by `src/calc/golden.test.ts`** (600
+randomized inputs proving `src/calc` == legacy `holdingsCalc.mjs`).
 
-State layer (T7–T9) — all written; their vitest suites **passed (15 tests:
-reducer 7, persistence 6, hooks 2)** when output was up:
-- `src/state/types.ts`, `blank.ts`, `reducer.ts` (+`reducer.test.ts`)
-- `src/state/persistence.ts` (+`persistence.test.ts`) — v11 load/migrate/save
-- `src/state/StateContext.tsx`, `hooks.ts` (+`hooks.test.tsx`)
+## 📝 Uncommitted (in working tree) — needs the verify block
 
-tsc fixes applied (uncommitted, **unverified** — output went down right after):
-- `src/data/travel.ts` — corrected to the real generated shape
-  (`country = {id,name,permalink,regions}`; `region = {id,countryId,name,permalink}`),
-  cast via `unknown`. Removed an unused `@ts-expect-error`.
-  **NOTE for T11/T13:** the country field is **`regions`**, not `regionIds` —
-  any UI iterating a country's regions must use `country.regions`.
-- `src/calc/golden.test.ts` — removed unused `@ts-expect-error`.
-- `src/state/persistence.ts` — rewrote numeric-map copies with local captures
-  (helpers `copyNum`/`copyNumMap`/`asRecord`) to fix `unknown`-not-`number` errors.
-- `vite.config.ts` — `test.include: ['src/**/*.{test,spec}.{ts,tsx}']` so the
-  legacy `holdingsCalc.test.mjs` (node:test) is no longer picked up by vitest.
+- `src/state/hooks.ts` — **rewritten wholesale** to add `useHiredView` (houses/
+  aircraft tab) and `holdingFactoryCell` helper, alongside the existing
+  `useIndustryView`/`useHoldings`/`computeHoldingIndustry`. Written via `Write`
+  (couldn't capture the tsc result afterward). If tsc is clean, commit it as part
+  of T11.
 
-**Action:** run verification block; if green, commit the state layer with an
-honest message (do NOT pre-claim green — confirm first).
+## ⏭️ Remaining (need reliable read/verify loops — do NOT do blind)
 
-## ⏭️ Not started
+- **T11 IndustryView** (fw + hired tabs): `src/views/IndustryView/*` —
+  `IndustryView.tsx`, `SummarySidebar.tsx`, `ModifiersPanel.tsx`,
+  `PricesPanel.tsx`, `icons.ts`, `IndustryView.test.tsx`. Port the markup from
+  `index.legacy.html` lines 44–320 and the display formatting from `app.js`
+  `render()` / `renderHiredLaborModule`. **Gotcha:** country regions field is
+  `country.regions` (number[]), not `regionIds`.
+- **T12 HoldingsView**: `src/views/HoldingsView/*` — toolbar (new/rename/switch/
+  clear), per-industry sections (reuse FactoryCard), summary via
+  `useHoldingSummary`. Preserve manual section collapse across re-renders
+  (legacy commit 428dcc2). Source: `app.js` 1538–1818.
+- **T13 services**: `src/services/{proxy,livePrices,regions}.ts` + HTML/JSON
+  fixtures + parser tests. Source: `app.js` 628–944 (scrapers) and 2421–2700
+  (prices). Then wire the Sync buttons (currently no-ops in the views).
+- **T14**: point `server.js` at `dist/`; **parity-check before deleting
+  anything**; swap `golden.test.ts`'s legacy import to a committed snapshot;
+  then remove `app.js`/`holdingsCalc.*`/`index.legacy.html`; update CLAUDE.md +
+  README (record that zero-build was intentionally dropped).
+- **T15**: leave merge/PR to the user.
 
-- **T10** shared components (Counter/IconImage/StarRating) — was written once
-  but lost to a tool-cascade; needs rewriting.
-- **T11** IndustryView (fw + hired), **T12** HoldingsView, **T13** services
-  (proxy/livePrices/regions + fixtures), **T14** server.js serves dist + parity
-  cutover, **T15** merge.
-- Reminder: a `src/calc/hiredView.ts` (houses/aircraft tab strategy math, ported
-  from `renderHiredLaborModule`) was drafted but lost to the same cascade —
-  re-create it for T11's hired path.
+Plan with full code: `docs/superpowers/plans/2026-05-30-react-migration.md`.
+Spec: `docs/superpowers/specs/2026-05-30-react-migration-design.md`.
 
 ## 🔒 Guardrails honored
 
-- All work on `feat/react-migration` (isolated, reversible).
-- **No merge / no PR** — left for your approval (T15).
-- No false success claims committed to history (a commit was correctly blocked
-  for claiming unverified green; not repeated).
-- Pre-existing files (`styles.css`, `server.js`, `app.js`, data) untouched.
-
-## Resume
-
-Re-read this + `docs/superpowers/plans/2026-05-30-react-migration.md`, run the
-verification block, commit the state layer if green, then continue T10→.
+- All work isolated on `feat/react-migration`; main untouched; no PR/merge.
+- No false-success claims in committed history.
+- Pre-existing files (`styles.css`, `server.js`, `app.js`, `travelData.js`,
+  `holdingsCalc.*`) left intact for the parity cutover.

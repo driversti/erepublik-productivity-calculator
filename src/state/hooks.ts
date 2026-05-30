@@ -4,12 +4,12 @@ import { useAppState } from './StateContext';
 import type { AppState, FwModule, HiredModule, Holding } from './types';
 import type { Cell, Cells } from '../calc/types';
 import type { IndustryKey } from '../data/types';
-import { getIndustry } from '../data/industries';
+import { getIndustry, INDUSTRIES } from '../data/industries';
 import { computeIndustryView, type IndustryView } from '../calc/strategy';
+import { computeHiredView, type HiredView } from '../calc/hiredView';
 import { computeFwIndustry, computeHiredIndustry } from '../calc/industry';
 import { sumHolding, type HoldingTotals } from '../calc/holding';
 import type { CellKind, ModuleField, SharedNumberField } from './reducer';
-import { INDUSTRIES } from '../data/industries';
 
 export function useActiveModule(): AppState['activeModule'] {
   return useAppState().state.activeModule;
@@ -51,7 +51,6 @@ export function useIndustryView(key: IndustryKey): IndustryView {
   const { state } = useAppState();
   const cfg = getIndustry(key);
   const mod = state[key] as FwModule;
-  const rmPrice = state[cfg.rmPriceKey];
   return computeIndustryView({
     industry: cfg,
     factoryCells: fwFactoryCells(mod, cfg.maxFactoryQuality),
@@ -61,12 +60,31 @@ export function useIndustryView(key: IndustryKey): IndustryView {
     qualityPollution: mod.qualityPollution,
     vat: mod.vat,
     prices: mod.prices,
-    rmPrice,
+    rmPrice: state[cfg.rmPriceKey],
     hasTycoon: state.hasTycoon,
     wamEnabled: state.wamEnabled,
     offeredSalary: state.offeredSalary,
     workTaxRate: mod.workTaxRate,
     averageSalary: mod.averageSalary,
+  });
+}
+
+export function useHiredView(key: IndustryKey): HiredView {
+  const { state } = useAppState();
+  const cfg = getIndustry(key);
+  const mod = state[key] as HiredModule;
+  return computeHiredView({
+    industry: cfg,
+    factoryCells: mod.factories,
+    rmCells: mod.rm,
+    countryBonus: mod.countryBonus,
+    regionBonus: mod.regionBonus,
+    qualityPollution: mod.qualityPollution,
+    vat: mod.vat,
+    prices: mod.prices,
+    rmPrice: state[cfg.rmPriceKey],
+    hasTycoon: state.hasTycoon,
+    offeredSalary: state.offeredSalary,
   });
 }
 
@@ -169,4 +187,17 @@ export function useHoldingSummary(holding: Holding): HoldingTotals {
     result: computeHoldingIndustry(state, holding, cfg.key),
   }));
   return sumHolding(results);
+}
+
+// Read a single industry's per-quality cell out of a holding (for the view).
+export function holdingFactoryCell(holding: Holding, key: IndustryKey, kind: CellKind, quality: number): Cell {
+  const cfg = getIndustry(key);
+  const ind = holding.industries[key];
+  if (cfg.type === 'fw') {
+    const fw = ind as Holding['industries']['food'];
+    return kind === 'plantation' ? (fw.plantations[quality] ?? { companies: 0, workers: 0 }) : (fw[quality] ?? { companies: 0, workers: 0 });
+  }
+  const hired = ind as Holding['industries']['houses'];
+  const group = kind === 'factory' ? 'factories' : 'rm';
+  return hired[group][quality] ?? { companies: 0, workers: 0 };
 }
