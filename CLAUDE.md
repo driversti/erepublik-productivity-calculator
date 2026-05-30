@@ -21,8 +21,6 @@ Four files do the real work:
 - **`travelData.js`** — static `countries` and `regions` maps (id → name/permalink/regionIds), exported for the location dropdowns. Generated data, not hand-edited.
 - **`server.js`** — ~100-line `http` server. Static file serving + a `/proxy?url=…` GET endpoint allowlisted to `www.erepublik.com` and `service.erepublik.tools` only. PORT 8080 hardcoded.
 
-`scratch_society_lithuania.html` is a saved live game page kept as a **parsing reference** for the regex scrapers in `app.js` — not part of the app.
-
 ### State & module model
 
 `state.activeModule` is `"food"` or `"weapons"`; almost everything keys off it (`state[active]`). The food/weapons sub-objects are structurally identical (`{1..7}` factory counts, `plantations{1..5}`, `countryBonus`, `regionBonus`, `pollution`, `qualityPollution{0..7}`, `prices`). Shared top-level fields: `hasTycoon`, `workTaxRate`, `averageSalary`, `vat`, `frmPrice`/`wrmPrice`, selected country/region. Tab switching just flips `activeModule` and re-renders; `render()` rewrites all the food↔weapon labels/titles inline.
@@ -45,7 +43,7 @@ Pollution is **quality-specific** (`qualityPollution[quality]`; index `0` is the
 ### Live data scraping (via `/proxy`)
 
 - **`syncLivePrices()`** → `service.erepublik.tools/api/v1/market/item/0/{industry}/{quality}` for market prices (food has an aggregate `info.misc` map for Q1–Q7; weapons must be fetched per-quality). Industry IDs: food `1`, FRM `7`, weapons `2`, WRM `12`.
-- **`loadRegionsForCountry()` / `syncRegionModifiers()`** → scrape `erepublik.com` country-society / country-economy / region pages with **regex over raw HTML** (`countryProductivityBonuses`, `regionPollutionDetails`, work-tax/salary table cells). These regexes are brittle by nature — when the game's markup changes, update them against a fresh capture (see the `scratch_*.html` reference). Each scraper has a JSON-first path with a regex-HTML fallback.
+- **`loadRegionsForCountry()` / `syncRegionModifiers()`** → scrape `erepublik.com` country-society / country-economy / region pages with **regex over raw HTML** (`countryProductivityBonuses`, `regionPollutionDetails`, work-tax/salary table cells). These regexes are brittle by nature — when the game's markup changes, update them against a freshly captured page. Each scraper has a JSON-first path with a regex-HTML fallback.
 
 Manually editing any modifier input **de-syncs** the location selection (clears country/region, sets the sync-status to "Manual") — this is intentional; preserve it.
 
