@@ -1404,12 +1404,12 @@ function renderHiredLaborModule(moduleKey) {
     document.getElementById("country-bonus-value").textContent = `${h.countryBonus}%`;
     document.getElementById("tycoon-toggle").checked = state.hasTycoon;
     document.getElementById("input-region-bonus").value = h.regionBonus;
-    document.getElementById("input-average-salary").value = state.averageSalary.toFixed(2);
+    document.getElementById("input-average-salary").value = h.averageSalary.toFixed(2);
     document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
-    document.getElementById("select-country").value = state.selectedCountryId || "";
-    document.getElementById("select-region").value = state.selectedRegionPermalink || "";
+    document.getElementById("select-country").value = h.selectedCountryId || "";
+    document.getElementById("select-region").value = h.selectedRegionPermalink || "";
     document.getElementById("input-grain-price").value = rmPrice.toFixed(2);
-    document.getElementById("input-vat").value = state.vat.toFixed(1);
+    document.getElementById("input-vat").value = h.vat.toFixed(1);
     for (let q = 1; q <= 5; q++) {
         const el = document.getElementById(`price-q${q}`);
         if (el) el.value = h.prices[q].toFixed(2);
@@ -1417,10 +1417,10 @@ function renderHiredLaborModule(moduleKey) {
 
     const syncStatus = document.getElementById("sync-status");
     if (syncStatus) {
-        if (state.selectedCountryId && state.selectedRegionPermalink) {
+        if (h.selectedCountryId && h.selectedRegionPermalink) {
             syncStatus.textContent = `Auto-sync: Synced (Country: +${h.countryBonus}%, Region: +${h.regionBonus}%)`;
             syncStatus.style.color = "var(--erep-green, #7ab700)";
-        } else if (state.selectedCountryId) {
+        } else if (h.selectedCountryId) {
             syncStatus.textContent = "Auto-sync: Region not selected";
             syncStatus.style.color = "var(--text-secondary)";
         } else {
@@ -1453,7 +1453,7 @@ function renderHiredLaborModule(moduleKey) {
         const cardOutput = singleOutput * workers;
         const cardHrm = fac.baseRM * mult * workers;
         const productPrice = h.prices[fac.quality];
-        const cardRevenue = cardOutput * productPrice * (1 - state.vat / 100);
+        const cardRevenue = cardOutput * productPrice * (1 - h.vat / 100);
         const cardHrmCost = cardHrm * rmPrice;
         const cardSalary = workers * state.offeredSalary;
         // No work tax here: houses/aircraft have no WAM (owner can't be GM), and hired-worker
@@ -1521,7 +1521,7 @@ function renderHiredLaborModule(moduleKey) {
     // Option B: produce HRM
     let marketExpenseB = 0, marketRevenueB = 0;
     if (netHrmBalance < 0) marketExpenseB = (-netHrmBalance) * rmPrice;
-    else marketRevenueB = netHrmBalance * rmPrice * (1 - state.vat / 100);
+    else marketRevenueB = netHrmBalance * rmPrice * (1 - h.vat / 100);
     const netB = sumRevenue - houseSalaryCost - hrmSalaryCost - houseWorkTax - hrmWorkTax - marketExpenseB + marketRevenueB;
 
     const isBbetter = netB > netA;
