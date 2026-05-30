@@ -126,6 +126,7 @@ let state = {
     frmPrice: 50.00,
     wrmPrice: 50.00,
     hrmPrice: 1535.00,
+    armPrice: 1415.00,
     vat: 1.0,
     food: {
         1: { companies: 0, workers: 0 },
@@ -189,6 +190,27 @@ let state = {
         pollution: 0,
         qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
         prices: { 1: 29000, 2: 63500, 3: 129850, 4: 263498, 5: 315999 }
+    },
+    aircraft: {
+        factories: {
+            1: { companies: 0, workers: 0 },
+            2: { companies: 0, workers: 0 },
+            3: { companies: 0, workers: 0 },
+            4: { companies: 0, workers: 0 },
+            5: { companies: 0, workers: 0 }
+        },
+        rm: {
+            1: { companies: 0, workers: 0 },
+            2: { companies: 0, workers: 0 },
+            3: { companies: 0, workers: 0 },
+            4: { companies: 0, workers: 0 },
+            5: { companies: 0, workers: 0 }
+        },
+        countryBonus: 100,
+        regionBonus: 0,
+        pollution: 0,
+        qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        prices: { 1: 963.00, 2: 900.00, 3: 1485.00, 4: 1800.00, 5: 2179.00 }
     }
 };
 
@@ -214,6 +236,7 @@ function loadState() {
             if (typeof parsed.frmPrice === 'number') state.frmPrice = parsed.frmPrice;
             if (typeof parsed.wrmPrice === 'number') state.wrmPrice = parsed.wrmPrice;
             if (typeof parsed.hrmPrice === 'number') state.hrmPrice = parsed.hrmPrice;
+            if (typeof parsed.armPrice === 'number') state.armPrice = parsed.armPrice;
             if (typeof parsed.vat === 'number') state.vat = parsed.vat;
             
             // Helper to populate a module's nested state
@@ -268,40 +291,44 @@ function loadState() {
             loadModule('food');
             loadModule('weapons');
 
-            // Houses has a different shape ({companies, workers} per quality, Q1-Q5)
-            if (parsed.houses && typeof parsed.houses === 'object') {
-                const ph = parsed.houses;
-                const loadHouseGroup = (groupKey, data) => {
-                    if (ph[groupKey] && typeof ph[groupKey] === 'object') {
+            // Houses + Aircraft share a shape: {factories{1..5}, rm{1..5}, bonuses, prices}, hired-worker cells.
+            [
+                { key: 'houses',   facData: houseFactoriesData,    rmData: houseRawMaterialsData },
+                { key: 'aircraft', facData: aircraftFactoriesData, rmData: aircraftRawMaterialsData }
+            ].forEach(({ key, facData, rmData }) => {
+                const pm = parsed[key];
+                if (!pm || typeof pm !== 'object') return;
+                const loadGroup = (groupKey, data) => {
+                    if (pm[groupKey] && typeof pm[groupKey] === 'object') {
                         for (let q = 1; q <= 5; q++) {
-                            const src = ph[groupKey][q];
+                            const src = pm[groupKey][q];
                             if (src && typeof src === 'object') {
                                 const row = data.find(x => x.quality === q);
                                 const maxEmp = row ? row.maxEmployees : 0;
                                 const companies = (typeof src.companies === 'number') ? Math.max(0, Math.floor(src.companies)) : 0;
                                 let workers = (typeof src.workers === 'number') ? Math.max(0, Math.floor(src.workers)) : 0;
                                 if (workers > companies * maxEmp) workers = companies * maxEmp;
-                                state.houses[groupKey][q] = { companies, workers };
+                                state[key][groupKey][q] = { companies, workers };
                             }
                         }
                     }
                 };
-                loadHouseGroup('factories', houseFactoriesData);
-                loadHouseGroup('rm', houseRawMaterialsData);
-                if (typeof ph.countryBonus === 'number') state.houses.countryBonus = ph.countryBonus;
-                if (typeof ph.regionBonus === 'number') state.houses.regionBonus = ph.regionBonus;
-                if (typeof ph.pollution === 'number') state.houses.pollution = ph.pollution;
-                if (ph.qualityPollution && typeof ph.qualityPollution === 'object') {
+                loadGroup('factories', facData);
+                loadGroup('rm', rmData);
+                if (typeof pm.countryBonus === 'number') state[key].countryBonus = pm.countryBonus;
+                if (typeof pm.regionBonus === 'number') state[key].regionBonus = pm.regionBonus;
+                if (typeof pm.pollution === 'number') state[key].pollution = pm.pollution;
+                if (pm.qualityPollution && typeof pm.qualityPollution === 'object') {
                     for (let q = 0; q <= 5; q++) {
-                        if (typeof ph.qualityPollution[q] === 'number') state.houses.qualityPollution[q] = ph.qualityPollution[q];
+                        if (typeof pm.qualityPollution[q] === 'number') state[key].qualityPollution[q] = pm.qualityPollution[q];
                     }
                 }
-                if (ph.prices && typeof ph.prices === 'object') {
+                if (pm.prices && typeof pm.prices === 'object') {
                     for (let q = 1; q <= 5; q++) {
-                        if (typeof ph.prices[q] === 'number') state.houses.prices[q] = ph.prices[q];
+                        if (typeof pm.prices[q] === 'number') state[key].prices[q] = pm.prices[q];
                     }
                 }
-            }
+            });
         }
     } catch (e) {
         console.error("Failed to load factory state from localStorage:", e);
