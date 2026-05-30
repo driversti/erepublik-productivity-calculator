@@ -110,7 +110,7 @@ const HIRED_LABOR_MODULES = {
         productNounPlural: "House",
         productNounPluralCard: "Houses",
         rmNoun: "HRM",
-        moduleTitle: "House Industry (Step 1)",
+        moduleTitle: "House Industry",
         countryBonusLabel: "Country Construction Bonus",
         factoriesTitle: "Your House Factories",
         factoriesSubtitle: "Set companies + workers (Q1–Q5). Only hired employees produce — no WAM.",
@@ -128,7 +128,7 @@ const HIRED_LABOR_MODULES = {
         productNounPlural: "Aircraft Weapon",
         productNounPluralCard: "Aircraft Weapons",
         rmNoun: "ARM",
-        moduleTitle: "Aircraft Industry (Step 1)",
+        moduleTitle: "Aircraft Industry",
         countryBonusLabel: "Country Aircraft Bonus",
         factoriesTitle: "Your Aircraft Weapon Factories",
         factoriesSubtitle: "Set companies + workers (Q1–Q5). Only hired employees produce — no WAM.",
@@ -790,7 +790,7 @@ function render() {
     // Dynamic headers and labels switching
     const activeModuleSpan = document.querySelector(".active-module .module-name");
     if (activeModuleSpan) {
-        activeModuleSpan.textContent = isFood ? "Food Industry (Step 1)" : "Weapon Industry (Step 1)";
+        activeModuleSpan.textContent = isFood ? "Food Industry" : "Weapon Industry";
     }
     const countryBonusLabel = document.getElementById("country-bonus-label");
     if (countryBonusLabel) {
@@ -1127,33 +1127,19 @@ function render() {
     const netProfitOptionB = sumRevenue - factoryTax - factoryLabor - plantTax - plantLabor - marketExpenseOptionB + marketRevenueOptionB;
     
     // Determine Optimal Option
-    const isOptionBBetter = netProfitOptionB > netProfitOptionA;
-    
-    // Set Main summary variables based on optimal option
-    let displayGrainCost = 0;
-    let displayWorkTax = 0;   // total work tax (all sessions) for the chosen option
-    let displaySalary = 0;    // total hired-worker labor for the chosen option
-    let displayNetProfit = 0;
+    // Headline KPIs reflect the user's ACTUAL configuration: factories plus whatever
+    // plantations they staffed (Option B accounting). With no plantations this collapses
+    // to the pure-buy case (netProfitOptionB === netProfitOptionA). The comparison panel
+    // below still shows the buy-vs-produce tradeoff and recommends the cheaper path.
+    const producingRM = (plantWamSessions + plantWorkers) > 0;
+    const displayGrainCost = marketExpenseOptionB - marketRevenueOptionB;
+    const displayWorkTax = factoryTax + plantTax;    // all sessions (factory + plantation)
+    const displaySalary = factoryLabor + plantLabor; // all hired-worker labor
+    const displayNetProfit = netProfitOptionB;
     const badge = document.getElementById("summary-strategy-badge");
-
-    if (isOptionBBetter) {
-        displayGrainCost = marketExpenseOptionB - marketRevenueOptionB;
-        displayWorkTax = factoryTax + plantTax;
-        displaySalary = factoryLabor + plantLabor;
-        displayNetProfit = netProfitOptionB;
-        if (badge) {
-            badge.textContent = "Option B: Produce";
-            badge.style.background = isFood ? "#e67e22" : "#7f8c8d";
-        }
-    } else {
-        displayGrainCost = grainExpenseOptionA;
-        displayWorkTax = factoryTax;
-        displaySalary = factoryLabor;
-        displayNetProfit = netProfitOptionA;
-        if (badge) {
-            badge.textContent = "Option A: Buy";
-            badge.style.background = "var(--erep-blue)";
-        }
+    if (badge) {
+        badge.textContent = producingRM ? "Option B: Produce" : "Option A: Buy";
+        badge.style.background = producingRM ? (isFood ? "#e67e22" : "#7f8c8d") : "var(--erep-blue)";
     }
     
     // Update main summary DOM
@@ -1529,21 +1515,19 @@ function renderHiredLaborModule(moduleKey) {
     else marketRevenueB = netHrmBalance * rmPrice * (1 - h.vat / 100);
     const netB = sumRevenue - houseSalaryCost - hrmSalaryCost - houseWorkTax - hrmWorkTax - marketExpenseB + marketRevenueB;
 
-    const isBbetter = netB > netA;
-    let displayHrmCost, displaySalary, displayTax, displayNet;
+    // Headline KPIs reflect the user's ACTUAL configuration: factories plus whatever
+    // HRM companies they staffed (Option B accounting). With no HRM workers this collapses
+    // to the pure-buy case (netB === netA). The comparison panel below still recommends
+    // the cheaper path.
+    const producingRM = totalRmWorkers > 0;
+    const displayHrmCost = marketExpenseB - marketRevenueB;
+    const displaySalary = houseSalaryCost + hrmSalaryCost;
+    const displayTax = houseWorkTax + hrmWorkTax;
+    const displayNet = netB;
     const badge = document.getElementById("summary-strategy-badge");
-    if (isBbetter) {
-        displayHrmCost = marketExpenseB - marketRevenueB;
-        displaySalary = houseSalaryCost + hrmSalaryCost;
-        displayTax = houseWorkTax + hrmWorkTax;
-        displayNet = netB;
-        if (badge) { badge.textContent = "Option B: Produce"; badge.style.background = "#78909c"; }
-    } else {
-        displayHrmCost = optionA_hrmCost;
-        displaySalary = houseSalaryCost;
-        displayTax = houseWorkTax;
-        displayNet = netA;
-        if (badge) { badge.textContent = "Option A: Buy"; badge.style.background = "var(--erep-blue)"; }
+    if (badge) {
+        badge.textContent = producingRM ? "Option B: Produce" : "Option A: Buy";
+        badge.style.background = producingRM ? "#78909c" : "var(--erep-blue)";
     }
     const grossDailyProfit = sumRevenue - displayHrmCost;
 
@@ -1790,33 +1774,8 @@ function setupListeners() {
         };
     }
 
-    // Region Bonus Input
-    const regionBonusInput = document.getElementById("input-region-bonus");
-    if (regionBonusInput) {
-        regionBonusInput.onchange = function() {
-            const active = state.activeModule;
-            let val = parseInt(this.value, 10);
-            if (isNaN(val) || val < 0) {
-                val = 0;
-            }
-            state[active].regionBonus = Math.min(val, 100);
-            
-            // De-sync location since user modified manual inputs (active module only)
-            activeLoc().selectedCountryId = "";
-            activeLoc().selectedRegionPermalink = "";
-            const syncStatus = document.getElementById("sync-status");
-            if (syncStatus) {
-                syncStatus.textContent = "Auto-sync: De-synced (Manual)";
-                syncStatus.style.color = "var(--text-secondary)";
-            }
-
-            saveState();
-            render();
-        };
-        regionBonusInput.onkeydown = function(e) {
-            if (e.key === "Enter") this.blur();
-        };
-    }
+    // Region Bonus is read-only — it is auto-synced from the selected region
+    // (syncRegionModifiers / render write its value). No manual-edit handler.
 
 
 
