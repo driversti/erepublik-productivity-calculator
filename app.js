@@ -72,80 +72,46 @@ let state = {
     hrmPrice: 1535.00,
     vat: 1.0,
     food: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-        7: 0,
+        1: { companies: 0, workers: 0 },
+        2: { companies: 0, workers: 0 },
+        3: { companies: 0, workers: 0 },
+        4: { companies: 0, workers: 0 },
+        5: { companies: 0, workers: 0 },
+        6: { companies: 0, workers: 0 },
+        7: { companies: 0, workers: 0 },
         plantations: {
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0
+            1: { companies: 0, workers: 0 },
+            2: { companies: 0, workers: 0 },
+            3: { companies: 0, workers: 0 },
+            4: { companies: 0, workers: 0 },
+            5: { companies: 0, workers: 0 }
         },
         countryBonus: 100,
         regionBonus: 0,
         pollution: 0,
-        qualityPollution: {
-            0: 0,
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0,
-            6: 0,
-            7: 0
-        },
-        prices: {
-            1: 0.80,
-            2: 1.60,
-            3: 2.40,
-            4: 3.20,
-            5: 4.00,
-            6: 5.00,
-            7: 9.90
-        }
+        qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 },
+        prices: { 1: 0.80, 2: 1.60, 3: 2.40, 4: 3.20, 5: 4.00, 6: 5.00, 7: 9.90 }
     },
     weapons: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-        7: 0,
+        1: { companies: 0, workers: 0 },
+        2: { companies: 0, workers: 0 },
+        3: { companies: 0, workers: 0 },
+        4: { companies: 0, workers: 0 },
+        5: { companies: 0, workers: 0 },
+        6: { companies: 0, workers: 0 },
+        7: { companies: 0, workers: 0 },
         plantations: {
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0
+            1: { companies: 0, workers: 0 },
+            2: { companies: 0, workers: 0 },
+            3: { companies: 0, workers: 0 },
+            4: { companies: 0, workers: 0 },
+            5: { companies: 0, workers: 0 }
         },
         countryBonus: 100,
         regionBonus: 0,
         pollution: 0,
-        qualityPollution: {
-            0: 0,
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0,
-            6: 0,
-            7: 0
-        },
-        prices: {
-            1: 1.20,
-            2: 2.40,
-            3: 3.60,
-            4: 4.80,
-            5: 6.00,
-            6: 8.00,
-            7: 15.00
-        }
+        qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 },
+        prices: { 1: 1.20, 2: 2.40, 3: 3.60, 4: 4.80, 5: 6.00, 6: 8.00, 7: 15.00 }
     },
     houses: {
         factories: {
@@ -183,6 +149,7 @@ function loadState() {
             if (typeof parsed.hasTycoon === 'boolean') state.hasTycoon = parsed.hasTycoon;
             if (typeof parsed.workTaxRate === 'number') state.workTaxRate = parsed.workTaxRate;
             if (typeof parsed.averageSalary === 'number') state.averageSalary = parsed.averageSalary;
+            if (typeof parsed.offeredSalary === 'number') state.offeredSalary = parsed.offeredSalary;
             if (typeof parsed.selectedCountryId === 'string' || typeof parsed.selectedCountryId === 'number') {
                 state.selectedCountryId = String(parsed.selectedCountryId);
             }
@@ -196,12 +163,33 @@ function loadState() {
             const loadModule = (key) => {
                 if (parsed[key] && typeof parsed[key] === 'object') {
                     const m = parsed[key];
+                    const facData = key === 'food' ? foodFactoriesData : weaponFactoriesData;
+                    const plantData = key === 'food' ? foodPlantationsData : weaponPlantationsData;
+                    const migrateCell = (src, maxEmp) => {
+                        let companies = 0, workers = 0;
+                        if (typeof src === 'number') {
+                            companies = Math.max(0, Math.floor(src));
+                        } else if (src && typeof src === 'object') {
+                            companies = (typeof src.companies === 'number') ? Math.max(0, Math.floor(src.companies)) : 0;
+                            workers = (typeof src.workers === 'number') ? Math.max(0, Math.floor(src.workers)) : 0;
+                        }
+                        companies = Math.min(companies, 9999);
+                        const cap = companies * maxEmp;
+                        if (workers > cap) workers = cap;
+                        return { companies, workers };
+                    };
                     for (let q = 1; q <= 7; q++) {
-                        if (typeof m[q] === 'number') state[key][q] = Math.floor(m[q]);
+                        if (m[q] !== undefined) {
+                            const row = facData.find(x => x.quality === q);
+                            state[key][q] = migrateCell(m[q], row ? row.maxEmployees : 0);
+                        }
                     }
                     if (m.plantations && typeof m.plantations === 'object') {
                         for (let q = 1; q <= 5; q++) {
-                            if (typeof m.plantations[q] === 'number') state[key].plantations[q] = Math.floor(m.plantations[q]);
+                            if (m.plantations[q] !== undefined) {
+                                const row = plantData.find(x => x.quality === q);
+                                state[key].plantations[q] = migrateCell(m.plantations[q], row ? row.maxEmployees : 0);
+                            }
                         }
                     }
                     if (typeof m.countryBonus === 'number') state[key].countryBonus = m.countryBonus;
@@ -1954,10 +1942,16 @@ document.getElementById("btn-reset-all").onclick = function() {
 
     // Reset factories
     for (let q = 1; q <= 7; q++) {
-        state[active][q] = 0;
+        state[active][q] = { companies: 0, workers: 0 };
     }
     // Reset plantations
-    state[active].plantations = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    state[active].plantations = {
+        1: { companies: 0, workers: 0 },
+        2: { companies: 0, workers: 0 },
+        3: { companies: 0, workers: 0 },
+        4: { companies: 0, workers: 0 },
+        5: { companies: 0, workers: 0 }
+    };
     // Reset modifiers
     state[active].countryBonus = 100;
     state[active].regionBonus = 0;
