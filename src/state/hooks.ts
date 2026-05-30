@@ -51,10 +51,13 @@ export function useIndustryView(key: IndustryKey): IndustryView {
   const { state } = useAppState();
   const cfg = getIndustry(key);
   const mod = state[key] as FwModule;
+  // Both useIndustryView and useHiredView are called unconditionally by the view
+  // (Rules of Hooks); the irrelevant one sees a wrong-shaped module, so guard the
+  // cell containers — its result is ignored anyway.
   return computeIndustryView({
     industry: cfg,
     factoryCells: fwFactoryCells(mod, cfg.maxFactoryQuality),
-    plantationCells: mod.plantations,
+    plantationCells: mod.plantations ?? {},
     countryBonus: mod.countryBonus,
     regionBonus: mod.regionBonus,
     qualityPollution: mod.qualityPollution,
@@ -75,8 +78,8 @@ export function useHiredView(key: IndustryKey): HiredView {
   const mod = state[key] as HiredModule;
   return computeHiredView({
     industry: cfg,
-    factoryCells: mod.factories,
-    rmCells: mod.rm,
+    factoryCells: mod.factories ?? {},
+    rmCells: mod.rm ?? {},
     countryBonus: mod.countryBonus,
     regionBonus: mod.regionBonus,
     qualityPollution: mod.qualityPollution,
