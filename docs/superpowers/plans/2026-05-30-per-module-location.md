@@ -22,7 +22,7 @@ VAT is per-industry and is **not** currently scraped. Before writing scraper cod
 - Create: `scratch_country_economy.html` (saved live reference, like the existing `scratch_society_lithuania.html`)
 - Update: this plan's "VAT scrape recipe" note at the end of Task 1
 
-- [ ] **Step 1: Start the server**
+- [x] **Step 1: Start the server**
 
 ```bash
 node server.js >/tmp/erep_calc_server.log 2>&1 &
@@ -30,7 +30,7 @@ sleep 1 && curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8080/
 ```
 Expected: `200`
 
-- [ ] **Step 2: Capture a live economy page through the proxy**
+- [x] **Step 2: Capture a live economy page through the proxy**
 
 Use a country that controls regions (Lithuania, permalink `Lithuania`, matches the existing society scratch). Drive it through the app's own `/proxy` so headers/Cloudflare handling match production:
 
@@ -40,14 +40,14 @@ wc -l scratch_country_economy.html
 ```
 Expected: a non-trivial HTML file (hundreds+ of lines). If it is a Cloudflare challenge / tiny error page, try another country permalink from `travelData.js` (e.g. `Poland`, `Romania`) until a real economy page is captured.
 
-- [ ] **Step 3: Inspect VAT + industry-row markup**
+- [x] **Step 3: Inspect VAT + industry-row markup**
 
 ```bash
 grep -n -i "vat\|class=\"special\"\|Work Tax\|Import Tax\|Construction\|Aircraft\|Weapons\|Food" scratch_country_economy.html | head -60
 ```
 Identify, for each industry, the row label text and which `<span class="special">…%</span>` cell is VAT (relative to Work Tax / Import Tax columns). Record the exact industry-row labels (Food / Weapons / Construction-or-Houses / Aircraft-Weapons-or-Aircraft).
 
-- [ ] **Step 4: Confirm a working VAT regex against the captured file**
+- [x] **Step 4: Confirm a working VAT regex against the captured file**
 
 Prototype with node against the saved file (adjust until it extracts the right number — do not guess):
 
@@ -62,16 +62,34 @@ const m=html.match(re);console.log("Food VAT =", m?m[1]:"NO MATCH");
 ```
 Expected: a sensible VAT percentage (e.g. `1.00`, `3.00`). Repeat for the other three industry labels.
 
-- [ ] **Step 5: CHECKPOINT — record recipe or escalate**
+- [x] **Step 5: CHECKPOINT — record recipe or escalate**
 
 If a reliable VAT regex + per-industry label map is found, write it into the note block below and proceed. **If VAT cannot be parsed reliably, STOP and report to the user** (do not silently default VAT) — the design's fallback decision is required before continuing.
 
-> **VAT scrape recipe (fill in during Step 4–5):**
-> - Industry-row labels: food=`____`, weapons=`____`, houses=`____`, aircraft=`____`
-> - VAT regex template (with `INDUSTRY_LABEL` placeholder): `____`
-> - JSON-first source available? `____` (if the page exposes a JS var, prefer it like the bonus/pollution parsers do)
+> **VAT scrape recipe (confirmed against `scratch_country_economy.html`, Lithuania, Day 6766):**
+>
+> **Industry-row labels (exact text in `<span class="fakeheight">…</span>`):**
+> - food = `Food`
+> - weapons = `Weapons`
+> - houses = `House`
+> - aircraft = `Aircraft Weapons`
+>
+> **Table structure** (columns, left-to-right per row): icon | label | Work Tax | Import Tax | VAT
+> - Work Tax cell: `<td><span class="special">X.XX%</span></td>` (percent sign inside span)
+> - Import Tax cell: `<td><span class="special">N</span>%</td>` (percent sign outside span)
+> - VAT cell: `<td>\n    <span class="special">N</span>%\n</td>` (integer, percent outside span; **empty for raw-material rows**)
+>
+> **VAT regex template** (replace `INDUSTRY_LABEL` with the exact label string above; use `new RegExp(template, 'i')`):
+> ```
+> fakeheight">INDUSTRY_LABEL<\/span><\/td>\s*<td[^>]*>\s*<span[^>]*>[^<]*<\/span>\s*<\/td>\s*<td[^>]*>\s*<span[^>]*>[^<]*<\/span>%\s*<\/td>\s*<td[^>]*>\s*<span[^>]*>([\d.]*)<\/span>
+> ```
+> Capture group 1 = the VAT integer (e.g. `"1"`, `"3"`). Empty string means no VAT (raw materials). Parse with `parseFloat(match[1]) || 0`.
+>
+> **JSON-first source available? NO.** The page has a `countryProductivityBonuses` JS var (productivity bonuses only) and historical daily aggregate revenue arrays (`chartDataJSON`, `tableDataJSON`). Neither exposes per-industry VAT rates. Only the HTML tax table carries them. HTML-regex is the only parse path.
+>
+> **Sample extracted values (Lithuania):** food=1%, weapons=1%, houses=1%, aircraft=1%.
 
-- [ ] **Step 6: Commit the reference capture**
+- [x] **Step 6: Commit the reference capture**
 
 ```bash
 git add scratch_country_economy.html docs/superpowers/plans/2026-05-30-per-module-location.md

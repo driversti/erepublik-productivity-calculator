@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html ng-app="ErpkApp" lang="en">
+<head>
+<base href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="title" content="eRepublik Country Economy | Lithuania" />
+<meta name="robots" content="index, follow" />
+<meta name="description" content="Lithuania is a country in Erepublik. Find information about the economical activities of Lithuania" />
+<meta name="keywords" content="" />
+<meta name="language" content="en" />
+<meta name="facebook-domain-verification" content="d1ofy8ykmpj5leii98aznqfpacyknn" />
+<title>eRepublik Country Economy | Lithuania</title>
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="preload stylesheet" as="style" href="//www.erepublik.net/css/cmp/animations.1780039615.css" type="text/css" media="screen" />
+<link rel="preload stylesheet" as="style" href="//www.erepublik.net/css/cmp/layout.1780039615.css" type="text/css" media="screen" />
+<link rel="preload stylesheet" as="style" href="//www.erepublik.net/css/cmp/app.1780039615.css" type="text/css" media="screen" />
+<link rel="preload stylesheet" as="style" href="/css/fonts/PTSansNarrow/font.1698060170.css" type="text/css" />
+<link rel="preload stylesheet" as="style" href="/css/fonts/OpenSansCondensed/font.1751369024.css" type="text/css" />
+<link rel="preload stylesheet" as="style" href="/css/fonts/Franchise/font.1698060170.css" type="text/css" />
+<link rel="preload stylesheet" as="style" href="/css/fonts/Icons/font.1698060170.css" type="text/css" />
+<link rel="preload stylesheet" as="style" href="//www.erepublik.net/css/cmp/country.1780039615.css" type="text/css" />
+<link rel="preload stylesheet" as="style" href="//www.erepublik.net/css/countryPageCharts.1698060170.css" type="text/css" />
+<script type="text/javascript" charset="utf-8">
+    var culture = 'en';
+    var csrfToken = 'ef6937398ebd4f130711970fba45ab77';
+    var domainname = 'erepublik.com';
+    var erepublik = {"settings":{"domainname":"erepublik.com","hostname":"www.erepublik.com","economyhostname":"economy.erepublik.com","cookielessHost":"www.erepublik.net","isLive":true,"culture":"en","eDay":6766,"isOnHomepage":false,"requestUri":"L2VuL2NvdW50cnkvZWNvbm9teS9MaXRodWFuaWE"},"shortcuts":{"links":{"inventory":"/en/main/inventory","myland":"//www.erepublik.com/en/economy/myCompanies","campaigns":"//www.erepublik.com/en/military/campaigns","top_news":"//www.erepublik.com/en/news/international","new_message":"//www.erepublik.com/en/main/messages-compose/0","world_map":"//www.erepublik.com/en/map","military_unit":"//www.erepublik.com/en/main/group-home/military","alerts":"//www.erepublik.com/en/main/notifications","residence":"//www.erepublik.com/en/main/myResidence","armory":"//www.erepublik.com/en/military/armory"},"names":{"inventory":"Storage","myland":"My places","campaigns":"Campaigns","top_news":"Top news","new_message":"New Message","world_map":"World map","military_unit":"Military unit","alerts":"Notifications","residence":"Residence","armory":"Protectors of Nations"}},"angularTemplates":{"CitizenAchievements":"/templates/CitizenAchievements.tpl.html?v=1698060182","DailyMissions":"/templates/DailyMissions.tpl.html?v=1698060182","CitizenRevival":"/templates/CitizenRevival.tpl.html?v=1698060182","LoginRewardsRevival":"/templates/LoginRewardsRevival.tpl.html?v=1698060182","SideNotification":"/templates/SideNotification.tpl.html?v=1698060182","Hovercard":"/templates/Hovercard.tpl.html?v=1698060182"}},
+        Environment = {"facebookSession":0,"isInIframe":false,"isOnFacebook":false,"isWebView":false,"isOnHomepage":false,"isSymfony":false,"logEnabled":false,"hasSessionCaptcha":false,"sessionId":"3c0c8ec41224499db108c90ff42c25d7"},
+        SERVER_DATA = {"csrfToken":"ef6937398ebd4f130711970fba45ab77","isLoggedIn":false,"fbAppId":300511377223,"fbApiVersion":"v2.8","fbPixelId":258530638768310,"gaPropertyId":"G-PSSBE951PK","extras":"carrots","serverTime":{"rfc":"Sat, 30 May 2026 07:49:14 -0700","dateTime":"2026-05-30 07:49:14","timezone":"PDT","offset":-700,"hour":7,"unix":1780152554,"unixMs":1780152554000},"webDeployEnabled":true},
+        ErpkShop = {"promotions":[],"popupPromotions":[],"battlePromotions":[],"numberOfPurchasablePacks":0,"specialSalesEvent":false},
+        missionsJSON = [],
+        numberOfMissions = 0,
+        dotNotifications = [];
+    var assistantNotifications = dotNotifications;
+
+    if(Environment){
+        Environment.isInIframe = (window.self !== window.top);
+        Environment.isOnFacebook = Environment.facebookSession && Environment.isInIframe && !Environment.isWebView;
+        if (Environment.isInIframe && !Environment.isOnFacebook && !Environment.isWebView) {
+            top.location = self.location
+        }
+    }
+</script>
+<!--    Start cookie consent-->
+    <script src="https://cdn.cookiehub.eu/c2/d3117cfe.js"></script>
+    <script>document.addEventListener("DOMContentLoaded", () => {window.cookiehub?.load({})})</script>
+<!--    End cookie consent-->
+<!-- AngularJs Libs -->
+<script src="//www.erepublik.net/js/jquery.min.1698060179.js"></script>
+<script src="//www.erepublik.net/js/angular/182/angular.min.1703751706.js"></script>
+<script src="//www.erepublik.net/js/angular/182/angular-sanitize.min.1703751706.js"></script>
+<script src="//www.erepublik.net/js/angular/182/ui-bootstrap-tpls.min.1703751706.js"></script>
+<script> var $j = jQuery.noConflict();</script>
+<script src="//www.erepublik.net/js/cmp/erepublik.1780039584.js"></script>
+<script src="//www.erepublik.net/js/cmp/erpk_angular_init.1780039589.js"></script>
+<script src="//www.erepublik.net/js/cmp/erpk_angular_directives.1780039589.js"></script>
+<script src="//www.erepublik.net/js/cmp/erpk_angular_filters.1780039589.js"></script>
+<script src="//www.erepublik.net/js/cmp/erpk_angular_controllers.1780039589.js"></script>
+<script src="//www.erepublik.net/js/cmp/erpk_angular_services.1780039589.js"></script>
+<script src="//www.erepublik.net/js/global.1747737976.js"></script>
+<script src="//www.erepublik.net/js/analytics.1724399810.js"></script>
+<script src="//www.erepublik.net/js/jquery.color.1698060179.js"></script><script src="//www.erepublik.net/js/jquery.pulse.1698060179.js"></script><script src="//www.erepublik.net/js/country/countryPage.1698060179.js"></script>    <script src="//www.erepublik.net/js/facebook/facebook_init.1719825491.js"></script>
+    <script src="//www.erepublik.net/js/facebook/facebook_canvas.1724835737.js"></script>
+    
+<script type="text/javascript" src="//www.erepublik.net/js/facebook/facebook_events.1719825491.js"></script>
+</head>
+<body id="country" class=" logged_out lowered">
+	<div id="fb-root"></div>
+<div class="at">
+	<div class="ath">
+		<a href="javascript:" id="ambient_toggler" class="ambient_toggler"><span>Ambient on/off</span></a>
+	</div>
+</div>
+	<div id="container">
+
+
+
+	<div id="header" >
+	    
+	    <div class="header_top leftFlex">
+	   		<div class="erpk_time">
+				<span class="eday">
+					Day <strong>6,766</strong>				</span>
+				<span class="date">May 30</span>
+				<!-- <span id="live_time" class="time"></span> -->
+			</div>
+
+	   	</div>
+	   	
+	    <div class="leaderboard"></div>
+		<div class="advisor"></div>
+
+		
+		<!-- start of logged out authentication section -->
+		<section class="player logged_out" id="compact_sidebar">
+	<article class="logo">
+        <a href="/"><img src="//www.erepublik.net/images/modules/sidebar/logo_metalic.png" alt="Logo"></a>
+	</article>
+	<article class="register">
+	    <a href="//www.erepublik.com/en#register" title="Sign up" class="sign_up register_button">
+	        Sign up	    </a>
+	    <a href="javascript:;" title="Sign up with Facebook" class="fb_sign facebook_login" id="fb_sign">
+	        Sign up with	        <span>Facebook</span>
+	    </a>
+	</article>
+	<article class="login">
+		<p>Already have an account? <a href="//www.erepublik.com/en">Login</a></p>
+	</article>
+</section>
+		<!-- end of logged out authentication section -->
+
+		
+
+	</div>
+
+
+
+					<div id="sidebar">
+				<div id="miniprofile">
+	  				<div class="core">
+						<div class="avatarholder">
+							<div class="backwhite">
+								<img src="//www.erepublik.net/images/avatar-m-empty.gif" alt="Citizen Name" width="55" height="55" />
+								<a href="javascript:;" style="cursor: default;color:#BABABA; margin-top:9px" title="" class="citizen_name">Guest</a>
+							</div>
+							<div class="ender">
+								<div class="xprank"></div>
+							</div>
+						</div>
+
+	                    <div class="nameholder" style="padding: 20px 3px;">
+							<a class="smalldotted" rel="nofollow" href="/en/login">Login</a>
+						</div>
+
+						<a href="/en#register" class="strongbtnmini" rel="nofollow">
+							<strong>Join now </strong>
+							It's free						</a>
+						<div class="facebook_login_sidebar">
+							<a onclick="FB.login(function(response){ if(response.session) { window.location = '/en/facebook/login';} }, {scope:'email'});" href="javascript:;" id="RES_ID_fb_login">
+                                     <img id="fb_login_image" src="//www.erepublik.net/images/parts/connect_light_small_short.gif" alt="Connect" />
+                            </a>
+						</div>
+			  	  	</div>
+				</div>
+				<div id="internalad">
+										&nbsp;
+				</div>
+			</div>
+			<div id="content">
+
+<div class="clear"></div>
+<div id="filters">
+    <div class="bigcore">
+                        <img src="//www.erepublik.net/images/flags/XL/Lithuania.gif" />
+    </div>
+</div>
+<div id="profileholder" style="padding-top: 11px;">
+    <h1>Lithuania</h1>
+    <p class="padded">
+        <a href="//wiki.erepublik.com/index.php/Lithuania" target="_blank" class="goleft rightpadded">
+            <img src="//www.erepublik.net/images/parts/btn_icon-wiki.gif" title="Open Wiki page" class="flag" alt="wiki">
+        </a>
+                <a class="country_rank" href="//www.erepublik.com/en/main/rankings-countries/1/1">Rank 39</a>
+                	        <a class="alliance_name" href="//www.erepublik.com/en/main/alliances/34" title="AEGIS "><span>AEGIS </span></a>
+        
+    </p>
+</div>
+<div class="country-select contriesSelectorWrapper" id="contriesSelector">
+    <select id="countrySelectorDropdown" onchange="countrySelectorOnChange(this);">
+        <option value="167" data-permalink="Albania" >Albania</option><option value="27" data-permalink="Argentina" >Argentina</option><option value="169" data-permalink="Armenia" >Armenia</option><option value="50" data-permalink="Australia" >Australia</option><option value="33" data-permalink="Austria" >Austria</option><option value="83" data-permalink="Belarus" >Belarus</option><option value="32" data-permalink="Belgium" >Belgium</option><option value="76" data-permalink="Bolivia" >Bolivia</option><option value="69" data-permalink="Bosnia-Herzegovina" >Bosnia and Herzegovina</option><option value="9" data-permalink="Brazil" >Brazil</option><option value="42" data-permalink="Bulgaria" >Bulgaria</option><option value="23" data-permalink="Canada" >Canada</option><option value="64" data-permalink="Chile" >Chile</option><option value="14" data-permalink="China" >China</option><option value="78" data-permalink="Colombia" >Colombia</option><option value="63" data-permalink="Croatia" >Croatia</option><option value="171" data-permalink="Cuba" >Cuba</option><option value="82" data-permalink="Cyprus" >Cyprus</option><option value="34" data-permalink="Czech-Republic" >Czech Republic</option><option value="55" data-permalink="Denmark" >Denmark</option><option value="165" data-permalink="Egypt" >Egypt</option><option value="70" data-permalink="Estonia" >Estonia</option><option value="39" data-permalink="Finland" >Finland</option><option value="11" data-permalink="France" >France</option><option value="168" data-permalink="Georgia" >Georgia</option><option value="12" data-permalink="Germany" >Germany</option><option value="44" data-permalink="Greece" >Greece</option><option value="13" data-permalink="Hungary" >Hungary</option><option value="48" data-permalink="India" >India</option><option value="49" data-permalink="Indonesia" >Indonesia</option><option value="56" data-permalink="Iran" >Iran</option><option value="54" data-permalink="Ireland" >Ireland</option><option value="58" data-permalink="Israel" >Israel</option><option value="10" data-permalink="Italy" >Italy</option><option value="45" data-permalink="Japan" >Japan</option><option value="71" data-permalink="Latvia" >Latvia</option><option value="72" data-permalink="Lithuania"  selected>Lithuania</option><option value="66" data-permalink="Malaysia" >Malaysia</option><option value="26" data-permalink="Mexico" >Mexico</option><option value="80" data-permalink="Montenegro" >Montenegro</option><option value="31" data-permalink="Netherlands" >Netherlands</option><option value="84" data-permalink="New-Zealand" >New Zealand</option><option value="170" data-permalink="Nigeria" >Nigeria</option><option value="73" data-permalink="North-Korea" >North Korea</option><option value="79" data-permalink="North-Macedonia" >North Macedonia</option><option value="37" data-permalink="Norway" >Norway</option><option value="57" data-permalink="Pakistan" >Pakistan</option><option value="75" data-permalink="Paraguay" >Paraguay</option><option value="77" data-permalink="Peru" >Peru</option><option value="67" data-permalink="Philippines" >Philippines</option><option value="35" data-permalink="Poland" >Poland</option><option value="53" data-permalink="Portugal" >Portugal</option><option value="81" data-permalink="Republic-of-China-Taiwan" >Republic of China (Taiwan)</option><option value="52" data-permalink="Republic-of-Moldova" >Republic of Moldova</option><option value="1" data-permalink="Romania" >Romania</option><option value="41" data-permalink="Russia" >Russia</option><option value="164" data-permalink="Saudi-Arabia" >Saudi Arabia</option><option value="65" data-permalink="Serbia" >Serbia</option><option value="68" data-permalink="Singapore" >Singapore</option><option value="36" data-permalink="Slovakia" >Slovakia</option><option value="61" data-permalink="Slovenia" >Slovenia</option><option value="51" data-permalink="South-Africa" >South Africa</option><option value="47" data-permalink="South-Korea" >South Korea</option><option value="15" data-permalink="Spain" >Spain</option><option value="38" data-permalink="Sweden" >Sweden</option><option value="30" data-permalink="Switzerland" >Switzerland</option><option value="59" data-permalink="Thailand" >Thailand</option><option value="43" data-permalink="Turkey" >Turkey</option><option value="40" data-permalink="Ukraine" >Ukraine</option><option value="166" data-permalink="United-Arab-Emirates" >United Arab Emirates</option><option value="29" data-permalink="United-Kingdom" >United Kingdom</option><option value="74" data-permalink="Uruguay" >Uruguay</option><option value="24" data-permalink="USA" >USA</option><option value="28" data-permalink="Venezuela" >Venezuela</option>    </select>    
+    <div class="clear"></div>
+</div>
+<style type="text/css">body#country #filters>div.bigcore,#filters>div.bigcore{cursor:pointer}</style>
+<script>
+    var countrySelector = {
+        placeholderText: "Choose a country...",
+        urlTab: "country/economy"    };
+</script>
+<script src="//www.erepublik.net/js/country/countrySelector.1698060179.js"></script>
+ 
+<div class="holder">
+    <ul class="country_tabs ">
+     
+        <li>
+            <a title="Society"  href="//www.erepublik.com/en/country/society/Lithuania">
+                <q class="left_c"></q>
+                <q class="right_c"></q>
+                <img src="//www.erepublik.net/images/modules/manager/tab_society.png" alt="Society" />
+                <span><b>Society</b></span>
+            </a> 
+        </li>
+        
+        <li>
+            <a title="Economy"  class="selected" href="//www.erepublik.com/en/country/economy/Lithuania">            
+                <q class="left_c"></q>
+                <q class="right_c"></q>
+                <img src="//www.erepublik.net/images/modules/manager/tab_economy.png" alt="Economy" />
+                <span><b>Economy</b></span>
+            </a>
+        </li>
+        
+        <li>
+            <a title="Politics"  href="//www.erepublik.com/en/country/politics/Lithuania">                
+                <q class="left_c"></q>
+                <q class="right_c"></q>
+                <img src="//www.erepublik.net/images/modules/manager/tab_politics.png" alt="Politics" />
+                <span><b>Politics</b></span>
+            </a>
+        </li>
+        
+        <li>
+            <a title="Military"  href="//www.erepublik.com/en/country/military/Lithuania">
+                <q class="left_c"></q>
+                <q class="right_c"></q>
+                <img src="//www.erepublik.net/images/modules/manager/tab_military.png" alt="Military" />
+                <span><b>Military</b></span>
+            </a>
+        </li>
+        
+        <li>
+            <a title="Administration"  href="//www.erepublik.com/en/country-administration/Lithuania/1">
+                <q class="left_c"></q>
+                <q class="right_c"></q>
+                <img src="//www.erepublik.net/images/modules/manager/tab_administration.png" alt="Administration" />
+                <span><b>Administration</b></span>
+            </a>
+        </li>
+        
+            </ul>
+</div>
+
+<div id="economy">
+
+<h2 class="section">Treasury</h2>
+<table class="info_message">
+	<tr>
+		<td>Help your country by donating Gold, Currency and Food! The President and Congress can use Gold to declare wars and issue money. The currency can be donated to Organizations or used to sign Mutual Protection Pacts with other countries. Launching Airstrikes requires both Currency and Energy from Food.					</td>
+	</tr>
+</table>
+<div class="indent tall">
+	<div class="infoholder bigger">
+		<table class="donation_status_table" cellpading="0" cellspacing="0">
+    		<tr>
+    			<td align="right">
+    									<span class="special">364</span>
+					<sup>.50</sup>
+    			</td>
+    			<td class="c2">
+    				<img src="//www.erepublik.net/images/parts/icon-gold.gif" alt="Gold" title="Gold" class="icon"/>
+					<span class="currency">GOLD</span>
+    			</td>
+    		</tr>
+    		<tr>
+    			<td align="right">
+    							        <span class="special">342,261,313</span>
+			        <sup>.45</sup>
+			    </td>
+    			<td class="c2">
+				    <img src="//www.erepublik.net/images/flags/M/Lithuania.gif" title="LTL" alt="LTL"/>
+				    <span class="currency">LTL</span>
+    			</td>
+    		</tr>
+    		<tr>
+    			<td align="right">
+    				    				<span class="special">191,400</span>
+    			</td>
+    			<td class="c2">
+    				<img src="//www.erepublik.net/images/modules/sidebar/energy_bar_icon2.png" alt="Energy" title="Energy" />
+					<span class="currency">ENERGY</span>
+    			</td>
+    		</tr>
+    	</table>
+    	    </div>
+    </div>
+<h2 class="section">Tax Revenue (60 days)</h2>
+<table class="info_message">
+	<tr>
+		<td>The tax revenue is based on the number of regions a country owns. Conquered regions will generate additional income at the expense of the country that originally held that region.<a href="//www.erepublik.com/en/main/latest-updates/0/75" title="More info"> More info</a></td>
+	</tr>
+</table>
+<div class="country_charts" id="country_charts">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+
+        google.charts.load('current', {'packages':['corechart', 'bar', 'table', 'line']});
+        var countryChartDays = 60;
+        
+        if(typeof(erepublik.i18n) === 'undefined'){
+            erepublik.i18n = {};
+        }
+        $j.extend(erepublik.i18n, obj = {
+            visualizationTexts: {
+                showGraph: "Show as graph",
+                showTable: "Show as table",
+                chartAxisX: "Day",
+                chartAxisY: "Currency",
+                chartTitle: "Daily tax revenue generated by owned regions"            }
+        });
+        var chartDataJSON = [["Day","Work as Manager","Work","Medals","Value Added Tax","Import Tax","Combat Orders","Cities Subsidy","Resource Concession Fee","Australia","Iran","USA","Colombia","Belarus","Mexico"],["Day 6,706",723779.42,11050.43,23732,31245.68,3371.04,0,-79317.85,-320074.88,163670.85,75723.38,70304.85,13336.36,4961.29,6739.25],["Day 6,707",814324.14,12336.07,41007.4,23341.87,18752.5,0,-90976.2,-262919.76,176123.24,80388.01,63117.92,14754.81,6457.49,5285.97],["Day 6,708",930914.79,10822.42,9687.28,22848.57,9177.6,0,-98345.06,-311274.87,89514.99,65509.38,24423.09,14221.86,4973.77,4361.94],["Day 6,709",880329.72,11791.58,7486.8,30406.29,9045.09,0,-93905.95,-335345.91,84538.76,113243.27,14667.12,12845.2,5057.57,3919.05],["Day 6,710",853400.03,11157.52,7527.6,15358.16,1.72,0,-88744.5,-315843.6,73025.9,119839.24,13150.11,14185.1,3382.04,4733.62],["Day 6,711",807422.99,12752.48,7826.8,6808.85,1128.91,0,-83594,-318044.19,77696.48,72896.17,17673.92,13921.92,5207.3,4828.43],["Day 6,712",861402.83,15534.02,5875.2,3842.74,711.78,0,-88736.65,-300757.11,77230.96,71691.01,30521.11,13408.28,5686.53,4513.21],["Day 6,713",741597.84,32750.86,144370.79,73234.73,8493.73,0,-100044.79,-325365.43,99070.15,68074.26,53022.47,24685.76,6269.61,9551.18],["Day 6,714",762026.67,32260.8,13479.28,37617.37,13668.13,0,-85905.22,-390389.79,258797.11,73907.65,46848.17,18007.31,8939.05,5230.51],["Day 6,715",736833.67,34702.33,9452.88,33731.19,2870.54,0.02,-81759.06,-404578.28,299072.27,74375.34,41374.91,16994.8,7487.36,10153.67],["Day 6,716",919270.87,42140.94,11685.49,35572.45,5112.55,0,-101378.23,-341698.24,219705.4,73567.75,42994.86,15188.36,7347.17,9399.17],["Day 6,717",746809.5,42798.03,11451.2,34865.94,504.9,852.89,-83728.24,-345335.15,156833.76,74146.14,24452.5,18683.85,6193.06,6788.69],["Day 6,718",781316.27,36339.55,14634.28,19594.58,529.44,0,-85241.41,-312357.43,335586,77964.1,20778.46,18196.25,7262.11,7150.02],["Day 6,719",823111.52,35804.12,11383.2,14802.34,6808.81,0,-89191,-312950.6,181373.62,79237.46,17939.09,16626.78,11885.74,6616.09],["Day 6,720",768195.82,35400.18,86917.6,20010.8,2842.32,0,-91336.67,-331212.12,210389.34,79001.96,16140.19,14805.4,11052.57,5639.24],["Day 6,721",872981.29,46952.61,10342.79,9965.23,88.63,0,-94033.05,-341239.16,0,86927.08,28075.58,28656.04,9472.76,5538.52],["Day 6,722",892507.32,56609.51,12389.6,24434.24,2535.29,0,-98847.59,-406438.33,0,84222.93,35697.21,26630.48,9296.98,5715.51],["Day 6,723",866329.45,47705.31,49225.2,24269.91,3166.24,7109.79,-99780.59,-371466.83,0,81694.84,36120.11,36082.74,9341.2,6094.05],["Day 6,724",864683.83,38898.47,10655.6,50826.95,297.34,0,-96536.22,-347339.82,0,81284.15,34012.56,24712.33,11502.94,6175.95],["Day 6,725",917381.47,36372.36,32880.04,83631.26,2370.35,0,-107263.55,-347534.11,3393.79,85833.33,38238.35,28441.42,11369.08,4884.6],["Day 6,726",884334.97,33391.12,14076,28824.54,3116.79,0,-96374.34,-352382.82,116648.18,77060.47,36593.86,49200.06,13708.75,6829.39],["Day 6,727",900454.42,21164.7,91623.2,15371.55,4838.35,0,-103345.22,-365122.71,118845.93,78724.57,39481.93,36507.58,10538.7,5412.69],["Day 6,728",855364.15,17663.81,12546,18708.31,969.36,0,-90525.16,-393067.37,199605.26,81541.15,41192.67,53534.9,8075.11,4881.28],["Day 6,729",939565.76,15999.55,10336,2348.07,1514.59,0,-96976.39,-382240.39,146865.37,87724.84,35138.33,37431.56,9049.46,6258.4],["Day 6,730",873649.8,18902.33,9717.2,2399.12,0.34,0,-90466.88,-411981.23,178185.6,86520.21,33506.15,32110.13,8762.13,5904.59],["Day 6,731",879452.27,23788.79,9010,8607.6,54.06,0,-92091.27,-367401.04,120611.47,89421.11,33276.87,46847.91,9373.97,4350.35],["Day 6,732",899740.09,30942.76,11118.68,12913.73,23662.27,0,-97837.75,-362667.53,197968.88,82022.77,40381.22,42133.94,11796.46,4634.47],["Day 6,733",939608.66,23109.51,8683.6,4361.54,141.76,0,-97590.5,-396053.19,147889.79,85796.56,33833.42,49472.42,8941.1,4470.23],["Day 6,734",845830.31,19129.01,68136,32863.98,1093.54,0,-96705.28,-398528.72,212275.96,73291.79,42856.22,45043.1,9827.29,5776.57],["Day 6,735",843125.91,22262.92,12253.6,4235.89,37.35,0,-88191.56,-394546.82,145239.78,86337.08,33433.58,41030.56,8662.7,5181.17],["Day 6,736",918227.56,21153.82,8636,7084.03,0,0,-95510.14,-378513.36,92958.11,87847.93,38260.14,45181.41,9135.22,5604.71],["Day 6,737",869936.44,21745.32,9159.6,3150.46,517.38,0,-90450.92,-376489.72,97103.37,90639.08,36285.18,42797.91,9432.54,4584.99],["Day 6,738",852790.81,19071.38,10941.2,1437.06,1336.47,0,-88557.69,-360739.46,89242.29,87087.79,31446.97,44899.18,9337.88,5360.29],["Day 6,739",886506.14,24333.73,9934.79,7750.84,256.93,0,-92878.24,-329506.57,74796.01,91822.45,35165.96,41625.49,6414.55,5998.75],["Day 6,740",912435,19269.37,11213.2,2034.14,1197.92,0,-94614.96,-351263.17,86182.01,94037.75,40366.63,38355.55,7401.7,4314.77],["Day 6,741",914267.36,18746.31,41126.4,48136.68,3185.39,0,-102546.21,-371172.93,82427.63,79524.16,36409.46,40874.87,8100.25,4910.55],["Day 6,742",950670.88,17922.74,7092.4,4972.05,487.98,0,-98114.6,-367395.8,167369.48,81653.91,35856.58,39466.28,8101.01,5641.03],["Day 6,743",882315.4,18079.37,6922.4,9246.52,14212.53,0,-93077.62,-381748.36,129894.31,81421.47,38084.87,32059.01,6377.12,4930.77],["Day 6,744",899903.75,21187.52,6548.4,13836.19,729.93,0,-94220.58,-353776.86,206592.83,89187.82,31591.38,38266.17,5884.34,4438],["Day 6,745",829873.4,16837.18,7976.4,7925.33,997.43,0,-86360.97,-362950.87,129259.11,87102.22,31371.35,28776.35,6153.81,5995.22],["Day 6,746",897559.44,19366.48,7983.2,3295.47,1496.02,0,-92970.06,-321453.63,252156.08,98357,39472.46,42104.69,8610.3,5127.07],["Day 6,747",858549.47,18088.21,7942.4,29707.67,25.18,0,-91431.29,-355583.29,123482.56,96478.71,32881.05,23526.96,5671.32,5715.38],["Day 6,748",802248.02,17380.07,17564.4,21458.13,571.62,1868.19,-86109.04,-342898.54,152620.88,85900.49,32316.31,43959.87,6283.35,6940.57],["Day 6,749",856982.4,17766.51,9159.6,27333,2165.66,0,-91340.71,-338472.36,82252.19,90333.29,29529.25,42227.89,5511.19,5805.06],["Day 6,750",820266.51,16732.49,8697.87,9635.55,0.03,72.75,-85540.52,-353755.11,72754.39,101196.61,43370.62,25618.37,6766.44,5151.16],["Day 6,751",854057.86,17020.18,7847.2,13653.32,637.75,299.88,-89351.62,-336344.48,79282.22,93977.63,57420.37,17764.27,7177.25,5016.06],["Day 6,752",867974.56,15589.82,6140.4,2178.25,3483.62,5693.94,-90106.06,-340913.18,72198.44,96822.17,84010.34,31941.59,6472.58,5146.02],["Day 6,753",905668.2,20807.15,7031.2,6855.53,487.77,0,-94084.98,-347632.12,73149.6,103255.27,111396.95,58484.68,6669.55,4682.33],["Day 6,754",877670.65,20257.71,7942.4,30638.65,2009.27,0,-93851.87,-364043.99,73977.84,98326.27,91683.54,18638.51,6371.22,5667.54],["Day 6,755",820664.91,21872.9,19883.2,16876.64,10040.88,0,-88933.85,-354998.99,68847.65,100246.59,107670.01,48348.69,7506.46,6080.55],["Day 6,756",847636.3,22549.9,13409.6,1675.04,2547.35,0,-88781.82,-335605.53,151374.76,108422.73,114041.65,48315.75,6815.78,5760.22],["Day 6,757",805113.5,21999.28,6168.28,333.81,83.98,0,-83369.88,-343771.21,154145.61,107252.48,79720.81,46276.63,6768.57,5114.61],["Day 6,758",795197.82,21419.74,6990.4,593.57,1077.75,0,-82527.93,-326530.66,167041.84,112557.61,58293.89,80650.78,5334.01,6214.37],["Day 6,759",838991.49,20864.38,7289.6,1531.15,0.35,137.96,-86881.49,-337258.47,149957.87,92867.71,60453.03,24848.58,0,4051.23],["Day 6,760",830265.06,18564.95,7242,7176.76,2111.78,0,-86536.05,-357476.05,165378.09,82733.55,66553.01,12215.64,0,5733.56],["Day 6,761",903824.42,24782.34,7058.4,10414.49,15105.96,0,-96118.56,-353818.47,145407.04,84144.4,66630.88,14658.3,0,4750.55],["Day 6,762",774695.47,22122.07,31878.4,7605.04,1252.79,0,-83755.37,-348578.11,159518.02,85439.75,62604.53,20623.23,0,5190.26],["Day 6,763",886562.1,22991.22,8602.68,4897.01,2016.15,0,-92506.91,-316563.19,63362.29,84336.19,60142.23,21887.62,0,5988.85],["Day 6,764",868050.39,31852.05,6888.4,2599.39,3394.28,0,-91278.45,-357312.01,59693.69,89492.85,66677.27,14795.87,0,5407.05],["Day 6,765",825701.45,21810.27,6133.6,1982.48,3478.76,0,-85910.65,-357455.36,56297.45,96440.87,67034.46,14862.64,0,5298.04],["Day 6,766",512732.91,14652.38,1557.2,435.2,0.96,0,-52937.86,-334581.84,46401.9,66947.22,81005.11,10004.98,0,1868.13]];
+        var tableDataJSON = [["Revenue source","Day 6,706","Day 6,707","Day 6,708","Day 6,709","Day 6,710","Day 6,711","Day 6,712","Day 6,713","Day 6,714","Day 6,715","Day 6,716","Day 6,717","Day 6,718","Day 6,719","Day 6,720","Day 6,721","Day 6,722","Day 6,723","Day 6,724","Day 6,725","Day 6,726","Day 6,727","Day 6,728","Day 6,729","Day 6,730","Day 6,731","Day 6,732","Day 6,733","Day 6,734","Day 6,735","Day 6,736","Day 6,737","Day 6,738","Day 6,739","Day 6,740","Day 6,741","Day 6,742","Day 6,743","Day 6,744","Day 6,745","Day 6,746","Day 6,747","Day 6,748","Day 6,749","Day 6,750","Day 6,751","Day 6,752","Day 6,753","Day 6,754","Day 6,755","Day 6,756","Day 6,757","Day 6,758","Day 6,759","Day 6,760","Day 6,761","Day 6,762","Day 6,763","Day 6,764","Day 6,765","Day 6,766","Totals","Revenue source"],["Work as Manager",723779.42,814324.14,930914.79,880329.72,853400.03,807422.99,861402.83,741597.84,762026.67,736833.67,919270.87,746809.5,781316.27,823111.52,768195.82,872981.29,892507.32,866329.45,864683.83,917381.47,884334.97,900454.42,855364.15,939565.76,873649.8,879452.27,899740.09,939608.66,845830.31,843125.91,918227.56,869936.44,852790.81,886506.14,912435,914267.36,950670.88,882315.4,899903.75,829873.4,897559.44,858549.47,802248.02,856982.4,820266.51,854057.86,867974.56,905668.2,877670.65,820664.91,847636.3,805113.5,795197.82,838991.49,830265.06,903824.42,774695.47,886562.1,868050.39,825701.45,512732.91,51793085.449999996,"Work as Manager"],["Work",11050.43,12336.07,10822.42,11791.58,11157.52,12752.48,15534.02,32750.86,32260.8,34702.33,42140.94,42798.03,36339.55,35804.12,35400.18,46952.61,56609.51,47705.31,38898.47,36372.36,33391.12,21164.7,17663.81,15999.55,18902.33,23788.79,30942.76,23109.51,19129.01,22262.92,21153.82,21745.32,19071.38,24333.73,19269.37,18746.31,17922.74,18079.37,21187.52,16837.18,19366.48,18088.21,17380.07,17766.51,16732.49,17020.18,15589.82,20807.15,20257.71,21872.9,22549.9,21999.28,21419.74,20864.38,18564.95,24782.34,22122.07,22991.22,31852.05,21810.27,14652.38,1457370.9299999997,"Work"],["Medals",23732,41007.4,9687.28,7486.8,7527.6,7826.8,5875.2,144370.79,13479.28,9452.88,11685.49,11451.2,14634.28,11383.2,86917.6,10342.79,12389.6,49225.2,10655.6,32880.04,14076,91623.2,12546,10336,9717.2,9010,11118.68,8683.6,68136,12253.6,8636,9159.6,10941.2,9934.79,11213.2,41126.4,7092.4,6922.4,6548.4,7976.4,7983.2,7942.4,17564.4,9159.6,8697.87,7847.2,6140.4,7031.2,7942.4,19883.2,13409.6,6168.28,6990.4,7289.6,7242,7058.4,31878.4,8602.68,6888.4,6133.6,1557.2,1092472.5299999998,"Medals"],["Value Added Tax",31245.68,23341.87,22848.57,30406.29,15358.16,6808.85,3842.74,73234.73,37617.37,33731.19,35572.45,34865.94,19594.58,14802.34,20010.8,9965.23,24434.24,24269.91,50826.95,83631.26,28824.54,15371.55,18708.31,2348.07,2399.12,8607.6,12913.73,4361.54,32863.98,4235.89,7084.03,3150.46,1437.06,7750.84,2034.14,48136.68,4972.05,9246.52,13836.19,7925.33,3295.47,29707.67,21458.13,27333,9635.55,13653.32,2178.25,6855.53,30638.65,16876.64,1675.04,333.81,593.57,1531.15,7176.76,10414.49,7605.04,4897.01,2599.39,1982.48,435.2,1033492.9300000003,"Value Added Tax"],["Import Tax",3371.04,18752.5,9177.6,9045.09,1.72,1128.91,711.78,8493.73,13668.13,2870.54,5112.55,504.9,529.44,6808.81,2842.32,88.63,2535.29,3166.24,297.34,2370.35,3116.79,4838.35,969.36,1514.59,0.34,54.06,23662.27,141.76,1093.54,37.35,0,517.38,1336.47,256.93,1197.92,3185.39,487.98,14212.53,729.93,997.43,1496.02,25.18,571.62,2165.66,0.03,637.75,3483.62,487.77,2009.27,10040.88,2547.35,83.98,1077.75,0.35,2111.78,15105.96,1252.79,2016.15,3394.28,3478.76,0.96,201815.18999999997,"Import Tax"],["Combat Orders",0,0,0,0,0,0,0,0,0,0.02,0,852.89,0,0,0,0,0,7109.79,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1868.19,0,72.75,299.88,5693.94,0,0,0,0,0,0,137.96,0,0,0,0,0,0,0,16035.419999999998,"Combat Orders"],["Cities Subsidy",-79317.85,-90976.2,-98345.06,-93905.95,-88744.5,-83594,-88736.65,-100044.79,-85905.22,-81759.06,-101378.23,-83728.24,-85241.41,-89191,-91336.67,-94033.05,-98847.59,-99780.59,-96536.22,-107263.55,-96374.34,-103345.22,-90525.16,-96976.39,-90466.88,-92091.27,-97837.75,-97590.5,-96705.28,-88191.56,-95510.14,-90450.92,-88557.69,-92878.24,-94614.96,-102546.21,-98114.6,-93077.62,-94220.58,-86360.97,-92970.06,-91431.29,-86109.04,-91340.71,-85540.52,-89351.62,-90106.06,-94084.98,-93851.87,-88933.85,-88781.82,-83369.88,-82527.93,-86881.49,-86536.05,-96118.56,-83755.37,-92506.91,-91278.45,-85910.65,-52937.86,-5559427.080000001,"Cities Subsidy"],["Resource Concession Fee",-320074.88,-262919.76,-311274.87,-335345.91,-315843.6,-318044.19,-300757.11,-325365.43,-390389.79,-404578.28,-341698.24,-345335.15,-312357.43,-312950.6,-331212.12,-341239.16,-406438.33,-371466.83,-347339.82,-347534.11,-352382.82,-365122.71,-393067.37,-382240.39,-411981.23,-367401.04,-362667.53,-396053.19,-398528.72,-394546.82,-378513.36,-376489.72,-360739.46,-329506.57,-351263.17,-371172.93,-367395.8,-381748.36,-353776.86,-362950.87,-321453.63,-355583.29,-342898.54,-338472.36,-353755.11,-336344.48,-340913.18,-347632.12,-364043.99,-354998.99,-335605.53,-343771.21,-326530.66,-337258.47,-357476.05,-353818.47,-348578.11,-316563.19,-357312.01,-357455.36,-334581.84,-21424761.119999997,"Resource Concession Fee"],["Australia",163670.85,176123.24,89514.99,84538.76,73025.9,77696.48,77230.96,99070.15,258797.11,299072.27,219705.4,156833.76,335586,181373.62,210389.34,0,0,0,0,3393.79,116648.18,118845.93,199605.26,146865.37,178185.6,120611.47,197968.88,147889.79,212275.96,145239.78,92958.11,97103.37,89242.29,74796.01,86182.01,82427.63,167369.48,129894.31,206592.83,129259.11,252156.08,123482.56,152620.88,82252.19,72754.39,79282.22,72198.44,73149.6,73977.84,68847.65,151374.76,154145.61,167041.84,149957.87,165378.09,145407.04,159518.02,63362.29,59693.69,56297.45,46401.9,7615284.4,"Australia"],["Iran",75723.38,80388.01,65509.38,113243.27,119839.24,72896.17,71691.01,68074.26,73907.65,74375.34,73567.75,74146.14,77964.1,79237.46,79001.96,86927.08,84222.93,81694.84,81284.15,85833.33,77060.47,78724.57,81541.15,87724.84,86520.21,89421.11,82022.77,85796.56,73291.79,86337.08,87847.93,90639.08,87087.79,91822.45,94037.75,79524.16,81653.91,81421.47,89187.82,87102.22,98357,96478.71,85900.49,90333.29,101196.61,93977.63,96822.17,103255.27,98326.27,100246.59,108422.73,107252.48,112557.61,92867.71,82733.55,84144.4,85439.75,84336.19,89492.85,96440.87,66947.22,5293821.9700000025,"Iran"],["USA",70304.85,63117.92,24423.09,14667.12,13150.11,17673.92,30521.11,53022.47,46848.17,41374.91,42994.86,24452.5,20778.46,17939.09,16140.19,28075.58,35697.21,36120.11,34012.56,38238.35,36593.86,39481.93,41192.67,35138.33,33506.15,33276.87,40381.22,33833.42,42856.22,33433.58,38260.14,36285.18,31446.97,35165.96,40366.63,36409.46,35856.58,38084.87,31591.38,31371.35,39472.46,32881.05,32316.31,29529.25,43370.62,57420.37,84010.34,111396.95,91683.54,107670.01,114041.65,79720.81,58293.89,60453.03,66553.01,66630.88,62604.53,60142.23,66677.27,67034.46,81005.11,2806993.1199999996,"USA"],["Colombia",13336.36,14754.81,14221.86,12845.2,14185.1,13921.92,13408.28,24685.76,18007.31,16994.8,15188.36,18683.85,18196.25,16626.78,14805.4,28656.04,26630.48,36082.74,24712.33,28441.42,49200.06,36507.58,53534.9,37431.56,32110.13,46847.91,42133.94,49472.42,45043.1,41030.56,45181.41,42797.91,44899.18,41625.49,38355.55,40874.87,39466.28,32059.01,38266.17,28776.35,42104.69,23526.96,43959.87,42227.89,25618.37,17764.27,31941.59,58484.68,18638.51,48348.69,48315.75,46276.63,80650.78,24848.58,12215.64,14658.3,20623.23,21887.62,14795.87,14862.64,10004.98,1871754.9700000004,"Colombia"],["Belarus",4961.29,6457.49,4973.77,5057.57,3382.04,5207.3,5686.53,6269.61,8939.05,7487.36,7347.17,6193.06,7262.11,11885.74,11052.57,9472.76,9296.98,9341.2,11502.94,11369.08,13708.75,10538.7,8075.11,9049.46,8762.13,9373.97,11796.46,8941.1,9827.29,8662.7,9135.22,9432.54,9337.88,6414.55,7401.7,8100.25,8101.01,6377.12,5884.34,6153.81,8610.3,5671.32,6283.35,5511.19,6766.44,7177.25,6472.58,6669.55,6371.22,7506.46,6815.78,6768.57,5334.01,0,0,0,0,0,0,0,0,414177.73000000004,"Belarus"],["Mexico",6739.25,5285.97,4361.94,3919.05,4733.62,4828.43,4513.21,9551.18,5230.51,10153.67,9399.17,6788.69,7150.02,6616.09,5639.24,5538.52,5715.51,6094.05,6175.95,4884.6,6829.39,5412.69,4881.28,6258.4,5904.59,4350.35,4634.47,4470.23,5776.57,5181.17,5604.71,4584.99,5360.29,5998.75,4314.77,4910.55,5641.03,4930.77,4438,5995.22,5127.07,5715.38,6940.57,5805.06,5151.16,5016.06,5146.02,4682.33,5667.54,6080.55,5760.22,5114.61,6214.37,4051.23,5733.56,4750.55,5190.26,5988.85,5407.05,5298.04,1868.13,339505.4999999999,"Mexico"],["Totals",728521.8200000002,901993.4600000001,776835.76,744078.59,711172.9400000001,626526.0600000002,700923.9099999999,835711.16,794487.0400000003,780711.6400000001,938908.5400000002,695317.07,921752.22,803447.1699999999,827846.6299999998,663728.3200000001,644753.1499999999,695891.4199999999,679174.0799999997,789998.3899999999,815026.97,854495.69,810489.4700000002,813015.1499999999,747209.4899999999,765302.0900000001,896809.99,812664.9,860889.77,719062.1599999999,760065.4299999999,718411.6299999999,703654.17,762220.8300000001,770929.91,803989.9200000003,853723.9400000002,748717.79,870168.89,702955.9600000001,961104.5199999997,755054.33,760104.32,739252.9700000001,670967.16,728457.89,766632.49,856771.13,775287.7400000001,784105.6400000001,898161.7300000001,805836.4700000001,846313.19,776853.3899999999,753962.3000000002,826839.7500000002,738596.0800000001,751716.24,700260.7800000001,655674.0099999999,348166.7799999998,"",""]];
+        var gdpChartData = [["Day","Food","Weapons","House","Aircraft Weapons"],["6,706",1670249,2921331,124920,6588535],["6,707",1658054,3458610,120479,287716],["6,708",2211616,3726066,125307,3126086],["6,709",2071160,3509373,131447,5445244],["6,710",1891920,3533824,152554,1395121],["6,711",1616328,3341746,105821,3538131],["6,712",1681900,3615172,155037,2591420],["6,713",1374986,4337664,450212,25032815],["6,714",1659971,4495314,344900,7100565],["6,715",1392644,3796647,370625,798901],["6,716",1499653,3837057,299758,8658619],["6,717",1448029,3470638,196324,16151366],["6,718",1506400,3477229,163442,8359567],["6,719",1514159,3680135,294577,14938417],["6,720",1396007,3791546,338153,16542195],["6,721",1731038,4515982,390496,1986339],["6,722",1819128,4127409,345021,6887904],["6,723",1716275,3859331,334133,2034386],["6,724",1661986,3861490,224141,7395058],["6,725",1797687,3915365,347234,1407882],["6,726",1708177,4056919,331631,5077132],["6,727",1532637,4367415,181232,15965376],["6,728",1470981,4247116,95353,13369365],["6,729",1616529,4577569,134427,14436003],["6,730",1662836,4082234,160873,12715082],["6,731",1711227,4029639,234089,14805529],["6,732",1807669,4400591,113298,12258148],["6,733",1719357,4428097,80425,15251054],["6,734",1418424,4383854,151327,14347988],["6,735",1401130,4205704,43357,1651814],["6,736",1655691,4183219,77387,4619063],["6,737",1601407,4008216,40156,1156412],["6,738",1644011,3661184,94484,4577120],["6,739",1566850,3902924,68581,882568],["6,740",1592567,4124144,123621,4827160],["6,741",1750441,4082176,80939,13345220],["6,742",1701912,4241649,121954,18491966],["6,743",1598059,3930854,85913,15619809],["6,744",1545374,4032787,150249,18070654],["6,745",1549157,3571707,99926,13769896],["6,746",1524753,3950926,119246,16171476],["6,747",1577493,3809984,177087,14855389],["6,748",1413196,3760804,189529,28124212],["6,749",1527355,3930612,184572,2143259],["6,750",1483647,3737161,139471,15211526],["6,751",1601659,3787924,129918,10743873],["6,752",1551924,3862579,98354,2599329],["6,753",1589279,4044933,113086,22090380],["6,754",1575806,3944433,90520,2575467],["6,755",1476015,3728950,126171,35820855],["6,756",1552850,3819680,107699,14850245],["6,757",1332956,3628119,88386,26967025],["6,758",1251698,3747316,72788,17778130],["6,759",1346453,3971956,85697,360490],["6,760",1263998,3931316,114014,360156],["6,761",1549146,3873090,82689,211208],["6,762",1336946,3517369,96219,230216],["6,763",1605769,3970133,99573,209723],["6,764",1501609,3971726,90108,144027],["6,765",1471261,3717576,97525,177200]];
+        
+        var chartVisualization = {
+            updateButton: function(){
+                var overall = $j('#to_overall'),
+                    span = overall.find('span');
+                if(overall.parent().hasClass('show_overall')) {
+                    span.text(erepublik.i18n.visualizationTexts.showGraph);
+                } else {
+                    span.text(erepublik.i18n.visualizationTexts.showTable);
+                }
+            },
+            init: function(){
+                chartVisualization.drawChart();
+                chartVisualization.drawTable();
+            },
+            drawChart: function(){
+                var chartNumberFormatter = new google.visualization.NumberFormat({
+                        groupingSymbol: ',',
+                        fractionDigits: (countryChartDays > 7 ? 0 : 2)
+                    }),
+                    chartData = google.visualization.arrayToDataTable(chartDataJSON),
+                    chartDataNumCols = chartData.getNumberOfColumns(),
+                    chart, i,
+                    chartOptions = {
+                        title: erepublik.i18n.visualizationTexts.chartTitle,
+                        isStacked: true,
+                        series: {},
+                        enableInteractivity: false,
+                        focusTarget: 'category'
+                    };
+
+                
+                for (i = 1; i < chartDataNumCols; i++) {
+                    chartNumberFormatter.format(chartData, i);
+                }
+
+                var userMaterialChartColors = false;
+                chartOptions = $j.extend(chartOptions, {
+                    vAxis: {textPosition: 'none', title: ' ', titleTextStyle: {color: 'white'}, format: 'short'}, // Currency
+                    hAxis: {textPosition: 'none', title: ' ', titleTextStyle: {color: 'white'}}, // Days,
+                    seriesType: 'horizontal',
+                    bars: 'vertical'
+                });
+                if(userMaterialChartColors){
+                    chartOptions = $j.extend(chartOptions, {series:  {"0":{"color":"#81C784"},"1":{"color":"#A5D6A7"},"2":{"color":"#FF5722"},"3":{"color":"#FF9800"},"4":{"color":"#FFEBEE"}}});
+                }
+                chart = new google.charts.Bar(document.getElementById('chart_div'));
+                chartOptions = google.charts.Bar.convertOptions(chartOptions);
+
+                chart.draw(chartData, chartOptions);
+            },
+            drawTable: function(){
+                var tableNumberFormatter = new google.visualization.NumberFormat({
+                        groupingSymbol: '',
+                        fractionDigits: 0
+                    }),
+                    tableData = google.visualization.arrayToDataTable(tableDataJSON),
+                    tableDataNumCols = tableData.getNumberOfColumns(),
+                    table, j,
+                    tableOptions = {
+                        sort: 'disable',
+                        showRowNumber: false
+                    };
+                for (j = 0; j < tableDataNumCols; j++) {
+                    tableNumberFormatter.format(tableData, j);
+                }
+                table = new google.visualization.Table(document.getElementById('table_div'));
+                table.draw(tableData, tableOptions);
+            }
+        };
+        var chartVisualizationGDP = {
+            updateButton: function(){
+                var overall = $j('#to_overall_gdp'),
+                    span = overall.find('span');
+                if(overall.parent().hasClass('show_overall')) {
+                    span.text(erepublik.i18n.visualizationTexts.showGraph);
+                } else {
+                    span.text(erepublik.i18n.visualizationTexts.showTable);
+                }
+            },
+            init: function(){
+                chartVisualizationGDP.drawChart();
+                chartVisualizationGDP.drawTable();
+            },
+            drawChart: function(){
+                var data = google.visualization.arrayToDataTable(gdpChartData),
+                    chartOptions = {
+                        titlePosition: 'none',
+                        curveType: 'function',
+                        vAxis: {viewWindow: {min: 0}, format: 'short'},
+                        chartArea: {width: '90%'},
+                        legend: {position: 'bottom'},
+                        lineWidth: (countryChartDays > 7 ? 1 : 3),
+                        pointSize: (countryChartDays > 7 ? 0 : 10),
+                        titleTextStyle: {
+                            color: '#757575',
+                            // fontName: 'Roboto',//Caused issues with LineChart in Apr '23
+                            fontSize: 16,
+                            bold: false
+                        },
+                        focusTarget: 'category'
+                    },
+                    container = document.getElementById('gdp_curve_chart'),
+                    chart;
+
+                //LineChart looks nicer but threw some internal errors in Apr '23
+                // chart = new google.visualization.LineChart(container);
+                chart = new google.charts.Line(container);
+
+                chart.draw(data, chartOptions);
+            },
+            drawTable: function(){
+                var data = google.visualization.arrayToDataTable(gdpChartData),
+                    tableOptions = {
+                        sort: 'disable',
+                        showRowNumber: false,
+                        width: '100%',
+                        height: '100%'
+                    },
+                    table = new google.visualization.Table(document.getElementById('gdp_table'));
+
+                table.draw(data, tableOptions);
+            }
+        };
+        
+        $j(document).ready(function () {
+            chartVisualization.updateButton();
+            $j('#to_overall').click(function () {
+                $j(this).parent().toggleClass('show_overall');
+                chartVisualization.updateButton();
+            });
+            
+            chartVisualizationGDP.updateButton();
+            $j('#to_overall_gdp').click(function () {
+                $j(this).parent().toggleClass('show_overall');
+                chartVisualizationGDP.updateButton();
+            });
+        });
+        
+        google.charts.setOnLoadCallback(function (){
+            chartVisualization.init();
+            chartVisualizationGDP.init();
+        });
+    </script>
+	<a id="to_overall" href="javascript:" title="" class="std_global_btn mediumSize floatRight"><span>Show as table</span></a>
+	<div class="clear"></div>
+    <div id="chart_div" class="chart_div" style="width: 760px; height: 500px;"></div>
+    <div id="table_div" class="table_div" style="width: 760px;"></div>
+</div>
+
+<div class="country_charts" id="gdp_chart">
+    <h2 class="section">Gross Domestic Product (60 days)</h2>
+    <a id="to_overall_gdp" href="javascript:" title="" class="std_global_btn mediumSize floatRight"><span>Show as table</span></a>
+    <div id="gdp_curve_chart"></div>
+    <div id="gdp_table" class="table_div" ></div>
+</div>
+
+
+
+<h2 class="section" id="productivityInformation">Productivity Information</h2>
+<script id="countryProductivityBonuses">var countryProductivityBonuses = {"byToken":{"FOOD":100,"WEAPON":100,"HOUSE":0,"AIRCRAFT":60},"byId":{"1":100,"2":100,"4":0,"23":60}}</script>
+<div class="indent productivity">
+        <article class="area bonus">
+            <h6 class="heading">Country Bonuses</h6>
+            <div class="row">
+                                    <div class="item">
+                        <p class="name">Food</p>
+                        <img src="//www.erepublik.net/images/buildings/1.png" title="Food" alt="Industry icon" class="Food image" />
+                        <p data-industryId="1" data-bonus="100" class="amount full-bonus">+100%</p>
+                    </div>
+                                    <div class="item">
+                        <p class="name">Weapon</p>
+                        <img src="//www.erepublik.net/images/buildings/2.png" title="Weapons" alt="Industry icon" class="Weapons image" />
+                        <p data-industryId="2" data-bonus="100" class="amount full-bonus">+100%</p>
+                    </div>
+                                    <div class="item">
+                        <p class="name">House</p>
+                        <img src="//www.erepublik.net/images/buildings/4.png" title="House" alt="Industry icon" class="House image" />
+                        <p data-industryId="4" data-bonus="0" class="amount noBonus">No bonus</p>
+                    </div>
+                                    <div class="item">
+                        <p class="name">Aircraft</p>
+                        <img src="//www.erepublik.net/images/buildings/23.png" title="Aircraft Weapons" alt="Industry icon" class=" image" />
+                        <p data-industryId="23" data-bonus="60" class="amount partial-bonus">+60%</p>
+                    </div>
+                                <div class="clear"></div>
+            </div>
+        </article>
+        <div class="clear"></div>
+</div>
+<h2 class="section" id="countryResources">Country resources</h2>
+<div class="indent">
+	<table width="100%" class="resource_list">
+		<thead>
+			<tr>
+				<th style="padding-left:5px; width:150px;">Resource</th>
+				<th>Regions with a Trade Route</th>
+				<th>Regions without a Trade Route</th>
+			</tr>
+		</thead>
+				<tr>
+			<td title="+25% to Food production">
+				<img src="//www.erepublik.net/images/resources/1.png" alt="" />
+				<span>Grain</span>
+				<span class="bonus_value">(+25%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Samogitia">Samogitia</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+10% to Food production">
+				<img src="//www.erepublik.net/images/resources/2.png" alt="" />
+				<span>Fish</span>
+				<span class="bonus_value">(+10%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Lithuanian-Highland">Lithuanian Highland</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+15% to Food production">
+				<img src="//www.erepublik.net/images/resources/3.png" alt="" />
+				<span>Fruits</span>
+				<span class="bonus_value">(+15%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Samogitia">Samogitia</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+20% to Food production">
+				<img src="//www.erepublik.net/images/resources/4.png" alt="" />
+				<span>Cattle</span>
+				<span class="bonus_value">(+20%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Samogitia">Samogitia</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+30% to Food production">
+				<img src="//www.erepublik.net/images/resources/5.png" alt="" />
+				<span>Deer</span>
+				<span class="bonus_value">(+30%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Samogitia">Samogitia</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+10% to Weapon production">
+				<img src="//www.erepublik.net/images/resources/6.png" alt="" />
+				<span>Iron</span>
+				<span class="bonus_value">(+10%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Lithuania-Minor">Lithuania Minor</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+25% to Weapon production">
+				<img src="//www.erepublik.net/images/resources/7.png" alt="" />
+				<span>Saltpeter</span>
+				<span class="bonus_value">(+25%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Pampas">Pampas (<img src="/images/flags_png/S/Argentina.png" class="vmiddleFlag">Concession)</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+15% to Weapon production">
+				<img src="//www.erepublik.net/images/resources/8.png" alt="" />
+				<span>Aluminum</span>
+				<span class="bonus_value">(+15%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Lithuania-Minor">Lithuania Minor</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+20% to Weapon production">
+				<img src="//www.erepublik.net/images/resources/9.png" alt="" />
+				<span>Oil</span>
+				<span class="bonus_value">(+20%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Lithuania-Minor">Lithuania Minor</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+30% to Weapon production">
+				<img src="//www.erepublik.net/images/resources/10.png" alt="" />
+				<span>Rubber</span>
+				<span class="bonus_value">(+30%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Red-Sea-Coast">Red Sea Coast (<img src="/images/flags_png/S/Egypt.png" class="vmiddleFlag">Concession)</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="">
+				<img src="//www.erepublik.net/images/resources/11.png" alt="" />
+				<span>Sand</span>
+				<span class="bonus_value">(+0%)</span>
+			</td>
+			<td><small>Not available</small></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="">
+				<img src="//www.erepublik.net/images/resources/12.png" alt="" />
+				<span>Clay</span>
+				<span class="bonus_value">(+0%)</span>
+			</td>
+			<td><small>Not available</small></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="">
+				<img src="//www.erepublik.net/images/resources/13.png" alt="" />
+				<span>Wood</span>
+				<span class="bonus_value">(+0%)</span>
+			</td>
+			<td><small>Not available</small></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="">
+				<img src="//www.erepublik.net/images/resources/14.png" alt="" />
+				<span>Limestone</span>
+				<span class="bonus_value">(+0%)</span>
+			</td>
+			<td><small>Not available</small></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="">
+				<img src="//www.erepublik.net/images/resources/15.png" alt="" />
+				<span>Granite</span>
+				<span class="bonus_value">(+0%)</span>
+			</td>
+			<td><small>Not available</small></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+30% to Aircraft production">
+				<img src="//www.erepublik.net/images/resources/16.png" alt="" />
+				<span>Neodymium</span>
+				<span class="bonus_value">(+30%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Lithuanian-Highland">Lithuanian Highland</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="+5% to Aircraft production">
+				<img src="//www.erepublik.net/images/resources/17.png" alt="" />
+				<span>Magnesium</span>
+				<span class="bonus_value">(+5%)</span>
+			</td>
+			<td><small>Not available</small></td>
+			<td><a href="//www.erepublik.com/en/main/region/Victoria">Victoria</a></td>
+		</tr>
+				<tr>
+			<td title="+25% to Aircraft production">
+				<img src="//www.erepublik.net/images/resources/18.png" alt="" />
+				<span>Cobalt</span>
+				<span class="bonus_value">(+25%)</span>
+			</td>
+			<td><a href="//www.erepublik.com/en/main/region/Lithuanian-Highland">Lithuanian Highland</a></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="">
+				<img src="//www.erepublik.net/images/resources/19.png" alt="" />
+				<span>Titanium</span>
+				<span class="bonus_value">(+0%)</span>
+			</td>
+			<td><small>Not available</small></td>
+			<td><small>Not available</small></td>
+		</tr>
+				<tr>
+			<td title="">
+				<img src="//www.erepublik.net/images/resources/20.png" alt="" />
+				<span>Wolfram</span>
+				<span class="bonus_value">(+0%)</span>
+			</td>
+			<td><small>Not available</small></td>
+			<td><small>Not available</small></td>
+		</tr>
+			</table>
+</div>
+
+
+<h2 class="section" id="resourceConcessions">Resource Concessions</h2>
+<div class="indent">
+        <table class="political" id="resourcesInConcession">
+        <tbody>
+                    <tr>
+                <th width="405" colspan="4">Resources in concession from other countries.</th>
+                <th width="195">&nbsp;</th>
+            </tr>
+                            <tr class="active">
+                    <td class="last" width="40">
+                        <img src="//www.erepublik.net/images/flags_png/L/Egypt.png" class="flag"/>
+                    </td>
+                    <td class="last">
+                        <span class="fakeheight">
+                            <a href="//www.erepublik.com/en/country/economy/Egypt" class="dotted" title="Egypt">
+                                Egypt                            </a>
+                        </span>
+                    </td>
+                    <td class="last" width="45">
+                        <img src="//www.erepublik.net/images/resources/10.png" alt="">
+                    </td>
+                    <td class="last">
+                        <span>
+                            Rubber                            (Red Sea Coast)
+                        </span>
+                    </td>
+                    <td class="last">
+                        Expires in 2 months                    </td>
+                </tr>
+                                <tr class="active">
+                    <td class="last" width="40">
+                        <img src="//www.erepublik.net/images/flags_png/L/Argentina.png" class="flag"/>
+                    </td>
+                    <td class="last">
+                        <span class="fakeheight">
+                            <a href="//www.erepublik.com/en/country/economy/Argentina" class="dotted" title="Argentina">
+                                Argentina                            </a>
+                        </span>
+                    </td>
+                    <td class="last" width="45">
+                        <img src="//www.erepublik.net/images/resources/7.png" alt="">
+                    </td>
+                    <td class="last">
+                        <span>
+                            Saltpeter                            (Pampas)
+                        </span>
+                    </td>
+                    <td class="last">
+                        Expires in 27 days                    </td>
+                </tr>
+                        </tbody>
+    </table>
+    <table class="political padded" id="conceededResources">
+        <tbody>
+                    <tr>
+                <td colspan="5" class="last"><i>No Resources conceded to other countries.</i></td>
+            </tr>
+                </tbody>
+    </table>
+</div>
+
+
+<h2 class="section" id="tradeEmbargoes">Trade embargoes</h2>
+<div class="indent">
+	<table class="political padded">
+    	<tr>
+        	<th width="405px;"></th>
+        	<th width="195px;"></th>
+        </tr>
+        	 		<tr>
+	 			<td colspan="3" class="last">
+	 				This country can trade with any other country in eRepublik.	 			</td>
+	 		</tr>
+	 	    </table>
+</div>
+
+<h2 class="section">Taxes</h2>
+<div class="indent">
+	<table class="citizens largepadded">
+    	<tr>
+        	<th width="60px"></th>
+        	<th width="205px"></th>
+        	<th width="110px">Work Tax</th>
+        	<th width="110px">Import Tax</th>
+        	<th width="110px">VAT</th>
+        </tr>
+							<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/1/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">Food</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">5</span>%</td>
+	            <td >
+	            	            	<span class="special">1</span>%
+	            	            </td>
+	        </tr>
+	        					<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/2/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">Weapons</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">2</span>%</td>
+	            <td >
+	            	            	<span class="special">1</span>%
+	            	            </td>
+	        </tr>
+	        					<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/23/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">Aircraft Weapons</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">1</span>%</td>
+	            <td >
+	            	            	<span class="special">1</span>%
+	            	            </td>
+	        </tr>
+	        					<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/3/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">Moving Tickets</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">1</span>%</td>
+	            <td >
+	            	            	<span class="special">1</span>%
+	            	            </td>
+	        </tr>
+	        					<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/4/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">House</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">2</span>%</td>
+	            <td >
+	            	            	<span class="special">1</span>%
+	            	            </td>
+	        </tr>
+	        					<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/7/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">Food Raw Materials</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">1</span>%</td>
+	            <td >
+	            	            	<span class="special"></span>
+	            	            </td>
+	        </tr>
+	        					<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/12/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">Weapon Raw Materials</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">1</span>%</td>
+	            <td >
+	            	            	<span class="special"></span>
+	            	            </td>
+	        </tr>
+	        					<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/24/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">Aircraft Weapons Raw Materials</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">1</span>%</td>
+	            <td >
+	            	            	<span class="special"></span>
+	            	            </td>
+	        </tr>
+	        					<tr>
+				<td ><img src="https://www.erepublik.net/images/icons/industry/17/default.png?1698060173" /></td>
+	            <td ><span class="fakeheight">House Raw Materials</span></td>
+	            <td ><span class="special">1.00%</span></td>
+	            <td ><span class="special">2</span>%</td>
+	            <td >
+	            	            	<span class="special"></span>
+	            	            </td>
+	        </tr>
+	        		    </table>
+</div>
+
+<h2 class="section">Salary</h2>
+<div class="indent">
+    <table class="citizens">
+    	<tr>
+        	<th width="490px" class="first"></th>
+        	<th width="110px" class="first"></th>
+        </tr>
+        <tr>
+        	<td class="last"><span class="fakeheight">Minimum</span></td>
+        	        	<td class="last"><span class="special">1.00</span> LTL</td>
+        </tr>
+        <tr>
+        	<td class="last"><span class="fakeheight">Average</span></td>
+        	        	<td class="last"><span class="special">8675.86</span> LTL</td>
+        </tr>
+    </table>
+	<a name="productivity"></a>
+</div>
+
+
+
+<br clear = "both">
+</div>
+</div>
+<div id="promo">
+</div>
+
+<div id="footer" >
+    <p>
+        <a href="//wiki.erepublik.com" target="_blank">Wiki</a> &nbsp; | &nbsp;
+        <a href="/en/main/latest-updates" target="_blank">Latest Updates</a> &nbsp; | &nbsp;
+        <a href="//forum.erepublik.com/" target="_blank">Forum</a> &nbsp; | &nbsp;
+        <a href="//blog.erepublik.com" target="_blank">Blog</a> &nbsp; | &nbsp;
+
+        <!-- a href="//shop.erepublik.com" target="_blank">Shop</a> &nbsp; | &nbsp;-->
+        <a href="mailto:support@erepublik.com" title="Contact">Contact</a> &nbsp; | &nbsp;
+        <a target="_blank" rel="nofollow" href="//www.erepubliklabs.com/careers">Jobs</a> &nbsp; | &nbsp;
+        <a href="/en/news/rated/all/all/1"  title="Articles of Erepublik Media">Erepublik media</a> &nbsp; | &nbsp;
+        <a rel="terms-of-service nofollow" href="/en/main/terms-and-conditions"  target="_blank">Terms of Service</a> &nbsp; | &nbsp;
+        <a rel="privacy-policy nofollow" href="/en/privacy-policy"  target="_blank">Privacy</a>&nbsp; | &nbsp;
+        <a href="/en/laws " rel="nofollow" target="_blank">eRepublik Laws</a>
+    </p>
+
+    
+<p class="follow">Follow us:    <a href="//www.facebook.com/pages/Erepublik/26897053321" title="Facebook" target="_blank"><img alt="Facebook" src="//www.erepublik.net/images/parts/facebook_small_icon.png" title="Facebook" />Facebook</a>
+    <a href="//www.twitter.com/erepublik" title="Twitter" target="_blank"><img alt="Twitter" src="//www.erepublik.net/images/parts/twitter_small_icon.png" title="Twitter" />Twitter</a>
+    <a href="https://discord.gg/erepublik" title="Discord" target="_blank"><img alt="Discord" src="//www.erepublik.net/images/parts/discord_icon.png" title="Discord" />Discord</a>
+    <a href="//www.erepublik.com/en/main/news/rated/all/all/1/rss" class="rss_footer">Articles</a>
+</p>
+    
+<p>
+        <a href="https://erepublik.onelink.me/XHrG/5tr423rd" target="_blank" title="Get the eRepublik App on Google Play">
+        <img title="Get the eRepublik App on Google Play" height="40" src="//www.erepublik.net/images/parts/google_play.svg?1700128400" alt="Google Play Logo" />
+    </a>
+        <a href="https://erepublik.onelink.me/XHrG/iwn7wtrl" target="_blank" title="Download eRepublik on App Store">
+        <img title="Download eRepublik on App Store" height="40" src="//www.erepublik.net/images/parts/apple_store.svg?1700128400" alt="App Store Logo" />
+    </a>
+</p>
+
+<p>
+    Our other games:    <a href="https://warandpeace.onelink.me/g1tb/xdrlfbuu" target="_blank" title="">War and Peace</a>&nbsp; | &nbsp;    <a href="https://worldatwar.onelink.me/625496524/6zrj9znp" target="_blank" title="">World at War</a>
+</p>
+
+    <p>Copyright &copy; 2007-2026&nbsp;eRepublik</p>
+    <img src="//www.erepublik.net/images/sf_erpk_black_logo.png" alt="StillFront & eRepublik logo"/>
+</div>
+
+</div>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ed5099b181bd4cb4af82d75b07e82053","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a03e8b5a3f28ee3f',t:'MTc4MDE1MjU1NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
