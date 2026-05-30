@@ -206,11 +206,11 @@
                     <div class="form-row">
                         <div class="control-group" id="work-tax-group">
                             <label for="input-work-tax" class="control-label">Work Tax Rate (%)</label>
-                            <input type="number" id="input-work-tax" class="market-input" step="0.5" min="1" max="25" value="1.0">
+                            <input type="number" id="input-work-tax" class="market-input info-readonly" step="0.5" min="1" max="25" value="1.0" readonly tabindex="-1" title="From selected country — read-only">
                         </div>
                         <div class="control-group">
                             <label for="input-average-salary" class="control-label">Average Salary (CC)</label>
-                            <input type="number" id="input-average-salary" class="market-input" step="10" min="0" value="0.0">
+                            <input type="number" id="input-average-salary" class="market-input info-readonly" step="10" min="0" value="0.0" readonly tabindex="-1" title="From selected country — read-only">
                         </div>
                         <div class="control-group" id="offered-salary-group">
                             <label for="input-offered-salary" class="control-label">Offered Salary (CC)</label>
@@ -233,7 +233,7 @@
                         </div>
                         <div class="control-group">
                             <label for="input-vat" class="control-label">VAT Tax (%)</label>
-                            <input type="number" id="input-vat" class="market-input" step="0.5" min="0" max="50" value="1.0">
+                            <input type="number" id="input-vat" class="market-input info-readonly" step="0.5" min="0" max="50" value="1.0" readonly tabindex="-1" title="From selected country — read-only">
                         </div>
                     </div>
                     <button id="btn-sync-prices" class="btn btn-primary" style="margin-top: 15px;">Sync Live Prices</button>
