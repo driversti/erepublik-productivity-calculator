@@ -3,7 +3,7 @@
 // the whole migration. At cutover (before legacy deletion) it is re-pointed at a
 // committed snapshot — see plan Task 14.
 import { describe, it, expect } from 'vitest';
-// @ts-expect-error - legacy untyped module, present only during migration
+// legacy untyped module, present only during migration (removed at cutover)
 import { computeFwIndustry as legacyFw, computeHiredIndustry as legacyHired } from '../../holdingsCalc.mjs';
 import { computeFwIndustry, computeHiredIndustry } from './industry';
 import { getIndustry } from '../data/industries';

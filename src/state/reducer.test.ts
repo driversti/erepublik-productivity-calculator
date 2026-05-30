@@ -1,0 +1,63 @@
+import { describe, it, expect } from 'vitest';
+import { reducer } from './reducer';
+import { initialState } from './blank';
+
+describe('reducer', () => {
+  it('SET_FACTORY_CELL sets companies clamped to [0,9999]', () => {
+    const s = reducer(initialState(), { type: 'SET_FACTORY_CELL', module: 'food', kind: 'factory', quality: 3, field: 'companies', value: 5 });
+    expect(s.food[3].companies).toBe(5);
+    const over = reducer(s, { type: 'SET_FACTORY_CELL', module: 'food', kind: 'factory', quality: 3, field: 'companies', value: 99999 });
+    expect(over.food[3].companies).toBe(9999);
+  });
+
+  it('SET_FACTORY_CELL caps workers at companies*maxEmployees', () => {
+    let s = reducer(initialState(), { type: 'SET_FACTORY_CELL', module: 'food', kind: 'factory', quality: 7, field: 'companies', value: 2 });
+    // Q7 food maxEmployees = 10 → cap 20
+    s = reducer(s, { type: 'SET_FACTORY_CELL', module: 'food', kind: 'factory', quality: 7, field: 'workers', value: 999 });
+    expect(s.food[7].workers).toBe(20);
+  });
+
+  it('SET_MODULE_FIELD clears the location (Manual de-sync)', () => {
+    let s = reducer(initialState(), {
+      type: 'SET_MODULE_LOCATION', module: 'food', selectedCountryId: '1', selectedRegionPermalink: 'r',
+      countryBonus: 120, regionBonus: 10, qualityPollution: {}, workTaxRate: 5, averageSalary: 50, vat: 3,
+    });
+    expect(s.food.selectedCountryId).toBe('1');
+    s = reducer(s, { type: 'SET_MODULE_FIELD', module: 'food', field: 'countryBonus', value: 130 });
+    expect(s.food.countryBonus).toBe(130);
+    expect(s.food.selectedCountryId).toBe('');
+    expect(s.food.selectedRegionPermalink).toBe('');
+  });
+
+  it('SWITCH_MODULE changes the active module', () => {
+    const s = reducer(initialState(), { type: 'SWITCH_MODULE', module: 'weapons' });
+    expect(s.activeModule).toBe('weapons');
+  });
+
+  it('CREATE_HOLDING appends a holding, bumps seq, activates it', () => {
+    const s = reducer(initialState(), { type: 'CREATE_HOLDING', name: 'Berlin' });
+    expect(s.holdings).toHaveLength(1);
+    expect(s.holdings[0].id).toBe('h1');
+    expect(s.holdings[0].name).toBe('Berlin');
+    expect(s.activeHoldingId).toBe('h1');
+    expect(s.holdingSeq).toBe(1);
+  });
+
+  it('CLEAR_HOLDING_COMPANIES zeros cells but keeps name/bonuses', () => {
+    let s = reducer(initialState(), { type: 'CREATE_HOLDING', name: 'Berlin' });
+    s = reducer(s, { type: 'SET_HOLDING_CELL', id: 'h1', industry: 'food', kind: 'factory', quality: 1, field: 'companies', value: 4 });
+    s = reducer(s, { type: 'SET_HOLDING_FIELD', id: 'h1', field: 'averageSalary', value: 42 });
+    expect(s.holdings[0].industries.food[1].companies).toBe(4);
+    s = reducer(s, { type: 'CLEAR_HOLDING_COMPANIES', id: 'h1' });
+    expect(s.holdings[0].industries.food[1].companies).toBe(0);
+    expect(s.holdings[0].name).toBe('Berlin');
+    expect(s.holdings[0].averageSalary).toBe(42);
+  });
+
+  it('TOGGLE_TYCOON flips the flag immutably', () => {
+    const a = initialState();
+    const b = reducer(a, { type: 'TOGGLE_TYCOON' });
+    expect(b.hasTycoon).toBe(true);
+    expect(a.hasTycoon).toBe(false);
+  });
+});
