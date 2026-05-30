@@ -618,7 +618,7 @@ function render() {
     const labelTotalCountFW = document.getElementById("label-total-count");
     if (labelTotalCountFW) labelTotalCountFW.textContent = "Total Factories:";
     const produceTaxLabelFW = document.getElementById("strategy-produce-tax-label");
-    if (produceTaxLabelFW) produceTaxLabelFW.textContent = "WaM Tax:";
+    if (produceTaxLabelFW) produceTaxLabelFW.textContent = "Work Tax:";
     for (let q = 1; q <= 7; q++) {
         const row = document.getElementById(`price-row-q${q}`);
         if (row) row.style.display = "";
@@ -1218,7 +1218,7 @@ function renderHouses() {
     const stratProduceTitle = document.getElementById("strategy-produce-title");
     if (stratProduceTitle) stratProduceTitle.textContent = "Option B: Produce HRM";
     const produceTaxLabel = document.getElementById("strategy-produce-tax-label");
-    if (produceTaxLabel) produceTaxLabel.textContent = "HRM Salary:";
+    if (produceTaxLabel) produceTaxLabel.textContent = "HRM Cost:";
 
     const workTaxGroup = document.getElementById("work-tax-group");
     if (workTaxGroup) workTaxGroup.style.display = "none";
