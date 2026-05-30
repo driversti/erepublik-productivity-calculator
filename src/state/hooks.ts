@@ -10,6 +10,8 @@ import { computeHiredView, type HiredView } from '../calc/hiredView';
 import { computeFwIndustry, computeHiredIndustry } from '../calc/industry';
 import { sumHolding, type HoldingTotals } from '../calc/holding';
 import type { CellKind, ModuleField, SharedNumberField } from './reducer';
+import { fetchPrices } from '../services/livePrices';
+import { fetchCountryRegionHtml, parseRegionModifiers, SCRAPE_CONFIG } from '../services/regions';
 
 export function useActiveModule(): AppState['activeModule'] {
   return useAppState().state.activeModule;
@@ -94,6 +96,98 @@ export function useHiredView(key: IndustryKey): HiredView {
 export function useSetFactoryCell(): (module: IndustryKey, kind: CellKind, quality: number, field: keyof Cell, value: number) => void {
   const { dispatch } = useAppState();
   return (module, kind, quality, field, value) => dispatch({ type: 'SET_FACTORY_CELL', module, kind, quality, field, value });
+}
+
+// --- Live-sync actions (wrap the services + dispatch the parsed results) ---
+
+export interface IndustrySync {
+  syncPrices: () => Promise<void>;
+  selectCountry: (countryId: string) => void;
+  selectRegion: (permalink: string) => void;
+}
+
+export function useIndustrySync(key: IndustryKey): IndustrySync {
+  const { state, dispatch } = useAppState();
+  const cfg = getIndustry(key);
+
+  const syncPrices = async () => {
+    const { prices, rmPrice } = await fetchPrices(key, cfg.maxFactoryQuality);
+    if (Object.keys(prices).length) dispatch({ type: 'SET_MODULE_PRICES', module: key, prices });
+    if (typeof rmPrice === 'number') dispatch({ type: 'SET_SHARED_FIELD', field: cfg.rmPriceKey, value: rmPrice });
+  };
+
+  // Selecting a region triggers a modifier scrape; selecting a country only stores it.
+  const selectCountry = (countryId: string) => {
+    dispatch({ type: 'SET_MODULE_LOCATION', module: key, selectedCountryId: countryId, selectedRegionPermalink: '',
+      countryBonus: state[key].countryBonus, regionBonus: state[key].regionBonus,
+      qualityPollution: state[key].qualityPollution, workTaxRate: state[key].workTaxRate,
+      averageSalary: state[key].averageSalary, vat: state[key].vat });
+  };
+
+  const selectRegion = (permalink: string) => {
+    const countryId = state[key].selectedCountryId;
+    if (!countryId || !permalink) return;
+    void (async () => {
+      try {
+        const { countryHtml, regionHtml } = await fetchCountryRegionHtml(countryId, permalink);
+        const m = parseRegionModifiers(countryHtml, regionHtml, SCRAPE_CONFIG[key], state[key].vat);
+        dispatch({ type: 'SET_MODULE_LOCATION', module: key, selectedCountryId: countryId, selectedRegionPermalink: permalink,
+          countryBonus: m.countryBonus, regionBonus: m.regionBonus, qualityPollution: m.qualityPollution,
+          workTaxRate: m.workTaxRate, averageSalary: m.averageSalary, vat: m.vat });
+      } catch (e) {
+        console.error('Region sync failed:', e);
+      }
+    })();
+  };
+
+  return { syncPrices, selectCountry, selectRegion };
+}
+
+// Holdings: sync ALL industries' prices into the shared global price state, and
+// scrape one country/region pair once into every industry of the active holding.
+export function useHoldingSync() {
+  const { state, dispatch } = useAppState();
+
+  const syncPrices = async () => {
+    await Promise.all(
+      INDUSTRIES.map(async (cfg) => {
+        const { prices, rmPrice } = await fetchPrices(cfg.key, cfg.maxFactoryQuality);
+        if (Object.keys(prices).length) dispatch({ type: 'SET_MODULE_PRICES', module: cfg.key, prices });
+        if (typeof rmPrice === 'number') dispatch({ type: 'SET_SHARED_FIELD', field: cfg.rmPriceKey, value: rmPrice });
+      }),
+    );
+  };
+
+  const selectCountry = (id: string, countryId: string) => {
+    dispatch({ type: 'SET_HOLDING_LOCATION', id, selectedCountryId: countryId, selectedRegionPermalink: '' });
+  };
+
+  const selectRegion = (id: string, permalink: string) => {
+    const holding = state.holdings.find((h) => h.id === id);
+    if (!holding || !holding.selectedCountryId || !permalink) return;
+    void (async () => {
+      try {
+        const { countryHtml, regionHtml } = await fetchCountryRegionHtml(holding.selectedCountryId, permalink);
+        const bonuses = (key: IndustryKey, vatFallback: number) => {
+          const m = parseRegionModifiers(countryHtml, regionHtml, SCRAPE_CONFIG[key], vatFallback);
+          return { countryBonus: m.countryBonus, regionBonus: m.regionBonus, qualityPollution: m.qualityPollution, vat: m.vat };
+        };
+        const first = parseRegionModifiers(countryHtml, regionHtml, SCRAPE_CONFIG.food, holding.industries.food.vat);
+        const perIndustry = {
+          food: bonuses('food', holding.industries.food.vat),
+          weapons: bonuses('weapons', holding.industries.weapons.vat),
+          houses: bonuses('houses', holding.industries.houses.vat),
+          aircraft: bonuses('aircraft', holding.industries.aircraft.vat),
+        };
+        dispatch({ type: 'SET_HOLDING_LOCATION', id, selectedCountryId: holding.selectedCountryId, selectedRegionPermalink: permalink });
+        dispatch({ type: 'SET_HOLDING_MODIFIERS', id, workTaxRate: first.workTaxRate, averageSalary: first.averageSalary, perIndustry });
+      } catch (e) {
+        console.error('Holding region sync failed:', e);
+      }
+    })();
+  };
+
+  return { syncPrices, selectCountry, selectRegion };
 }
 
 export function useSetModuleField(): (module: IndustryKey, field: ModuleField, value: number) => void {

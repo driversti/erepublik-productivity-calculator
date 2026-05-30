@@ -2,7 +2,8 @@ import type { IndustryKey } from '../../data/types';
 import type { FwModule, HiredModule } from '../../state/types';
 import type { Cell } from '../../calc/types';
 import { getIndustry } from '../../data/industries';
-import { useModule, useIndustryView, useHiredView, useSetFactoryCell } from '../../state/hooks';
+import { useState } from 'react';
+import { useModule, useIndustryView, useHiredView, useSetFactoryCell, useIndustrySync } from '../../state/hooks';
 import { FactoryCard } from '../../components/FactoryCard';
 import { SummarySidebar } from './SummarySidebar';
 import { ModifiersPanel } from './ModifiersPanel';
@@ -36,13 +37,18 @@ export function IndustryView({ industryKey }: Props) {
   const rmMult = () =>
     productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon: false, pollutionRate: pollutionAt(mod.qualityPollution, 0) });
 
-  const noop = () => { /* sync wired in T13 */ };
+  const sync = useIndustrySync(industryKey);
+  const [syncing, setSyncing] = useState(false);
+  const onSyncPrices = () => {
+    setSyncing(true);
+    sync.syncPrices().catch((e) => console.error('Price sync failed:', e)).finally(() => setSyncing(false));
+  };
 
   return (
     <main className="app-container" data-testid={`industry-view-${industryKey}`}>
       {summary}
       <section className="config-area">
-        <ModifiersPanel cfg={cfg} mod={mod} onSelectCountry={noop} onSelectRegion={noop} onSyncPrices={noop} />
+        <ModifiersPanel cfg={cfg} mod={mod} onSelectCountry={sync.selectCountry} onSelectRegion={sync.selectRegion} onSyncPrices={onSyncPrices} syncing={syncing} />
         <PricesPanel cfg={cfg} mod={mod} />
 
         <div className="config-card">

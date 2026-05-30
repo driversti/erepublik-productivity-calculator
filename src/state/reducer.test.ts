@@ -54,6 +54,32 @@ describe('reducer', () => {
     expect(s.holdings[0].averageSalary).toBe(42);
   });
 
+  it('SET_MODULE_PRICES merges bulk prices and keeps the location', () => {
+    let s = reducer(initialState(), {
+      type: 'SET_MODULE_LOCATION', module: 'food', selectedCountryId: '1', selectedRegionPermalink: 'r',
+      countryBonus: 120, regionBonus: 10, qualityPollution: {}, workTaxRate: 5, averageSalary: 50, vat: 3,
+    });
+    s = reducer(s, { type: 'SET_MODULE_PRICES', module: 'food', prices: { 1: 0.5, 7: 1.1 } });
+    expect(s.food.prices[1]).toBe(0.5);
+    expect(s.food.prices[7]).toBe(1.1);
+    expect(s.food.selectedCountryId).toBe('1'); // bulk price sync must NOT de-sync
+  });
+
+  it('SET_HOLDING_MODIFIERS applies bonuses to every industry + holding tax/salary', () => {
+    let s = reducer(initialState(), { type: 'CREATE_HOLDING', name: 'Berlin' });
+    const ind = { countryBonus: 130, regionBonus: 20, qualityPollution: { 0: 2, 1: 3 }, vat: 4 };
+    s = reducer(s, {
+      type: 'SET_HOLDING_MODIFIERS', id: 'h1', workTaxRate: 6, averageSalary: 80,
+      perIndustry: { food: ind, weapons: ind, houses: ind, aircraft: ind },
+    });
+    const h = s.holdings[0];
+    expect(h.workTaxRate).toBe(6);
+    expect(h.averageSalary).toBe(80);
+    expect(h.industries.food.countryBonus).toBe(130);
+    expect(h.industries.aircraft.vat).toBe(4);
+    expect(h.industries.weapons.qualityPollution[1]).toBe(3);
+  });
+
   it('TOGGLE_TYCOON flips the flag immutably', () => {
     const a = initialState();
     const b = reducer(a, { type: 'TOGGLE_TYCOON' });

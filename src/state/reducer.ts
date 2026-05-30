@@ -31,7 +31,10 @@ export type Action =
   | { type: 'DELETE_HOLDING'; id: string }
   | { type: 'CLEAR_HOLDING_COMPANIES'; id: string }
   | { type: 'SET_HOLDING_CELL'; id: string; industry: IndustryKey; kind: CellKind; quality: number; field: keyof Cell; value: number }
-  | { type: 'SET_HOLDING_FIELD'; id: string; field: 'workTaxRate' | 'averageSalary'; value: number };
+  | { type: 'SET_HOLDING_FIELD'; id: string; field: 'workTaxRate' | 'averageSalary'; value: number }
+  | { type: 'SET_MODULE_PRICES'; module: IndustryKey; prices: Record<number, number> }
+  | { type: 'SET_HOLDING_LOCATION'; id: string; selectedCountryId: string; selectedRegionPermalink: string }
+  | { type: 'SET_HOLDING_MODIFIERS'; id: string; workTaxRate: number; averageSalary: number; perIndustry: Record<IndustryKey, { countryBonus: number; regionBonus: number; qualityPollution: Record<number, number>; vat: number }> };
 
 function clampCompanies(v: number): number {
   return Math.max(0, Math.min(MAX_COMPANIES, Math.floor(v)));
@@ -127,6 +130,15 @@ export function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         [action.module]: { ...mod, prices: { ...mod.prices, [action.quality]: action.value } },
+      };
+    }
+
+    case 'SET_MODULE_PRICES': {
+      // Bulk price update from a live sync — merges parsed Q-prices, keeps location.
+      const mod = state[action.module];
+      return {
+        ...state,
+        [action.module]: { ...mod, prices: { ...mod.prices, ...action.prices } },
       };
     }
 
@@ -233,6 +245,34 @@ export function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         holdings: state.holdings.map((h) => (h.id === action.id ? { ...h, [action.field]: action.value } : h)),
+      };
+
+    case 'SET_HOLDING_LOCATION':
+      return {
+        ...state,
+        holdings: state.holdings.map((h) =>
+          h.id === action.id
+            ? { ...h, selectedCountryId: action.selectedCountryId, selectedRegionPermalink: action.selectedRegionPermalink }
+            : h,
+        ),
+      };
+
+    case 'SET_HOLDING_MODIFIERS':
+      // Apply scraped modifiers to every industry of one holding at once
+      // (mirrors legacy syncHoldingModifiers). Holding-level work tax + salary too.
+      return {
+        ...state,
+        holdings: state.holdings.map((h) => {
+          if (h.id !== action.id) return h;
+          const p = action.perIndustry;
+          const industries: Holding['industries'] = {
+            food: { ...h.industries.food, countryBonus: p.food.countryBonus, regionBonus: p.food.regionBonus, qualityPollution: { ...p.food.qualityPollution }, vat: p.food.vat },
+            weapons: { ...h.industries.weapons, countryBonus: p.weapons.countryBonus, regionBonus: p.weapons.regionBonus, qualityPollution: { ...p.weapons.qualityPollution }, vat: p.weapons.vat },
+            houses: { ...h.industries.houses, countryBonus: p.houses.countryBonus, regionBonus: p.houses.regionBonus, qualityPollution: { ...p.houses.qualityPollution }, vat: p.houses.vat },
+            aircraft: { ...h.industries.aircraft, countryBonus: p.aircraft.countryBonus, regionBonus: p.aircraft.regionBonus, qualityPollution: { ...p.aircraft.qualityPollution }, vat: p.aircraft.vat },
+          };
+          return { ...h, workTaxRate: action.workTaxRate, averageSalary: action.averageSalary, industries };
+        }),
       };
 
     default:

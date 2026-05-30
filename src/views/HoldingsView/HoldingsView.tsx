@@ -2,6 +2,7 @@ import { useAppState } from '../../state/StateContext';
 import { useHoldings, computeHoldingIndustry } from '../../state/hooks';
 import { INDUSTRIES } from '../../data/industries';
 import { HoldingToolbar } from './HoldingToolbar';
+import { HoldingLocationBar } from './HoldingLocationBar';
 import { HoldingSection } from './HoldingSection';
 import { HoldingSummary } from './HoldingSummary';
 
@@ -22,6 +23,7 @@ export function HoldingsView() {
         <div className="holdings-content" data-testid="hld-content" style={{ display: 'flex' }}>
           <HoldingSummary holding={holding} />
           <section className="holdings-main">
+            <HoldingLocationBar holding={holding} />
             {INDUSTRIES.map((cfg) => {
               const result = computeHoldingIndustry(state, holding, cfg.key);
               return (
