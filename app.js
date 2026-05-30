@@ -1144,7 +1144,7 @@ function render() {
     // Update main summary DOM
     const grossDailyProfit = sumRevenue - displayGrainCost;
     
-    totalFactoriesCount.textContent = totalFactories;
+    totalFactoriesCount.textContent = totalFactories + totalPlantations;
     totalFoodOutput.textContent = totalOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     totalGrainRequired.textContent = `${totalRM.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${isFood ? 'FRM' : 'WRM'}`;
     totalGrossRevenue.textContent = `${sumRevenue.toFixed(2)} CC`;
@@ -1481,6 +1481,7 @@ function renderHiredLaborModule(moduleKey) {
         const maxWorkers = companies * rm.maxEmployees;
         const workers = Math.min(cell.workers || 0, maxWorkers);
         totalRmWorkers += workers;
+        totalCompanies += companies;   // count RM companies in the Total Companies KPI
 
         const { mult, pollutionRate } = multiplierFor(0); // index 0 = raw-material pollution
         const singleOutput = (rm.baseOutput / 100) * mult;
