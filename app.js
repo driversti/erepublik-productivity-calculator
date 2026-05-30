@@ -849,7 +849,7 @@ function render() {
     breakdownList.innerHTML = "";
     
     let totalFactories = 0;       // total companies (for the "Total Factories" KPI)
-    let factorySessions = 0;      // WAM + hired sessions (for work tax)
+    let factoryWamSessions = 0;   // WAM (owner-as-manager) sessions only — the ONLY thing that pays work tax
     let factoryWorkers = 0;       // hired only (for labor salary)
     let totalOutput = 0;
     let totalRM = 0;
@@ -864,7 +864,7 @@ function render() {
         const workers = Math.min(cell.workers || 0, companies * fact.maxEmployees);
         const sessions = (state.wamEnabled ? companies : 0) + workers;
         totalFactories += companies;
-        factorySessions += sessions;
+        factoryWamSessions += (state.wamEnabled ? companies : 0); // work tax: GM pays per company started, not per hired worker
         factoryWorkers += workers;
         
         // Quality-specific pollution (fall back to manual general pollution if not populated)
@@ -971,7 +971,7 @@ function render() {
     // Render plantation rows
     const plantationsContainer = document.getElementById("plantations-container");
     let totalPlantations = 0;     // total companies
-    let plantSessions = 0;        // WAM + hired
+    let plantWamSessions = 0;     // WAM (owner-as-manager) sessions only — the ONLY thing that pays work tax
     let plantWorkers = 0;         // hired only
     let totalGrainProduced = 0;
     
@@ -984,7 +984,7 @@ function render() {
             const workers = Math.min(cell.workers || 0, companies * plant.maxEmployees);
             const sessions = (state.wamEnabled ? companies : 0) + workers;
             totalPlantations += companies;
-            plantSessions += sessions;
+            plantWamSessions += (state.wamEnabled ? companies : 0); // work tax: GM pays per company started, not per hired worker
             plantWorkers += workers;
             
             // Raw materials pollution is at index 0 of qualityPollution
@@ -1072,7 +1072,7 @@ function render() {
 
     // STRATEGY MATH & COMPARISON
     const taxPerSession = (state.workTaxRate / 100) * state.averageSalary;
-    const factoryTax = factorySessions * taxPerSession;
+    const factoryTax = factoryWamSessions * taxPerSession;
     const factoryLabor = factoryWorkers * state.offeredSalary;
     const totalGrainRequiredVal = totalRM;
     const netGrainBalance = totalGrainProduced - totalGrainRequiredVal;
@@ -1082,7 +1082,7 @@ function render() {
     const netProfitOptionA = sumRevenue - factoryTax - factoryLabor - grainExpenseOptionA;
 
     // Option B: Produce (run plantations)
-    const plantTax = plantSessions * taxPerSession;
+    const plantTax = plantWamSessions * taxPerSession;
     const plantLabor = plantWorkers * state.offeredSalary;
 
     let marketExpenseOptionB = 0;
@@ -1430,8 +1430,9 @@ function renderHiredLaborModule(moduleKey) {
         const cardRevenue = cardOutput * productPrice * (1 - state.vat / 100);
         const cardHrmCost = cardHrm * rmPrice;
         const cardSalary = workers * state.offeredSalary;
-        const cardTax = workers * (state.workTaxRate / 100) * state.averageSalary;
-        const cardProfit = cardRevenue - cardHrmCost - cardSalary - cardTax;
+        // No work tax here: houses/aircraft have no WAM (owner can't be GM), and hired-worker
+        // work tax is deducted from their wage — never an owner-side cost. See KB Economy.md → Work Tax.
+        const cardProfit = cardRevenue - cardHrmCost - cardSalary;
 
         totalOutput += cardOutput;
         totalHrmUsed += cardHrm;
@@ -1479,11 +1480,12 @@ function renderHiredLaborModule(moduleKey) {
     });
 
     // --- Strategy math ---
-    const houseTaxPerSession = (state.workTaxRate / 100) * state.averageSalary;
+    // No WAM in houses/aircraft → no GM work tax; hired-worker tax is deducted from their wage,
+    // never paid by the owner. So work tax is always 0 here. Owner's only labor cost is salaries.
     const houseSalaryCost = totalWorkers * state.offeredSalary;      // house-factory labor
     const hrmSalaryCost = totalRmWorkers * state.offeredSalary;      // HRM labor
-    const houseWorkTax = totalWorkers * houseTaxPerSession;          // no WAM in houses
-    const hrmWorkTax = totalRmWorkers * houseTaxPerSession;
+    const houseWorkTax = 0;
+    const hrmWorkTax = 0;
     const netHrmBalance = totalHrmProduced - totalHrmUsed;
 
     // Option A: buy all HRM, run no RM companies
