@@ -927,18 +927,20 @@ function render() {
     }
     
     // STRATEGY MATH & COMPARISON
-    const dailyWorkTaxOptionA = totalFactories * (state.workTaxRate / 100) * state.averageSalary;
+    const taxPerSession = (state.workTaxRate / 100) * state.averageSalary;
+    const factoryTax = factorySessions * taxPerSession;
+    const factoryLabor = factoryWorkers * state.offeredSalary;
     const totalGrainRequiredVal = totalRM;
     const netGrainBalance = totalGrainProduced - totalGrainRequiredVal;
-    
-    // Option A: Buy 100%
+
+    // Option A: Buy 100% of raw material
     const grainExpenseOptionA = totalGrainRequiredVal * rmPrice;
-    const netProfitOptionA = sumRevenue - dailyWorkTaxOptionA - grainExpenseOptionA;
-    
-    // Option B: Produce
-    const plantationWorkTax = totalPlantations * (state.workTaxRate / 100) * state.averageSalary;
-    const dailyWorkTaxOptionB = dailyWorkTaxOptionA + plantationWorkTax;
-    
+    const netProfitOptionA = sumRevenue - factoryTax - factoryLabor - grainExpenseOptionA;
+
+    // Option B: Produce (run plantations)
+    const plantTax = plantSessions * taxPerSession;
+    const plantLabor = plantWorkers * state.offeredSalary;
+
     let marketExpenseOptionB = 0;
     let marketRevenueOptionB = 0;
     if (netGrainBalance < 0) {
@@ -946,32 +948,35 @@ function render() {
     } else {
         marketRevenueOptionB = netGrainBalance * rmPrice * (1 - state.vat / 100);
     }
-    
-    const netProfitOptionB = sumRevenue - dailyWorkTaxOptionA - plantationWorkTax - marketExpenseOptionB + marketRevenueOptionB;
+
+    const netProfitOptionB = sumRevenue - factoryTax - factoryLabor - plantTax - plantLabor - marketExpenseOptionB + marketRevenueOptionB;
     
     // Determine Optimal Option
     const isOptionBBetter = netProfitOptionB > netProfitOptionA;
     
     // Set Main summary variables based on optimal option
     let displayGrainCost = 0;
-    let displayWorkTax = 0;
+    let displayWorkTax = 0;   // total work tax (all sessions) for the chosen option
+    let displaySalary = 0;    // total hired-worker labor for the chosen option
     let displayNetProfit = 0;
     const badge = document.getElementById("summary-strategy-badge");
-    
+
     if (isOptionBBetter) {
         displayGrainCost = marketExpenseOptionB - marketRevenueOptionB;
-        displayWorkTax = dailyWorkTaxOptionB;
+        displayWorkTax = factoryTax + plantTax;
+        displaySalary = factoryLabor + plantLabor;
         displayNetProfit = netProfitOptionB;
         if (badge) {
-            badge.textContent = isFood ? "Option B: Produce" : "Option B: Produce";
+            badge.textContent = "Option B: Produce";
             badge.style.background = isFood ? "#e67e22" : "#7f8c8d";
         }
     } else {
         displayGrainCost = grainExpenseOptionA;
-        displayWorkTax = dailyWorkTaxOptionA;
+        displayWorkTax = factoryTax;
+        displaySalary = factoryLabor;
         displayNetProfit = netProfitOptionA;
         if (badge) {
-            badge.textContent = isFood ? "Option A: Buy" : "Option A: Buy";
+            badge.textContent = "Option A: Buy";
             badge.style.background = "var(--erep-blue)";
         }
     }
@@ -1000,7 +1005,8 @@ function render() {
     }
     
     document.getElementById("total-work-tax").textContent = `-${displayWorkTax.toFixed(2)} CC`;
-    
+    document.getElementById("total-salary").textContent = `-${displaySalary.toFixed(2)} CC`;
+
     const totalNetProfit = document.getElementById("total-net-profit");
     totalNetProfit.textContent = `${displayNetProfit.toFixed(2)} CC`;
     if (displayNetProfit >= 0) {
@@ -1035,7 +1041,7 @@ function render() {
         profitBuySpan.className = "text-danger";
     }
     
-    document.getElementById("strategy-produce-tax").textContent = plantationWorkTax.toFixed(2);
+    document.getElementById("strategy-produce-tax").textContent = (factoryTax + plantTax).toFixed(2);
     document.getElementById("strategy-produce-balance").textContent = `${(netGrainBalance >= 0 ? "+" : "")}${netGrainBalance.toFixed(2)}`;
     const profitProduceSpan = document.getElementById("strategy-produce-profit");
     profitProduceSpan.textContent = `${netProfitOptionB.toFixed(2)} CC`;
