@@ -683,7 +683,8 @@ function render() {
     document.getElementById("input-pollution").value = moduleState.pollution;
     document.getElementById("input-work-tax").value = state.workTaxRate.toFixed(2);
     document.getElementById("input-average-salary").value = state.averageSalary.toFixed(2);
-    
+    document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
+
     // Sync location dropdown selections
     document.getElementById("select-country").value = state.selectedCountryId || "";
     document.getElementById("select-region").value = state.selectedRegionPermalink || "";
@@ -1229,6 +1230,7 @@ function renderHouses() {
     document.getElementById("input-region-bonus").value = h.regionBonus;
     document.getElementById("input-pollution").value = h.pollution;
     document.getElementById("input-average-salary").value = state.averageSalary.toFixed(2);
+    document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
     document.getElementById("select-country").value = state.selectedCountryId || "";
     document.getElementById("select-region").value = state.selectedRegionPermalink || "";
     document.getElementById("input-grain-price").value = hrmPrice.toFixed(2);
@@ -1475,107 +1477,37 @@ function setupListeners() {
         };
     }
 
-    // Plus Buttons
-    document.querySelectorAll(".btn-plus").forEach(btn => {
+    // Food/Weapon counter buttons (companies / workers, factory / plantation)
+    document.querySelectorAll(".fw-counter-btn").forEach(btn => {
         btn.onclick = function() {
-            const quality = this.getAttribute("data-quality");
             const active = state.activeModule;
-            state[active][quality] = Math.min(state[active][quality] + 1, 9999);
+            const kind = this.getAttribute("data-kind");
+            const field = this.getAttribute("data-field");
+            const q = this.getAttribute("data-quality");
+            const delta = parseInt(this.getAttribute("data-delta"), 10);
+            const current = getFwCell(active, kind, q)[field] || 0;
+            applyFwCounterChange(active, kind, field, q, current + delta);
             saveState();
             render();
-        };
-    });
-    
-    // Minus Buttons
-    document.querySelectorAll(".btn-minus").forEach(btn => {
-        btn.onclick = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            state[active][quality] = Math.max(state[active][quality] - 1, 0);
-            saveState();
-            render();
-        };
-    });
-    
-    // Input Fields
-    document.querySelectorAll(".counter-input:not(.plantation-counter-input)").forEach(input => {
-        input.oninput = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            let valStr = this.value.replace(/[^0-9]/g, '');
-            this.value = valStr;
-            
-            let val = parseInt(valStr, 10);
-            if (isNaN(val)) {
-                val = 0;
-            }
-            state[active][quality] = Math.min(val, 9999);
-        };
-        
-        input.onblur = function() {
-            if (this.value === "") {
-                this.value = "0";
-            }
-            saveState();
-            render();
-        };
-        
-        input.onkeydown = function(e) {
-            if (e.key === "Enter") {
-                this.blur();
-            }
         };
     });
 
-    // Plantation Plus Buttons
-    document.querySelectorAll(".btn-plant-plus").forEach(btn => {
-        btn.onclick = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            state[active].plantations[quality] = Math.min((state[active].plantations[quality] || 0) + 1, 9999);
-            saveState();
-            render();
-        };
-    });
-    
-    // Plantation Minus Buttons
-    document.querySelectorAll(".btn-plant-minus").forEach(btn => {
-        btn.onclick = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            state[active].plantations[quality] = Math.max((state[active].plantations[quality] || 0) - 1, 0);
-            saveState();
-            render();
-        };
-    });
-    
-    // Plantation Input Fields
-    document.querySelectorAll(".plantation-counter-input").forEach(input => {
+    // Food/Weapon counter text inputs
+    document.querySelectorAll(".fw-counter-input").forEach(input => {
         input.oninput = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            let valStr = this.value.replace(/[^0-9]/g, '');
+            const valStr = this.value.replace(/[^0-9]/g, '');
             this.value = valStr;
-            
             let val = parseInt(valStr, 10);
-            if (isNaN(val)) {
-                val = 0;
-            }
-            state[active].plantations[quality] = Math.min(val, 9999);
+            if (isNaN(val)) val = 0;
+            applyFwCounterChange(state.activeModule, this.getAttribute("data-kind"), this.getAttribute("data-field"), this.getAttribute("data-quality"), val);
         };
-        
         input.onblur = function() {
-            if (this.value === "") {
-                this.value = "0";
-            }
+            if (this.value === "") this.value = "0";
             saveState();
             render();
         };
-        
         input.onkeydown = function(e) {
-            if (e.key === "Enter") {
-                this.blur();
-            }
+            if (e.key === "Enter") this.blur();
         };
     });
 
@@ -1788,6 +1720,21 @@ function setupListeners() {
             render();
         };
         avgSalaryInput.onkeydown = function(e) {
+            if (e.key === "Enter") this.blur();
+        };
+    }
+
+    // Offered Salary Input (labor paid to hired workers; does not de-sync location)
+    const offeredSalaryInput = document.getElementById("input-offered-salary");
+    if (offeredSalaryInput) {
+        offeredSalaryInput.onchange = function() {
+            let val = parseFloat(this.value);
+            if (isNaN(val) || val < 0) val = 0.0;
+            state.offeredSalary = val;
+            saveState();
+            render();
+        };
+        offeredSalaryInput.onkeydown = function(e) {
             if (e.key === "Enter") this.blur();
         };
     }
