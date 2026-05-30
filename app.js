@@ -267,18 +267,11 @@ function loadState() {
             if (typeof parsed.activeModule === 'string') state.activeModule = parsed.activeModule;
             if (typeof parsed.hasTycoon === 'boolean') state.hasTycoon = parsed.hasTycoon;
             if (typeof parsed.wamEnabled === 'boolean') state.wamEnabled = parsed.wamEnabled;
-            if (typeof parsed.workTaxRate === 'number') state.workTaxRate = parsed.workTaxRate;
-            if (typeof parsed.averageSalary === 'number') state.averageSalary = parsed.averageSalary;
             if (typeof parsed.offeredSalary === 'number') state.offeredSalary = parsed.offeredSalary;
-            if (typeof parsed.selectedCountryId === 'string' || typeof parsed.selectedCountryId === 'number') {
-                state.selectedCountryId = String(parsed.selectedCountryId);
-            }
-            if (typeof parsed.selectedRegionPermalink === 'string') state.selectedRegionPermalink = parsed.selectedRegionPermalink;
             if (typeof parsed.frmPrice === 'number') state.frmPrice = parsed.frmPrice;
             if (typeof parsed.wrmPrice === 'number') state.wrmPrice = parsed.wrmPrice;
             if (typeof parsed.hrmPrice === 'number') state.hrmPrice = parsed.hrmPrice;
             if (typeof parsed.armPrice === 'number') state.armPrice = parsed.armPrice;
-            if (typeof parsed.vat === 'number') state.vat = parsed.vat;
             
             // Helper to populate a module's nested state
             const loadModule = (key) => {
@@ -369,6 +362,28 @@ function loadState() {
                         if (typeof pm.prices[q] === 'number') state[key].prices[q] = pm.prices[q];
                     }
                 }
+            });
+            // Per-module location & country metrics, migrating any legacy top-level values.
+            const legacyCountry = (typeof parsed.selectedCountryId === 'string' || typeof parsed.selectedCountryId === 'number') ? String(parsed.selectedCountryId) : "";
+            const legacyRegion = (typeof parsed.selectedRegionPermalink === 'string') ? parsed.selectedRegionPermalink : "";
+            const legacyWorkTax = (typeof parsed.workTaxRate === 'number') ? parsed.workTaxRate : null;
+            const legacyAvgSalary = (typeof parsed.averageSalary === 'number') ? parsed.averageSalary : null;
+            const legacyVat = (typeof parsed.vat === 'number') ? parsed.vat : null;
+            ['food', 'weapons', 'houses', 'aircraft'].forEach(key => {
+                const pm = (parsed[key] && typeof parsed[key] === 'object') ? parsed[key] : {};
+                if (typeof pm.selectedCountryId === 'string' || typeof pm.selectedCountryId === 'number') {
+                    state[key].selectedCountryId = String(pm.selectedCountryId);
+                } else if (legacyCountry) {
+                    state[key].selectedCountryId = legacyCountry;
+                }
+                if (typeof pm.selectedRegionPermalink === 'string') state[key].selectedRegionPermalink = pm.selectedRegionPermalink;
+                else if (legacyRegion) state[key].selectedRegionPermalink = legacyRegion;
+                if (typeof pm.workTaxRate === 'number') state[key].workTaxRate = pm.workTaxRate;
+                else if (legacyWorkTax !== null) state[key].workTaxRate = legacyWorkTax;
+                if (typeof pm.averageSalary === 'number') state[key].averageSalary = pm.averageSalary;
+                else if (legacyAvgSalary !== null) state[key].averageSalary = legacyAvgSalary;
+                if (typeof pm.vat === 'number') state[key].vat = pm.vat;
+                else if (legacyVat !== null) state[key].vat = legacyVat;
             });
         }
     } catch (e) {
