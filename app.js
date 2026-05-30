@@ -1553,6 +1553,31 @@ function hldCardHtml(iconHtml, title, quality, pollutionRate, outputText, counte
     </div>`;
 }
 
+// Compute one industry of a holding via the pure holdingsCalc functions.
+function computeHoldingIndustry(holding, cfg) {
+    const ind = holding.industries[cfg.key];
+    if (cfg.type === 'fw') {
+        return computeFwIndustry({
+            factoriesData: cfg.factoriesData, plantationsData: cfg.plantationsData,
+            factoryCells: ind, plantationCells: ind.plantations,
+            countryBonus: ind.countryBonus, regionBonus: ind.regionBonus,
+            qualityPollution: ind.qualityPollution, vat: ind.vat,
+            prices: state[cfg.key].prices, rmPrice: state[cfg.rmPriceField],
+            hasTycoon: state.hasTycoon, wamEnabled: state.wamEnabled,
+            offeredSalary: state.offeredSalary,
+            workTaxRate: holding.workTaxRate, averageSalary: holding.averageSalary
+        });
+    }
+    return computeHiredIndustry({
+        factoriesData: cfg.factoriesData, rmData: cfg.rmData,
+        factoryCells: ind.factories, rmCells: ind.rm,
+        countryBonus: ind.countryBonus, regionBonus: ind.regionBonus,
+        qualityPollution: ind.qualityPollution, vat: ind.vat,
+        prices: state[cfg.key].prices, rmPrice: state[cfg.rmPriceField],
+        hasTycoon: state.hasTycoon, offeredSalary: state.offeredSalary
+    });
+}
+
 function renderHoldingSections(holding) {
     const container = document.getElementById("hld-sections");
     if (!container) return;
@@ -1636,7 +1661,45 @@ function renderHoldingSections(holding) {
     });
 }
 
-function renderHoldingSummary(holding) { /* filled in a later task */ }
+function renderHoldingSummary(holding) {
+    const results = HOLDING_INDUSTRIES.map(cfg => ({
+        key: cfg.key, label: cfg.label, result: computeHoldingIndustry(holding, cfg)
+    }));
+    const sum = sumHolding(results);
+
+    const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+    const setSigned = (id, val, suffix = " CC") => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = `${val.toFixed(2)}${suffix}`;
+        el.classList.remove("text-success", "text-danger");
+        el.classList.add(val >= 0 ? "text-success" : "text-danger");
+    };
+
+    setSigned("hld-net-profit", sum.net);
+    setText("hld-total-companies", String(sum.companies));
+    setText("hld-revenue", `${sum.revenue.toFixed(2)} CC`);
+    const rmNet = document.getElementById("hld-rm-net");
+    if (rmNet) {
+        rmNet.textContent = `${sum.rmNetCost.toFixed(2)} CC`;
+        rmNet.className = "kpi-value " + (sum.rmNetCost <= 0 ? "text-success" : "kpi-gold");
+    }
+    setText("hld-work-tax", `-${sum.workTax.toFixed(2)} CC`);
+    setText("hld-salary", `-${sum.salary.toFixed(2)} CC`);
+
+    const list = document.getElementById("hld-breakdown");
+    if (list) {
+        const rows = sum.perIndustry.filter(p => p.companies > 0);
+        list.innerHTML = rows.length ? rows.map(p => {
+            const cfg = HOLDING_INDUSTRIES.find(c => c.key === p.key);
+            const cls = p.net >= 0 ? "text-success" : "text-danger";
+            return `<li class="breakdown-item">
+                <span class="breakdown-label">${cfg.icon} ${p.label} (${p.companies}c)</span>
+                <span class="breakdown-count ${cls}" style="font-weight:700;">${p.net >= 0 ? '+' : ''}${p.net.toFixed(2)} CC</span>
+            </li>`;
+        }).join("") : `<li class="info-text" style="text-align:center;font-style:italic;">No companies in this holding yet.</li>`;
+    }
+}
 
 function renderHiredLaborModule(moduleKey) {
     const cfg = HIRED_LABOR_MODULES[moduleKey];
