@@ -1485,8 +1485,157 @@ function renderHoldings() {
     setupListeners();
 }
 
-// Stubs — replaced by later tasks (sections/summary rendering).
-function renderHoldingSections(holding) { /* filled in a later task */ }
+// Resolve the {companies,workers} cell for a holding industry counter.
+function getHoldingCell(holding, industry, kind, quality) {
+    const ind = holding.industries[industry];
+    if (kind === 'factory') return ind.factories ? ind.factories[quality] : ind[quality];
+    if (kind === 'plantation') return ind.plantations[quality];
+    if (kind === 'rm') return ind.rm[quality];
+    return null;
+}
+
+function holdingMaxEmployees(industry, kind, quality) {
+    const cfg = HOLDING_INDUSTRIES.find(c => c.key === industry);
+    let data;
+    if (kind === 'factory') data = cfg.factoriesData;
+    else if (kind === 'plantation') data = cfg.plantationsData;
+    else data = cfg.rmData;
+    const row = data.find(x => String(x.quality) === String(quality));
+    return row ? (row.maxEmployees || 0) : 0;
+}
+
+function applyHoldingCounterChange(industry, kind, field, quality, value) {
+    const h = activeHolding(); if (!h) return;
+    const cell = getHoldingCell(h, industry, kind, quality); if (!cell) return;
+    const maxEmp = holdingMaxEmployees(industry, kind, quality);
+    if (field === 'companies') {
+        cell.companies = Math.max(0, Math.min(value, 9999));
+        const cap = cell.companies * maxEmp;
+        if (cell.workers > cap) cell.workers = cap;
+    } else {
+        const cap = (cell.companies || 0) * maxEmp;
+        cell.workers = Math.max(0, Math.min(value, cap));
+    }
+}
+
+// Stacked Companies/Workers counter rows for a holding card.
+function hldCounterGroupsHtml(industry, kind, quality, companies, workers, maxWorkers, hideWorkers) {
+    const row = (field, value, label, hint) => `
+        <div class="house-counter-row">
+            <span class="house-counter-label">${label}${hint}</span>
+            <div class="counter-group counter-group-sm">
+                <button class="btn-counter hld-counter-btn" data-industry="${industry}" data-kind="${kind}" data-field="${field}" data-quality="${quality}" data-delta="-1">-</button>
+                <input type="text" class="counter-input hld-counter-input" data-industry="${industry}" data-kind="${kind}" data-field="${field}" data-quality="${quality}" value="${value}" inputmode="numeric" pattern="[0-9]*">
+                <button class="btn-counter hld-counter-btn" data-industry="${industry}" data-kind="${kind}" data-field="${field}" data-quality="${quality}" data-delta="1">+</button>
+            </div>
+        </div>`;
+    let html = `<div class="house-counters">` + row('companies', companies, 'Companies', '');
+    if (!hideWorkers) html += row('workers', workers, 'Workers', ` <span class="max-hint">· max ${maxWorkers}</span>`);
+    return html + `</div>`;
+}
+
+// One compact holding card (icon + title/stars/pollution + daily output + counters).
+function hldCardHtml(iconHtml, title, quality, pollutionRate, outputText, counterHtml, borderColor) {
+    return `<div class="factory-row-card" style="border-left:3px solid ${borderColor};">
+        <div class="factory-avatar-area">${iconHtml}</div>
+        <div class="factory-info-area">
+            <div class="factory-title">${title}</div>
+            <div class="stars-container">${generateStarsHtml(quality)}</div>
+            <div class="factory-pollution" style="font-size:11px;margin-top:4px;color:${pollutionRate > 0 ? '#e74c3c' : 'var(--text-secondary)'};font-weight:500;">Pollution: ${pollutionRate.toFixed(2)}%</div>
+        </div>
+        <div class="factory-stats-area">
+            <div class="stat-item">
+                <span class="stat-label">Daily Output</span>
+                <span class="stat-value" style="color: var(--erep-blue);">${outputText}</span>
+            </div>
+        </div>
+        <div class="factory-action-area">${counterHtml}</div>
+    </div>`;
+}
+
+function renderHoldingSections(holding) {
+    const container = document.getElementById("hld-sections");
+    if (!container) return;
+    container.innerHTML = "";
+
+    HOLDING_INDUSTRIES.forEach(cfg => {
+        const ind = holding.industries[cfg.key];
+        const result = computeHoldingIndustry(holding, cfg);
+        const pollAt = (i) => (typeof ind.qualityPollution[i] === 'number' ? ind.qualityPollution[i] : 0);
+
+        let bodyHtml = "";
+        if (cfg.type === 'fw') {
+            cfg.factoriesData.forEach(fact => {
+                const cell = ind[fact.quality] || { companies: 0, workers: 0 };
+                const maxW = (cell.companies || 0) * fact.maxEmployees;
+                const w = Math.min(cell.workers || 0, maxW);
+                const mult = Math.max(0, 1 + ind.countryBonus / 100 + ind.regionBonus / 100 + (state.hasTycoon ? 0.2 : 0) - pollAt(fact.quality) / 100);
+                const sessions = (state.wamEnabled ? (cell.companies || 0) : 0) + w;
+                const out = roundNumber(fact.baseOutput * mult, 2) * sessions;
+                const icon = gameIconHtml(factoryIconUrl(cfg.isFood, fact.quality), "");
+                bodyHtml += hldCardHtml(icon, fact.name, fact.quality, pollAt(fact.quality),
+                    `${out.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} items`,
+                    hldCounterGroupsHtml(cfg.key, 'factory', fact.quality, cell.companies || 0, w, maxW, false),
+                    cfg.isFood ? 'var(--erep-blue)' : '#7f8c8d');
+            });
+            cfg.plantationsData.forEach(plant => {
+                const cell = ind.plantations[plant.quality] || { companies: 0, workers: 0 };
+                const maxW = (cell.companies || 0) * plant.maxEmployees;
+                const w = Math.min(cell.workers || 0, maxW);
+                const mult = Math.max(0, 1 + ind.countryBonus / 100 + ind.regionBonus / 100 + (state.hasTycoon ? 0.2 : 0) - pollAt(0) / 100);
+                const sessions = (state.wamEnabled ? (cell.companies || 0) : 0) + w;
+                const out = gameRawProduction((plant.baseOutput / 100) * mult) * sessions;
+                const icon = gameIconHtml(plantationIconUrl(cfg.isFood, plant.quality), "");
+                bodyHtml += hldCardHtml(icon, plant.name, plant.quality, pollAt(0),
+                    `${out.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.rmNoun}`,
+                    hldCounterGroupsHtml(cfg.key, 'plantation', plant.quality, cell.companies || 0, w, maxW, plant.maxEmployees === 0),
+                    cfg.isFood ? '#e67e22' : '#7f8c8d');
+            });
+        } else {
+            cfg.factoriesData.forEach(fac => {
+                const cell = ind.factories[fac.quality] || { companies: 0, workers: 0 };
+                const maxW = (cell.companies || 0) * fac.maxEmployees;
+                const w = Math.min(cell.workers || 0, maxW);
+                const mult = Math.max(0, 1 + ind.countryBonus / 100 + ind.regionBonus / 100 + (state.hasTycoon ? 0.2 : 0) - pollAt(fac.quality) / 100);
+                const out = fac.baseOutput * mult * w;
+                const icon = gameIconHtml(`${EREP_CDN}/icons/industry/${cfg.factoryIconIndustry}/q${fac.quality}.png`, "");
+                bodyHtml += hldCardHtml(icon, fac.name, fac.quality, pollAt(fac.quality),
+                    `${out.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} items`,
+                    hldCounterGroupsHtml(cfg.key, 'factory', fac.quality, cell.companies || 0, w, maxW, false),
+                    'var(--erep-blue)');
+            });
+            cfg.rmData.forEach(rm => {
+                const cell = ind.rm[rm.quality] || { companies: 0, workers: 0 };
+                const maxW = (cell.companies || 0) * rm.maxEmployees;
+                const w = Math.min(cell.workers || 0, maxW);
+                const mult = Math.max(0, 1 + ind.countryBonus / 100 + ind.regionBonus / 100 + (state.hasTycoon ? 0.2 : 0) - pollAt(0) / 100);
+                const out = (rm.baseOutput / 100) * mult * w;
+                const icon = gameIconHtml(`${EREP_CDN}/buildings/${cfg.rmBuildingIds[rm.quality]}.png`, "");
+                bodyHtml += hldCardHtml(icon, rm.name, rm.quality, pollAt(0),
+                    `${out.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.rmNoun}`,
+                    hldCounterGroupsHtml(cfg.key, 'rm', rm.quality, cell.companies || 0, w, maxW, false),
+                    '#78909c');
+            });
+        }
+
+        const collapsed = result.companies === 0 ? " collapsed" : "";
+        const netClass = result.net >= 0 ? "text-success" : "text-danger";
+        const section = document.createElement("div");
+        section.className = "hld-section" + collapsed;
+        section.innerHTML = `
+            <div class="hld-section-head">
+                <span style="font-size:18px;">${cfg.icon}</span>
+                <span class="hld-ind-name">${cfg.label}</span>
+                <span class="hld-ind-mods">Country +${ind.countryBonus}% · Region +${ind.regionBonus}% · Pollution ${pollAt(1).toFixed(2)}%</span>
+                <span class="hld-ind-net ${netClass}">${result.net >= 0 ? '+' : ''}${result.net.toFixed(2)} CC</span>
+                <span class="hld-chev">▾</span>
+            </div>
+            <div class="hld-section-body">${bodyHtml}</div>`;
+        section.querySelector(".hld-section-head").onclick = () => section.classList.toggle("collapsed");
+        container.appendChild(section);
+    });
+}
+
 function renderHoldingSummary(holding) { /* filled in a later task */ }
 
 function renderHiredLaborModule(moduleKey) {
@@ -1901,6 +2050,32 @@ function setupListeners() {
         input.onkeydown = function(e) {
             if (e.key === "Enter") this.blur();
         };
+    });
+
+    document.querySelectorAll(".hld-counter-btn").forEach(btn => {
+        btn.onclick = function () {
+            const industry = this.getAttribute("data-industry");
+            const kind = this.getAttribute("data-kind");
+            const field = this.getAttribute("data-field");
+            const q = this.getAttribute("data-quality");
+            const delta = parseInt(this.getAttribute("data-delta"), 10);
+            const cell = getHoldingCell(activeHolding(), industry, kind, q);
+            const current = (cell && cell[field]) || 0;
+            applyHoldingCounterChange(industry, kind, field, q, current + delta);
+            saveState();
+            render();
+        };
+    });
+    document.querySelectorAll(".hld-counter-input").forEach(input => {
+        input.oninput = function () {
+            const valStr = this.value.replace(/[^0-9]/g, '');
+            this.value = valStr;
+            let val = parseInt(valStr, 10);
+            if (isNaN(val)) val = 0;
+            applyHoldingCounterChange(this.getAttribute("data-industry"), this.getAttribute("data-kind"), this.getAttribute("data-field"), this.getAttribute("data-quality"), val);
+        };
+        input.onblur = function () { if (this.value === "") this.value = "0"; saveState(); render(); };
+        input.onkeydown = function (e) { if (e.key === "Enter") this.blur(); };
     });
 
     // Country Dropdown Change listener
