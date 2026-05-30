@@ -3,39 +3,39 @@
 import { countries } from './travelData.js';
 
 const foodFactoriesData = [
-    { quality: 1, name: "Grain Bakery (Q1)", baseOutput: 100, baseRM: 1, energyPerItem: 2 },
-    { quality: 2, name: "Food Factory (Q2)", baseOutput: 100, baseRM: 2, energyPerItem: 4 },
-    { quality: 3, name: "Food Factory (Q3)", baseOutput: 100, baseRM: 3, energyPerItem: 6 },
-    { quality: 4, name: "Food Factory (Q4)", baseOutput: 100, baseRM: 4, energyPerItem: 8 },
-    { quality: 5, name: "Food Factory (Q5)", baseOutput: 100, baseRM: 5, energyPerItem: 10 },
-    { quality: 6, name: "Food Factory (Q6)", baseOutput: 100, baseRM: 6, energyPerItem: 12 },
-    { quality: 7, name: "Food Factory (Q7)", baseOutput: 100, baseRM: 20, energyPerItem: 20 }
+    { quality: 1, name: "Grain Bakery (Q1)", baseOutput: 100, baseRM: 1, energyPerItem: 2, maxEmployees: 1 },
+    { quality: 2, name: "Food Factory (Q2)", baseOutput: 100, baseRM: 2, energyPerItem: 4, maxEmployees: 2 },
+    { quality: 3, name: "Food Factory (Q3)", baseOutput: 100, baseRM: 3, energyPerItem: 6, maxEmployees: 3 },
+    { quality: 4, name: "Food Factory (Q4)", baseOutput: 100, baseRM: 4, energyPerItem: 8, maxEmployees: 5 },
+    { quality: 5, name: "Food Factory (Q5)", baseOutput: 100, baseRM: 5, energyPerItem: 10, maxEmployees: 10 },
+    { quality: 6, name: "Food Factory (Q6)", baseOutput: 100, baseRM: 6, energyPerItem: 12, maxEmployees: 10 },
+    { quality: 7, name: "Food Factory (Q7)", baseOutput: 100, baseRM: 20, energyPerItem: 20, maxEmployees: 10 }
 ];
 
 const foodPlantationsData = [
-    { quality: 1, name: "Grain Farm (Q1)", baseOutput: 35, energyPerItem: 10 },
-    { quality: 2, name: "Fruit Orchard (Q2)", baseOutput: 70, energyPerItem: 10 },
-    { quality: 3, name: "Fishery (Q3)", baseOutput: 125, energyPerItem: 10 },
-    { quality: 4, name: "Cattle Farm (Q4)", baseOutput: 175, energyPerItem: 10 },
-    { quality: 5, name: "Hunting Lodge (Q5)", baseOutput: 250, energyPerItem: 10 }
+    { quality: 1, name: "Grain Farm (Q1)", baseOutput: 35, energyPerItem: 10, maxEmployees: 0 },
+    { quality: 2, name: "Fruit Orchard (Q2)", baseOutput: 70, energyPerItem: 10, maxEmployees: 0 },
+    { quality: 3, name: "Fishery (Q3)", baseOutput: 125, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 4, name: "Cattle Farm (Q4)", baseOutput: 175, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 5, name: "Hunting Lodge (Q5)", baseOutput: 250, energyPerItem: 10, maxEmployees: 4 }
 ];
 
 const weaponFactoriesData = [
-    { quality: 1, name: "Weapons Factory (Q1)", baseOutput: 10, baseRM: 1, energyPerItem: 10 },
-    { quality: 2, name: "Weapons Factory (Q2)", baseOutput: 10, baseRM: 2, energyPerItem: 20 },
-    { quality: 3, name: "Weapons Factory (Q3)", baseOutput: 10, baseRM: 3, energyPerItem: 30 },
-    { quality: 4, name: "Weapons Factory (Q4)", baseOutput: 10, baseRM: 4, energyPerItem: 40 },
-    { quality: 5, name: "Weapons Factory (Q5)", baseOutput: 10, baseRM: 5, energyPerItem: 50 },
-    { quality: 6, name: "Weapons Factory (Q6)", baseOutput: 10, baseRM: 6, energyPerItem: 60 },
-    { quality: 7, name: "Weapons Factory (Q7)", baseOutput: 10, baseRM: 20, energyPerItem: 100 }
+    { quality: 1, name: "Weapons Factory (Q1)", baseOutput: 10, baseRM: 1, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 2, name: "Weapons Factory (Q2)", baseOutput: 10, baseRM: 2, energyPerItem: 20, maxEmployees: 2 },
+    { quality: 3, name: "Weapons Factory (Q3)", baseOutput: 10, baseRM: 3, energyPerItem: 30, maxEmployees: 3 },
+    { quality: 4, name: "Weapons Factory (Q4)", baseOutput: 10, baseRM: 4, energyPerItem: 40, maxEmployees: 5 },
+    { quality: 5, name: "Weapons Factory (Q5)", baseOutput: 10, baseRM: 5, energyPerItem: 50, maxEmployees: 10 },
+    { quality: 6, name: "Weapons Factory (Q6)", baseOutput: 10, baseRM: 6, energyPerItem: 60, maxEmployees: 10 },
+    { quality: 7, name: "Weapons Factory (Q7)", baseOutput: 10, baseRM: 20, energyPerItem: 100, maxEmployees: 10 }
 ];
 
 const weaponPlantationsData = [
-    { quality: 1, name: "Iron Mine (Q1)", baseOutput: 35, energyPerItem: 10 },
-    { quality: 2, name: "Oil Spring (Q2)", baseOutput: 70, energyPerItem: 10 },
-    { quality: 3, name: "Aluminum Mine (Q3)", baseOutput: 125, energyPerItem: 10 },
-    { quality: 4, name: "Saltpeter Mine (Q4)", baseOutput: 175, energyPerItem: 10 },
-    { quality: 5, name: "Rubber Plantation (Q5)", baseOutput: 250, energyPerItem: 10 }
+    { quality: 1, name: "Iron Mine (Q1)", baseOutput: 35, energyPerItem: 10, maxEmployees: 0 },
+    { quality: 2, name: "Oil Spring (Q2)", baseOutput: 70, energyPerItem: 10, maxEmployees: 0 },
+    { quality: 3, name: "Aluminum Mine (Q3)", baseOutput: 125, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 4, name: "Saltpeter Mine (Q4)", baseOutput: 175, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 5, name: "Rubber Plantation (Q5)", baseOutput: 250, energyPerItem: 10, maxEmployees: 4 }
 ];
 
 // House factories (construction industry). Q1-Q5 only.
@@ -64,6 +64,7 @@ let state = {
     hasTycoon: false,
     workTaxRate: 1.0,
     averageSalary: 0.0,
+    offeredSalary: 0.0,
     selectedCountryId: "",
     selectedRegionPermalink: "",
     frmPrice: 50.00,
@@ -170,7 +171,7 @@ let state = {
 };
 
 // LocalStorage key name (v9)
-const STORAGE_KEY = "erep_calculator_food_factories_v9";
+const STORAGE_KEY = "erep_calculator_food_factories_v10";
 
 // Load values from localStorage on startup
 function loadState() {
