@@ -1203,7 +1203,7 @@ function renderHouses() {
     const labelCostKpi = document.getElementById("label-daily-cost-kpi");
     if (labelCostKpi) labelCostKpi.textContent = "Daily HRM Cost";
     const labelWorkTaxKpi = document.getElementById("label-work-tax-kpi");
-    if (labelWorkTaxKpi) labelWorkTaxKpi.textContent = "Daily Salary Cost";
+    if (labelWorkTaxKpi) labelWorkTaxKpi.textContent = "Daily Work Tax";
     const labelTotalCount = document.getElementById("label-total-count");
     if (labelTotalCount) labelTotalCount.textContent = "Total Companies:";
 
@@ -1329,31 +1329,36 @@ function renderHouses() {
     });
 
     // --- Strategy math ---
-    const houseSalaryCost = totalWorkers * state.averageSalary;
-    const hrmSalaryCost = totalRmWorkers * state.averageSalary;
+    const houseTaxPerSession = (state.workTaxRate / 100) * state.averageSalary;
+    const houseSalaryCost = totalWorkers * state.offeredSalary;      // house-factory labor
+    const hrmSalaryCost = totalRmWorkers * state.offeredSalary;      // HRM labor
+    const houseWorkTax = totalWorkers * houseTaxPerSession;          // no WAM in houses
+    const hrmWorkTax = totalRmWorkers * houseTaxPerSession;
     const netHrmBalance = totalHrmProduced - totalHrmUsed;
 
     // Option A: buy all HRM, run no RM companies
     const optionA_hrmCost = totalHrmUsed * hrmPrice;
-    const netA = sumRevenue - optionA_hrmCost - houseSalaryCost;
+    const netA = sumRevenue - optionA_hrmCost - houseSalaryCost - houseWorkTax;
 
     // Option B: produce HRM
     let marketExpenseB = 0, marketRevenueB = 0;
     if (netHrmBalance < 0) marketExpenseB = (-netHrmBalance) * hrmPrice;
     else marketRevenueB = netHrmBalance * hrmPrice * (1 - state.vat / 100);
-    const netB = sumRevenue - houseSalaryCost - hrmSalaryCost - marketExpenseB + marketRevenueB;
+    const netB = sumRevenue - houseSalaryCost - hrmSalaryCost - houseWorkTax - hrmWorkTax - marketExpenseB + marketRevenueB;
 
     const isBbetter = netB > netA;
-    let displayHrmCost, displaySalary, displayNet;
+    let displayHrmCost, displaySalary, displayTax, displayNet;
     const badge = document.getElementById("summary-strategy-badge");
     if (isBbetter) {
         displayHrmCost = marketExpenseB - marketRevenueB;
         displaySalary = houseSalaryCost + hrmSalaryCost;
+        displayTax = houseWorkTax + hrmWorkTax;
         displayNet = netB;
         if (badge) { badge.textContent = "Option B: Produce"; badge.style.background = "#78909c"; }
     } else {
         displayHrmCost = optionA_hrmCost;
         displaySalary = houseSalaryCost;
+        displayTax = houseWorkTax;
         displayNet = netA;
         if (badge) { badge.textContent = "Option A: Buy"; badge.style.background = "var(--erep-blue)"; }
     }
@@ -1373,7 +1378,8 @@ function renderHouses() {
     grossProfitEl.textContent = `${grossDailyProfit.toFixed(2)} CC`;
     grossProfitEl.className = grossDailyProfit >= 0 ? "kpi-value text-success" : "kpi-value text-danger";
 
-    document.getElementById("total-work-tax").textContent = `-${displaySalary.toFixed(2)} CC`;
+    document.getElementById("total-work-tax").textContent = `-${displayTax.toFixed(2)} CC`;
+    document.getElementById("total-salary").textContent = `-${displaySalary.toFixed(2)} CC`;
 
     const netProfitEl = document.getElementById("total-net-profit");
     netProfitEl.textContent = `${displayNet.toFixed(2)} CC`;
@@ -1393,7 +1399,7 @@ function renderHouses() {
     profitBuySpan.textContent = `${netA.toFixed(2)} CC`;
     profitBuySpan.className = netA >= 0 ? "text-success" : "text-danger";
 
-    document.getElementById("strategy-produce-tax").textContent = hrmSalaryCost.toFixed(2);
+    document.getElementById("strategy-produce-tax").textContent = (hrmWorkTax + hrmSalaryCost).toFixed(2);
     document.getElementById("strategy-produce-balance").textContent = `${netHrmBalance >= 0 ? "+" : ""}${netHrmBalance.toFixed(2)}`;
     const profitProduceSpan = document.getElementById("strategy-produce-profit");
     profitProduceSpan.textContent = `${netB.toFixed(2)} CC`;
