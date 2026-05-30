@@ -9,10 +9,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = 8080;
-// Serve the Vite production build (run `npm run build` first). The legacy vanilla
-// app remains on disk (index.legacy.html / app.js) for rollback + parity checks
-// but is no longer served from "/". Falls back to the repo root for assets that
-// live outside dist (e.g. favicon.svg) so existing references keep working.
+// Serve the Vite production build (run `npm run build` first). Falls back to the
+// repo root for assets that live outside dist (e.g. styles.css) so existing
+// references keep working, and serves from the root entirely if dist is absent.
 const DIST_DIR = path.join(__dirname, "dist");
 const PUBLIC_DIR = fs.existsSync(DIST_DIR) ? DIST_DIR : __dirname;
 
