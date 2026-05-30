@@ -77,6 +77,14 @@ node --test holdingsCalc.test.mjs
 
 Design notes and per-feature specs/plans live under `docs/superpowers/`.
 
+## Acknowledgements
+
+Live market prices come from the excellent **[eRepublik Tools](https://erepublik.tools)**
+API (`service.erepublik.tools`). Huge thanks to its authors for their work and
+for keeping it available — without it, up-to-date prices simply wouldn't be
+reachable and users would have to look up and enter every Q1–Q7 price by hand.
+Please support and respect their service; use it responsibly.
+
 ## Disclaimer
 
 This is an unofficial fan-made tool and is not affiliated with or endorsed by
