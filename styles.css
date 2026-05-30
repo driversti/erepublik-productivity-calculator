@@ -524,6 +524,51 @@ body {
     margin: 0;
 }
 
+/* House cards: two compact Companies / Workers counters stacked in the action area */
+.house-counters {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    width: 100%;
+}
+
+.house-counter-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.house-counter-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.house-counter-label .max-hint {
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+.counter-group.counter-group-sm {
+    height: 28px;
+}
+
+.counter-group-sm .btn-counter {
+    width: 26px;
+    font-size: 15px;
+}
+
+.counter-group-sm .counter-input {
+    width: 38px;
+    font-size: 13px;
+}
+
 /* Footer Section */
 .game-footer {
     margin-top: 40px;

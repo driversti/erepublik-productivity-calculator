@@ -1045,18 +1045,21 @@ function render() {
     setupListeners();
 }
 
-// Two stacked counter rows (Companies / Workers) for a house or HRM card
+// Two compact, vertically-stacked counter rows (Companies / Workers) for a house or HRM card
 function houseCounterGroupsHtml(kind, quality, companies, workers, maxWorkers) {
-    const mk = (field, value, label, extra) => `
-        <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:4px;">
-            <span style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--text-secondary);">${label}${extra}</span>
-            <div class="counter-group">
+    const row = (field, value, label, hint) => `
+        <div class="house-counter-row">
+            <span class="house-counter-label">${label}${hint}</span>
+            <div class="counter-group counter-group-sm">
                 <button class="btn-counter house-counter-btn" data-kind="${kind}" data-field="${field}" data-quality="${quality}" data-delta="-1">-</button>
                 <input type="text" class="counter-input house-counter-input" data-kind="${kind}" data-field="${field}" data-quality="${quality}" value="${value}" inputmode="numeric" pattern="[0-9]*">
                 <button class="btn-counter house-counter-btn" data-kind="${kind}" data-field="${field}" data-quality="${quality}" data-delta="1">+</button>
             </div>
         </div>`;
-    return mk('companies', companies, 'Companies', '') + mk('workers', workers, 'Workers', ` (max ${maxWorkers})`);
+    return `<div class="house-counters">`
+        + row('companies', companies, 'Companies', '')
+        + row('workers', workers, 'Workers', ` <span class="max-hint">· max ${maxWorkers}</span>`)
+        + `</div>`;
 }
 
 function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue) {
