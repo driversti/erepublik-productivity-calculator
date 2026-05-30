@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eRepublik Productivity Calculator | Food Module</title>
+    <meta name="description" content="Calculate and optimize your food production factories in eRepublik with a game-themed dashboard interface.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation Bar (eRepublik Header Style) -->
+    <header class="game-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <span class="logo-brand">eRepublik</span>
+                <span class="logo-divider"></span>
+                <span class="logo-title">Productivity Calculator</span>
+            </div>
+            <div class="active-module">
+                <span class="status-dot"></span>
+                <span class="module-name">Food Industry</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Module Navigation Bar -->
+    <nav class="module-nav">
+        <div class="nav-container">
+            <button class="nav-tab active" id="tab-food">Food Industry</button>
+            <button class="nav-tab" id="tab-weapons">Weapon Industry</button>
+            <button class="nav-tab" id="tab-houses">House Industry</button>
+            <button class="nav-tab" id="tab-aircraft">Aircraft Industry</button>
+            <button class="nav-tab" id="tab-holdings">🗂️ Holdings</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="app-container" id="industry-view">
+        <!-- Sidebar: Config & Market Parameters -->
+        <aside class="sidebar">
+            <!-- Summary Card -->
+            <div class="card summary-card">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Summary</h2>
+                    <span id="summary-strategy-badge" style="font-size: 9px; font-weight: 700; padding: 3px 6px; border-radius: 4px; background: var(--erep-blue); color: white; text-transform: uppercase;">Option A</span>
+                </div>
+                <div class="card-body">
+                    <div class="kpi-list">
+                        <div class="kpi-block">
+                            <span class="kpi-label">Est. Daily Net Profit</span>
+                            <span class="kpi-value" id="total-net-profit">0.00 CC</span>
+                        </div>
+                        <hr class="kpi-divider">
+                        <div class="kpi-block-inline">
+                            <span class="kpi-label" id="label-total-count">Total Factories:</span>
+                            <span class="kpi-value-small" id="total-factories-count">0</span>
+                        </div>
+                        <div class="kpi-block-inline">
+                            <span class="kpi-label" id="label-total-output">Food Output:</span>
+                            <span class="kpi-value-small" id="total-food-output">0</span>
+                        </div>
+                        <div class="kpi-block-inline">
+                            <span class="kpi-label" id="label-total-consumed">Grain Consumed:</span>
+                            <span class="kpi-value-small" id="total-grain-required">0</span>
+                        </div>
+                        <hr class="kpi-divider">
+                        <div class="kpi-block">
+                            <span class="kpi-label">Daily Revenue</span>
+                            <span class="kpi-value kpi-blue" id="total-gross-revenue">0.00 CC</span>
+                        </div>
+                        <div class="kpi-block">
+                            <span class="kpi-label" id="label-daily-cost-kpi">Daily Grain Cost</span>
+                            <span class="kpi-value kpi-gold" id="total-grain-cost">0.00 CC</span>
+                        </div>
+                        <div class="kpi-block">
+                            <span class="kpi-label">Daily Gross Profit</span>
+                            <span class="kpi-value" id="total-gross-profit">0.00 CC</span>
+                        </div>
+                        <div class="kpi-block">
+                            <span class="kpi-label" id="label-work-tax-kpi">Daily Work Tax</span>
+                            <span class="kpi-value kpi-red" id="total-work-tax">0.00 CC</span>
+                        </div>
+                        <div class="kpi-block">
+                            <span class="kpi-label" id="label-salary-kpi">Daily Salary</span>
+                            <span class="kpi-value kpi-red" id="total-salary">0.00 CC</span>
+                        </div>
+                    </div>
+                    <hr class="section-divider">
+                    <div class="summary-details">
+                        <h3 class="details-title">Inventory breakdown:</h3>
+                        <ul class="breakdown-list" id="factory-breakdown-list">
+                            <!-- Populated dynamically by JS -->
+                        </ul>
+                    </div>
+                    <hr class="section-divider">
+                    <div class="grain-comparison-section" style="margin-bottom: 15px;">
+                        <h3 class="details-title" style="margin-bottom: 8px;" id="strategy-comparison-header">Grain Strategy Comparison</h3>
+                        <div class="kpi-block-inline" style="margin-bottom: 4px;">
+                            <span class="kpi-label" id="label-total-produced">Grain Produced:</span>
+                            <span class="kpi-value-small" id="total-grain-produced" style="color: var(--erep-gold); font-weight: 700;">0.00 FRM</span>
+                        </div>
+                        <div class="kpi-block-inline" style="margin-bottom: 10px;">
+                            <span class="kpi-label" id="label-net-balance">Grain Net Balance:</span>
+                            <span class="kpi-value-small" id="grain-net-balance" style="font-weight: 700;">0.00 FRM</span>
+                        </div>
+                        
+                        <div class="strategy-card-wrapper" style="display: flex; flex-direction: column; gap: 8px;">
+                            <div class="strategy-option-card" id="strategy-buy-card" style="border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; background: var(--bg-card); transition: all 0.2s ease;">
+                                <div id="strategy-buy-title" style="font-weight: 700; font-size: 12px; color: var(--text-primary);">Option A: Buy Grain</div>
+                                <div style="font-size: 11px; margin-top: 2px; color: var(--text-secondary);">Market Cost: <span id="strategy-buy-cost">0.00</span> CC</div>
+                                <div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Net Profit: <span id="strategy-buy-profit" style="color: var(--text-primary);">0.00 CC</span></div>
+                            </div>
+                            <div class="strategy-option-card" id="strategy-produce-card" style="border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; background: var(--bg-card); transition: all 0.2s ease;">
+                                <div id="strategy-produce-title" style="font-weight: 700; font-size: 12px; color: var(--text-primary);">Option B: Produce Grain</div>
+                                <div style="font-size: 11px; margin-top: 2px; color: var(--text-secondary);"><span id="strategy-produce-tax-label">WaM Tax:</span> <span id="strategy-produce-tax">0.00</span> CC | Balance: <span id="strategy-produce-balance">0.00</span> CC</div>
+                                <div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Net Profit: <span id="strategy-produce-profit" style="color: var(--text-primary);">0.00 CC</span></div>
+                            </div>
+                        </div>
+                        <div id="strategy-recommendation" style="margin-top: 10px; font-size: 11px; font-weight: 700; padding: 8px; border-radius: 6px; text-align: center; border: 1px solid var(--border-color); transition: all 0.2s ease;">
+                            Recommendation: ...
+                        </div>
+                    </div>
+                    <div class="reset-area">
+                        <button id="btn-reset-all" class="btn btn-secondary">Clear All Factories</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modifiers Card -->
+            <div class="card modifiers-card">
+                <div class="card-header">
+                    <h2>Modifiers</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="control-group">
+                            <label for="select-country" class="control-label">Holding Country</label>
+                            <select id="select-country" class="market-input">
+                                <option value="">-- Select Country --</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="select-region" class="control-label">Holding Region</label>
+                            <select id="select-region" class="market-input" disabled>
+                                <option value="">-- Select Region --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sync-status-row" style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <span id="sync-status" class="sync-status text-muted" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">Auto-sync: Not configured</span>
+                    </div>
+                    
+                    <hr class="section-divider">
+
+                    <div class="form-row">
+                        <div class="control-group">
+                            <label for="input-country-bonus" class="control-label" id="country-bonus-label">Country Food Bonus</label>
+                            <input type="number" id="input-country-bonus" class="market-input info-readonly" min="0" max="100" value="100" readonly tabindex="-1" title="Auto-synced from the selected country — read-only">
+                        </div>
+                    </div>
+                    
+                    <hr class="section-divider">
+                    
+                    <div class="control-group">
+                        <div class="toggle-container">
+                            <span class="control-label">Active Tycoon Pack (+20%)</span>
+                            <label class="switch">
+                                <input type="checkbox" id="tycoon-toggle">
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-container" id="wam-group">
+                            <span class="control-label">Work as Manager (WAM)</span>
+                            <label class="switch">
+                                <input type="checkbox" id="wam-toggle" checked>
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr class="section-divider">
+                    
+                    <div class="form-row">
+                        <div class="control-group">
+                            <label for="input-region-bonus" class="control-label">Region Bonus (%)</label>
+                            <input type="number" id="input-region-bonus" class="market-input info-readonly" min="0" max="100" value="0" readonly tabindex="-1" title="Auto-synced from the selected region — read-only">
+                        </div>
+                    </div>
+                    
+                    <hr class="section-divider">
+                    
+                    <div class="form-row">
+                        <div class="control-group" id="work-tax-group">
+                            <label for="input-work-tax" class="control-label">Work Tax Rate (%)</label>
+                            <input type="number" id="input-work-tax" class="market-input info-readonly" step="0.5" min="1" max="25" value="1.0" readonly tabindex="-1" title="From selected country — read-only">
+                        </div>
+                        <div class="control-group">
+                            <label for="input-average-salary" class="control-label">Average Salary (CC)</label>
+                            <input type="number" id="input-average-salary" class="market-input info-readonly" step="10" min="0" value="0.0" readonly tabindex="-1" title="From selected country — read-only">
+                        </div>
+                        <div class="control-group" id="offered-salary-group">
+                            <label for="input-offered-salary" class="control-label">Offered Salary (CC)</label>
+                            <input type="number" id="input-offered-salary" class="market-input" step="1" min="0" value="0.0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Parameters Card -->
+            <div class="card market-params-card">
+                <div class="card-header">
+                    <h2>Market Parameters</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="control-group">
+                            <label for="input-grain-price" class="control-label" id="label-grain-price">Grain Price (CC)</label>
+                            <input type="number" id="input-grain-price" class="market-input" step="0.5" min="0" value="50.00">
+                        </div>
+                        <div class="control-group">
+                            <label for="input-vat" class="control-label">VAT Tax (%)</label>
+                            <input type="number" id="input-vat" class="market-input info-readonly" step="0.5" min="0" max="50" value="1.0" readonly tabindex="-1" title="From selected country — read-only">
+                        </div>
+                    </div>
+                    <button id="btn-sync-prices" class="btn btn-primary" style="margin-top: 15px;">Sync Live Prices</button>
+                </div>
+            </div>
+
+            <!-- Food Selling Prices Card -->
+            <div class="card food-prices-card">
+                <div class="card-header">
+                    <h2 id="food-prices-header">Food Prices (CC)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="prices-grid">
+                        <div class="price-input-row" id="price-row-q1">
+                            <label for="price-q1" class="food-price-label" data-quality="1">Q1 Food</label>
+                            <input type="number" id="price-q1" class="food-price-input" data-quality="1" step="0.05" min="0" value="0.80">
+                        </div>
+                        <div class="price-input-row" id="price-row-q2">
+                            <label for="price-q2" class="food-price-label" data-quality="2">Q2 Food</label>
+                            <input type="number" id="price-q2" class="food-price-input" data-quality="2" step="0.05" min="0" value="1.60">
+                        </div>
+                        <div class="price-input-row" id="price-row-q3">
+                            <label for="price-q3" class="food-price-label" data-quality="3">Q3 Food</label>
+                            <input type="number" id="price-q3" class="food-price-input" data-quality="3" step="0.05" min="0" value="2.40">
+                        </div>
+                        <div class="price-input-row" id="price-row-q4">
+                            <label for="price-q4" class="food-price-label" data-quality="4">Q4 Food</label>
+                            <input type="number" id="price-q4" class="food-price-input" data-quality="4" step="0.05" min="0" value="3.20">
+                        </div>
+                        <div class="price-input-row" id="price-row-q5">
+                            <label for="price-q5" class="food-price-label" data-quality="5">Q5 Food</label>
+                            <input type="number" id="price-q5" class="food-price-input" data-quality="5" step="0.05" min="0" value="4.00">
+                        </div>
+                        <div class="price-input-row" id="price-row-q6">
+                            <label for="price-q6" class="food-price-label" data-quality="6">Q6 Food</label>
+                            <input type="number" id="price-q6" class="food-price-input" data-quality="6" step="0.05" min="0" value="5.00">
+                        </div>
+                        <div class="price-input-row" id="price-row-q7">
+                            <label for="price-q7" class="food-price-label" data-quality="7">Q7 Food</label>
+                            <input type="number" id="price-q7" class="food-price-input" data-quality="7" step="0.05" min="0" value="9.90">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <section class="workspace">
+            <div class="card workspace-card">
+                <div class="card-header main-header">
+                    <div class="header-title-wrapper">
+                        <div class="icon-circle">
+                            <!-- Food SVG Icon -->
+                            <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 id="factories-main-title">Your Food Factories</h1>
+                            <p class="subtitle" id="factories-subtitle">Specify the number of Q1 to Q7 companies you own</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="factories-grid" id="factories-container">
+                        <!-- Q1-Q7 Cards will be rendered dynamically by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card workspace-card" style="margin-top: 25px;">
+                <div class="card-header main-header">
+                    <div class="header-title-wrapper">
+                        <div class="icon-circle">
+                            <!-- Plant SVG Icon / Wheat -->
+                            <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v20M17 5l-5 5M7 5l5 5M17 10l-5 5M7 10l5 5M17 15l-5 5M7 15l5 5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 id="plantations-main-title">Your Grain Plantations</h1>
+                            <p class="subtitle" id="plantations-subtitle">Specify the number of Q1 to Q5 Food Raw Material (FRM) companies you own</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="factories-grid" id="plantations-container">
+                        <!-- Q1-Q5 Plantation Cards will be rendered dynamically by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main class="app-container" id="holdings-view" style="display:none;">
+        <div class="holdings-toolbar">
+            <div class="holdings-picker">
+                <label class="control-label" for="hld-select">Holding</label>
+                <select id="hld-select" class="market-input"></select>
+            </div>
+            <div class="holdings-actions">
+                <button id="hld-new" class="btn btn-primary">+ New</button>
+                <button id="hld-rename" class="btn btn-secondary">Rename</button>
+                <button id="hld-delete" class="btn btn-secondary">Delete</button>
+            </div>
+        </div>
+
+        <div id="hld-empty" class="holdings-empty">No holdings yet. Click <strong>+ New</strong> to create one.</div>
+
+        <div id="hld-content" class="holdings-content" style="display:none;">
+            <section class="holdings-workspace">
+                <div class="card">
+                    <div class="card-body holdings-location-bar">
+                        <div class="control-group">
+                            <label class="control-label" for="hld-country">Holding Country</label>
+                            <select id="hld-country" class="market-input"><option value="">-- Select Country --</option></select>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="hld-region">Holding Region</label>
+                            <select id="hld-region" class="market-input" disabled><option value="">-- Select Region --</option></select>
+                        </div>
+                        <div class="control-group toggle-container">
+                            <span class="control-label">Tycoon (+20%)</span>
+                            <label class="switch"><input type="checkbox" id="hld-tycoon"><span class="switch-slider"></span></label>
+                        </div>
+                        <div class="control-group toggle-container">
+                            <span class="control-label">WAM</span>
+                            <label class="switch"><input type="checkbox" id="hld-wam"><span class="switch-slider"></span></label>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="hld-offered-salary">Offered Salary (CC)</label>
+                            <input type="number" id="hld-offered-salary" class="market-input" step="1" min="0" value="0.0">
+                        </div>
+                        <div class="control-group holdings-sync-col">
+                            <span id="hld-sync-status" class="sync-status" style="font-size:11px;font-weight:600;color:var(--text-secondary);">Auto-sync: Not configured</span>
+                            <button id="hld-sync-prices" class="btn btn-primary">Sync Live Prices</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="hld-sections"></div>
+            </section>
+
+            <aside class="holdings-summary">
+                <div class="card summary-card">
+                    <div class="card-header"><h2>Holding Summary</h2></div>
+                    <div class="card-body">
+                        <div class="kpi-block">
+                            <span class="kpi-label">Net Profit / day</span>
+                            <span class="kpi-value" id="hld-net-profit">0.00 CC</span>
+                        </div>
+                        <hr class="kpi-divider">
+                        <div class="kpi-block-inline"><span class="kpi-label">Total Companies</span><span class="kpi-value-small" id="hld-total-companies">0</span></div>
+                        <div class="kpi-block"><span class="kpi-label">Daily Revenue</span><span class="kpi-value kpi-blue" id="hld-revenue">0.00 CC</span></div>
+                        <div class="kpi-block"><span class="kpi-label">Raw Material (net)</span><span class="kpi-value kpi-gold" id="hld-rm-net">0.00 CC</span></div>
+                        <div class="kpi-block"><span class="kpi-label">Work Tax</span><span class="kpi-value kpi-red" id="hld-work-tax">0.00 CC</span></div>
+                        <div class="kpi-block"><span class="kpi-label">Salaries</span><span class="kpi-value kpi-red" id="hld-salary">0.00 CC</span></div>
+                        <hr class="section-divider">
+                        <h3 class="details-title">Per industry</h3>
+                        <ul class="breakdown-list" id="hld-breakdown"></ul>
+                        <p class="subtitle" style="margin-top:10px;font-size:11px;">Product &amp; raw-material prices are shared with the industry tabs. Use "Sync Live Prices" or edit them on those tabs.</p>
+                        <hr class="section-divider">
+                        <div class="reset-area">
+                            <button id="hld-clear" class="btn btn-secondary">Clear All Companies</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>eRepublik Productivity Calculator &bull; Created step-by-step with pair programming</p>
+    </footer>
+
+    <!-- Main Logic Script -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
