@@ -692,7 +692,9 @@ async function syncRegionModifiers() {
             }
         }
 
-        // 4. Parse Work Tax Rate
+        // 4. Parse Work Tax Rate. Anchored on the "Food" row on purpose: work tax is a country-wide
+        // rate (identical across all industry rows), so we read it once regardless of activeModule.
+        // (VAT, by contrast, IS per-industry — see step 6, which anchors on cfg.industryLabel.)
         let workTaxValue = 1.0;
         const wtMatch = countryHtml.match(/Food<\/span>\s*<\/td>\s*<\s*td[^>]*>\s*<span\s+class="special"\s*>([\d.]+)%/i);
         if (wtMatch) {
