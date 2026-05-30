@@ -1615,65 +1615,33 @@ function renderHiredLaborModule(moduleKey) {
     setupListeners();
 }
 
+// Switch active industry module: persist, repopulate the region dropdown for THIS module's
+// country, then render from stored per-module state (no network re-sync).
+async function switchModule(target) {
+    if (state.activeModule === target) return;
+    state.activeModule = target;
+    saveState();
+    const loc = state[target];
+    if (loc.selectedCountryId) {
+        await loadRegionsForCountry(loc.selectedCountryId, loc.selectedRegionPermalink);
+    } else {
+        const regionSelect = document.getElementById("select-region");
+        if (regionSelect) { regionSelect.innerHTML = '<option value="">-- Select Region --</option>'; regionSelect.disabled = true; }
+    }
+    render();
+}
+
 // Bind events to interactive controls
 function setupListeners() {
     // Tab switching
     const tabFood = document.getElementById("tab-food");
-    if (tabFood) {
-        tabFood.onclick = function() {
-            if (state.activeModule !== "food") {
-                state.activeModule = "food";
-                saveState();
-                if (state.selectedCountryId && state.selectedRegionPermalink) {
-                    syncRegionModifiers();
-                } else {
-                    render();
-                }
-            }
-        };
-    }
+    if (tabFood) tabFood.onclick = () => switchModule("food");
     const tabWeapons = document.getElementById("tab-weapons");
-    if (tabWeapons) {
-        tabWeapons.onclick = function() {
-            if (state.activeModule !== "weapons") {
-                state.activeModule = "weapons";
-                saveState();
-                if (state.selectedCountryId && state.selectedRegionPermalink) {
-                    syncRegionModifiers();
-                } else {
-                    render();
-                }
-            }
-        };
-    }
+    if (tabWeapons) tabWeapons.onclick = () => switchModule("weapons");
     const tabHouses = document.getElementById("tab-houses");
-    if (tabHouses) {
-        tabHouses.onclick = function() {
-            if (state.activeModule !== "houses") {
-                state.activeModule = "houses";
-                saveState();
-                if (state.selectedCountryId && state.selectedRegionPermalink) {
-                    syncRegionModifiers();
-                } else {
-                    render();
-                }
-            }
-        };
-    }
+    if (tabHouses) tabHouses.onclick = () => switchModule("houses");
     const tabAircraft = document.getElementById("tab-aircraft");
-    if (tabAircraft) {
-        tabAircraft.onclick = function() {
-            if (state.activeModule !== "aircraft") {
-                state.activeModule = "aircraft";
-                saveState();
-                if (state.selectedCountryId && state.selectedRegionPermalink) {
-                    syncRegionModifiers();
-                } else {
-                    render();
-                }
-            }
-        };
-    }
+    if (tabAircraft) tabAircraft.onclick = () => switchModule("aircraft");
 
     // Food/Weapon counter buttons (companies / workers, factory / plantation)
     document.querySelectorAll(".fw-counter-btn").forEach(btn => {
@@ -2073,10 +2041,11 @@ document.getElementById("btn-reset-all").onclick = function() {
             state.armPrice = 1415.00;
         }
         state.hasTycoon = false;
-        state.averageSalary = 0.0;
-        state.selectedCountryId = "";
-        state.selectedRegionPermalink = "";
-        state.vat = 1.0;
+        m.averageSalary = 0.0;
+        m.workTaxRate = 1.0;
+        m.selectedCountryId = "";
+        m.selectedRegionPermalink = "";
+        m.vat = 1.0;
         const syncStatusH = document.getElementById("sync-status");
         if (syncStatusH) { syncStatusH.textContent = "Auto-sync: Not configured"; syncStatusH.style.color = "var(--text-secondary)"; }
         const regionSelectH = document.getElementById("select-region");
@@ -2114,11 +2083,11 @@ document.getElementById("btn-reset-all").onclick = function() {
     
     // Reset shared state
     state.hasTycoon = false;
-    state.workTaxRate = 1.0;
-    state.averageSalary = 0.0;
-    state.selectedCountryId = "";
-    state.selectedRegionPermalink = "";
-    state.vat = 1.0;
+    state[active].workTaxRate = 1.0;
+    state[active].averageSalary = 0.0;
+    state[active].selectedCountryId = "";
+    state[active].selectedRegionPermalink = "";
+    state[active].vat = 1.0;
     
     const syncStatus = document.getElementById("sync-status");
     if (syncStatus) {
@@ -2140,8 +2109,9 @@ document.getElementById("btn-reset-all").onclick = function() {
 document.addEventListener("DOMContentLoaded", async () => {
     populateCountriesDropdown();
     loadState();
-    if (state.selectedCountryId) {
-        await loadRegionsForCountry(state.selectedCountryId, state.selectedRegionPermalink);
+    const bootLoc = state[state.activeModule];
+    if (bootLoc.selectedCountryId) {
+        await loadRegionsForCountry(bootLoc.selectedCountryId, bootLoc.selectedRegionPermalink);
     }
     render();
 });
