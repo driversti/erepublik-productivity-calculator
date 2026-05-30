@@ -296,6 +296,23 @@ function activeHolding() {
     return state.holdings.find(h => h.id === state.activeHoldingId) || null;
 }
 
+// Zero out every company/worker count in the active holding, keeping its location & bonuses.
+function clearHoldingCompanies() {
+    const h = activeHolding(); if (!h) return;
+    if (!confirm("Clear all companies in this holding? Location and synced bonuses are kept.")) return;
+    HOLDING_INDUSTRIES.forEach(cfg => {
+        const ind = h.industries[cfg.key];
+        if (cfg.type === 'fw') {
+            for (let q = 1; q <= 7; q++) ind[q] = { companies: 0, workers: 0 };
+            for (let q = 1; q <= 5; q++) ind.plantations[q] = { companies: 0, workers: 0 };
+        } else {
+            for (let q = 1; q <= 5; q++) { ind.factories[q] = { companies: 0, workers: 0 }; ind.rm[q] = { companies: 0, workers: 0 }; }
+        }
+    });
+    saveState();
+    render();
+}
+
 // LocalStorage key name (v11)
 const STORAGE_KEY = "erep_calculator_food_factories_v11";
 
@@ -2143,6 +2160,9 @@ function setupListeners() {
         state.activeHoldingId = state.holdings.length ? state.holdings[0].id : null;
         saveState(); render();
     };
+
+    const hldClear = document.getElementById("hld-clear");
+    if (hldClear) hldClear.onclick = clearHoldingCompanies;
 
     const hldTycoon = document.getElementById("hld-tycoon");
     if (hldTycoon) hldTycoon.onchange = function () { state.hasTycoon = this.checked; saveState(); render(); };
