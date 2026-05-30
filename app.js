@@ -834,15 +834,22 @@ function render() {
     
     // Render plantation rows
     const plantationsContainer = document.getElementById("plantations-container");
-    let totalPlantations = 0;
+    let totalPlantations = 0;     // total companies
+    let plantSessions = 0;        // WAM + hired
+    let plantWorkers = 0;         // hired only
     let totalGrainProduced = 0;
     
     if (plantationsContainer) {
         plantationsContainer.innerHTML = "";
         
         plantationsData.forEach(plant => {
-            const qty = moduleState.plantations[plant.quality] || 0;
-            totalPlantations += qty;
+            const cell = moduleState.plantations[plant.quality] || { companies: 0, workers: 0 };
+            const companies = cell.companies || 0;
+            const workers = Math.min(cell.workers || 0, companies * plant.maxEmployees);
+            const sessions = companies + workers;
+            totalPlantations += companies;
+            plantSessions += sessions;
+            plantWorkers += workers;
             
             // Raw materials pollution is at index 0 of qualityPollution
             const pollutionRate = (moduleState.qualityPollution && typeof moduleState.qualityPollution[0] === 'number') 
@@ -854,7 +861,7 @@ function render() {
             const cardMultiplier = Math.max(0, multiplier);
             
             const singleOutput = (plant.baseOutput / 100) * cardMultiplier;
-            const cardOutput = singleOutput * qty;
+            const cardOutput = singleOutput * sessions;
             totalGrainProduced += cardOutput;
             
             // Create Plantation Card DOM
@@ -889,7 +896,7 @@ function render() {
                     <div class="stat-item">
                         <span class="stat-label">Daily Output</span>
                         <span class="stat-value" style="color: ${isFood ? '#e67e22' : '#7f8c8d'};">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${isFood ? 'FRM' : 'WRM'}</span>
-                        <span style="font-size: 10px; color: var(--text-secondary);">${singleOutput.toFixed(2)} / bldg</span>
+                        <span style="font-size: 10px; color: var(--text-secondary);">${singleOutput.toFixed(2)} / session</span>
                     </div>
                     <div class="stat-item" style="opacity: 0.5;">
                         <!-- Placeholder to align with factory cards -->
@@ -899,11 +906,7 @@ function render() {
                     </div>
                 </div>
                 <div class="factory-action-area">
-                    <div class="counter-group">
-                        <button class="btn-counter btn-plant-minus" data-quality="${plant.quality}">-</button>
-                        <input type="text" class="counter-input plantation-counter-input" data-quality="${plant.quality}" value="${qty}" inputmode="numeric" pattern="[0-9]*">
-                        <button class="btn-counter btn-plant-plus" data-quality="${plant.quality}">+</button>
-                    </div>
+                    ${fwCounterGroupsHtml('plantation', plant.quality, companies, workers, companies * plant.maxEmployees, plant.maxEmployees === 0)}
                 </div>
             `;
             
