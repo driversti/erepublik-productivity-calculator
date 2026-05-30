@@ -357,14 +357,20 @@ function generateStarsHtml(quality) {
     return starsHtml;
 }
 
-// --- House module helpers ---
+// --- Hired-labor module helpers (houses + aircraft share the same shape) ---
+function hiredLaborData(kind) {
+    const isHouses = state.activeModule === 'houses';
+    return kind === 'factory'
+        ? (isHouses ? houseFactoriesData : aircraftFactoriesData)
+        : (isHouses ? houseRawMaterialsData : aircraftRawMaterialsData);
+}
+
 function getHouseCell(kind, quality) {
-    return state.houses[kind === 'factory' ? 'factories' : 'rm'][quality];
+    return state[state.activeModule][kind === 'factory' ? 'factories' : 'rm'][quality];
 }
 
 function houseMaxEmployees(kind, quality) {
-    const data = kind === 'factory' ? houseFactoriesData : houseRawMaterialsData;
-    const row = data.find(x => String(x.quality) === String(quality));
+    const row = hiredLaborData(kind).find(x => String(x.quality) === String(quality));
     return row ? row.maxEmployees : 0;
 }
 
