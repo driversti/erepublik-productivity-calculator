@@ -58,6 +58,26 @@ const houseRawMaterialsData = [
     { quality: 5, name: "Granite (Q5)",   baseOutput: 250, maxEmployees: 5 }
 ];
 
+// Aircraft Weapon Factories (Q1-Q5). Owner cannot work — hired employees only (like houses).
+// baseOutput is flat 5 (quality-independent, like food=100/weapon=10).
+// baseRM is in Marketplace Units (1 ARM unit = 100 individual), per-quality like ground weapons.
+const aircraftFactoriesData = [
+    { quality: 1, name: "Aircraft Weapons Factory (Q1)", baseOutput: 5, baseRM: 1, maxEmployees: 1 },
+    { quality: 2, name: "Aircraft Weapons Factory (Q2)", baseOutput: 5, baseRM: 2, maxEmployees: 2 },
+    { quality: 3, name: "Aircraft Weapons Factory (Q3)", baseOutput: 5, baseRM: 3, maxEmployees: 3 },
+    { quality: 4, name: "Aircraft Weapons Factory (Q4)", baseOutput: 5, baseRM: 4, maxEmployees: 4 },
+    { quality: 5, name: "Aircraft Weapons Factory (Q5)", baseOutput: 5, baseRM: 5, maxEmployees: 5 }
+];
+
+// Aircraft Raw Material companies. baseOutput is in individual units (÷100 for marketplace ARM units).
+const aircraftRawMaterialsData = [
+    { quality: 1, name: "Magnesium Refinery (Q1)", baseOutput: 0.35, maxEmployees: 1 },
+    { quality: 2, name: "Titanium Refinery (Q2)",  baseOutput: 0.70, maxEmployees: 2 },
+    { quality: 3, name: "Wolfram Mine (Q3)",       baseOutput: 1.25, maxEmployees: 3 },
+    { quality: 4, name: "Cobalt Plant (Q4)",       baseOutput: 1.75, maxEmployees: 4 },
+    { quality: 5, name: "Neodymium Mine (Q5)",     baseOutput: 2.50, maxEmployees: 5 }
+];
+
 // --- eRepublik rounding helpers (mirror the game's own myCompanies math) ---
 // Standard round-to-N-decimals, identical to the game's roundNumber().
 function roundNumber(number, digits = 2) {
@@ -80,6 +100,7 @@ const EREP_CDN = "https://www.erepublik.net/images";
 const FRM_BUILDING_IDS = { 1: 7, 2: 8, 3: 9, 4: 10, 5: 11 };    // Grain Farm … Hunting Lodge
 const WRM_BUILDING_IDS = { 1: 12, 2: 13, 3: 14, 4: 15, 5: 16 }; // Iron Mine … Rubber Plantation
 const HRM_BUILDING_IDS = { 1: 17, 2: 18, 3: 19, 4: 21, 5: 22 }; // Sand … Granite (id 20 unused)
+const ARM_BUILDING_IDS = { 1: 24, 2: 25, 3: 26, 4: 27, 5: 28 }; // Magnesium … Neodymium
 
 const factoryIconUrl = (isFood, quality) => `${EREP_CDN}/icons/industry/${isFood ? 1 : 2}/q${quality}.png`;
 const plantationIconUrl = (isFood, quality) => `${EREP_CDN}/buildings/${(isFood ? FRM_BUILDING_IDS : WRM_BUILDING_IDS)[quality]}.png`;
