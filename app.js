@@ -62,6 +62,7 @@ const houseRawMaterialsData = [
 let state = {
     activeModule: "food", // "food", "weapons", or "houses"
     hasTycoon: false,
+    wamEnabled: true,
     workTaxRate: 1.0,
     averageSalary: 0.0,
     offeredSalary: 0.0,
@@ -147,6 +148,7 @@ function loadState() {
             const parsed = JSON.parse(stored);
             if (typeof parsed.activeModule === 'string') state.activeModule = parsed.activeModule;
             if (typeof parsed.hasTycoon === 'boolean') state.hasTycoon = parsed.hasTycoon;
+            if (typeof parsed.wamEnabled === 'boolean') state.wamEnabled = parsed.wamEnabled;
             if (typeof parsed.workTaxRate === 'number') state.workTaxRate = parsed.workTaxRate;
             if (typeof parsed.averageSalary === 'number') state.averageSalary = parsed.averageSalary;
             if (typeof parsed.offeredSalary === 'number') state.offeredSalary = parsed.offeredSalary;
@@ -613,6 +615,8 @@ function render() {
     // Restore DOM that the houses path hides/relabels
     const workTaxGroupFW = document.getElementById("work-tax-group");
     if (workTaxGroupFW) workTaxGroupFW.style.display = "";
+    const wamGroupFW = document.getElementById("wam-group");
+    if (wamGroupFW) wamGroupFW.style.display = "";
     const labelWorkTaxKpiFW = document.getElementById("label-work-tax-kpi");
     if (labelWorkTaxKpiFW) labelWorkTaxKpiFW.textContent = "Daily Work Tax";
     const labelTotalCountFW = document.getElementById("label-total-count");
@@ -679,6 +683,8 @@ function render() {
     document.getElementById("country-bonus-slider").value = moduleState.countryBonus;
     document.getElementById("country-bonus-value").textContent = `${moduleState.countryBonus}%`;
     document.getElementById("tycoon-toggle").checked = state.hasTycoon;
+    const wamToggleFW = document.getElementById("wam-toggle");
+    if (wamToggleFW) wamToggleFW.checked = state.wamEnabled;
     document.getElementById("input-region-bonus").value = moduleState.regionBonus;
     document.getElementById("input-pollution").value = moduleState.pollution;
     document.getElementById("input-work-tax").value = state.workTaxRate.toFixed(2);
@@ -729,7 +735,7 @@ function render() {
         const cell = moduleState[fact.quality] || { companies: 0, workers: 0 };
         const companies = cell.companies || 0;
         const workers = Math.min(cell.workers || 0, companies * fact.maxEmployees);
-        const sessions = companies + workers;
+        const sessions = (state.wamEnabled ? companies : 0) + workers;
         totalFactories += companies;
         factorySessions += sessions;
         factoryWorkers += workers;
@@ -847,7 +853,7 @@ function render() {
             const cell = moduleState.plantations[plant.quality] || { companies: 0, workers: 0 };
             const companies = cell.companies || 0;
             const workers = Math.min(cell.workers || 0, companies * plant.maxEmployees);
-            const sessions = companies + workers;
+            const sessions = (state.wamEnabled ? companies : 0) + workers;
             totalPlantations += companies;
             plantSessions += sessions;
             plantWorkers += workers;
@@ -1222,6 +1228,8 @@ function renderHouses() {
 
     const workTaxGroup = document.getElementById("work-tax-group");
     if (workTaxGroup) workTaxGroup.style.display = "none";
+    const wamGroupH = document.getElementById("wam-group");
+    if (wamGroupH) wamGroupH.style.display = "none";
 
     // --- Sync modifier/market inputs with houses state ---
     document.getElementById("country-bonus-slider").value = h.countryBonus;
@@ -1611,6 +1619,16 @@ function setupListeners() {
     if (toggle) {
         toggle.onchange = function() {
             state.hasTycoon = this.checked;
+            saveState();
+            render();
+        };
+    }
+
+    // Work-as-Manager Toggle (counts the owner's 1 WAM session per company when on)
+    const wamToggle = document.getElementById("wam-toggle");
+    if (wamToggle) {
+        wamToggle.onchange = function() {
+            state.wamEnabled = this.checked;
             saveState();
             render();
         };
