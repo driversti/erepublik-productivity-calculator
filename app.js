@@ -157,16 +157,11 @@ let state = {
     activeModule: "food", // "food", "weapons", "houses", or "aircraft"
     hasTycoon: false,
     wamEnabled: true,
-    workTaxRate: 1.0,
-    averageSalary: 0.0,
     offeredSalary: 0.0,
-    selectedCountryId: "",
-    selectedRegionPermalink: "",
     frmPrice: 50.00,
     wrmPrice: 50.00,
     hrmPrice: 1535.00,
     armPrice: 1415.00,
-    vat: 1.0,
     food: {
         1: { companies: 0, workers: 0 },
         2: { companies: 0, workers: 0 },
@@ -186,7 +181,8 @@ let state = {
         regionBonus: 0,
         pollution: 0,
         qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 },
-        prices: { 1: 0.80, 2: 1.60, 3: 2.40, 4: 3.20, 5: 4.00, 6: 5.00, 7: 9.90 }
+        prices: { 1: 0.80, 2: 1.60, 3: 2.40, 4: 3.20, 5: 4.00, 6: 5.00, 7: 9.90 },
+        selectedCountryId: "", selectedRegionPermalink: "", workTaxRate: 1.0, averageSalary: 0.0, vat: 1.0
     },
     weapons: {
         1: { companies: 0, workers: 0 },
@@ -207,7 +203,8 @@ let state = {
         regionBonus: 0,
         pollution: 0,
         qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 },
-        prices: { 1: 1.20, 2: 2.40, 3: 3.60, 4: 4.80, 5: 6.00, 6: 8.00, 7: 15.00 }
+        prices: { 1: 1.20, 2: 2.40, 3: 3.60, 4: 4.80, 5: 6.00, 6: 8.00, 7: 15.00 },
+        selectedCountryId: "", selectedRegionPermalink: "", workTaxRate: 1.0, averageSalary: 0.0, vat: 1.0
     },
     houses: {
         factories: {
@@ -228,7 +225,8 @@ let state = {
         regionBonus: 0,
         pollution: 0,
         qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
-        prices: { 1: 29000, 2: 63500, 3: 129850, 4: 263498, 5: 315999 }
+        prices: { 1: 29000, 2: 63500, 3: 129850, 4: 263498, 5: 315999 },
+        selectedCountryId: "", selectedRegionPermalink: "", workTaxRate: 1.0, averageSalary: 0.0, vat: 1.0
     },
     aircraft: {
         factories: {
@@ -249,9 +247,13 @@ let state = {
         regionBonus: 0,
         pollution: 0,
         qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
-        prices: { 1: 963.00, 2: 900.00, 3: 1485.00, 4: 1800.00, 5: 2179.00 }
+        prices: { 1: 963.00, 2: 900.00, 3: 1485.00, 4: 1800.00, 5: 2179.00 },
+        selectedCountryId: "", selectedRegionPermalink: "", workTaxRate: 1.0, averageSalary: 0.0, vat: 1.0
     }
 };
+
+// The active module's sub-state (food/weapons/houses/aircraft) — holds its own location & country metrics.
+function activeLoc() { return state[state.activeModule]; }
 
 // LocalStorage key name (v9)
 const STORAGE_KEY = "erep_calculator_food_factories_v10";
