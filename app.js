@@ -475,7 +475,7 @@ function fwCounterGroupsHtml(kind, quality, companies, workers, maxWorkers, hide
 
 // Highlight the active tab across all three modules
 function setActiveTabHighlight(active) {
-    [['food', 'tab-food'], ['weapons', 'tab-weapons'], ['houses', 'tab-houses']].forEach(([m, id]) => {
+    [['food', 'tab-food'], ['weapons', 'tab-weapons'], ['houses', 'tab-houses'], ['aircraft', 'tab-aircraft']].forEach(([m, id]) => {
         const el = document.getElementById(id);
         if (el) el.classList.toggle('active', m === active);
     });
@@ -1622,6 +1622,20 @@ function setupListeners() {
         tabHouses.onclick = function() {
             if (state.activeModule !== "houses") {
                 state.activeModule = "houses";
+                saveState();
+                if (state.selectedCountryId && state.selectedRegionPermalink) {
+                    syncRegionModifiers();
+                } else {
+                    render();
+                }
+            }
+        };
+    }
+    const tabAircraft = document.getElementById("tab-aircraft");
+    if (tabAircraft) {
+        tabAircraft.onclick = function() {
+            if (state.activeModule !== "aircraft") {
+                state.activeModule = "aircraft";
                 saveState();
                 if (state.selectedCountryId && state.selectedRegionPermalink) {
                     syncRegionModifiers();
