@@ -1747,8 +1747,8 @@ function setupListeners() {
     if (selectCountry) {
         selectCountry.onchange = async function() {
             const countryId = this.value;
-            state.selectedCountryId = countryId;
-            state.selectedRegionPermalink = ""; // Reset region selection
+            activeLoc().selectedCountryId = countryId;
+            activeLoc().selectedRegionPermalink = ""; // Reset region selection
             
             saveState();
             render();
@@ -1769,7 +1769,7 @@ function setupListeners() {
     const selectRegion = document.getElementById("select-region");
     if (selectRegion) {
         selectRegion.onchange = function() {
-            state.selectedRegionPermalink = this.value;
+            activeLoc().selectedRegionPermalink = this.value;
             saveState();
             syncRegionModifiers();
         };
@@ -1783,15 +1783,15 @@ function setupListeners() {
             state[active].countryBonus = parseInt(this.value, 10);
             document.getElementById("country-bonus-value").textContent = `${this.value}%`;
             
-            // De-sync location since user modified manual inputs
-            state.selectedCountryId = "";
-            state.selectedRegionPermalink = "";
+            // De-sync location since user modified manual inputs (active module only)
+            activeLoc().selectedCountryId = "";
+            activeLoc().selectedRegionPermalink = "";
             const syncStatus = document.getElementById("sync-status");
             if (syncStatus) {
                 syncStatus.textContent = "Auto-sync: De-synced (Manual)";
                 syncStatus.style.color = "var(--text-secondary)";
             }
-            
+
             saveState();
             render();
         };
@@ -1828,15 +1828,15 @@ function setupListeners() {
             }
             state[active].regionBonus = Math.min(val, 100);
             
-            // De-sync location since user modified manual inputs
-            state.selectedCountryId = "";
-            state.selectedRegionPermalink = "";
+            // De-sync location since user modified manual inputs (active module only)
+            activeLoc().selectedCountryId = "";
+            activeLoc().selectedRegionPermalink = "";
             const syncStatus = document.getElementById("sync-status");
             if (syncStatus) {
                 syncStatus.textContent = "Auto-sync: De-synced (Manual)";
                 syncStatus.style.color = "var(--text-secondary)";
             }
-            
+
             saveState();
             render();
         };
@@ -1845,59 +1845,7 @@ function setupListeners() {
         };
     }
 
-    // Work Tax Input
-    const workTaxInput = document.getElementById("input-work-tax");
-    if (workTaxInput) {
-        workTaxInput.onchange = function() {
-            let val = parseFloat(this.value);
-            if (isNaN(val) || val < 0) {
-                val = 1.0;
-            }
-            state.workTaxRate = Math.min(val, 25.0);
-            
-            // De-sync location since user modified manual inputs
-            state.selectedCountryId = "";
-            state.selectedRegionPermalink = "";
-            const syncStatus = document.getElementById("sync-status");
-            if (syncStatus) {
-                syncStatus.textContent = "Auto-sync: De-synced (Manual)";
-                syncStatus.style.color = "var(--text-secondary)";
-            }
-            
-            saveState();
-            render();
-        };
-        workTaxInput.onkeydown = function(e) {
-            if (e.key === "Enter") this.blur();
-        };
-    }
 
-    // Average Salary Input
-    const avgSalaryInput = document.getElementById("input-average-salary");
-    if (avgSalaryInput) {
-        avgSalaryInput.onchange = function() {
-            let val = parseFloat(this.value);
-            if (isNaN(val) || val < 0) {
-                val = 0.0;
-            }
-            state.averageSalary = val;
-            
-            // De-sync location since user modified manual inputs
-            state.selectedCountryId = "";
-            state.selectedRegionPermalink = "";
-            const syncStatus = document.getElementById("sync-status");
-            if (syncStatus) {
-                syncStatus.textContent = "Auto-sync: De-synced (Manual)";
-                syncStatus.style.color = "var(--text-secondary)";
-            }
-            
-            saveState();
-            render();
-        };
-        avgSalaryInput.onkeydown = function(e) {
-            if (e.key === "Enter") this.blur();
-        };
-    }
 
     // Offered Salary Input (labor paid to hired workers; does not de-sync location)
     const offeredSalaryInput = document.getElementById("input-offered-salary");
@@ -1940,22 +1888,7 @@ function setupListeners() {
         };
     }
 
-    // VAT Input
-    const vatInput = document.getElementById("input-vat");
-    if (vatInput) {
-        vatInput.onchange = function() {
-            let val = parseFloat(this.value);
-            if (isNaN(val) || val < 0) {
-                val = 1.0;
-            }
-            state.vat = Math.min(val, 50.0);
-            saveState();
-            render();
-        };
-        vatInput.onkeydown = function(e) {
-            if (e.key === "Enter") this.blur();
-        };
-    }
+
 
     // Food/Weapon Prices Inputs
     document.querySelectorAll(".food-price-input").forEach(input => {
