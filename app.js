@@ -71,11 +71,11 @@ const aircraftFactoriesData = [
 
 // Aircraft Raw Material companies. baseOutput is in individual units (÷100 for marketplace ARM units).
 const aircraftRawMaterialsData = [
-    { quality: 1, name: "Magnesium Refinery (Q1)", baseOutput: 0.35, maxEmployees: 1 },
-    { quality: 2, name: "Titanium Refinery (Q2)",  baseOutput: 0.70, maxEmployees: 2 },
-    { quality: 3, name: "Wolfram Mine (Q3)",       baseOutput: 1.25, maxEmployees: 3 },
-    { quality: 4, name: "Cobalt Plant (Q4)",       baseOutput: 1.75, maxEmployees: 4 },
-    { quality: 5, name: "Neodymium Mine (Q5)",     baseOutput: 2.50, maxEmployees: 5 }
+    { quality: 1, name: "Magnesium Refinery (Q1)", baseOutput: 35,  maxEmployees: 1 },
+    { quality: 2, name: "Titanium Refinery (Q2)",  baseOutput: 70,  maxEmployees: 2 },
+    { quality: 3, name: "Wolfram Mine (Q3)",       baseOutput: 125, maxEmployees: 3 },
+    { quality: 4, name: "Cobalt Plant (Q4)",       baseOutput: 175, maxEmployees: 4 },
+    { quality: 5, name: "Neodymium Mine (Q5)",     baseOutput: 250, maxEmployees: 5 }
 ];
 
 // --- eRepublik rounding helpers (mirror the game's own myCompanies math) ---
@@ -154,7 +154,7 @@ function gameIconHtml(iconUrl, fallbackSvg) {
 
 // Initialize Application State
 let state = {
-    activeModule: "food", // "food", "weapons", or "houses"
+    activeModule: "food", // "food", "weapons", "houses", or "aircraft"
     hasTycoon: false,
     wamEnabled: true,
     workTaxRate: 1.0,
@@ -1517,7 +1517,7 @@ function renderHiredLaborModule(moduleKey) {
     // --- Summary KPIs ---
     document.getElementById("total-factories-count").textContent = totalCompanies;
     document.getElementById("total-food-output").textContent = totalOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    document.getElementById("total-grain-required").textContent = `${totalHrmUsed.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} HRM`;
+    document.getElementById("total-grain-required").textContent = `${totalHrmUsed.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.rmNoun}`;
     document.getElementById("total-gross-revenue").textContent = `${sumRevenue.toFixed(2)} CC`;
 
     const totalGrainCostEl = document.getElementById("total-grain-cost");
@@ -1536,12 +1536,12 @@ function renderHiredLaborModule(moduleKey) {
     netProfitEl.className = displayNet >= 0 ? "kpi-value text-success" : "kpi-value text-danger";
 
     const breakdownList = document.getElementById("factory-breakdown-list");
-    breakdownList.innerHTML = breakdownHtml === "" ? `<li class="info-text" style="text-align:center;font-style:italic;">No house companies configured yet.</li>` : breakdownHtml;
+    breakdownList.innerHTML = breakdownHtml === "" ? `<li class="info-text" style="text-align:center;font-style:italic;">No ${cfg.productNounPluralCard.toLowerCase()} companies configured yet.</li>` : breakdownHtml;
 
     // --- Strategy comparison panel ---
-    document.getElementById("total-grain-produced").textContent = `${totalHrmProduced.toFixed(2)} HRM`;
+    document.getElementById("total-grain-produced").textContent = `${totalHrmProduced.toFixed(2)} ${cfg.rmNoun}`;
     const balanceSpan = document.getElementById("grain-net-balance");
-    balanceSpan.textContent = `${netHrmBalance >= 0 ? "+" : ""}${netHrmBalance.toFixed(2)} HRM`;
+    balanceSpan.textContent = `${netHrmBalance >= 0 ? "+" : ""}${netHrmBalance.toFixed(2)} ${cfg.rmNoun}`;
     balanceSpan.className = netHrmBalance >= 0 ? "kpi-value-small text-success" : "kpi-value-small text-danger";
 
     document.getElementById("strategy-buy-cost").textContent = optionA_hrmCost.toFixed(2);
@@ -1566,7 +1566,7 @@ function renderHiredLaborModule(moduleKey) {
     if (netA > netB) {
         buyCard.style.borderColor = "var(--erep-green)";
         buyCard.style.backgroundColor = "rgba(122, 183, 0, 0.05)";
-        recommendationDiv.textContent = `Recommendation: Option A (Buy HRM) is more profitable by ${(netA - netB).toFixed(2)} CC/day`;
+        recommendationDiv.textContent = `Recommendation: Option A (Buy ${cfg.rmNoun}) is more profitable by ${(netA - netB).toFixed(2)} CC/day`;
         recommendationDiv.style.borderColor = "var(--erep-green)";
         recommendationDiv.style.color = "var(--erep-green-border)";
         recommendationDiv.style.backgroundColor = "rgba(122, 183, 0, 0.08)";
