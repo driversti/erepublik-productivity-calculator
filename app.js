@@ -582,8 +582,9 @@ async function loadRegionsForCountry(countryId, selectedPermalink = "") {
 
 // Fetch region statistics (bonuses and pollution rates) directly
 async function syncRegionModifiers() {
-    const countryId = state.selectedCountryId;
-    const regionPermalink = state.selectedRegionPermalink;
+    const loc = activeLoc();
+    const countryId = loc.selectedCountryId;
+    const regionPermalink = loc.selectedRegionPermalink;
     
     if (!countryId || !regionPermalink) return;
     
@@ -597,10 +598,10 @@ async function syncRegionModifiers() {
     }
     
     const moduleSyncCfg = {
-        food:    { industryId: "1", industryToken: "FOOD",   resourceRegexStr: 'data-resourceId="([1-5])"',          maxQuality: 7 },
-        weapons: { industryId: "2", industryToken: "WEAPON", resourceRegexStr: 'data-resourceId="(6|7|8|9|10)"',     maxQuality: 7 },
-        houses:  { industryId: "4", industryToken: "HOUSE",  resourceRegexStr: 'data-resourceId="(11|12|13|14|15)"', maxQuality: 5 },
-        aircraft: { industryId: "23", industryToken: "AIRCRAFT", resourceRegexStr: 'data-resourceId="(16|17|18|19|20)"', maxQuality: 5 }
+        food:    { industryId: "1", industryToken: "FOOD",   resourceRegexStr: 'data-resourceId="([1-5])"',          maxQuality: 7, industryLabel: "Food" },
+        weapons: { industryId: "2", industryToken: "WEAPON", resourceRegexStr: 'data-resourceId="(6|7|8|9|10)"',     maxQuality: 7, industryLabel: "Weapons" },
+        houses:  { industryId: "4", industryToken: "HOUSE",  resourceRegexStr: 'data-resourceId="(11|12|13|14|15)"', maxQuality: 5, industryLabel: "House" },
+        aircraft: { industryId: "23", industryToken: "AIRCRAFT", resourceRegexStr: 'data-resourceId="(16|17|18|19|20)"', maxQuality: 5, industryLabel: "Aircraft Weapons" }
     };
     const cfg = moduleSyncCfg[state.activeModule] || moduleSyncCfg.food;
     const industryId = cfg.industryId;
@@ -704,16 +705,24 @@ async function syncRegionModifiers() {
         if (salMatch) {
             avgSalaryValue = parseFloat(salMatch[1]) || 0;
         }
-        
+
+        // 6. Parse Industry VAT (per-industry). Recipe confirmed against scratch_country_economy.html (plan Task 1).
+        let vatValue = (typeof loc.vat === 'number') ? loc.vat : 1.0;
+        const vatRegexStr = 'fakeheight">' + cfg.industryLabel + '<\\/span><\\/td>\\s*<td[^>]*>\\s*<span[^>]*>[^<]*<\\/span>\\s*<\\/td>\\s*<td[^>]*>\\s*<span[^>]*>[^<]*<\\/span>%\\s*<\\/td>\\s*<td[^>]*>\\s*<span[^>]*>([\\d.]*)<\\/span>';
+        const vatMatch = countryHtml.match(new RegExp(vatRegexStr, 'i'));
+        if (vatMatch && vatMatch[1] !== '') {
+            vatValue = parseFloat(vatMatch[1]) || 0;
+        }
+
         // Update active module state
         const moduleKey = state.activeModule;
         state[moduleKey].countryBonus = countryBonusValue;
         state[moduleKey].regionBonus = regionBonusValue;
         state[moduleKey].qualityPollution = qPollution;
         state[moduleKey].pollution = qPollution[1];
-        
-        state.workTaxRate = workTaxValue;
-        state.averageSalary = avgSalaryValue;
+        state[moduleKey].workTaxRate = workTaxValue;
+        state[moduleKey].averageSalary = avgSalaryValue;
+        state[moduleKey].vat = vatValue;
         
         if (syncStatus) {
             syncStatus.textContent = `Auto-sync: Synced (Country: +${countryBonusValue}%, Region: +${regionBonusValue}%)`;
