@@ -613,8 +613,7 @@ function getProxyUrl(targetUrl) {
 }
 
 // Fetch and parse controlled regions from the Country Society page dynamically
-async function loadRegionsForCountry(countryId, selectedPermalink = "") {
-    const regionSelect = document.getElementById("select-region");
+async function loadRegionsForCountry(countryId, selectedPermalink = "", regionSelect = document.getElementById("select-region")) {
     if (!regionSelect) return;
     
     regionSelect.innerHTML = '<option value="">-- Loading Regions... --</option>';
@@ -836,6 +835,92 @@ async function syncRegionModifiers() {
             syncStatus.textContent = "Auto-sync: Failed to sync. Using manual input.";
             syncStatus.style.color = "#e74c3c";
         }
+    }
+}
+
+// Fetch the holding's country-economy + region pages ONCE and populate the location
+// modifiers for ALL FOUR industries of the active holding.
+async function syncHoldingModifiers() {
+    const holding = activeHolding();
+    if (!holding || !holding.selectedCountryId || !holding.selectedRegionPermalink) return;
+    const country = countries[holding.selectedCountryId];
+    if (!country) return;
+
+    const status = document.getElementById("hld-sync-status");
+    if (status) { status.textContent = "Auto-sync: Syncing…"; status.style.color = "var(--erep-gold, #ff9f00)"; }
+
+    const cfgs = {
+        food:     { id: "1",  token: "FOOD",     resources: [1, 2, 3, 4, 5],      maxQ: 7, label: "Food" },
+        weapons:  { id: "2",  token: "WEAPON",   resources: [6, 7, 8, 9, 10],     maxQ: 7, label: "Weapons" },
+        houses:   { id: "4",  token: "HOUSE",    resources: [11, 12, 13, 14, 15], maxQ: 5, label: "House" },
+        aircraft: { id: "23", token: "AIRCRAFT", resources: [16, 17, 18, 19, 20], maxQ: 5, label: "Aircraft Weapons" }
+    };
+
+    try {
+        const countryUrl = `https://www.erepublik.com/en/country/economy/${country.permalink}`;
+        const regionUrl = `https://www.erepublik.com/en/main/region/${holding.selectedRegionPermalink}`;
+        const [countryRes, regionRes] = await Promise.all([fetch(getProxyUrl(countryUrl)), fetch(getProxyUrl(regionUrl))]);
+        if (!countryRes.ok || !regionRes.ok) throw new Error("eRepublik server error");
+        const countryHtml = await countryRes.text();
+        const regionHtml = await regionRes.text();
+
+        let bonuses = null;
+        const m = countryHtml.match(/var\s+countryProductivityBonuses\s*=\s*([^\n;<]+)/);
+        if (m) { try { bonuses = JSON.parse(m[1]); } catch (e) { bonuses = null; } }
+
+        let pollutionDetails = null;
+        const pm = regionHtml.match(/var\s+regionPollutionDetails\s*=\s*([^\n;]+)/);
+        if (pm) { try { pollutionDetails = JSON.parse(pm[1]); } catch (e) { pollutionDetails = null; } }
+
+        let workTax = 1.0;
+        const wt = countryHtml.match(/Food<\/span>\s*<\/td>\s*<\s*td[^>]*>\s*<span\s+class="special"\s*>([\d.]+)%/i);
+        if (wt) workTax = parseFloat(wt[1]) || 0;
+        let avgSalary = 0;
+        const sal = countryHtml.match(/Average<\/span>\s*<\/td>\s*<\s*td[^>]*>\s*<span\s+class="special"\s*>([\d.]+)/i);
+        if (sal) avgSalary = parseFloat(sal[1]) || 0;
+        holding.workTaxRate = workTax;
+        holding.averageSalary = avgSalary;
+
+        Object.entries(cfgs).forEach(([key, c]) => {
+            const ind = holding.industries[key];
+
+            let countryBonus = 100;
+            if (bonuses) {
+                if (bonuses.byToken && typeof bonuses.byToken[c.token] === 'number') countryBonus = bonuses.byToken[c.token];
+                else if (bonuses.byId && typeof bonuses.byId[c.id] === 'number') countryBonus = bonuses.byId[c.id];
+            } else {
+                const hm = new RegExp(`data-industryId="${c.id}"\\s+data-bonus="(\\d+)"`).exec(countryHtml);
+                if (hm) countryBonus = parseInt(hm[1], 10);
+            }
+            ind.countryBonus = countryBonus;
+
+            let regionBonus = 0;
+            const resRegex = new RegExp(`data-resourceId="(${c.resources.join('|')})"\\s+data-bonus="(\\d+)"`, 'g');
+            let rmatch;
+            while ((rmatch = resRegex.exec(regionHtml)) !== null) regionBonus += parseInt(rmatch[2], 10);
+            ind.regionBonus = regionBonus;
+
+            const qp = {};
+            for (let q = 0; q <= c.maxQ; q++) qp[q] = 0;
+            if (pollutionDetails) {
+                const raw = pollutionDetails[c.id] || [];
+                for (let q = 0; q <= c.maxQ; q++) {
+                    if (raw[q] && raw[q].pollution && raw[q].pollution !== "N/A") qp[q] = parseFloat(raw[q].pollution) || 0;
+                }
+            }
+            ind.qualityPollution = qp;
+
+            const vatRegexStr = 'fakeheight">' + c.label + '<\\/span><\\/td>\\s*<td[^>]*>\\s*<span[^>]*>[^<]*<\\/span>\\s*<\\/td>\\s*<td[^>]*>\\s*<span[^>]*>[^<]*<\\/span>%\\s*<\\/td>\\s*<td[^>]*>\\s*<span[^>]*>([\\d.]*)<\\/span>';
+            const vm = countryHtml.match(new RegExp(vatRegexStr, 'i'));
+            if (vm && vm[1] !== '') ind.vat = parseFloat(vm[1]) || 0;
+        });
+
+        if (status) { status.textContent = "Auto-sync: Synced"; status.style.color = "var(--erep-green, #7ab700)"; }
+        saveState();
+        render();
+    } catch (err) {
+        console.error("Holding sync failed:", err);
+        if (status) { status.textContent = "Auto-sync: Failed. Using manual values."; status.style.color = "#e74c3c"; }
     }
 }
 
@@ -1982,6 +2067,14 @@ async function switchModule(target) {
     if (state.activeModule === target) return;
     state.activeModule = target;
     saveState();
+    if (target === "holdings") {
+        const h = activeHolding();
+        const rgn = document.getElementById("hld-region");
+        if (h && h.selectedCountryId) await loadRegionsForCountry(h.selectedCountryId, h.selectedRegionPermalink, rgn);
+        else if (rgn) { rgn.innerHTML = '<option value="">-- Select Region --</option>'; rgn.disabled = true; }
+        render();
+        return;
+    }
     const loc = state[target];
     if (loc.selectedCountryId) {
         await loadRegionsForCountry(loc.selectedCountryId, loc.selectedRegionPermalink);
@@ -2140,6 +2233,27 @@ function setupListeners() {
         input.onblur = function () { if (this.value === "") this.value = "0"; saveState(); render(); };
         input.onkeydown = function (e) { if (e.key === "Enter") this.blur(); };
     });
+
+    const hldCountry = document.getElementById("hld-country");
+    if (hldCountry) hldCountry.onchange = async function () {
+        const h = activeHolding(); if (!h) return;
+        h.selectedCountryId = this.value;
+        h.selectedRegionPermalink = "";
+        saveState();
+        render();
+        const rgn = document.getElementById("hld-region");
+        if (this.value) await loadRegionsForCountry(this.value, "", rgn);
+        else if (rgn) { rgn.innerHTML = '<option value="">-- Select Region --</option>'; rgn.disabled = true; }
+    };
+    const hldRegion = document.getElementById("hld-region");
+    if (hldRegion) hldRegion.onchange = function () {
+        const h = activeHolding(); if (!h) return;
+        h.selectedRegionPermalink = this.value;
+        saveState();
+        syncHoldingModifiers();
+    };
+    const hldSyncPrices = document.getElementById("hld-sync-prices");
+    if (hldSyncPrices) hldSyncPrices.onclick = syncAllPrices;
 
     // Country Dropdown Change listener
     const selectCountry = document.getElementById("select-country");
@@ -2406,6 +2520,45 @@ async function syncLivePrices() {
     }
 }
 
+// Holdings "Sync Live Prices" — refresh product + RM prices for ALL industries
+// into the shared global price state, then re-render.
+async function syncAllPrices() {
+    const btn = document.getElementById("hld-sync-prices");
+    if (btn) { btn.classList.add("loading"); btn.textContent = "Syncing…"; }
+    const pick = async (industry, quality) => {
+        try {
+            const res = await fetch(getProxyUrl(`https://service.erepublik.tools/api/v1/market/item/0/${industry}/${quality}`));
+            if (!res.ok) return null;
+            const d = await res.json();
+            if (d.status === "ok" && d.offers && d.offers.length > 0) return d.offers[0].gross;
+        } catch (e) { /* ignore one failed quality */ }
+        return null;
+    };
+    try {
+        const foodRes = await fetch(getProxyUrl(`https://service.erepublik.tools/api/v1/market/item/0/1/1`));
+        if (foodRes.ok) {
+            const fd = await foodRes.json();
+            if (fd.status === "ok" && fd.info && fd.info.misc) for (let q = 1; q <= 7; q++) if (fd.info.misc[q] && typeof fd.info.misc[q].gross === 'number') state.food.prices[q] = fd.info.misc[q].gross;
+        }
+        const frm = await pick(7, 1); if (frm !== null) state.frmPrice = frm;
+        for (let q = 1; q <= 7; q++) { const p = await pick(2, q); if (p !== null) state.weapons.prices[q] = p; }
+        const wrm = await pick(12, 1); if (wrm !== null) state.wrmPrice = wrm;
+        for (let q = 1; q <= 5; q++) { const p = await pick(4, q); if (p !== null) state.houses.prices[q] = p; }
+        const hrm = await pick(17, 1); if (hrm !== null) state.hrmPrice = hrm;
+        for (let q = 1; q <= 5; q++) { const p = await pick(23, q); if (p !== null) state.aircraft.prices[q] = p; }
+        const arm = await pick(24, 1); if (arm !== null) state.armPrice = arm;
+
+        saveState();
+        render();
+        alert("Prices synced for all industries.");
+    } catch (e) {
+        console.error("syncAllPrices error:", e);
+        alert("Failed to sync prices (proxy/network).");
+    } finally {
+        if (btn) { btn.classList.remove("loading"); btn.textContent = "Sync Live Prices"; }
+    }
+}
+
 // Reset button handler
 document.getElementById("btn-reset-all").onclick = function() {
     const active = state.activeModule;
@@ -2497,9 +2650,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     populateCountriesDropdown();
     populateHoldingCountriesDropdown();
     loadState();
-    const bootLoc = state[state.activeModule];
-    if (bootLoc.selectedCountryId) {
-        await loadRegionsForCountry(bootLoc.selectedCountryId, bootLoc.selectedRegionPermalink);
+    if (state.activeModule !== "holdings") {
+        const bootLoc = state[state.activeModule];
+        if (bootLoc.selectedCountryId) {
+            await loadRegionsForCountry(bootLoc.selectedCountryId, bootLoc.selectedRegionPermalink);
+        }
+    }
+    if (state.activeModule === "holdings") {
+        const h = activeHolding();
+        const rgn = document.getElementById("hld-region");
+        if (h && h.selectedCountryId) await loadRegionsForCountry(h.selectedCountryId, h.selectedRegionPermalink, rgn);
     }
     render();
 });
