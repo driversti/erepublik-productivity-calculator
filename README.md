@@ -46,26 +46,28 @@ buy-vs-produce strategy comparison, and location/market modifiers.
 
 ## Run
 
-Requires [Node.js](https://nodejs.org) (v18+ for the built-in test runner).
+Requires [Node.js](https://nodejs.org) (v18+).
 
 ```bash
-node server.js
+npm install
+npm run dev      # Vite dev server (HMR) on http://localhost:5173
+node server.js   # /proxy endpoint + serves the production build on http://localhost:8080
 ```
 
-Then open <http://localhost:8080>.
-
-> The app needs the server: `app.js` is loaded as an ES module (so opening
-> `index.html` over `file://` breaks imports), and live data fetches go through
-> the server's `/proxy` endpoint to bypass CORS.
+For development, run `npm run dev` (UI with hot reload) alongside `node
+server.js` (provides `/proxy` for live data). For production, `npm run build`
+then `node server.js` serves the built app from `dist/` at
+<http://localhost:8080>. Live data fetches go through the server's `/proxy`
+endpoint to bypass CORS.
 
 ## Tests
 
-The profit math lives in a pure, DOM-free module (`holdingsCalc.mjs`) covered by
-the built-in Node test runner — no dependencies, no config:
-
 ```bash
-node --test holdingsCalc.test.mjs
+npm test         # Vitest — calc golden-parity, state, components, views
 ```
+
+The profit math is covered by a golden-parity suite that asserts the React
+calc layer is bit-identical to the original `holdingsCalc.mjs`.
 
 ## Architecture
 
