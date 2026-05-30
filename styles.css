@@ -332,6 +332,7 @@ body {
 }
 
 .main-header {
+    background-color: var(--bg-header);
     padding: 16px 20px;
 }
 
