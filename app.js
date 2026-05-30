@@ -627,7 +627,10 @@ async function syncRegionModifiers() {
         
         // 1. Parse Country Industry Bonus
         let countryBonusValue = 100;
-        const countryBonusJsonMatch = countryHtml.match(/var\s+countryProductivityBonuses\s*=\s*([^\n;]+)/);
+        // Stop the capture at `<` too: on the economy page the assignment is inline
+        // (`<script>var countryProductivityBonuses = {...}</script>`) with no trailing `;`
+        // or newline, so `[^\n;]+` would swallow `</script>` and break JSON.parse.
+        const countryBonusJsonMatch = countryHtml.match(/var\s+countryProductivityBonuses\s*=\s*([^\n;<]+)/);
         if (countryBonusJsonMatch) {
             try {
                 const bonuses = JSON.parse(countryBonusJsonMatch[1]);
