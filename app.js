@@ -58,6 +58,20 @@ const houseRawMaterialsData = [
     { quality: 5, name: "Granite (Q5)",   baseOutput: 250, maxEmployees: 5 }
 ];
 
+// --- eRepublik rounding helpers (mirror the game's own myCompanies math) ---
+// Standard round-to-N-decimals, identical to the game's roundNumber().
+function roundNumber(number, digits = 2) {
+    const multiplier = Math.pow(10, digits);
+    return Math.round(parseFloat(number) * multiplier) / multiplier;
+}
+
+// Raw-material production per company: the game rounds to 3 decimals then drops the
+// 3rd decimal (floor to 2dp), i.e. roundNumber(x,3).toFixed(3).slice(0,-1).
+// e.g. 3.685 -> "3.68" (NOT 3.69). See calculateProduction() on /economy/myCompanies.
+function gameRawProduction(value) {
+    return Number(roundNumber(value, 3).toFixed(3).slice(0, -1));
+}
+
 // Initialize Application State
 let state = {
     activeModule: "food", // "food", "weapons", or "houses"
@@ -750,9 +764,10 @@ function render() {
         const multiplier = 1 + (moduleState.countryBonus / 100) + (moduleState.regionBonus / 100) + (state.hasTycoon ? 0.2 : 0) - (pollutionRate / 100);
         const cardMultiplier = Math.max(0, multiplier);
         
-        // Calculations for this card
-        const singleOutput = fact.baseOutput * cardMultiplier;
-        const singleRM = fact.baseRM * cardMultiplier;
+        // Calculations for this card.
+        // Match eRepublik: round each company's value to 2dp, then sum across companies.
+        const singleOutput = roundNumber(fact.baseOutput * cardMultiplier, 2);
+        const singleRM = roundNumber(fact.baseRM * cardMultiplier, 2);
         const cardOutput = singleOutput * sessions;
         const cardRM = singleRM * sessions;
         
@@ -867,7 +882,9 @@ function render() {
             const multiplier = 1 + (moduleState.countryBonus / 100) + (moduleState.regionBonus / 100) + (state.hasTycoon ? 0.2 : 0) - (pollutionRate / 100);
             const cardMultiplier = Math.max(0, multiplier);
             
-            const singleOutput = (plant.baseOutput / 100) * cardMultiplier;
+            // Raw production: the game rounds to 3dp then truncates the 3rd (floor to 2dp),
+            // per company, then sums those truncated values.
+            const singleOutput = gameRawProduction((plant.baseOutput / 100) * cardMultiplier);
             const cardOutput = singleOutput * sessions;
             totalGrainProduced += cardOutput;
             
@@ -933,6 +950,11 @@ function render() {
         });
     }
     
+    // Mirror eRepublik's totals: sum of the per-company displayed values, rounded to 2dp.
+    totalOutput = roundNumber(totalOutput, 2);
+    totalRM = roundNumber(totalRM, 2);
+    totalGrainProduced = roundNumber(totalGrainProduced, 2);
+
     // STRATEGY MATH & COMPARISON
     const taxPerSession = (state.workTaxRate / 100) * state.averageSalary;
     const factoryTax = factorySessions * taxPerSession;
