@@ -77,8 +77,9 @@ function gameRawProduction(value) {
 // have a distinct building illustration per quality under /images/buildings/{id}.png.
 const EREP_CDN = "https://www.erepublik.net/images";
 // Plantation/mine building ids by quality (Q1..Q5). Matches the `epc` project's mapping.
-const FRM_BUILDING_IDS = { 1: 7, 2: 8, 3: 9, 4: 10, 5: 11 };   // Grain Farm … Hunting Lodge
+const FRM_BUILDING_IDS = { 1: 7, 2: 8, 3: 9, 4: 10, 5: 11 };    // Grain Farm … Hunting Lodge
 const WRM_BUILDING_IDS = { 1: 12, 2: 13, 3: 14, 4: 15, 5: 16 }; // Iron Mine … Rubber Plantation
+const HRM_BUILDING_IDS = { 1: 17, 2: 18, 3: 19, 4: 21, 5: 22 }; // Sand … Granite (id 20 unused)
 
 const factoryIconUrl = (isFood, quality) => `${EREP_CDN}/icons/industry/${isFood ? 1 : 2}/q${quality}.png`;
 const plantationIconUrl = (isFood, quality) => `${EREP_CDN}/buildings/${(isFood ? FRM_BUILDING_IDS : WRM_BUILDING_IDS)[quality]}.png`;
@@ -1159,11 +1160,13 @@ function houseCounterGroupsHtml(kind, quality, companies, workers, maxWorkers) {
 }
 
 function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue) {
-    return `
-        <div class="factory-avatar-area">
+    const fallbackSvg = `
             <svg class="factory-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#8e7cc3;fill:rgba(142,124,195,0.1);">
                 <path d="M3 11l9-7 9 7M5 10v10h14V10M9 20v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            </svg>`;
+    return `
+        <div class="factory-avatar-area">
+            ${gameIconHtml(`${EREP_CDN}/icons/industry/4/q${fac.quality}.png`, fallbackSvg)}
         </div>
         <div class="factory-info-area">
             <div class="factory-title">${fac.name}</div>
@@ -1190,11 +1193,13 @@ function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate
 }
 
 function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput) {
-    return `
-        <div class="factory-avatar-area" style="background:rgba(120,144,156,0.1);color:#78909c;border-radius:4px;padding:4px;">
+    const fallbackSvg = `
             <svg class="factory-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#78909c;fill:rgba(120,144,156,0.1);">
                 <path d="M3 20h18L17 8l-4 5-3-4-4 6z" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            </svg>`;
+    return `
+        <div class="factory-avatar-area" style="background:rgba(120,144,156,0.1);color:#78909c;border-radius:4px;padding:4px;">
+            ${gameIconHtml(`${EREP_CDN}/buildings/${HRM_BUILDING_IDS[rm.quality]}.png`, fallbackSvg)}
         </div>
         <div class="factory-info-area">
             <div class="factory-title">${rm.name}</div>
