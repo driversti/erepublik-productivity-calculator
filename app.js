@@ -148,6 +148,9 @@ let state = {
     activeModule: "food", // "food", "weapons", "houses", or "aircraft"
     hasTycoon: false,
     wamEnabled: true,
+    holdings: [],            // Holding[]: each is one location + a mix of industries
+    activeHoldingId: null,   // id of the selected holding, or null
+    holdingSeq: 0,           // monotonic counter for stable holding ids (no Date.now)
     offeredSalary: 0.0,
     frmPrice: 50.00,
     wrmPrice: 50.00,
@@ -246,8 +249,47 @@ let state = {
 // The active module's sub-state (food/weapons/houses/aircraft) — holds its own location & country metrics.
 function activeLoc() { return state[state.activeModule]; }
 
-// LocalStorage key name (v9)
-const STORAGE_KEY = "erep_calculator_food_factories_v10";
+// --- Holdings: builders & lookup -------------------------------------------------
+function blankFwIndustry() {
+    const ind = {};
+    for (let q = 1; q <= 7; q++) ind[q] = { companies: 0, workers: 0 };
+    ind.plantations = {};
+    for (let q = 1; q <= 5; q++) ind.plantations[q] = { companies: 0, workers: 0 };
+    ind.countryBonus = 100; ind.regionBonus = 0;
+    ind.qualityPollution = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
+    ind.vat = 1.0;
+    return ind;
+}
+
+function blankHiredIndustry() {
+    const ind = { factories: {}, rm: {} };
+    for (let q = 1; q <= 5; q++) { ind.factories[q] = { companies: 0, workers: 0 }; ind.rm[q] = { companies: 0, workers: 0 }; }
+    ind.countryBonus = 100; ind.regionBonus = 0;
+    ind.qualityPollution = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    ind.vat = 1.0;
+    return ind;
+}
+
+function createHolding(name) {
+    state.holdingSeq = (state.holdingSeq || 0) + 1;
+    return {
+        id: "h" + state.holdingSeq,
+        name: name,
+        selectedCountryId: "", selectedRegionPermalink: "",
+        workTaxRate: 1.0, averageSalary: 0.0,
+        industries: {
+            food: blankFwIndustry(), weapons: blankFwIndustry(),
+            houses: blankHiredIndustry(), aircraft: blankHiredIndustry()
+        }
+    };
+}
+
+function activeHolding() {
+    return state.holdings.find(h => h.id === state.activeHoldingId) || null;
+}
+
+// LocalStorage key name (v11)
+const STORAGE_KEY = "erep_calculator_food_factories_v11";
 
 // Load values from localStorage on startup
 function loadState() {
@@ -376,6 +418,48 @@ function loadState() {
                 if (typeof pm.vat === 'number') state[key].vat = pm.vat;
                 else if (legacyVat !== null) state[key].vat = legacyVat;
             });
+            // --- Holdings (v11) ---
+            if (typeof parsed.holdingSeq === 'number') state.holdingSeq = parsed.holdingSeq;
+            if (typeof parsed.activeHoldingId === 'string') state.activeHoldingId = parsed.activeHoldingId;
+            if (Array.isArray(parsed.holdings)) {
+                const clampCell = (src, maxEmp) => {
+                    let companies = (src && typeof src.companies === 'number') ? Math.max(0, Math.floor(src.companies)) : 0;
+                    let workers = (src && typeof src.workers === 'number') ? Math.max(0, Math.floor(src.workers)) : 0;
+                    companies = Math.min(companies, 9999);
+                    if (workers > companies * maxEmp) workers = companies * maxEmp;
+                    return { companies, workers };
+                };
+                const maxEmpOf = (data, q) => { const row = data.find(x => x.quality === q); return row ? (row.maxEmployees || 0) : 0; };
+                state.holdings = parsed.holdings.map(ph => {
+                    const h = createHolding(typeof ph.name === 'string' ? ph.name : 'Holding');
+                    if (typeof ph.id === 'string') h.id = ph.id;
+                    if (typeof ph.selectedCountryId === 'string' || typeof ph.selectedCountryId === 'number') h.selectedCountryId = String(ph.selectedCountryId);
+                    if (typeof ph.selectedRegionPermalink === 'string') h.selectedRegionPermalink = ph.selectedRegionPermalink;
+                    if (typeof ph.workTaxRate === 'number') h.workTaxRate = ph.workTaxRate;
+                    if (typeof ph.averageSalary === 'number') h.averageSalary = ph.averageSalary;
+                    const pind = (ph.industries && typeof ph.industries === 'object') ? ph.industries : {};
+                    [['food', foodFactoriesData, foodPlantationsData], ['weapons', weaponFactoriesData, weaponPlantationsData]].forEach(([key, facData, plantData]) => {
+                        const src = pind[key]; if (!src || typeof src !== 'object') return;
+                        for (let q = 1; q <= 7; q++) if (src[q]) h.industries[key][q] = clampCell(src[q], maxEmpOf(facData, q));
+                        if (src.plantations) for (let q = 1; q <= 5; q++) if (src.plantations[q]) h.industries[key].plantations[q] = clampCell(src.plantations[q], maxEmpOf(plantData, q));
+                        if (typeof src.countryBonus === 'number') h.industries[key].countryBonus = src.countryBonus;
+                        if (typeof src.regionBonus === 'number') h.industries[key].regionBonus = src.regionBonus;
+                        if (src.qualityPollution) for (let q = 0; q <= 7; q++) if (typeof src.qualityPollution[q] === 'number') h.industries[key].qualityPollution[q] = src.qualityPollution[q];
+                        if (typeof src.vat === 'number') h.industries[key].vat = src.vat;
+                    });
+                    [['houses', houseFactoriesData, houseRawMaterialsData], ['aircraft', aircraftFactoriesData, aircraftRawMaterialsData]].forEach(([key, facData, rmData]) => {
+                        const src = pind[key]; if (!src || typeof src !== 'object') return;
+                        if (src.factories) for (let q = 1; q <= 5; q++) if (src.factories[q]) h.industries[key].factories[q] = clampCell(src.factories[q], maxEmpOf(facData, q));
+                        if (src.rm) for (let q = 1; q <= 5; q++) if (src.rm[q]) h.industries[key].rm[q] = clampCell(src.rm[q], maxEmpOf(rmData, q));
+                        if (typeof src.countryBonus === 'number') h.industries[key].countryBonus = src.countryBonus;
+                        if (typeof src.regionBonus === 'number') h.industries[key].regionBonus = src.regionBonus;
+                        if (src.qualityPollution) for (let q = 0; q <= 5; q++) if (typeof src.qualityPollution[q] === 'number') h.industries[key].qualityPollution[q] = src.qualityPollution[q];
+                        if (typeof src.vat === 'number') h.industries[key].vat = src.vat;
+                    });
+                    return h;
+                });
+                if (typeof parsed.holdingSeq === 'number') state.holdingSeq = parsed.holdingSeq;
+            }
         }
     } catch (e) {
         console.error("Failed to load factory state from localStorage:", e);
