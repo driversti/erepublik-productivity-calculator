@@ -835,7 +835,7 @@ input:checked + .switch-slider:before {
 }
 
 .food-price-input {
-    width: 75px;
+    width: 100px;
     padding: 6px 8px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
