@@ -941,11 +941,11 @@ input:checked + .switch-slider:before {
 .holdings-picker { display: flex; flex-direction: column; gap: 4px; min-width: 220px; }
 .holdings-actions { display: flex; gap: 8px; }
 .holdings-empty { padding: 40px; text-align: center; color: var(--text-secondary); border: 1px dashed var(--border-color); border-radius: 10px; }
-.holdings-content { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start; }
+.holdings-content { display: grid; grid-template-columns: 320px 1fr; gap: 20px; align-items: start; }
 .holdings-location-bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
 .holdings-location-bar .control-group { min-width: 150px; }
 .holdings-sync-col { display: flex; flex-direction: column; gap: 6px; }
-.holdings-summary { position: sticky; top: 16px; }
+.holdings-summary { position: sticky; top: 16px; order: -1; }
 .hld-section { border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 16px; overflow: hidden; background: var(--bg-card); }
 .hld-section-head { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--bg-header); cursor: pointer; }
 .hld-section-head .hld-ind-name { font-weight: 700; }
