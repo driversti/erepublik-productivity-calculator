@@ -589,6 +589,13 @@ body {
     fill: #f1f5f9;
 }
 
+/* Real game icons fetched from the eRepublik CDN */
+.factory-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
 .factory-row-card:hover .factory-svg {
     color: var(--erep-blue);
 }

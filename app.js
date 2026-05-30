@@ -72,6 +72,25 @@ function gameRawProduction(value) {
     return Number(roundNumber(value, 3).toFixed(3).slice(0, -1));
 }
 
+// --- Real eRepublik building/product icons (served from its CDN, no auth) ---
+// Finished products use the quality-tiered industry icon; raw-material companies
+// have a distinct building illustration per quality under /images/buildings/{id}.png.
+const EREP_CDN = "https://www.erepublik.net/images";
+// Plantation/mine building ids by quality (Q1..Q5). Matches the `epc` project's mapping.
+const FRM_BUILDING_IDS = { 1: 7, 2: 8, 3: 9, 4: 10, 5: 11 };   // Grain Farm … Hunting Lodge
+const WRM_BUILDING_IDS = { 1: 12, 2: 13, 3: 14, 4: 15, 5: 16 }; // Iron Mine … Rubber Plantation
+
+const factoryIconUrl = (isFood, quality) => `${EREP_CDN}/icons/industry/${isFood ? 1 : 2}/q${quality}.png`;
+const plantationIconUrl = (isFood, quality) => `${EREP_CDN}/buildings/${(isFood ? FRM_BUILDING_IDS : WRM_BUILDING_IDS)[quality]}.png`;
+
+// Build an <img> that shows the real game icon, falling back to the inline SVG if the
+// CDN is unreachable. The SVG is embedded in onerror (double quotes -> &quot;, collapsed
+// to one line) so the HTML parser decodes it back to a valid JS string at error time.
+function gameIconHtml(iconUrl, fallbackSvg) {
+    const fallback = fallbackSvg.replace(/"/g, "&quot;").replace(/\s+/g, " ").trim();
+    return `<img class="factory-img" src="${iconUrl}" alt="" loading="lazy" onerror="this.outerHTML='${fallback}'">`;
+}
+
 // Initialize Application State
 let state = {
     activeModule: "food", // "food", "weapons", or "houses"
@@ -800,8 +819,8 @@ function render() {
             `;
         }
         
-        // Choose avatar icon based on isFood
-        const iconHtml = isFood ? `
+        // Real game product icon, with the inline SVG as offline fallback
+        const fallbackSvg = isFood ? `
             <svg class="factory-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M2 20h20M3 20v-8l4 3v-3l4 3v-3l4 3V6l5 4v10" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M18 10h1M18 13h1M18 16h1M5 16h2M9 16h2" stroke-linecap="round"/>
@@ -811,6 +830,7 @@ function render() {
                 <path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l2 2M19 13l2-2M15 15l4 4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         `;
+        const iconHtml = gameIconHtml(factoryIconUrl(isFood, fact.quality), fallbackSvg);
         
         // Create Factory Card DOM
         const card = document.createElement("div");
@@ -892,7 +912,7 @@ function render() {
             card.className = "factory-row-card";
             card.style.borderLeft = isFood ? "3px solid #e67e22" : "3px solid #7f8c8d";
             
-            const plantIconHtml = isFood ? `
+            const plantFallbackSvg = isFood ? `
                 <svg class="factory-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: #e67e22; fill: rgba(230, 126, 34, 0.1);">
                     <path d="M12 2v20M17 5l-5 5M7 5l5 5M17 10l-5 5M7 10l5 5M17 15l-5 5M7 15l5 5" stroke-linecap="round"/>
                 </svg>
@@ -901,6 +921,7 @@ function render() {
                     <path d="M4 22V4h16v18M12 4v18M4 10h16M4 16h16" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             `;
+            const plantIconHtml = gameIconHtml(plantationIconUrl(isFood, plant.quality), plantFallbackSvg);
             
             card.innerHTML = `
                 <div class="factory-avatar-area" style="background: ${isFood ? 'rgba(230, 126, 34, 0.1)' : 'rgba(127, 140, 141, 0.1)'}; color: ${isFood ? '#e67e22' : '#7f8c8d'}; border-radius: 4px; padding: 4px;">
