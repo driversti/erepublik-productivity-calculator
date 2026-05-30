@@ -58,6 +58,26 @@ const houseRawMaterialsData = [
     { quality: 5, name: "Granite (Q5)",   baseOutput: 250, maxEmployees: 5 }
 ];
 
+// Aircraft Weapon Factories (Q1-Q5). Owner cannot work — hired employees only (like houses).
+// baseOutput is flat 5 (quality-independent, like food=100/weapon=10).
+// baseRM is in Marketplace Units (1 ARM unit = 100 individual), per-quality like ground weapons.
+const aircraftFactoriesData = [
+    { quality: 1, name: "Aircraft Weapons Factory (Q1)", baseOutput: 5, baseRM: 1, maxEmployees: 1 },
+    { quality: 2, name: "Aircraft Weapons Factory (Q2)", baseOutput: 5, baseRM: 2, maxEmployees: 2 },
+    { quality: 3, name: "Aircraft Weapons Factory (Q3)", baseOutput: 5, baseRM: 3, maxEmployees: 3 },
+    { quality: 4, name: "Aircraft Weapons Factory (Q4)", baseOutput: 5, baseRM: 4, maxEmployees: 4 },
+    { quality: 5, name: "Aircraft Weapons Factory (Q5)", baseOutput: 5, baseRM: 5, maxEmployees: 5 }
+];
+
+// Aircraft Raw Material companies. baseOutput is in individual units (÷100 for marketplace ARM units).
+const aircraftRawMaterialsData = [
+    { quality: 1, name: "Magnesium Refinery (Q1)", baseOutput: 35,  maxEmployees: 1 },
+    { quality: 2, name: "Titanium Refinery (Q2)",  baseOutput: 70,  maxEmployees: 2 },
+    { quality: 3, name: "Wolfram Mine (Q3)",       baseOutput: 125, maxEmployees: 3 },
+    { quality: 4, name: "Cobalt Plant (Q4)",       baseOutput: 175, maxEmployees: 4 },
+    { quality: 5, name: "Neodymium Mine (Q5)",     baseOutput: 250, maxEmployees: 5 }
+];
+
 // --- eRepublik rounding helpers (mirror the game's own myCompanies math) ---
 // Standard round-to-N-decimals, identical to the game's roundNumber().
 function roundNumber(number, digits = 2) {
@@ -80,6 +100,46 @@ const EREP_CDN = "https://www.erepublik.net/images";
 const FRM_BUILDING_IDS = { 1: 7, 2: 8, 3: 9, 4: 10, 5: 11 };    // Grain Farm … Hunting Lodge
 const WRM_BUILDING_IDS = { 1: 12, 2: 13, 3: 14, 4: 15, 5: 16 }; // Iron Mine … Rubber Plantation
 const HRM_BUILDING_IDS = { 1: 17, 2: 18, 3: 19, 4: 21, 5: 22 }; // Sand … Granite (id 20 unused)
+const ARM_BUILDING_IDS = { 1: 24, 2: 25, 3: 26, 4: 27, 5: 28 }; // Magnesium … Neodymium
+
+const HIRED_LABOR_MODULES = {
+    houses: {
+        moduleKey: "houses", priceField: "hrmPrice",
+        factoriesData: houseFactoriesData, rmData: houseRawMaterialsData,
+        rmBuildingIds: HRM_BUILDING_IDS, factoryIconIndustry: 4,
+        productNounPlural: "House",
+        productNounPluralCard: "Houses",
+        rmNoun: "HRM",
+        moduleTitle: "House Industry (Step 1)",
+        countryBonusLabel: "Country Construction Bonus",
+        factoriesTitle: "Your House Factories",
+        factoriesSubtitle: "Set companies + workers (Q1–Q5). Only hired employees produce — no WAM.",
+        rmTitle: "Your HRM Companies",
+        rmSubtitle: "House Raw Material companies Sand → Granite (Q1–Q5)",
+        priceHeader: "House Prices (CC)",
+        priceRowLabel: "House",
+        strategyBuyTitle: "Option A: Buy HRM",
+        strategyProduceTitle: "Option B: Produce HRM"
+    },
+    aircraft: {
+        moduleKey: "aircraft", priceField: "armPrice",
+        factoriesData: aircraftFactoriesData, rmData: aircraftRawMaterialsData,
+        rmBuildingIds: ARM_BUILDING_IDS, factoryIconIndustry: 23,
+        productNounPlural: "Aircraft Weapon",
+        productNounPluralCard: "Aircraft Weapons",
+        rmNoun: "ARM",
+        moduleTitle: "Aircraft Industry (Step 1)",
+        countryBonusLabel: "Country Aircraft Bonus",
+        factoriesTitle: "Your Aircraft Weapon Factories",
+        factoriesSubtitle: "Set companies + workers (Q1–Q5). Only hired employees produce — no WAM.",
+        rmTitle: "Your ARM Companies",
+        rmSubtitle: "Aircraft Raw Material companies Magnesium → Neodymium (Q1–Q5)",
+        priceHeader: "Aircraft Weapon Prices (CC)",
+        priceRowLabel: "Aircraft",
+        strategyBuyTitle: "Option A: Buy ARM",
+        strategyProduceTitle: "Option B: Produce ARM"
+    }
+};
 
 const factoryIconUrl = (isFood, quality) => `${EREP_CDN}/icons/industry/${isFood ? 1 : 2}/q${quality}.png`;
 const plantationIconUrl = (isFood, quality) => `${EREP_CDN}/buildings/${(isFood ? FRM_BUILDING_IDS : WRM_BUILDING_IDS)[quality]}.png`;
@@ -94,7 +154,7 @@ function gameIconHtml(iconUrl, fallbackSvg) {
 
 // Initialize Application State
 let state = {
-    activeModule: "food", // "food", "weapons", or "houses"
+    activeModule: "food", // "food", "weapons", "houses", or "aircraft"
     hasTycoon: false,
     wamEnabled: true,
     workTaxRate: 1.0,
@@ -105,6 +165,7 @@ let state = {
     frmPrice: 50.00,
     wrmPrice: 50.00,
     hrmPrice: 1535.00,
+    armPrice: 1415.00,
     vat: 1.0,
     food: {
         1: { companies: 0, workers: 0 },
@@ -168,6 +229,27 @@ let state = {
         pollution: 0,
         qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
         prices: { 1: 29000, 2: 63500, 3: 129850, 4: 263498, 5: 315999 }
+    },
+    aircraft: {
+        factories: {
+            1: { companies: 0, workers: 0 },
+            2: { companies: 0, workers: 0 },
+            3: { companies: 0, workers: 0 },
+            4: { companies: 0, workers: 0 },
+            5: { companies: 0, workers: 0 }
+        },
+        rm: {
+            1: { companies: 0, workers: 0 },
+            2: { companies: 0, workers: 0 },
+            3: { companies: 0, workers: 0 },
+            4: { companies: 0, workers: 0 },
+            5: { companies: 0, workers: 0 }
+        },
+        countryBonus: 100,
+        regionBonus: 0,
+        pollution: 0,
+        qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        prices: { 1: 963.00, 2: 900.00, 3: 1485.00, 4: 1800.00, 5: 2179.00 }
     }
 };
 
@@ -193,6 +275,7 @@ function loadState() {
             if (typeof parsed.frmPrice === 'number') state.frmPrice = parsed.frmPrice;
             if (typeof parsed.wrmPrice === 'number') state.wrmPrice = parsed.wrmPrice;
             if (typeof parsed.hrmPrice === 'number') state.hrmPrice = parsed.hrmPrice;
+            if (typeof parsed.armPrice === 'number') state.armPrice = parsed.armPrice;
             if (typeof parsed.vat === 'number') state.vat = parsed.vat;
             
             // Helper to populate a module's nested state
@@ -247,40 +330,44 @@ function loadState() {
             loadModule('food');
             loadModule('weapons');
 
-            // Houses has a different shape ({companies, workers} per quality, Q1-Q5)
-            if (parsed.houses && typeof parsed.houses === 'object') {
-                const ph = parsed.houses;
-                const loadHouseGroup = (groupKey, data) => {
-                    if (ph[groupKey] && typeof ph[groupKey] === 'object') {
+            // Houses + Aircraft share a shape: {factories{1..5}, rm{1..5}, bonuses, prices}, hired-worker cells.
+            [
+                { key: 'houses',   facData: houseFactoriesData,    rmData: houseRawMaterialsData },
+                { key: 'aircraft', facData: aircraftFactoriesData, rmData: aircraftRawMaterialsData }
+            ].forEach(({ key, facData, rmData }) => {
+                const pm = parsed[key];
+                if (!pm || typeof pm !== 'object') return;
+                const loadGroup = (groupKey, data) => {
+                    if (pm[groupKey] && typeof pm[groupKey] === 'object') {
                         for (let q = 1; q <= 5; q++) {
-                            const src = ph[groupKey][q];
+                            const src = pm[groupKey][q];
                             if (src && typeof src === 'object') {
                                 const row = data.find(x => x.quality === q);
                                 const maxEmp = row ? row.maxEmployees : 0;
                                 const companies = (typeof src.companies === 'number') ? Math.max(0, Math.floor(src.companies)) : 0;
                                 let workers = (typeof src.workers === 'number') ? Math.max(0, Math.floor(src.workers)) : 0;
                                 if (workers > companies * maxEmp) workers = companies * maxEmp;
-                                state.houses[groupKey][q] = { companies, workers };
+                                state[key][groupKey][q] = { companies, workers };
                             }
                         }
                     }
                 };
-                loadHouseGroup('factories', houseFactoriesData);
-                loadHouseGroup('rm', houseRawMaterialsData);
-                if (typeof ph.countryBonus === 'number') state.houses.countryBonus = ph.countryBonus;
-                if (typeof ph.regionBonus === 'number') state.houses.regionBonus = ph.regionBonus;
-                if (typeof ph.pollution === 'number') state.houses.pollution = ph.pollution;
-                if (ph.qualityPollution && typeof ph.qualityPollution === 'object') {
+                loadGroup('factories', facData);
+                loadGroup('rm', rmData);
+                if (typeof pm.countryBonus === 'number') state[key].countryBonus = pm.countryBonus;
+                if (typeof pm.regionBonus === 'number') state[key].regionBonus = pm.regionBonus;
+                if (typeof pm.pollution === 'number') state[key].pollution = pm.pollution;
+                if (pm.qualityPollution && typeof pm.qualityPollution === 'object') {
                     for (let q = 0; q <= 5; q++) {
-                        if (typeof ph.qualityPollution[q] === 'number') state.houses.qualityPollution[q] = ph.qualityPollution[q];
+                        if (typeof pm.qualityPollution[q] === 'number') state[key].qualityPollution[q] = pm.qualityPollution[q];
                     }
                 }
-                if (ph.prices && typeof ph.prices === 'object') {
+                if (pm.prices && typeof pm.prices === 'object') {
                     for (let q = 1; q <= 5; q++) {
-                        if (typeof ph.prices[q] === 'number') state.houses.prices[q] = ph.prices[q];
+                        if (typeof pm.prices[q] === 'number') state[key].prices[q] = pm.prices[q];
                     }
                 }
-            }
+            });
         }
     } catch (e) {
         console.error("Failed to load factory state from localStorage:", e);
@@ -309,14 +396,20 @@ function generateStarsHtml(quality) {
     return starsHtml;
 }
 
-// --- House module helpers ---
+// --- Hired-labor module helpers (houses + aircraft share the same shape) ---
+function hiredLaborData(kind) {
+    const isHouses = state.activeModule === 'houses';
+    return kind === 'factory'
+        ? (isHouses ? houseFactoriesData : aircraftFactoriesData)
+        : (isHouses ? houseRawMaterialsData : aircraftRawMaterialsData);
+}
+
 function getHouseCell(kind, quality) {
-    return state.houses[kind === 'factory' ? 'factories' : 'rm'][quality];
+    return state[state.activeModule][kind === 'factory' ? 'factories' : 'rm'][quality];
 }
 
 function houseMaxEmployees(kind, quality) {
-    const data = kind === 'factory' ? houseFactoriesData : houseRawMaterialsData;
-    const row = data.find(x => String(x.quality) === String(quality));
+    const row = hiredLaborData(kind).find(x => String(x.quality) === String(quality));
     return row ? row.maxEmployees : 0;
 }
 
@@ -382,7 +475,7 @@ function fwCounterGroupsHtml(kind, quality, companies, workers, maxWorkers, hide
 
 // Highlight the active tab across all three modules
 function setActiveTabHighlight(active) {
-    [['food', 'tab-food'], ['weapons', 'tab-weapons'], ['houses', 'tab-houses']].forEach(([m, id]) => {
+    [['food', 'tab-food'], ['weapons', 'tab-weapons'], ['houses', 'tab-houses'], ['aircraft', 'tab-aircraft']].forEach(([m, id]) => {
         const el = document.getElementById(id);
         if (el) el.classList.toggle('active', m === active);
     });
@@ -489,7 +582,8 @@ async function syncRegionModifiers() {
     const moduleSyncCfg = {
         food:    { industryId: "1", industryToken: "FOOD",   resourceRegexStr: 'data-resourceId="([1-5])"',          maxQuality: 7 },
         weapons: { industryId: "2", industryToken: "WEAPON", resourceRegexStr: 'data-resourceId="(6|7|8|9|10)"',     maxQuality: 7 },
-        houses:  { industryId: "4", industryToken: "HOUSE",  resourceRegexStr: 'data-resourceId="(11|12|13|14|15)"', maxQuality: 5 }
+        houses:  { industryId: "4", industryToken: "HOUSE",  resourceRegexStr: 'data-resourceId="(11|12|13|14|15)"', maxQuality: 5 },
+        aircraft: { industryId: "23", industryToken: "AIRCRAFT", resourceRegexStr: 'data-resourceId="(16|17|18|19|20)"', maxQuality: 5 }
     };
     const cfg = moduleSyncCfg[state.activeModule] || moduleSyncCfg.food;
     const industryId = cfg.industryId;
@@ -622,8 +716,8 @@ async function syncRegionModifiers() {
 
 // Render factories grid and update summary
 function render() {
-    if (state.activeModule === "houses") {
-        renderHouses();
+    if (state.activeModule === "houses" || state.activeModule === "aircraft") {
+        renderHiredLaborModule(state.activeModule);
         return;
     }
 
@@ -1159,14 +1253,14 @@ function houseCounterGroupsHtml(kind, quality, companies, workers, maxWorkers) {
         + `</div>`;
 }
 
-function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue) {
+function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue, cfg) {
     const fallbackSvg = `
             <svg class="factory-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#8e7cc3;fill:rgba(142,124,195,0.1);">
                 <path d="M3 11l9-7 9 7M5 10v10h14V10M9 20v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`;
     return `
         <div class="factory-avatar-area">
-            ${gameIconHtml(`${EREP_CDN}/icons/industry/4/q${fac.quality}.png`, fallbackSvg)}
+            ${gameIconHtml(`${EREP_CDN}/icons/industry/${cfg.factoryIconIndustry}/q${fac.quality}.png`, fallbackSvg)}
         </div>
         <div class="factory-info-area">
             <div class="factory-title">${fac.name}</div>
@@ -1176,12 +1270,12 @@ function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate
         <div class="factory-stats-area">
             <div class="stat-item">
                 <span class="stat-label">Daily Output</span>
-                <span class="stat-value" style="color: var(--erep-blue);">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} houses</span>
+                <span class="stat-value" style="color: var(--erep-blue);">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.productNounPluralCard.toLowerCase()}</span>
                 <span style="font-size:10px;color:var(--text-secondary);">${singleOutput.toFixed(4)} / worker</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Daily HRM</span>
-                <span class="stat-value" style="color: var(--erep-gold);">${cardHrm.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} HRM</span>
+                <span class="stat-label">Daily ${cfg.rmNoun}</span>
+                <span class="stat-value" style="color: var(--erep-gold);">${cardHrm.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.rmNoun}</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Est. Daily Profit</span>
@@ -1192,14 +1286,14 @@ function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate
         <div class="factory-action-area">${houseCounterGroupsHtml('factory', fac.quality, companies, workers, maxWorkers)}</div>`;
 }
 
-function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput) {
+function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cfg) {
     const fallbackSvg = `
             <svg class="factory-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#78909c;fill:rgba(120,144,156,0.1);">
                 <path d="M3 20h18L17 8l-4 5-3-4-4 6z" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`;
     return `
         <div class="factory-avatar-area" style="background:rgba(120,144,156,0.1);color:#78909c;border-radius:4px;padding:4px;">
-            ${gameIconHtml(`${EREP_CDN}/buildings/${HRM_BUILDING_IDS[rm.quality]}.png`, fallbackSvg)}
+            ${gameIconHtml(`${EREP_CDN}/buildings/${cfg.rmBuildingIds[rm.quality]}.png`, fallbackSvg)}
         </div>
         <div class="factory-info-area">
             <div class="factory-title">${rm.name}</div>
@@ -1209,7 +1303,7 @@ function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, sing
         <div class="factory-stats-area">
             <div class="stat-item">
                 <span class="stat-label">Daily Output</span>
-                <span class="stat-value" style="color:#78909c;">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} HRM</span>
+                <span class="stat-value" style="color:#78909c;">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.rmNoun}</span>
                 <span style="font-size:10px;color:var(--text-secondary);">${singleOutput.toFixed(4)} / worker</span>
             </div>
             <div class="stat-item" style="opacity:0.5;"></div>
@@ -1218,60 +1312,61 @@ function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, sing
         <div class="factory-action-area">${houseCounterGroupsHtml('rm', rm.quality, companies, workers, maxWorkers)}</div>`;
 }
 
-function renderHouses() {
-    setActiveTabHighlight("houses");
+function renderHiredLaborModule(moduleKey) {
+    const cfg = HIRED_LABOR_MODULES[moduleKey];
+    setActiveTabHighlight(moduleKey);
 
-    const h = state.houses;
-    const hrmPrice = state.hrmPrice;
+    const h = state[moduleKey];
+    const rmPrice = state[cfg.priceField];
 
     // --- Labels / titles ---
     const activeModuleSpan = document.querySelector(".active-module .module-name");
-    if (activeModuleSpan) activeModuleSpan.textContent = "House Industry (Step 1)";
+    if (activeModuleSpan) activeModuleSpan.textContent = cfg.moduleTitle;
     const countryBonusLabel = document.getElementById("country-bonus-label");
-    if (countryBonusLabel) countryBonusLabel.textContent = "Country Construction Bonus";
+    if (countryBonusLabel) countryBonusLabel.textContent = cfg.countryBonusLabel;
     const grainPriceLabel = document.getElementById("label-grain-price");
-    if (grainPriceLabel) grainPriceLabel.textContent = "HRM Price (CC)";
+    if (grainPriceLabel) grainPriceLabel.textContent = `${cfg.rmNoun} Price (CC)`;
     const foodPricesHeader = document.getElementById("food-prices-header");
-    if (foodPricesHeader) foodPricesHeader.textContent = "House Prices (CC)";
+    if (foodPricesHeader) foodPricesHeader.textContent = cfg.priceHeader;
     document.querySelectorAll(".food-price-label").forEach(label => {
         const q = label.getAttribute("data-quality");
-        label.textContent = `Q${q} House`;
+        label.textContent = `Q${q} ${cfg.priceRowLabel}`;
     });
     for (let q = 1; q <= 5; q++) { const r = document.getElementById(`price-row-q${q}`); if (r) r.style.display = ""; }
     for (let q = 6; q <= 7; q++) { const r = document.getElementById(`price-row-q${q}`); if (r) r.style.display = "none"; }
 
     const factoriesTitle = document.getElementById("factories-main-title");
-    if (factoriesTitle) factoriesTitle.textContent = "Your House Factories";
+    if (factoriesTitle) factoriesTitle.textContent = cfg.factoriesTitle;
     const factoriesSub = document.getElementById("factories-subtitle");
-    if (factoriesSub) factoriesSub.textContent = "Set companies + workers (Q1–Q5). Only hired employees produce — no WAM.";
+    if (factoriesSub) factoriesSub.textContent = cfg.factoriesSubtitle;
     const plantationsTitle = document.getElementById("plantations-main-title");
-    if (plantationsTitle) plantationsTitle.textContent = "Your HRM Companies";
+    if (plantationsTitle) plantationsTitle.textContent = cfg.rmTitle;
     const plantationsSub = document.getElementById("plantations-subtitle");
-    if (plantationsSub) plantationsSub.textContent = "House Raw Material companies Sand → Granite (Q1–Q5)";
+    if (plantationsSub) plantationsSub.textContent = cfg.rmSubtitle;
 
     const labelOutput = document.getElementById("label-total-output");
-    if (labelOutput) labelOutput.textContent = "House Output:";
+    if (labelOutput) labelOutput.textContent = `${cfg.productNounPlural} Output:`;
     const labelConsumed = document.getElementById("label-total-consumed");
-    if (labelConsumed) labelConsumed.textContent = "HRM Consumed:";
+    if (labelConsumed) labelConsumed.textContent = `${cfg.rmNoun} Consumed:`;
     const labelCostKpi = document.getElementById("label-daily-cost-kpi");
-    if (labelCostKpi) labelCostKpi.textContent = "Daily HRM Cost";
+    if (labelCostKpi) labelCostKpi.textContent = `Daily ${cfg.rmNoun} Cost`;
     const labelWorkTaxKpi = document.getElementById("label-work-tax-kpi");
     if (labelWorkTaxKpi) labelWorkTaxKpi.textContent = "Daily Work Tax";
     const labelTotalCount = document.getElementById("label-total-count");
     if (labelTotalCount) labelTotalCount.textContent = "Total Companies:";
 
     const stratHeader = document.getElementById("strategy-comparison-header");
-    if (stratHeader) stratHeader.textContent = "HRM Strategy Comparison";
+    if (stratHeader) stratHeader.textContent = `${cfg.rmNoun} Strategy Comparison`;
     const labelProduced = document.getElementById("label-total-produced");
-    if (labelProduced) labelProduced.textContent = "HRM Produced:";
+    if (labelProduced) labelProduced.textContent = `${cfg.rmNoun} Produced:`;
     const labelBalance = document.getElementById("label-net-balance");
-    if (labelBalance) labelBalance.textContent = "HRM Net Balance:";
+    if (labelBalance) labelBalance.textContent = `${cfg.rmNoun} Net Balance:`;
     const stratBuyTitle = document.getElementById("strategy-buy-title");
-    if (stratBuyTitle) stratBuyTitle.textContent = "Option A: Buy HRM";
+    if (stratBuyTitle) stratBuyTitle.textContent = cfg.strategyBuyTitle;
     const stratProduceTitle = document.getElementById("strategy-produce-title");
-    if (stratProduceTitle) stratProduceTitle.textContent = "Option B: Produce HRM";
+    if (stratProduceTitle) stratProduceTitle.textContent = cfg.strategyProduceTitle;
     const produceTaxLabel = document.getElementById("strategy-produce-tax-label");
-    if (produceTaxLabel) produceTaxLabel.textContent = "HRM Cost:";
+    if (produceTaxLabel) produceTaxLabel.textContent = `${cfg.rmNoun} Cost:`;
 
     const workTaxGroup = document.getElementById("work-tax-group");
     if (workTaxGroup) workTaxGroup.style.display = "none";
@@ -1287,7 +1382,7 @@ function renderHouses() {
     document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
     document.getElementById("select-country").value = state.selectedCountryId || "";
     document.getElementById("select-region").value = state.selectedRegionPermalink || "";
-    document.getElementById("input-grain-price").value = hrmPrice.toFixed(2);
+    document.getElementById("input-grain-price").value = rmPrice.toFixed(2);
     document.getElementById("input-vat").value = state.vat.toFixed(1);
     for (let q = 1; q <= 5; q++) {
         const el = document.getElementById(`price-q${q}`);
@@ -1319,7 +1414,7 @@ function renderHouses() {
     let totalCompanies = 0, totalWorkers = 0, totalOutput = 0, totalHrmUsed = 0, sumRevenue = 0;
     let breakdownHtml = "";
 
-    houseFactoriesData.forEach(fac => {
+    cfg.factoriesData.forEach(fac => {
         const cell = h.factories[fac.quality];
         const companies = cell.companies || 0;
         const maxWorkers = companies * fac.maxEmployees;
@@ -1333,7 +1428,7 @@ function renderHouses() {
         const cardHrm = fac.baseRM * mult * workers;
         const productPrice = h.prices[fac.quality];
         const cardRevenue = cardOutput * productPrice * (1 - state.vat / 100);
-        const cardHrmCost = cardHrm * hrmPrice;
+        const cardHrmCost = cardHrm * rmPrice;
         const cardSalary = workers * state.offeredSalary;
         const cardTax = workers * (state.workTaxRate / 100) * state.averageSalary;
         const cardProfit = cardRevenue - cardHrmCost - cardSalary - cardTax;
@@ -1347,7 +1442,7 @@ function renderHouses() {
                 <li class="breakdown-item">
                     <span class="breakdown-label">Q${fac.quality} (${companies}c / ${workers}w)</span>
                     <span class="breakdown-count" style="display:flex;flex-direction:column;align-items:flex-end;">
-                        <span>+${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Houses</span>
+                        <span>+${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.productNounPluralCard}</span>
                         <span class="${cardProfit >= 0 ? 'text-success' : 'text-danger'}" style="font-size:11px;font-weight:700;">${cardProfit >= 0 ? '+' : ''}${cardProfit.toFixed(2)} CC</span>
                     </span>
                 </li>`;
@@ -1355,7 +1450,7 @@ function renderHouses() {
 
         const card = document.createElement("div");
         card.className = "factory-row-card";
-        card.innerHTML = houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue);
+        card.innerHTML = houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue, cfg);
         container.appendChild(card);
     });
 
@@ -1364,7 +1459,7 @@ function renderHouses() {
     rmContainer.innerHTML = "";
     let totalRmWorkers = 0, totalHrmProduced = 0;
 
-    houseRawMaterialsData.forEach(rm => {
+    cfg.rmData.forEach(rm => {
         const cell = h.rm[rm.quality];
         const companies = cell.companies || 0;
         const maxWorkers = companies * rm.maxEmployees;
@@ -1379,7 +1474,7 @@ function renderHouses() {
         const card = document.createElement("div");
         card.className = "factory-row-card";
         card.style.borderLeft = "3px solid #78909c";
-        card.innerHTML = houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput);
+        card.innerHTML = houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cfg);
         rmContainer.appendChild(card);
     });
 
@@ -1392,13 +1487,13 @@ function renderHouses() {
     const netHrmBalance = totalHrmProduced - totalHrmUsed;
 
     // Option A: buy all HRM, run no RM companies
-    const optionA_hrmCost = totalHrmUsed * hrmPrice;
+    const optionA_hrmCost = totalHrmUsed * rmPrice;
     const netA = sumRevenue - optionA_hrmCost - houseSalaryCost - houseWorkTax;
 
     // Option B: produce HRM
     let marketExpenseB = 0, marketRevenueB = 0;
-    if (netHrmBalance < 0) marketExpenseB = (-netHrmBalance) * hrmPrice;
-    else marketRevenueB = netHrmBalance * hrmPrice * (1 - state.vat / 100);
+    if (netHrmBalance < 0) marketExpenseB = (-netHrmBalance) * rmPrice;
+    else marketRevenueB = netHrmBalance * rmPrice * (1 - state.vat / 100);
     const netB = sumRevenue - houseSalaryCost - hrmSalaryCost - houseWorkTax - hrmWorkTax - marketExpenseB + marketRevenueB;
 
     const isBbetter = netB > netA;
@@ -1422,7 +1517,7 @@ function renderHouses() {
     // --- Summary KPIs ---
     document.getElementById("total-factories-count").textContent = totalCompanies;
     document.getElementById("total-food-output").textContent = totalOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    document.getElementById("total-grain-required").textContent = `${totalHrmUsed.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} HRM`;
+    document.getElementById("total-grain-required").textContent = `${totalHrmUsed.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.rmNoun}`;
     document.getElementById("total-gross-revenue").textContent = `${sumRevenue.toFixed(2)} CC`;
 
     const totalGrainCostEl = document.getElementById("total-grain-cost");
@@ -1441,12 +1536,12 @@ function renderHouses() {
     netProfitEl.className = displayNet >= 0 ? "kpi-value text-success" : "kpi-value text-danger";
 
     const breakdownList = document.getElementById("factory-breakdown-list");
-    breakdownList.innerHTML = breakdownHtml === "" ? `<li class="info-text" style="text-align:center;font-style:italic;">No house companies configured yet.</li>` : breakdownHtml;
+    breakdownList.innerHTML = breakdownHtml === "" ? `<li class="info-text" style="text-align:center;font-style:italic;">No ${cfg.productNounPlural.toLowerCase()} companies configured yet.</li>` : breakdownHtml;
 
     // --- Strategy comparison panel ---
-    document.getElementById("total-grain-produced").textContent = `${totalHrmProduced.toFixed(2)} HRM`;
+    document.getElementById("total-grain-produced").textContent = `${totalHrmProduced.toFixed(2)} ${cfg.rmNoun}`;
     const balanceSpan = document.getElementById("grain-net-balance");
-    balanceSpan.textContent = `${netHrmBalance >= 0 ? "+" : ""}${netHrmBalance.toFixed(2)} HRM`;
+    balanceSpan.textContent = `${netHrmBalance >= 0 ? "+" : ""}${netHrmBalance.toFixed(2)} ${cfg.rmNoun}`;
     balanceSpan.className = netHrmBalance >= 0 ? "kpi-value-small text-success" : "kpi-value-small text-danger";
 
     document.getElementById("strategy-buy-cost").textContent = optionA_hrmCost.toFixed(2);
@@ -1471,7 +1566,7 @@ function renderHouses() {
     if (netA > netB) {
         buyCard.style.borderColor = "var(--erep-green)";
         buyCard.style.backgroundColor = "rgba(122, 183, 0, 0.05)";
-        recommendationDiv.textContent = `Recommendation: Option A (Buy HRM) is more profitable by ${(netA - netB).toFixed(2)} CC/day`;
+        recommendationDiv.textContent = `Recommendation: Option A (Buy ${cfg.rmNoun}) is more profitable by ${(netA - netB).toFixed(2)} CC/day`;
         recommendationDiv.style.borderColor = "var(--erep-green)";
         recommendationDiv.style.color = "var(--erep-green-border)";
         recommendationDiv.style.backgroundColor = "rgba(122, 183, 0, 0.08)";
@@ -1528,6 +1623,20 @@ function setupListeners() {
         tabHouses.onclick = function() {
             if (state.activeModule !== "houses") {
                 state.activeModule = "houses";
+                saveState();
+                if (state.selectedCountryId && state.selectedRegionPermalink) {
+                    syncRegionModifiers();
+                } else {
+                    render();
+                }
+            }
+        };
+    }
+    const tabAircraft = document.getElementById("tab-aircraft");
+    if (tabAircraft) {
+        tabAircraft.onclick = function() {
+            if (state.activeModule !== "aircraft") {
+                state.activeModule = "aircraft";
                 saveState();
                 if (state.selectedCountryId && state.selectedRegionPermalink) {
                     syncRegionModifiers();
@@ -1783,14 +1892,17 @@ function setupListeners() {
         grainPriceInput.onchange = function() {
             let val = parseFloat(this.value);
             if (isNaN(val) || val < 0) {
-                val = state.activeModule === "houses" ? 1535.00 : 50.00;
+                val = state.activeModule === "houses" ? 1535.00
+                    : state.activeModule === "aircraft" ? 1415.00 : 50.00;
             }
             if (state.activeModule === "food") {
                 state.frmPrice = val;
             } else if (state.activeModule === "weapons") {
                 state.wrmPrice = val;
-            } else {
+            } else if (state.activeModule === "houses") {
                 state.hrmPrice = val;
+            } else {
+                state.armPrice = val;
             }
             saveState();
             render();
@@ -1940,6 +2052,30 @@ async function syncLivePrices() {
                     }
                 }
             }
+        } else if (state.activeModule === "aircraft") {
+            // Aircraft: industry 23 (per-quality, no info.misc); ARM: industry 24 (Q1 only)
+            const aircraftRequests = [1, 2, 3, 4, 5].map(q =>
+                fetch(getProxyUrl(`https://service.erepublik.tools/api/v1/market/item/0/23/${q}`))
+            );
+            const armRequest = fetch(getProxyUrl(`https://service.erepublik.tools/api/v1/market/item/0/24/1`));
+            const [armRes, ...aircraftResponses] = await Promise.all([armRequest, ...aircraftRequests]);
+
+            if (armRes.ok) {
+                const armData = await armRes.json();
+                if (armData.status === "ok" && armData.offers && armData.offers.length > 0) {
+                    state.armPrice = armData.offers[0].gross;
+                }
+            }
+            for (let i = 0; i < aircraftResponses.length; i++) {
+                const q = i + 1;
+                const res = aircraftResponses[i];
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.status === "ok" && data.offers && data.offers.length > 0) {
+                        state.aircraft.prices[q] = data.offers[0].gross;
+                    }
+                }
+            }
         }
 
         saveState();
@@ -1958,17 +2094,23 @@ async function syncLivePrices() {
 document.getElementById("btn-reset-all").onclick = function() {
     const active = state.activeModule;
 
-    if (active === "houses") {
+    if (active === "houses" || active === "aircraft") {
+        const m = state[active];
         for (let q = 1; q <= 5; q++) {
-            state.houses.factories[q] = { companies: 0, workers: 0 };
-            state.houses.rm[q] = { companies: 0, workers: 0 };
+            m.factories[q] = { companies: 0, workers: 0 };
+            m.rm[q] = { companies: 0, workers: 0 };
         }
-        state.houses.countryBonus = 100;
-        state.houses.regionBonus = 0;
-        state.houses.pollution = 0;
-        state.houses.qualityPollution = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-        state.houses.prices = { 1: 29000, 2: 63500, 3: 129850, 4: 263498, 5: 315999 };
-        state.hrmPrice = 1535.00;
+        m.countryBonus = 100;
+        m.regionBonus = 0;
+        m.pollution = 0;
+        m.qualityPollution = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        if (active === "houses") {
+            m.prices = { 1: 29000, 2: 63500, 3: 129850, 4: 263498, 5: 315999 };
+            state.hrmPrice = 1535.00;
+        } else {
+            m.prices = { 1: 963.00, 2: 900.00, 3: 1485.00, 4: 1800.00, 5: 2179.00 };
+            state.armPrice = 1415.00;
+        }
         state.hasTycoon = false;
         state.averageSalary = 0.0;
         state.selectedCountryId = "";
