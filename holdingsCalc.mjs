@@ -129,3 +129,20 @@ export function computeHiredIndustry(p) {
 
     return { companies, output, rmConsumed, rmProduced, netBalance, revenue, rmNetCost, workTax, salary, net };
 }
+
+// Sum per-industry results into holding totals.
+// `results` is an array of { key, label, result } (result = a compute*Industry return value).
+export function sumHolding(results) {
+    const totals = { net: 0, revenue: 0, rmNetCost: 0, workTax: 0, salary: 0, companies: 0 };
+    const perIndustry = [];
+    for (const { key, label, result } of results) {
+        totals.net += result.net;
+        totals.revenue += result.revenue;
+        totals.rmNetCost += result.rmNetCost;
+        totals.workTax += result.workTax;
+        totals.salary += result.salary;
+        totals.companies += result.companies;
+        perIndustry.push({ key, label, net: result.net, companies: result.companies });
+    }
+    return { ...totals, perIndustry };
+}

@@ -77,3 +77,18 @@ test('computeHiredIndustry: single Q1 house, 1 worker, buys HRM, no WAM/work-tax
     assert.equal(r.salary, 10);
     assert.equal(roundNumber(r.net, 2), 2662);       // 5742 - 3070 - 0 - 10
 });
+
+import { sumHolding } from './holdingsCalc.mjs';
+
+test('sumHolding aggregates totals and keeps a per-industry breakdown', () => {
+    const sum = sumHolding([
+        { key: 'food', label: 'Food', result: { net: 48, revenue: 99, rmNetCost: 50, workTax: 1, salary: 0, companies: 1 } },
+        { key: 'weapons', label: 'Weapons', result: { net: 100, revenue: 200, rmNetCost: 80, workTax: 15, salary: 5, companies: 2 } }
+    ]);
+    assert.equal(sum.net, 148);
+    assert.equal(sum.revenue, 299);
+    assert.equal(sum.companies, 3);
+    assert.equal(sum.perIndustry.length, 2);
+    assert.equal(sum.perIndustry[0].key, 'food');
+    assert.equal(sum.perIndustry[1].net, 100);
+});
