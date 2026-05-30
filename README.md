@@ -28,6 +28,19 @@ CORS.
   pollution, work tax, and VAT from `erepublik.com` (via the local proxy).
 - **Persistent** — all input is saved to `localStorage`.
 
+## Screenshots
+
+**Holdings mode** — a single holding in one region with a mix of Food and Weapon
+companies; each industry uses that region's own bonuses, and the left summary
+shows the combined daily profit with a per-industry breakdown.
+
+![Holdings mode](docs/screenshots/holdings-mode.png)
+
+**Industry view** — the Food module with factories, plantations, the live
+buy-vs-produce strategy comparison, and location/market modifiers.
+
+![Food industry view](docs/screenshots/industry-food.png)
+
 ## Run
 
 Requires [Node.js](https://nodejs.org) (v18+ for the built-in test runner).
