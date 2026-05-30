@@ -1213,14 +1213,14 @@ function houseCounterGroupsHtml(kind, quality, companies, workers, maxWorkers) {
         + `</div>`;
 }
 
-function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue) {
+function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue, cfg) {
     const fallbackSvg = `
             <svg class="factory-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#8e7cc3;fill:rgba(142,124,195,0.1);">
                 <path d="M3 11l9-7 9 7M5 10v10h14V10M9 20v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`;
     return `
         <div class="factory-avatar-area">
-            ${gameIconHtml(`${EREP_CDN}/icons/industry/4/q${fac.quality}.png`, fallbackSvg)}
+            ${gameIconHtml(`${EREP_CDN}/icons/industry/${cfg.factoryIconIndustry}/q${fac.quality}.png`, fallbackSvg)}
         </div>
         <div class="factory-info-area">
             <div class="factory-title">${fac.name}</div>
@@ -1230,12 +1230,12 @@ function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate
         <div class="factory-stats-area">
             <div class="stat-item">
                 <span class="stat-label">Daily Output</span>
-                <span class="stat-value" style="color: var(--erep-blue);">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} houses</span>
+                <span class="stat-value" style="color: var(--erep-blue);">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.productNounPluralCard.toLowerCase()}</span>
                 <span style="font-size:10px;color:var(--text-secondary);">${singleOutput.toFixed(4)} / worker</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Daily HRM</span>
-                <span class="stat-value" style="color: var(--erep-gold);">${cardHrm.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} HRM</span>
+                <span class="stat-label">Daily ${cfg.rmNoun}</span>
+                <span class="stat-value" style="color: var(--erep-gold);">${cardHrm.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.rmNoun}</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Est. Daily Profit</span>
@@ -1246,14 +1246,14 @@ function houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate
         <div class="factory-action-area">${houseCounterGroupsHtml('factory', fac.quality, companies, workers, maxWorkers)}</div>`;
 }
 
-function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput) {
+function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cfg) {
     const fallbackSvg = `
             <svg class="factory-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#78909c;fill:rgba(120,144,156,0.1);">
                 <path d="M3 20h18L17 8l-4 5-3-4-4 6z" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`;
     return `
         <div class="factory-avatar-area" style="background:rgba(120,144,156,0.1);color:#78909c;border-radius:4px;padding:4px;">
-            ${gameIconHtml(`${EREP_CDN}/buildings/${HRM_BUILDING_IDS[rm.quality]}.png`, fallbackSvg)}
+            ${gameIconHtml(`${EREP_CDN}/buildings/${cfg.rmBuildingIds[rm.quality]}.png`, fallbackSvg)}
         </div>
         <div class="factory-info-area">
             <div class="factory-title">${rm.name}</div>
@@ -1263,7 +1263,7 @@ function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, sing
         <div class="factory-stats-area">
             <div class="stat-item">
                 <span class="stat-label">Daily Output</span>
-                <span class="stat-value" style="color:#78909c;">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} HRM</span>
+                <span class="stat-value" style="color:#78909c;">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cfg.rmNoun}</span>
                 <span style="font-size:10px;color:var(--text-secondary);">${singleOutput.toFixed(4)} / worker</span>
             </div>
             <div class="stat-item" style="opacity:0.5;"></div>
@@ -1409,7 +1409,7 @@ function renderHouses() {
 
         const card = document.createElement("div");
         card.className = "factory-row-card";
-        card.innerHTML = houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue);
+        card.innerHTML = houseFactoryCardHtml(fac, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, cardHrm, cardProfit, cardRevenue, { factoryIconIndustry: 4, productNounPluralCard: "Houses", rmNoun: "HRM", rmBuildingIds: HRM_BUILDING_IDS });
         container.appendChild(card);
     });
 
@@ -1433,7 +1433,7 @@ function renderHouses() {
         const card = document.createElement("div");
         card.className = "factory-row-card";
         card.style.borderLeft = "3px solid #78909c";
-        card.innerHTML = houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput);
+        card.innerHTML = houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, singleOutput, cardOutput, { rmNoun: "HRM", rmBuildingIds: HRM_BUILDING_IDS });
         rmContainer.appendChild(card);
     });
 
