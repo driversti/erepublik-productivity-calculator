@@ -298,6 +298,52 @@ function applyHouseCounterChange(kind, field, quality, value) {
     }
 }
 
+// --- Food/Weapon employee helpers (companies + hired workers) ---
+function fwMaxEmployees(active, kind, quality) {
+    const data = kind === 'factory'
+        ? (active === 'food' ? foodFactoriesData : weaponFactoriesData)
+        : (active === 'food' ? foodPlantationsData : weaponPlantationsData);
+    const row = data.find(x => String(x.quality) === String(quality));
+    return row ? (row.maxEmployees || 0) : 0;
+}
+
+function getFwCell(active, kind, quality) {
+    return kind === 'factory' ? state[active][quality] : state[active].plantations[quality];
+}
+
+// Clamp companies to 0..9999 and workers to 0..(companies * maxEmployees)
+function applyFwCounterChange(active, kind, field, quality, value) {
+    const cell = getFwCell(active, kind, quality);
+    const maxEmp = fwMaxEmployees(active, kind, quality);
+    if (field === 'companies') {
+        cell.companies = Math.max(0, Math.min(value, 9999));
+        const cap = cell.companies * maxEmp;
+        if (cell.workers > cap) cell.workers = cap;
+    } else {
+        const cap = (cell.companies || 0) * maxEmp;
+        cell.workers = Math.max(0, Math.min(value, cap));
+    }
+}
+
+// Stacked Companies / Workers counter rows for a food/weapon card.
+// Workers row is hidden when hideWorkers is true (e.g. plantations with maxEmployees 0).
+function fwCounterGroupsHtml(kind, quality, companies, workers, maxWorkers, hideWorkers) {
+    const row = (field, value, label, hint) => `
+        <div class="house-counter-row">
+            <span class="house-counter-label">${label}${hint}</span>
+            <div class="counter-group counter-group-sm">
+                <button class="btn-counter fw-counter-btn" data-kind="${kind}" data-field="${field}" data-quality="${quality}" data-delta="-1">-</button>
+                <input type="text" class="counter-input fw-counter-input" data-kind="${kind}" data-field="${field}" data-quality="${quality}" value="${value}" inputmode="numeric" pattern="[0-9]*">
+                <button class="btn-counter fw-counter-btn" data-kind="${kind}" data-field="${field}" data-quality="${quality}" data-delta="1">+</button>
+            </div>
+        </div>`;
+    let html = `<div class="house-counters">` + row('companies', companies, 'Companies', '');
+    if (!hideWorkers) {
+        html += row('workers', workers, 'Workers', ` <span class="max-hint">· max ${maxWorkers}</span>`);
+    }
+    return html + `</div>`;
+}
+
 // Highlight the active tab across all three modules
 function setActiveTabHighlight(active) {
     [['food', 'tab-food'], ['weapons', 'tab-weapons'], ['houses', 'tab-houses']].forEach(([m, id]) => {
