@@ -840,24 +840,24 @@ function render() {
     const wamToggleFW = document.getElementById("wam-toggle");
     if (wamToggleFW) wamToggleFW.checked = state.wamEnabled;
     document.getElementById("input-region-bonus").value = moduleState.regionBonus;
-    document.getElementById("input-work-tax").value = state.workTaxRate.toFixed(2);
-    document.getElementById("input-average-salary").value = state.averageSalary.toFixed(2);
+    document.getElementById("input-work-tax").value = moduleState.workTaxRate.toFixed(2);
+    document.getElementById("input-average-salary").value = moduleState.averageSalary.toFixed(2);
     document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
 
     // Sync location dropdown selections
-    document.getElementById("select-country").value = state.selectedCountryId || "";
-    document.getElementById("select-region").value = state.selectedRegionPermalink || "";
-    
+    document.getElementById("select-country").value = moduleState.selectedCountryId || "";
+    document.getElementById("select-region").value = moduleState.selectedRegionPermalink || "";
+
     // Update sync status text color if synced successfully or manually overridden
     const syncStatus = document.getElementById("sync-status");
     if (syncStatus) {
-        if (state.selectedCountryId && state.selectedRegionPermalink) {
+        if (moduleState.selectedCountryId && moduleState.selectedRegionPermalink) {
             syncStatus.textContent = `Auto-sync: Synced (Country: +${moduleState.countryBonus}%, Region: +${moduleState.regionBonus}%)`;
             syncStatus.style.color = "var(--erep-green, #7ab700)";
-        } else if (state.selectedCountryId && !state.selectedRegionPermalink) {
+        } else if (moduleState.selectedCountryId && !moduleState.selectedRegionPermalink) {
             syncStatus.textContent = "Auto-sync: Region not selected";
             syncStatus.style.color = "var(--text-secondary)";
-        } else if (!state.selectedCountryId) {
+        } else if (!moduleState.selectedCountryId) {
             syncStatus.textContent = "Auto-sync: Not configured";
             syncStatus.style.color = "var(--text-secondary)";
         }
@@ -865,7 +865,7 @@ function render() {
     
     // Sync market input visuals with state
     document.getElementById("input-grain-price").value = rmPrice.toFixed(2);
-    document.getElementById("input-vat").value = state.vat.toFixed(1);
+    document.getElementById("input-vat").value = moduleState.vat.toFixed(1);
     for (let q = 1; q <= 7; q++) {
         document.getElementById(`price-q${q}`).value = moduleState.prices[q].toFixed(2);
     }
@@ -912,8 +912,8 @@ function render() {
         
         // Revenue after VAT
         const productPrice = moduleState.prices[fact.quality];
-        const cardRevenue = cardOutput * productPrice * (1 - state.vat / 100);
-        
+        const cardRevenue = cardOutput * productPrice * (1 - moduleState.vat / 100);
+
         // Raw Material Cost
         const cardRMCost = cardRM * rmPrice;
         
@@ -1097,7 +1097,7 @@ function render() {
     totalGrainProduced = roundNumber(totalGrainProduced, 2);
 
     // STRATEGY MATH & COMPARISON
-    const taxPerSession = (state.workTaxRate / 100) * state.averageSalary;
+    const taxPerSession = (moduleState.workTaxRate / 100) * moduleState.averageSalary;
     const factoryTax = factoryWamSessions * taxPerSession;
     const factoryLabor = factoryWorkers * state.offeredSalary;
     const totalGrainRequiredVal = totalRM;
@@ -1116,7 +1116,7 @@ function render() {
     if (netGrainBalance < 0) {
         marketExpenseOptionB = (-netGrainBalance) * rmPrice;
     } else {
-        marketRevenueOptionB = netGrainBalance * rmPrice * (1 - state.vat / 100);
+        marketRevenueOptionB = netGrainBalance * rmPrice * (1 - moduleState.vat / 100);
     }
 
     const netProfitOptionB = sumRevenue - factoryTax - factoryLabor - plantTax - plantLabor - marketExpenseOptionB + marketRevenueOptionB;
