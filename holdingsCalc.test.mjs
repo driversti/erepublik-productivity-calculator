@@ -56,3 +56,24 @@ test('computeFwIndustry: surplus RM from a plantation is sold minus VAT', () => 
     assert.equal(roundNumber(r.rmNetCost, 2), -45); // sell: -(1 * 50 * 0.90) = -45 (negative cost = income)
     assert.equal(roundNumber(r.net, 2), 45);
 });
+
+import { computeHiredIndustry } from './holdingsCalc.mjs';
+
+test('computeHiredIndustry: single Q1 house, 1 worker, buys HRM, no WAM/work-tax', () => {
+    const r = computeHiredIndustry({
+        factoriesData: [{ quality: 1, baseOutput: 1 / 5, baseRM: 2, maxEmployees: 1 }],
+        rmData: [],
+        factoryCells: { 1: { companies: 1, workers: 1 } },
+        rmCells: {},
+        countryBonus: 0, regionBonus: 0, qualityPollution: { 0: 0, 1: 0 }, vat: 1,
+        prices: { 1: 29000 }, rmPrice: 1535,
+        hasTycoon: false, offeredSalary: 10
+    });
+    assert.equal(roundNumber(r.output, 2), 0.20);
+    assert.equal(r.rmConsumed, 2);
+    assert.equal(r.workTax, 0);
+    assert.equal(roundNumber(r.revenue, 2), 5742);   // 0.2 * 29000 * 0.99
+    assert.equal(roundNumber(r.rmNetCost, 2), 3070); // buy 2 HRM @ 1535
+    assert.equal(r.salary, 10);
+    assert.equal(roundNumber(r.net, 2), 2662);       // 5742 - 3070 - 0 - 10
+});

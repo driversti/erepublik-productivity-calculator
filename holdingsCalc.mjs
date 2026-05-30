@@ -80,3 +80,52 @@ export function computeFwIndustry(p) {
 
     return { companies, output, rmConsumed, rmProduced, netBalance, revenue, rmNetCost, workTax, salary, net };
 }
+
+// One houses/aircraft-style industry inside a holding (no WAM; hired workers only).
+// Same return shape as computeFwIndustry; workTax is always 0 (owner cannot be GM).
+export function computeHiredIndustry(p) {
+    const {
+        factoriesData, rmData, factoryCells, rmCells,
+        countryBonus, regionBonus, qualityPollution, vat, prices, rmPrice,
+        hasTycoon, offeredSalary
+    } = p;
+
+    let companies = 0, factoryWorkers = 0;
+    let output = 0, rmConsumed = 0, revenue = 0;
+
+    for (const fac of factoriesData) {
+        const cell = factoryCells[fac.quality] || { companies: 0, workers: 0 };
+        const c = cell.companies || 0;
+        const w = Math.min(cell.workers || 0, c * fac.maxEmployees);
+        companies += c; factoryWorkers += w;
+
+        const mult = productivityMultiplier({ countryBonus, regionBonus, hasTycoon, pollutionRate: pollutionAt(qualityPollution, fac.quality) });
+        const singleOutput = fac.baseOutput * mult;
+        output += singleOutput * w;
+        rmConsumed += fac.baseRM * mult * w;
+        revenue += (singleOutput * w) * prices[fac.quality] * (1 - vat / 100);
+    }
+
+    let rmWorkers = 0, rmProduced = 0;
+    for (const rm of rmData) {
+        const cell = rmCells[rm.quality] || { companies: 0, workers: 0 };
+        const c = cell.companies || 0;
+        const w = Math.min(cell.workers || 0, c * rm.maxEmployees);
+        companies += c; rmWorkers += w;
+
+        const mult = productivityMultiplier({ countryBonus, regionBonus, hasTycoon, pollutionRate: pollutionAt(qualityPollution, 0) });
+        const singleOutput = (rm.baseOutput / 100) * mult;
+        rmProduced += singleOutput * w;
+    }
+
+    const netBalance = rmProduced - rmConsumed;
+    const rmNetCost = netBalance < 0
+        ? (-netBalance) * rmPrice
+        : -(netBalance * rmPrice * (1 - vat / 100));
+
+    const salary = (factoryWorkers + rmWorkers) * offeredSalary;
+    const workTax = 0;
+    const net = revenue - rmNetCost - workTax - salary;
+
+    return { companies, output, rmConsumed, rmProduced, netBalance, revenue, rmNetCost, workTax, salary, net };
+}
