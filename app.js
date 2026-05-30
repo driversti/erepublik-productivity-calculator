@@ -1666,6 +1666,16 @@ function computeHoldingIndustry(holding, cfg) {
 function renderHoldingSections(holding) {
     const container = document.getElementById("hld-sections");
     if (!container) return;
+
+    // Preserve the user's manual collapse/expand choice across re-renders. render()
+    // runs on every change (counter, toggle, sync), and we rebuild all sections from
+    // scratch — without this, a section the user collapsed would snap back open as soon
+    // as anything else changes. Capture the current state by industry before clearing.
+    const prevCollapsed = {};
+    container.querySelectorAll(".hld-section").forEach(s => {
+        const k = s.getAttribute("data-industry");
+        if (k) prevCollapsed[k] = s.classList.contains("collapsed");
+    });
     container.innerHTML = "";
 
     HOLDING_INDUSTRIES.forEach(cfg => {
@@ -1728,10 +1738,13 @@ function renderHoldingSections(holding) {
             });
         }
 
-        const collapsed = result.companies === 0 ? " collapsed" : "";
+        // Honor the user's last manual choice for this industry; fall back to the
+        // default (collapsed when empty) only the first time a section appears.
+        const isCollapsed = (cfg.key in prevCollapsed) ? prevCollapsed[cfg.key] : (result.companies === 0);
         const netClass = result.net >= 0 ? "text-success" : "text-danger";
         const section = document.createElement("div");
-        section.className = "hld-section" + collapsed;
+        section.setAttribute("data-industry", cfg.key);
+        section.className = "hld-section" + (isCollapsed ? " collapsed" : "");
         section.innerHTML = `
             <div class="hld-section-head">
                 <span style="font-size:18px;">${cfg.icon}</span>
