@@ -363,7 +363,7 @@ Replace each cfg entry's closing so it carries `industryLabel` (use the exact la
     const moduleSyncCfg = {
         food:    { industryId: "1", industryToken: "FOOD",   resourceRegexStr: 'data-resourceId="([1-5])"',          maxQuality: 7, industryLabel: "Food" },
         weapons: { industryId: "2", industryToken: "WEAPON", resourceRegexStr: 'data-resourceId="(6|7|8|9|10)"',     maxQuality: 7, industryLabel: "Weapons" },
-        houses:  { industryId: "4", industryToken: "HOUSE",  resourceRegexStr: 'data-resourceId="(11|12|13|14|15)"', maxQuality: 5, industryLabel: "Construction" },
+        houses:  { industryId: "4", industryToken: "HOUSE",  resourceRegexStr: 'data-resourceId="(11|12|13|14|15)"', maxQuality: 5, industryLabel: "House" },
         aircraft: { industryId: "23", industryToken: "AIRCRAFT", resourceRegexStr: 'data-resourceId="(16|17|18|19|20)"', maxQuality: 5, industryLabel: "Aircraft Weapons" }
     };
 ```
@@ -371,21 +371,17 @@ Replace each cfg entry's closing so it carries `industryLabel` (use the exact la
 
 - [ ] **Step 3: Parse VAT (insert after the Average Salary parse, before "Update active module state")**
 
-Insert after the `avgSalaryValue` block (the lines that set `avgSalaryValue`) and before `// Update active module state`:
+Insert after the `avgSalaryValue` block (the lines that set `avgSalaryValue`) and before `// Update active module state`. The regex below is the **confirmed** template from Task 1 (verified against `scratch_country_economy.html` for all four industries — capture group 1 is the VAT integer; columns are Work-Tax / Import-Tax / VAT; an empty capture means raw-material row, which we ignore):
 ```javascript
-        // 6. Parse Industry VAT (per-industry). Uses the recipe confirmed in plan Task 1.
+        // 6. Parse Industry VAT (per-industry). Recipe confirmed against scratch_country_economy.html (plan Task 1).
         let vatValue = (typeof loc.vat === 'number') ? loc.vat : 1.0;
-        const vatRegex = new RegExp(cfg.industryLabel + VAT_REGEX_TEMPLATE, 'i'); // VAT_REGEX_TEMPLATE finalized in Task 1
-        const vatMatch = countryHtml.match(vatRegex);
-        if (vatMatch) {
+        const vatRegexStr = 'fakeheight">' + cfg.industryLabel + '<\\/span><\\/td>\\s*<td[^>]*>\\s*<span[^>]*>[^<]*<\\/span>\\s*<\\/td>\\s*<td[^>]*>\\s*<span[^>]*>[^<]*<\\/span>%\\s*<\\/td>\\s*<td[^>]*>\\s*<span[^>]*>([\\d.]*)<\\/span>';
+        const vatMatch = countryHtml.match(new RegExp(vatRegexStr, 'i'));
+        if (vatMatch && vatMatch[1] !== '') {
             vatValue = parseFloat(vatMatch[1]) || 0;
         }
 ```
-And define `VAT_REGEX_TEMPLATE` near the top of the function (or as a module-level const) using the exact template from Task 1's recipe note, e.g.:
-```javascript
-    // Finalized in plan Task 1 against scratch_country_economy.html.
-    const VAT_REGEX_TEMPLATE = '<\\/span>\\s*<\\/td>(?:\\s*<td[^>]*>\\s*<span\\s+class="special"\\s*>[\\d.]+%?<\\/span>\\s*<\\/td>){2}\\s*<td[^>]*>\\s*<span\\s+class="special"\\s*>([\\d.]+)%';
-```
+Note: `loc` is already defined at the top of the function (Step 1). The regex is built by concatenating the `fakeheight">` prefix + the module's `industryLabel` + the structural tail — no separate placeholder template constant is needed.
 
 - [ ] **Step 4: Write metrics into the active module instead of top-level**
 
