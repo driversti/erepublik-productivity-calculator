@@ -1,0 +1,14 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+
+# Playwright MCP test artifacts (screenshots, snapshots, console logs)
+.playwright-mcp/
+
+# Logs
+*.log
