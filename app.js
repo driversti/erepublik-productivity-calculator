@@ -714,7 +714,9 @@ function render() {
     container.innerHTML = "";
     breakdownList.innerHTML = "";
     
-    let totalFactories = 0;
+    let totalFactories = 0;       // total companies (for the "Total Factories" KPI)
+    let factorySessions = 0;      // WAM + hired sessions (for work tax)
+    let factoryWorkers = 0;       // hired only (for labor salary)
     let totalOutput = 0;
     let totalRM = 0;
     let sumRevenue = 0;
@@ -723,8 +725,13 @@ function render() {
     
     // Render factory rows
     factoriesData.forEach(fact => {
-        const qty = moduleState[fact.quality] || 0;
-        totalFactories += qty;
+        const cell = moduleState[fact.quality] || { companies: 0, workers: 0 };
+        const companies = cell.companies || 0;
+        const workers = Math.min(cell.workers || 0, companies * fact.maxEmployees);
+        const sessions = companies + workers;
+        totalFactories += companies;
+        factorySessions += sessions;
+        factoryWorkers += workers;
         
         // Quality-specific pollution (fall back to manual general pollution if not populated)
         const pollutionRate = (moduleState.qualityPollution && typeof moduleState.qualityPollution[fact.quality] === 'number') 
@@ -739,8 +746,8 @@ function render() {
         // Calculations for this card
         const singleOutput = fact.baseOutput * cardMultiplier;
         const singleRM = fact.baseRM * cardMultiplier;
-        const cardOutput = singleOutput * qty;
-        const cardRM = singleRM * qty;
+        const cardOutput = singleOutput * sessions;
+        const cardRM = singleRM * sessions;
         
         // Revenue after VAT
         const productPrice = moduleState.prices[fact.quality];
@@ -758,10 +765,10 @@ function render() {
         sumGrainCost += cardRMCost;
         
         // Add to sidebar breakdown list if user has at least 1
-        if (qty > 0) {
+        if (companies > 0 || workers > 0) {
             breakdownHtml += `
                 <li class="breakdown-item">
-                    <span class="breakdown-label">Q${fact.quality} (${qty})</span>
+                    <span class="breakdown-label">Q${fact.quality} (${companies}c / ${workers}w)</span>
                     <span class="breakdown-count" style="display: flex; flex-direction: column; align-items: flex-end;">
                         <span>+${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${isFood ? 'Food' : 'Weapon'}</span>
                         <span class="${cardGrossProfit >= 0 ? 'text-success' : 'text-danger'}" style="font-size: 11px; font-weight: 700;">
@@ -804,7 +811,7 @@ function render() {
                 <div class="stat-item">
                     <span class="stat-label">Daily Output</span>
                     <span class="stat-value" style="color: var(--erep-blue);">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} items</span>
-                    <span style="font-size: 10px; color: var(--text-secondary);">${singleOutput.toFixed(2)} / bldg</span>
+                    <span style="font-size: 10px; color: var(--text-secondary);">${singleOutput.toFixed(2)} / session</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Daily ${isFood ? 'Grain' : 'WRM'}</span>
@@ -818,11 +825,7 @@ function render() {
                 </div>
             </div>
             <div class="factory-action-area">
-                <div class="counter-group">
-                    <button class="btn-counter btn-minus" data-quality="${fact.quality}">-</button>
-                    <input type="text" class="counter-input" data-quality="${fact.quality}" value="${qty}" inputmode="numeric" pattern="[0-9]*">
-                    <button class="btn-counter btn-plus" data-quality="${fact.quality}">+</button>
-                </div>
+                ${fwCounterGroupsHtml('factory', fact.quality, companies, workers, companies * fact.maxEmployees, false)}
             </div>
         `;
         
