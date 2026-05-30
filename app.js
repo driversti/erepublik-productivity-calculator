@@ -2052,6 +2052,30 @@ async function syncLivePrices() {
                     }
                 }
             }
+        } else if (state.activeModule === "aircraft") {
+            // Aircraft: industry 23 (per-quality, no info.misc); ARM: industry 24 (Q1 only)
+            const aircraftRequests = [1, 2, 3, 4, 5].map(q =>
+                fetch(getProxyUrl(`https://service.erepublik.tools/api/v1/market/item/0/23/${q}`))
+            );
+            const armRequest = fetch(getProxyUrl(`https://service.erepublik.tools/api/v1/market/item/0/24/1`));
+            const [armRes, ...aircraftResponses] = await Promise.all([armRequest, ...aircraftRequests]);
+
+            if (armRes.ok) {
+                const armData = await armRes.json();
+                if (armData.status === "ok" && armData.offers && armData.offers.length > 0) {
+                    state.armPrice = armData.offers[0].gross;
+                }
+            }
+            for (let i = 0; i < aircraftResponses.length; i++) {
+                const q = i + 1;
+                const res = aircraftResponses[i];
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.status === "ok" && data.offers && data.offers.length > 0) {
+                        state.aircraft.prices[q] = data.offers[0].gross;
+                    }
+                }
+            }
         }
 
         saveState();
