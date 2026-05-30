@@ -1,7 +1,7 @@
 // eRepublik Food Factories Data Structure
 // baseRM is normalized to Marketplace Units (1 unit of FRM = 100 individual Grain)
 import { countries } from './travelData.js';
-import { roundNumber, gameRawProduction } from './holdingsCalc.mjs';
+import { roundNumber, gameRawProduction, computeFwIndustry, computeHiredIndustry, sumHolding } from './holdingsCalc.mjs';
 
 const foodFactoriesData = [
     { quality: 1, name: "Grain Bakery (Q1)", baseOutput: 100, baseRM: 1, energyPerItem: 2, maxEmployees: 1 },
@@ -131,6 +131,14 @@ const HIRED_LABOR_MODULES = {
         strategyProduceTitle: "Option B: Produce ARM"
     }
 };
+
+// Drives the Holdings view: which industries to render and how to compute each.
+const HOLDING_INDUSTRIES = [
+    { key: 'food',     label: 'Food',     icon: '🍞', type: 'fw',    isFood: true,  factoriesData: foodFactoriesData,     plantationsData: foodPlantationsData,     rmPriceField: 'frmPrice', rmNoun: 'FRM' },
+    { key: 'weapons',  label: 'Weapons',  icon: '⚔️', type: 'fw',    isFood: false, factoriesData: weaponFactoriesData,   plantationsData: weaponPlantationsData,   rmPriceField: 'wrmPrice', rmNoun: 'WRM' },
+    { key: 'houses',   label: 'Houses',   icon: '🏠', type: 'hired', factoriesData: houseFactoriesData,    rmData: houseRawMaterialsData,    factoryIconIndustry: 4,  rmBuildingIds: HRM_BUILDING_IDS, rmPriceField: 'hrmPrice', rmNoun: 'HRM' },
+    { key: 'aircraft', label: 'Aircraft', icon: '✈️', type: 'hired', factoriesData: aircraftFactoriesData, rmData: aircraftRawMaterialsData, factoryIconIndustry: 23, rmBuildingIds: ARM_BUILDING_IDS, rmPriceField: 'armPrice', rmNoun: 'ARM' }
+];
 
 const factoryIconUrl = (isFood, quality) => `${EREP_CDN}/icons/industry/${isFood ? 1 : 2}/q${quality}.png`;
 const plantationIconUrl = (isFood, quality) => `${EREP_CDN}/buildings/${(isFood ? FRM_BUILDING_IDS : WRM_BUILDING_IDS)[quality]}.png`;
@@ -565,11 +573,22 @@ function fwCounterGroupsHtml(kind, quality, companies, workers, maxWorkers, hide
     return html + `</div>`;
 }
 
-// Highlight the active tab across all three modules
+// Highlight the active tab across all modules
 function setActiveTabHighlight(active) {
-    [['food', 'tab-food'], ['weapons', 'tab-weapons'], ['houses', 'tab-houses'], ['aircraft', 'tab-aircraft']].forEach(([m, id]) => {
+    [['food', 'tab-food'], ['weapons', 'tab-weapons'], ['houses', 'tab-houses'], ['aircraft', 'tab-aircraft'], ['holdings', 'tab-holdings']].forEach(([m, id]) => {
         const el = document.getElementById(id);
         if (el) el.classList.toggle('active', m === active);
+    });
+}
+
+function populateHoldingCountriesDropdown() {
+    const sel = document.getElementById("hld-country");
+    if (!sel) return;
+    sel.innerHTML = '<option value="">-- Select Country --</option>';
+    Object.values(countries).sort((a, b) => a.name.localeCompare(b.name)).forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.id; opt.textContent = c.name;
+        sel.appendChild(opt);
     });
 }
 
@@ -822,6 +841,17 @@ async function syncRegionModifiers() {
 
 // Render factories grid and update summary
 function render() {
+    const industryView = document.getElementById("industry-view");
+    const holdingsView = document.getElementById("holdings-view");
+    if (state.activeModule === "holdings") {
+        if (industryView) industryView.style.display = "none";
+        if (holdingsView) holdingsView.style.display = "";
+        renderHoldings();
+        return;
+    }
+    if (industryView) industryView.style.display = "";
+    if (holdingsView) holdingsView.style.display = "none";
+
     if (state.activeModule === "houses" || state.activeModule === "aircraft") {
         renderHiredLaborModule(state.activeModule);
         return;
@@ -1403,6 +1433,62 @@ function houseRmCardHtml(rm, companies, workers, maxWorkers, pollutionRate, sing
         <div class="factory-action-area">${houseCounterGroupsHtml('rm', rm.quality, companies, workers, maxWorkers)}</div>`;
 }
 
+function renderHoldings() {
+    setActiveTabHighlight("holdings");
+
+    const sel = document.getElementById("hld-select");
+    if (sel) {
+        sel.innerHTML = "";
+        state.holdings.forEach(h => {
+            const opt = document.createElement("option");
+            opt.value = h.id; opt.textContent = h.name;
+            sel.appendChild(opt);
+        });
+        if (state.activeHoldingId) sel.value = state.activeHoldingId;
+    }
+
+    const holding = activeHolding();
+    const empty = document.getElementById("hld-empty");
+    const content = document.getElementById("hld-content");
+    if (!holding) {
+        if (empty) empty.style.display = "";
+        if (content) content.style.display = "none";
+        setupListeners();
+        return;
+    }
+    if (empty) empty.style.display = "none";
+    if (content) content.style.display = "";
+
+    const tyc = document.getElementById("hld-tycoon"); if (tyc) tyc.checked = state.hasTycoon;
+    const wam = document.getElementById("hld-wam"); if (wam) wam.checked = state.wamEnabled;
+    const off = document.getElementById("hld-offered-salary"); if (off) off.value = state.offeredSalary.toFixed(2);
+    const cty = document.getElementById("hld-country"); if (cty) cty.value = holding.selectedCountryId || "";
+    const rgn = document.getElementById("hld-region"); if (rgn) rgn.value = holding.selectedRegionPermalink || "";
+
+    const syncStatus = document.getElementById("hld-sync-status");
+    if (syncStatus) {
+        if (holding.selectedCountryId && holding.selectedRegionPermalink) {
+            syncStatus.textContent = "Auto-sync: Synced";
+            syncStatus.style.color = "var(--erep-green, #7ab700)";
+        } else if (holding.selectedCountryId) {
+            syncStatus.textContent = "Auto-sync: Region not selected";
+            syncStatus.style.color = "var(--text-secondary)";
+        } else {
+            syncStatus.textContent = "Auto-sync: Not configured";
+            syncStatus.style.color = "var(--text-secondary)";
+        }
+    }
+
+    renderHoldingSections(holding);
+    renderHoldingSummary(holding);
+
+    setupListeners();
+}
+
+// Stubs — replaced by later tasks (sections/summary rendering).
+function renderHoldingSections(holding) { /* filled in a later task */ }
+function renderHoldingSummary(holding) { /* filled in a later task */ }
+
 function renderHiredLaborModule(moduleKey) {
     const cfg = HIRED_LABOR_MODULES[moduleKey];
     setActiveTabHighlight(moduleKey);
@@ -1705,6 +1791,50 @@ function setupListeners() {
     if (tabHouses) tabHouses.onclick = () => switchModule("houses");
     const tabAircraft = document.getElementById("tab-aircraft");
     if (tabAircraft) tabAircraft.onclick = () => switchModule("aircraft");
+
+    const tabHoldings = document.getElementById("tab-holdings");
+    if (tabHoldings) tabHoldings.onclick = () => switchModule("holdings");
+
+    const hldSelect = document.getElementById("hld-select");
+    if (hldSelect) hldSelect.onchange = function () { state.activeHoldingId = this.value; saveState(); render(); };
+
+    const hldNew = document.getElementById("hld-new");
+    if (hldNew) hldNew.onclick = function () {
+        const name = (prompt("New holding name:", "Holding " + (state.holdings.length + 1)) || "").trim();
+        if (!name) return;
+        const h = createHolding(name);
+        state.holdings.push(h);
+        state.activeHoldingId = h.id;
+        saveState();
+        render();
+    };
+
+    const hldRename = document.getElementById("hld-rename");
+    if (hldRename) hldRename.onclick = function () {
+        const h = activeHolding(); if (!h) return;
+        const name = (prompt("Rename holding:", h.name) || "").trim();
+        if (!name) return;
+        h.name = name; saveState(); render();
+    };
+
+    const hldDelete = document.getElementById("hld-delete");
+    if (hldDelete) hldDelete.onclick = function () {
+        const h = activeHolding(); if (!h) return;
+        if (!confirm(`Delete holding "${h.name}"? This cannot be undone.`)) return;
+        state.holdings = state.holdings.filter(x => x.id !== h.id);
+        state.activeHoldingId = state.holdings.length ? state.holdings[0].id : null;
+        saveState(); render();
+    };
+
+    const hldTycoon = document.getElementById("hld-tycoon");
+    if (hldTycoon) hldTycoon.onchange = function () { state.hasTycoon = this.checked; saveState(); render(); };
+    const hldWam = document.getElementById("hld-wam");
+    if (hldWam) hldWam.onchange = function () { state.wamEnabled = this.checked; saveState(); render(); };
+    const hldOffered = document.getElementById("hld-offered-salary");
+    if (hldOffered) {
+        hldOffered.onchange = function () { let v = parseFloat(this.value); if (isNaN(v) || v < 0) v = 0; state.offeredSalary = v; saveState(); render(); };
+        hldOffered.onkeydown = function (e) { if (e.key === "Enter") this.blur(); };
+    }
 
     // Food/Weapon counter buttons (companies / workers, factory / plantation)
     document.querySelectorAll(".fw-counter-btn").forEach(btn => {
@@ -2127,6 +2257,7 @@ document.getElementById("btn-reset-all").onclick = function() {
 // Initial App Bootstrapping
 document.addEventListener("DOMContentLoaded", async () => {
     populateCountriesDropdown();
+    populateHoldingCountriesDropdown();
     loadState();
     const bootLoc = state[state.activeModule];
     if (bootLoc.selectedCountryId) {
