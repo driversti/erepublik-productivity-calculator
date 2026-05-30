@@ -1,11 +1,14 @@
 # eRepublik Productivity & Profit Calculator
 
-A zero-dependency, single-page web app that estimates **daily profit** for your
+A single-page web app that estimates **daily profit** for your
 [eRepublik](https://www.erepublik.com) companies across all four industries —
-food, weapons, houses, and aircraft weapons. Pure vanilla JavaScript (ES
-modules), no framework, no build step. All calculations run client-side; the
-tiny bundled Node server only serves the files and proxies game requests around
-CORS.
+food, weapons, houses, and aircraft weapons. Built with **Vite + React 19 +
+TypeScript**. All calculations run client-side; the bundled Node server serves
+the production build and proxies game requests around CORS.
+
+> Migrating from the original zero-build vanilla-JS app (branch
+> `feat/react-migration`). The vanilla version is preserved on disk
+> (`index.legacy.html` + `app.js`) until the final cutover.
 
 ## Features
 

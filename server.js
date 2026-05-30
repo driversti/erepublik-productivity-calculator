@@ -1,7 +1,12 @@
-const http = require('http');
-const https = require('https');
-const fs = require('fs');
-const path = require('path');
+// ESM module (package.json has "type": "module").
+import http from 'node:http';
+import https from 'node:https';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const PORT = 8080;
 // Serve the Vite production build (run `npm run build` first). The legacy vanilla
