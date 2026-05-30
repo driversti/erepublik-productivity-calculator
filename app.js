@@ -1280,8 +1280,9 @@ function renderHouses() {
         const productPrice = h.prices[fac.quality];
         const cardRevenue = cardOutput * productPrice * (1 - state.vat / 100);
         const cardHrmCost = cardHrm * hrmPrice;
-        const cardSalary = workers * state.averageSalary;
-        const cardProfit = cardRevenue - cardHrmCost - cardSalary;
+        const cardSalary = workers * state.offeredSalary;
+        const cardTax = workers * (state.workTaxRate / 100) * state.averageSalary;
+        const cardProfit = cardRevenue - cardHrmCost - cardSalary - cardTax;
 
         totalOutput += cardOutput;
         totalHrmUsed += cardHrm;
