@@ -3,39 +3,39 @@
 import { countries } from './travelData.js';
 
 const foodFactoriesData = [
-    { quality: 1, name: "Grain Bakery (Q1)", baseOutput: 100, baseRM: 1, energyPerItem: 2 },
-    { quality: 2, name: "Food Factory (Q2)", baseOutput: 100, baseRM: 2, energyPerItem: 4 },
-    { quality: 3, name: "Food Factory (Q3)", baseOutput: 100, baseRM: 3, energyPerItem: 6 },
-    { quality: 4, name: "Food Factory (Q4)", baseOutput: 100, baseRM: 4, energyPerItem: 8 },
-    { quality: 5, name: "Food Factory (Q5)", baseOutput: 100, baseRM: 5, energyPerItem: 10 },
-    { quality: 6, name: "Food Factory (Q6)", baseOutput: 100, baseRM: 6, energyPerItem: 12 },
-    { quality: 7, name: "Food Factory (Q7)", baseOutput: 100, baseRM: 20, energyPerItem: 20 }
+    { quality: 1, name: "Grain Bakery (Q1)", baseOutput: 100, baseRM: 1, energyPerItem: 2, maxEmployees: 1 },
+    { quality: 2, name: "Food Factory (Q2)", baseOutput: 100, baseRM: 2, energyPerItem: 4, maxEmployees: 2 },
+    { quality: 3, name: "Food Factory (Q3)", baseOutput: 100, baseRM: 3, energyPerItem: 6, maxEmployees: 3 },
+    { quality: 4, name: "Food Factory (Q4)", baseOutput: 100, baseRM: 4, energyPerItem: 8, maxEmployees: 5 },
+    { quality: 5, name: "Food Factory (Q5)", baseOutput: 100, baseRM: 5, energyPerItem: 10, maxEmployees: 10 },
+    { quality: 6, name: "Food Factory (Q6)", baseOutput: 100, baseRM: 6, energyPerItem: 12, maxEmployees: 10 },
+    { quality: 7, name: "Food Factory (Q7)", baseOutput: 100, baseRM: 20, energyPerItem: 20, maxEmployees: 10 }
 ];
 
 const foodPlantationsData = [
-    { quality: 1, name: "Grain Farm (Q1)", baseOutput: 35, energyPerItem: 10 },
-    { quality: 2, name: "Fruit Orchard (Q2)", baseOutput: 70, energyPerItem: 10 },
-    { quality: 3, name: "Fishery (Q3)", baseOutput: 125, energyPerItem: 10 },
-    { quality: 4, name: "Cattle Farm (Q4)", baseOutput: 175, energyPerItem: 10 },
-    { quality: 5, name: "Hunting Lodge (Q5)", baseOutput: 250, energyPerItem: 10 }
+    { quality: 1, name: "Grain Farm (Q1)", baseOutput: 35, energyPerItem: 10, maxEmployees: 0 },
+    { quality: 2, name: "Fruit Orchard (Q2)", baseOutput: 70, energyPerItem: 10, maxEmployees: 0 },
+    { quality: 3, name: "Fishery (Q3)", baseOutput: 125, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 4, name: "Cattle Farm (Q4)", baseOutput: 175, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 5, name: "Hunting Lodge (Q5)", baseOutput: 250, energyPerItem: 10, maxEmployees: 4 }
 ];
 
 const weaponFactoriesData = [
-    { quality: 1, name: "Weapons Factory (Q1)", baseOutput: 10, baseRM: 1, energyPerItem: 10 },
-    { quality: 2, name: "Weapons Factory (Q2)", baseOutput: 10, baseRM: 2, energyPerItem: 20 },
-    { quality: 3, name: "Weapons Factory (Q3)", baseOutput: 10, baseRM: 3, energyPerItem: 30 },
-    { quality: 4, name: "Weapons Factory (Q4)", baseOutput: 10, baseRM: 4, energyPerItem: 40 },
-    { quality: 5, name: "Weapons Factory (Q5)", baseOutput: 10, baseRM: 5, energyPerItem: 50 },
-    { quality: 6, name: "Weapons Factory (Q6)", baseOutput: 10, baseRM: 6, energyPerItem: 60 },
-    { quality: 7, name: "Weapons Factory (Q7)", baseOutput: 10, baseRM: 20, energyPerItem: 100 }
+    { quality: 1, name: "Weapons Factory (Q1)", baseOutput: 10, baseRM: 1, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 2, name: "Weapons Factory (Q2)", baseOutput: 10, baseRM: 2, energyPerItem: 20, maxEmployees: 2 },
+    { quality: 3, name: "Weapons Factory (Q3)", baseOutput: 10, baseRM: 3, energyPerItem: 30, maxEmployees: 3 },
+    { quality: 4, name: "Weapons Factory (Q4)", baseOutput: 10, baseRM: 4, energyPerItem: 40, maxEmployees: 5 },
+    { quality: 5, name: "Weapons Factory (Q5)", baseOutput: 10, baseRM: 5, energyPerItem: 50, maxEmployees: 10 },
+    { quality: 6, name: "Weapons Factory (Q6)", baseOutput: 10, baseRM: 6, energyPerItem: 60, maxEmployees: 10 },
+    { quality: 7, name: "Weapons Factory (Q7)", baseOutput: 10, baseRM: 20, energyPerItem: 100, maxEmployees: 10 }
 ];
 
 const weaponPlantationsData = [
-    { quality: 1, name: "Iron Mine (Q1)", baseOutput: 35, energyPerItem: 10 },
-    { quality: 2, name: "Oil Spring (Q2)", baseOutput: 70, energyPerItem: 10 },
-    { quality: 3, name: "Aluminum Mine (Q3)", baseOutput: 125, energyPerItem: 10 },
-    { quality: 4, name: "Saltpeter Mine (Q4)", baseOutput: 175, energyPerItem: 10 },
-    { quality: 5, name: "Rubber Plantation (Q5)", baseOutput: 250, energyPerItem: 10 }
+    { quality: 1, name: "Iron Mine (Q1)", baseOutput: 35, energyPerItem: 10, maxEmployees: 0 },
+    { quality: 2, name: "Oil Spring (Q2)", baseOutput: 70, energyPerItem: 10, maxEmployees: 0 },
+    { quality: 3, name: "Aluminum Mine (Q3)", baseOutput: 125, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 4, name: "Saltpeter Mine (Q4)", baseOutput: 175, energyPerItem: 10, maxEmployees: 1 },
+    { quality: 5, name: "Rubber Plantation (Q5)", baseOutput: 250, energyPerItem: 10, maxEmployees: 4 }
 ];
 
 // House factories (construction industry). Q1-Q5 only.
@@ -64,6 +64,7 @@ let state = {
     hasTycoon: false,
     workTaxRate: 1.0,
     averageSalary: 0.0,
+    offeredSalary: 0.0,
     selectedCountryId: "",
     selectedRegionPermalink: "",
     frmPrice: 50.00,
@@ -71,80 +72,46 @@ let state = {
     hrmPrice: 1535.00,
     vat: 1.0,
     food: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-        7: 0,
+        1: { companies: 0, workers: 0 },
+        2: { companies: 0, workers: 0 },
+        3: { companies: 0, workers: 0 },
+        4: { companies: 0, workers: 0 },
+        5: { companies: 0, workers: 0 },
+        6: { companies: 0, workers: 0 },
+        7: { companies: 0, workers: 0 },
         plantations: {
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0
+            1: { companies: 0, workers: 0 },
+            2: { companies: 0, workers: 0 },
+            3: { companies: 0, workers: 0 },
+            4: { companies: 0, workers: 0 },
+            5: { companies: 0, workers: 0 }
         },
         countryBonus: 100,
         regionBonus: 0,
         pollution: 0,
-        qualityPollution: {
-            0: 0,
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0,
-            6: 0,
-            7: 0
-        },
-        prices: {
-            1: 0.80,
-            2: 1.60,
-            3: 2.40,
-            4: 3.20,
-            5: 4.00,
-            6: 5.00,
-            7: 9.90
-        }
+        qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 },
+        prices: { 1: 0.80, 2: 1.60, 3: 2.40, 4: 3.20, 5: 4.00, 6: 5.00, 7: 9.90 }
     },
     weapons: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-        7: 0,
+        1: { companies: 0, workers: 0 },
+        2: { companies: 0, workers: 0 },
+        3: { companies: 0, workers: 0 },
+        4: { companies: 0, workers: 0 },
+        5: { companies: 0, workers: 0 },
+        6: { companies: 0, workers: 0 },
+        7: { companies: 0, workers: 0 },
         plantations: {
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0
+            1: { companies: 0, workers: 0 },
+            2: { companies: 0, workers: 0 },
+            3: { companies: 0, workers: 0 },
+            4: { companies: 0, workers: 0 },
+            5: { companies: 0, workers: 0 }
         },
         countryBonus: 100,
         regionBonus: 0,
         pollution: 0,
-        qualityPollution: {
-            0: 0,
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0,
-            6: 0,
-            7: 0
-        },
-        prices: {
-            1: 1.20,
-            2: 2.40,
-            3: 3.60,
-            4: 4.80,
-            5: 6.00,
-            6: 8.00,
-            7: 15.00
-        }
+        qualityPollution: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 },
+        prices: { 1: 1.20, 2: 2.40, 3: 3.60, 4: 4.80, 5: 6.00, 6: 8.00, 7: 15.00 }
     },
     houses: {
         factories: {
@@ -170,7 +137,7 @@ let state = {
 };
 
 // LocalStorage key name (v9)
-const STORAGE_KEY = "erep_calculator_food_factories_v9";
+const STORAGE_KEY = "erep_calculator_food_factories_v10";
 
 // Load values from localStorage on startup
 function loadState() {
@@ -182,6 +149,7 @@ function loadState() {
             if (typeof parsed.hasTycoon === 'boolean') state.hasTycoon = parsed.hasTycoon;
             if (typeof parsed.workTaxRate === 'number') state.workTaxRate = parsed.workTaxRate;
             if (typeof parsed.averageSalary === 'number') state.averageSalary = parsed.averageSalary;
+            if (typeof parsed.offeredSalary === 'number') state.offeredSalary = parsed.offeredSalary;
             if (typeof parsed.selectedCountryId === 'string' || typeof parsed.selectedCountryId === 'number') {
                 state.selectedCountryId = String(parsed.selectedCountryId);
             }
@@ -195,12 +163,33 @@ function loadState() {
             const loadModule = (key) => {
                 if (parsed[key] && typeof parsed[key] === 'object') {
                     const m = parsed[key];
+                    const facData = key === 'food' ? foodFactoriesData : weaponFactoriesData;
+                    const plantData = key === 'food' ? foodPlantationsData : weaponPlantationsData;
+                    const migrateCell = (src, maxEmp) => {
+                        let companies = 0, workers = 0;
+                        if (typeof src === 'number') {
+                            companies = Math.max(0, Math.floor(src));
+                        } else if (src && typeof src === 'object') {
+                            companies = (typeof src.companies === 'number') ? Math.max(0, Math.floor(src.companies)) : 0;
+                            workers = (typeof src.workers === 'number') ? Math.max(0, Math.floor(src.workers)) : 0;
+                        }
+                        companies = Math.min(companies, 9999);
+                        const cap = companies * maxEmp;
+                        if (workers > cap) workers = cap;
+                        return { companies, workers };
+                    };
                     for (let q = 1; q <= 7; q++) {
-                        if (typeof m[q] === 'number') state[key][q] = Math.floor(m[q]);
+                        if (m[q] !== undefined) {
+                            const row = facData.find(x => x.quality === q);
+                            state[key][q] = migrateCell(m[q], row ? row.maxEmployees : 0);
+                        }
                     }
                     if (m.plantations && typeof m.plantations === 'object') {
                         for (let q = 1; q <= 5; q++) {
-                            if (typeof m.plantations[q] === 'number') state[key].plantations[q] = Math.floor(m.plantations[q]);
+                            if (m.plantations[q] !== undefined) {
+                                const row = plantData.find(x => x.quality === q);
+                                state[key].plantations[q] = migrateCell(m.plantations[q], row ? row.maxEmployees : 0);
+                            }
                         }
                     }
                     if (typeof m.countryBonus === 'number') state[key].countryBonus = m.countryBonus;
@@ -307,6 +296,52 @@ function applyHouseCounterChange(kind, field, quality, value) {
         const cap = (cell.companies || 0) * maxEmp;
         cell.workers = Math.max(0, Math.min(value, cap));
     }
+}
+
+// --- Food/Weapon employee helpers (companies + hired workers) ---
+function fwMaxEmployees(active, kind, quality) {
+    const data = kind === 'factory'
+        ? (active === 'food' ? foodFactoriesData : weaponFactoriesData)
+        : (active === 'food' ? foodPlantationsData : weaponPlantationsData);
+    const row = data.find(x => String(x.quality) === String(quality));
+    return row ? (row.maxEmployees || 0) : 0;
+}
+
+function getFwCell(active, kind, quality) {
+    return kind === 'factory' ? state[active][quality] : state[active].plantations[quality];
+}
+
+// Clamp companies to 0..9999 and workers to 0..(companies * maxEmployees)
+function applyFwCounterChange(active, kind, field, quality, value) {
+    const cell = getFwCell(active, kind, quality);
+    const maxEmp = fwMaxEmployees(active, kind, quality);
+    if (field === 'companies') {
+        cell.companies = Math.max(0, Math.min(value, 9999));
+        const cap = cell.companies * maxEmp;
+        if (cell.workers > cap) cell.workers = cap;
+    } else {
+        const cap = (cell.companies || 0) * maxEmp;
+        cell.workers = Math.max(0, Math.min(value, cap));
+    }
+}
+
+// Stacked Companies / Workers counter rows for a food/weapon card.
+// Workers row is hidden when hideWorkers is true (e.g. plantations with maxEmployees 0).
+function fwCounterGroupsHtml(kind, quality, companies, workers, maxWorkers, hideWorkers) {
+    const row = (field, value, label, hint) => `
+        <div class="house-counter-row">
+            <span class="house-counter-label">${label}${hint}</span>
+            <div class="counter-group counter-group-sm">
+                <button class="btn-counter fw-counter-btn" data-kind="${kind}" data-field="${field}" data-quality="${quality}" data-delta="-1">-</button>
+                <input type="text" class="counter-input fw-counter-input" data-kind="${kind}" data-field="${field}" data-quality="${quality}" value="${value}" inputmode="numeric" pattern="[0-9]*">
+                <button class="btn-counter fw-counter-btn" data-kind="${kind}" data-field="${field}" data-quality="${quality}" data-delta="1">+</button>
+            </div>
+        </div>`;
+    let html = `<div class="house-counters">` + row('companies', companies, 'Companies', '');
+    if (!hideWorkers) {
+        html += row('workers', workers, 'Workers', ` <span class="max-hint">· max ${maxWorkers}</span>`);
+    }
+    return html + `</div>`;
 }
 
 // Highlight the active tab across all three modules
@@ -583,7 +618,7 @@ function render() {
     const labelTotalCountFW = document.getElementById("label-total-count");
     if (labelTotalCountFW) labelTotalCountFW.textContent = "Total Factories:";
     const produceTaxLabelFW = document.getElementById("strategy-produce-tax-label");
-    if (produceTaxLabelFW) produceTaxLabelFW.textContent = "WaM Tax:";
+    if (produceTaxLabelFW) produceTaxLabelFW.textContent = "Work Tax:";
     for (let q = 1; q <= 7; q++) {
         const row = document.getElementById(`price-row-q${q}`);
         if (row) row.style.display = "";
@@ -648,7 +683,8 @@ function render() {
     document.getElementById("input-pollution").value = moduleState.pollution;
     document.getElementById("input-work-tax").value = state.workTaxRate.toFixed(2);
     document.getElementById("input-average-salary").value = state.averageSalary.toFixed(2);
-    
+    document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
+
     // Sync location dropdown selections
     document.getElementById("select-country").value = state.selectedCountryId || "";
     document.getElementById("select-region").value = state.selectedRegionPermalink || "";
@@ -679,7 +715,9 @@ function render() {
     container.innerHTML = "";
     breakdownList.innerHTML = "";
     
-    let totalFactories = 0;
+    let totalFactories = 0;       // total companies (for the "Total Factories" KPI)
+    let factorySessions = 0;      // WAM + hired sessions (for work tax)
+    let factoryWorkers = 0;       // hired only (for labor salary)
     let totalOutput = 0;
     let totalRM = 0;
     let sumRevenue = 0;
@@ -688,8 +726,13 @@ function render() {
     
     // Render factory rows
     factoriesData.forEach(fact => {
-        const qty = moduleState[fact.quality] || 0;
-        totalFactories += qty;
+        const cell = moduleState[fact.quality] || { companies: 0, workers: 0 };
+        const companies = cell.companies || 0;
+        const workers = Math.min(cell.workers || 0, companies * fact.maxEmployees);
+        const sessions = companies + workers;
+        totalFactories += companies;
+        factorySessions += sessions;
+        factoryWorkers += workers;
         
         // Quality-specific pollution (fall back to manual general pollution if not populated)
         const pollutionRate = (moduleState.qualityPollution && typeof moduleState.qualityPollution[fact.quality] === 'number') 
@@ -704,8 +747,8 @@ function render() {
         // Calculations for this card
         const singleOutput = fact.baseOutput * cardMultiplier;
         const singleRM = fact.baseRM * cardMultiplier;
-        const cardOutput = singleOutput * qty;
-        const cardRM = singleRM * qty;
+        const cardOutput = singleOutput * sessions;
+        const cardRM = singleRM * sessions;
         
         // Revenue after VAT
         const productPrice = moduleState.prices[fact.quality];
@@ -723,10 +766,10 @@ function render() {
         sumGrainCost += cardRMCost;
         
         // Add to sidebar breakdown list if user has at least 1
-        if (qty > 0) {
+        if (companies > 0 || workers > 0) {
             breakdownHtml += `
                 <li class="breakdown-item">
-                    <span class="breakdown-label">Q${fact.quality} (${qty})</span>
+                    <span class="breakdown-label">Q${fact.quality} (${companies}c / ${workers}w)</span>
                     <span class="breakdown-count" style="display: flex; flex-direction: column; align-items: flex-end;">
                         <span>+${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${isFood ? 'Food' : 'Weapon'}</span>
                         <span class="${cardGrossProfit >= 0 ? 'text-success' : 'text-danger'}" style="font-size: 11px; font-weight: 700;">
@@ -769,7 +812,7 @@ function render() {
                 <div class="stat-item">
                     <span class="stat-label">Daily Output</span>
                     <span class="stat-value" style="color: var(--erep-blue);">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} items</span>
-                    <span style="font-size: 10px; color: var(--text-secondary);">${singleOutput.toFixed(2)} / bldg</span>
+                    <span style="font-size: 10px; color: var(--text-secondary);">${singleOutput.toFixed(2)} / session</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Daily ${isFood ? 'Grain' : 'WRM'}</span>
@@ -783,11 +826,7 @@ function render() {
                 </div>
             </div>
             <div class="factory-action-area">
-                <div class="counter-group">
-                    <button class="btn-counter btn-minus" data-quality="${fact.quality}">-</button>
-                    <input type="text" class="counter-input" data-quality="${fact.quality}" value="${qty}" inputmode="numeric" pattern="[0-9]*">
-                    <button class="btn-counter btn-plus" data-quality="${fact.quality}">+</button>
-                </div>
+                ${fwCounterGroupsHtml('factory', fact.quality, companies, workers, companies * fact.maxEmployees, false)}
             </div>
         `;
         
@@ -796,15 +835,22 @@ function render() {
     
     // Render plantation rows
     const plantationsContainer = document.getElementById("plantations-container");
-    let totalPlantations = 0;
+    let totalPlantations = 0;     // total companies
+    let plantSessions = 0;        // WAM + hired
+    let plantWorkers = 0;         // hired only
     let totalGrainProduced = 0;
     
     if (plantationsContainer) {
         plantationsContainer.innerHTML = "";
         
         plantationsData.forEach(plant => {
-            const qty = moduleState.plantations[plant.quality] || 0;
-            totalPlantations += qty;
+            const cell = moduleState.plantations[plant.quality] || { companies: 0, workers: 0 };
+            const companies = cell.companies || 0;
+            const workers = Math.min(cell.workers || 0, companies * plant.maxEmployees);
+            const sessions = companies + workers;
+            totalPlantations += companies;
+            plantSessions += sessions;
+            plantWorkers += workers;
             
             // Raw materials pollution is at index 0 of qualityPollution
             const pollutionRate = (moduleState.qualityPollution && typeof moduleState.qualityPollution[0] === 'number') 
@@ -816,7 +862,7 @@ function render() {
             const cardMultiplier = Math.max(0, multiplier);
             
             const singleOutput = (plant.baseOutput / 100) * cardMultiplier;
-            const cardOutput = singleOutput * qty;
+            const cardOutput = singleOutput * sessions;
             totalGrainProduced += cardOutput;
             
             // Create Plantation Card DOM
@@ -851,7 +897,7 @@ function render() {
                     <div class="stat-item">
                         <span class="stat-label">Daily Output</span>
                         <span class="stat-value" style="color: ${isFood ? '#e67e22' : '#7f8c8d'};">${cardOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${isFood ? 'FRM' : 'WRM'}</span>
-                        <span style="font-size: 10px; color: var(--text-secondary);">${singleOutput.toFixed(2)} / bldg</span>
+                        <span style="font-size: 10px; color: var(--text-secondary);">${singleOutput.toFixed(2)} / session</span>
                     </div>
                     <div class="stat-item" style="opacity: 0.5;">
                         <!-- Placeholder to align with factory cards -->
@@ -861,11 +907,7 @@ function render() {
                     </div>
                 </div>
                 <div class="factory-action-area">
-                    <div class="counter-group">
-                        <button class="btn-counter btn-plant-minus" data-quality="${plant.quality}">-</button>
-                        <input type="text" class="counter-input plantation-counter-input" data-quality="${plant.quality}" value="${qty}" inputmode="numeric" pattern="[0-9]*">
-                        <button class="btn-counter btn-plant-plus" data-quality="${plant.quality}">+</button>
-                    </div>
+                    ${fwCounterGroupsHtml('plantation', plant.quality, companies, workers, companies * plant.maxEmployees, plant.maxEmployees === 0)}
                 </div>
             `;
             
@@ -886,18 +928,20 @@ function render() {
     }
     
     // STRATEGY MATH & COMPARISON
-    const dailyWorkTaxOptionA = totalFactories * (state.workTaxRate / 100) * state.averageSalary;
+    const taxPerSession = (state.workTaxRate / 100) * state.averageSalary;
+    const factoryTax = factorySessions * taxPerSession;
+    const factoryLabor = factoryWorkers * state.offeredSalary;
     const totalGrainRequiredVal = totalRM;
     const netGrainBalance = totalGrainProduced - totalGrainRequiredVal;
-    
-    // Option A: Buy 100%
+
+    // Option A: Buy 100% of raw material
     const grainExpenseOptionA = totalGrainRequiredVal * rmPrice;
-    const netProfitOptionA = sumRevenue - dailyWorkTaxOptionA - grainExpenseOptionA;
-    
-    // Option B: Produce
-    const plantationWorkTax = totalPlantations * (state.workTaxRate / 100) * state.averageSalary;
-    const dailyWorkTaxOptionB = dailyWorkTaxOptionA + plantationWorkTax;
-    
+    const netProfitOptionA = sumRevenue - factoryTax - factoryLabor - grainExpenseOptionA;
+
+    // Option B: Produce (run plantations)
+    const plantTax = plantSessions * taxPerSession;
+    const plantLabor = plantWorkers * state.offeredSalary;
+
     let marketExpenseOptionB = 0;
     let marketRevenueOptionB = 0;
     if (netGrainBalance < 0) {
@@ -905,32 +949,35 @@ function render() {
     } else {
         marketRevenueOptionB = netGrainBalance * rmPrice * (1 - state.vat / 100);
     }
-    
-    const netProfitOptionB = sumRevenue - dailyWorkTaxOptionA - plantationWorkTax - marketExpenseOptionB + marketRevenueOptionB;
+
+    const netProfitOptionB = sumRevenue - factoryTax - factoryLabor - plantTax - plantLabor - marketExpenseOptionB + marketRevenueOptionB;
     
     // Determine Optimal Option
     const isOptionBBetter = netProfitOptionB > netProfitOptionA;
     
     // Set Main summary variables based on optimal option
     let displayGrainCost = 0;
-    let displayWorkTax = 0;
+    let displayWorkTax = 0;   // total work tax (all sessions) for the chosen option
+    let displaySalary = 0;    // total hired-worker labor for the chosen option
     let displayNetProfit = 0;
     const badge = document.getElementById("summary-strategy-badge");
-    
+
     if (isOptionBBetter) {
         displayGrainCost = marketExpenseOptionB - marketRevenueOptionB;
-        displayWorkTax = dailyWorkTaxOptionB;
+        displayWorkTax = factoryTax + plantTax;
+        displaySalary = factoryLabor + plantLabor;
         displayNetProfit = netProfitOptionB;
         if (badge) {
-            badge.textContent = isFood ? "Option B: Produce" : "Option B: Produce";
+            badge.textContent = "Option B: Produce";
             badge.style.background = isFood ? "#e67e22" : "#7f8c8d";
         }
     } else {
         displayGrainCost = grainExpenseOptionA;
-        displayWorkTax = dailyWorkTaxOptionA;
+        displayWorkTax = factoryTax;
+        displaySalary = factoryLabor;
         displayNetProfit = netProfitOptionA;
         if (badge) {
-            badge.textContent = isFood ? "Option A: Buy" : "Option A: Buy";
+            badge.textContent = "Option A: Buy";
             badge.style.background = "var(--erep-blue)";
         }
     }
@@ -959,7 +1006,8 @@ function render() {
     }
     
     document.getElementById("total-work-tax").textContent = `-${displayWorkTax.toFixed(2)} CC`;
-    
+    document.getElementById("total-salary").textContent = `-${displaySalary.toFixed(2)} CC`;
+
     const totalNetProfit = document.getElementById("total-net-profit");
     totalNetProfit.textContent = `${displayNetProfit.toFixed(2)} CC`;
     if (displayNetProfit >= 0) {
@@ -994,7 +1042,7 @@ function render() {
         profitBuySpan.className = "text-danger";
     }
     
-    document.getElementById("strategy-produce-tax").textContent = plantationWorkTax.toFixed(2);
+    document.getElementById("strategy-produce-tax").textContent = (factoryTax + plantTax).toFixed(2);
     document.getElementById("strategy-produce-balance").textContent = `${(netGrainBalance >= 0 ? "+" : "")}${netGrainBalance.toFixed(2)}`;
     const profitProduceSpan = document.getElementById("strategy-produce-profit");
     profitProduceSpan.textContent = `${netProfitOptionB.toFixed(2)} CC`;
@@ -1155,7 +1203,7 @@ function renderHouses() {
     const labelCostKpi = document.getElementById("label-daily-cost-kpi");
     if (labelCostKpi) labelCostKpi.textContent = "Daily HRM Cost";
     const labelWorkTaxKpi = document.getElementById("label-work-tax-kpi");
-    if (labelWorkTaxKpi) labelWorkTaxKpi.textContent = "Daily Salary Cost";
+    if (labelWorkTaxKpi) labelWorkTaxKpi.textContent = "Daily Work Tax";
     const labelTotalCount = document.getElementById("label-total-count");
     if (labelTotalCount) labelTotalCount.textContent = "Total Companies:";
 
@@ -1170,7 +1218,7 @@ function renderHouses() {
     const stratProduceTitle = document.getElementById("strategy-produce-title");
     if (stratProduceTitle) stratProduceTitle.textContent = "Option B: Produce HRM";
     const produceTaxLabel = document.getElementById("strategy-produce-tax-label");
-    if (produceTaxLabel) produceTaxLabel.textContent = "HRM Salary:";
+    if (produceTaxLabel) produceTaxLabel.textContent = "HRM Cost:";
 
     const workTaxGroup = document.getElementById("work-tax-group");
     if (workTaxGroup) workTaxGroup.style.display = "none";
@@ -1182,6 +1230,7 @@ function renderHouses() {
     document.getElementById("input-region-bonus").value = h.regionBonus;
     document.getElementById("input-pollution").value = h.pollution;
     document.getElementById("input-average-salary").value = state.averageSalary.toFixed(2);
+    document.getElementById("input-offered-salary").value = state.offeredSalary.toFixed(2);
     document.getElementById("select-country").value = state.selectedCountryId || "";
     document.getElementById("select-region").value = state.selectedRegionPermalink || "";
     document.getElementById("input-grain-price").value = hrmPrice.toFixed(2);
@@ -1231,8 +1280,9 @@ function renderHouses() {
         const productPrice = h.prices[fac.quality];
         const cardRevenue = cardOutput * productPrice * (1 - state.vat / 100);
         const cardHrmCost = cardHrm * hrmPrice;
-        const cardSalary = workers * state.averageSalary;
-        const cardProfit = cardRevenue - cardHrmCost - cardSalary;
+        const cardSalary = workers * state.offeredSalary;
+        const cardTax = workers * (state.workTaxRate / 100) * state.averageSalary;
+        const cardProfit = cardRevenue - cardHrmCost - cardSalary - cardTax;
 
         totalOutput += cardOutput;
         totalHrmUsed += cardHrm;
@@ -1280,31 +1330,36 @@ function renderHouses() {
     });
 
     // --- Strategy math ---
-    const houseSalaryCost = totalWorkers * state.averageSalary;
-    const hrmSalaryCost = totalRmWorkers * state.averageSalary;
+    const houseTaxPerSession = (state.workTaxRate / 100) * state.averageSalary;
+    const houseSalaryCost = totalWorkers * state.offeredSalary;      // house-factory labor
+    const hrmSalaryCost = totalRmWorkers * state.offeredSalary;      // HRM labor
+    const houseWorkTax = totalWorkers * houseTaxPerSession;          // no WAM in houses
+    const hrmWorkTax = totalRmWorkers * houseTaxPerSession;
     const netHrmBalance = totalHrmProduced - totalHrmUsed;
 
     // Option A: buy all HRM, run no RM companies
     const optionA_hrmCost = totalHrmUsed * hrmPrice;
-    const netA = sumRevenue - optionA_hrmCost - houseSalaryCost;
+    const netA = sumRevenue - optionA_hrmCost - houseSalaryCost - houseWorkTax;
 
     // Option B: produce HRM
     let marketExpenseB = 0, marketRevenueB = 0;
     if (netHrmBalance < 0) marketExpenseB = (-netHrmBalance) * hrmPrice;
     else marketRevenueB = netHrmBalance * hrmPrice * (1 - state.vat / 100);
-    const netB = sumRevenue - houseSalaryCost - hrmSalaryCost - marketExpenseB + marketRevenueB;
+    const netB = sumRevenue - houseSalaryCost - hrmSalaryCost - houseWorkTax - hrmWorkTax - marketExpenseB + marketRevenueB;
 
     const isBbetter = netB > netA;
-    let displayHrmCost, displaySalary, displayNet;
+    let displayHrmCost, displaySalary, displayTax, displayNet;
     const badge = document.getElementById("summary-strategy-badge");
     if (isBbetter) {
         displayHrmCost = marketExpenseB - marketRevenueB;
         displaySalary = houseSalaryCost + hrmSalaryCost;
+        displayTax = houseWorkTax + hrmWorkTax;
         displayNet = netB;
         if (badge) { badge.textContent = "Option B: Produce"; badge.style.background = "#78909c"; }
     } else {
         displayHrmCost = optionA_hrmCost;
         displaySalary = houseSalaryCost;
+        displayTax = houseWorkTax;
         displayNet = netA;
         if (badge) { badge.textContent = "Option A: Buy"; badge.style.background = "var(--erep-blue)"; }
     }
@@ -1324,7 +1379,8 @@ function renderHouses() {
     grossProfitEl.textContent = `${grossDailyProfit.toFixed(2)} CC`;
     grossProfitEl.className = grossDailyProfit >= 0 ? "kpi-value text-success" : "kpi-value text-danger";
 
-    document.getElementById("total-work-tax").textContent = `-${displaySalary.toFixed(2)} CC`;
+    document.getElementById("total-work-tax").textContent = `-${displayTax.toFixed(2)} CC`;
+    document.getElementById("total-salary").textContent = `-${displaySalary.toFixed(2)} CC`;
 
     const netProfitEl = document.getElementById("total-net-profit");
     netProfitEl.textContent = `${displayNet.toFixed(2)} CC`;
@@ -1344,7 +1400,7 @@ function renderHouses() {
     profitBuySpan.textContent = `${netA.toFixed(2)} CC`;
     profitBuySpan.className = netA >= 0 ? "text-success" : "text-danger";
 
-    document.getElementById("strategy-produce-tax").textContent = hrmSalaryCost.toFixed(2);
+    document.getElementById("strategy-produce-tax").textContent = (hrmWorkTax + hrmSalaryCost).toFixed(2);
     document.getElementById("strategy-produce-balance").textContent = `${netHrmBalance >= 0 ? "+" : ""}${netHrmBalance.toFixed(2)}`;
     const profitProduceSpan = document.getElementById("strategy-produce-profit");
     profitProduceSpan.textContent = `${netB.toFixed(2)} CC`;
@@ -1428,107 +1484,37 @@ function setupListeners() {
         };
     }
 
-    // Plus Buttons
-    document.querySelectorAll(".btn-plus").forEach(btn => {
+    // Food/Weapon counter buttons (companies / workers, factory / plantation)
+    document.querySelectorAll(".fw-counter-btn").forEach(btn => {
         btn.onclick = function() {
-            const quality = this.getAttribute("data-quality");
             const active = state.activeModule;
-            state[active][quality] = Math.min(state[active][quality] + 1, 9999);
+            const kind = this.getAttribute("data-kind");
+            const field = this.getAttribute("data-field");
+            const q = this.getAttribute("data-quality");
+            const delta = parseInt(this.getAttribute("data-delta"), 10);
+            const current = getFwCell(active, kind, q)[field] || 0;
+            applyFwCounterChange(active, kind, field, q, current + delta);
             saveState();
             render();
-        };
-    });
-    
-    // Minus Buttons
-    document.querySelectorAll(".btn-minus").forEach(btn => {
-        btn.onclick = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            state[active][quality] = Math.max(state[active][quality] - 1, 0);
-            saveState();
-            render();
-        };
-    });
-    
-    // Input Fields
-    document.querySelectorAll(".counter-input:not(.plantation-counter-input)").forEach(input => {
-        input.oninput = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            let valStr = this.value.replace(/[^0-9]/g, '');
-            this.value = valStr;
-            
-            let val = parseInt(valStr, 10);
-            if (isNaN(val)) {
-                val = 0;
-            }
-            state[active][quality] = Math.min(val, 9999);
-        };
-        
-        input.onblur = function() {
-            if (this.value === "") {
-                this.value = "0";
-            }
-            saveState();
-            render();
-        };
-        
-        input.onkeydown = function(e) {
-            if (e.key === "Enter") {
-                this.blur();
-            }
         };
     });
 
-    // Plantation Plus Buttons
-    document.querySelectorAll(".btn-plant-plus").forEach(btn => {
-        btn.onclick = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            state[active].plantations[quality] = Math.min((state[active].plantations[quality] || 0) + 1, 9999);
-            saveState();
-            render();
-        };
-    });
-    
-    // Plantation Minus Buttons
-    document.querySelectorAll(".btn-plant-minus").forEach(btn => {
-        btn.onclick = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            state[active].plantations[quality] = Math.max((state[active].plantations[quality] || 0) - 1, 0);
-            saveState();
-            render();
-        };
-    });
-    
-    // Plantation Input Fields
-    document.querySelectorAll(".plantation-counter-input").forEach(input => {
+    // Food/Weapon counter text inputs
+    document.querySelectorAll(".fw-counter-input").forEach(input => {
         input.oninput = function() {
-            const quality = this.getAttribute("data-quality");
-            const active = state.activeModule;
-            let valStr = this.value.replace(/[^0-9]/g, '');
+            const valStr = this.value.replace(/[^0-9]/g, '');
             this.value = valStr;
-            
             let val = parseInt(valStr, 10);
-            if (isNaN(val)) {
-                val = 0;
-            }
-            state[active].plantations[quality] = Math.min(val, 9999);
+            if (isNaN(val)) val = 0;
+            applyFwCounterChange(state.activeModule, this.getAttribute("data-kind"), this.getAttribute("data-field"), this.getAttribute("data-quality"), val);
         };
-        
         input.onblur = function() {
-            if (this.value === "") {
-                this.value = "0";
-            }
+            if (this.value === "") this.value = "0";
             saveState();
             render();
         };
-        
         input.onkeydown = function(e) {
-            if (e.key === "Enter") {
-                this.blur();
-            }
+            if (e.key === "Enter") this.blur();
         };
     });
 
@@ -1745,6 +1731,21 @@ function setupListeners() {
         };
     }
 
+    // Offered Salary Input (labor paid to hired workers; does not de-sync location)
+    const offeredSalaryInput = document.getElementById("input-offered-salary");
+    if (offeredSalaryInput) {
+        offeredSalaryInput.onchange = function() {
+            let val = parseFloat(this.value);
+            if (isNaN(val) || val < 0) val = 0.0;
+            state.offeredSalary = val;
+            saveState();
+            render();
+        };
+        offeredSalaryInput.onkeydown = function(e) {
+            if (e.key === "Enter") this.blur();
+        };
+    }
+
     // Grain Price Input
     const grainPriceInput = document.getElementById("input-grain-price");
     if (grainPriceInput) {
@@ -1953,10 +1954,16 @@ document.getElementById("btn-reset-all").onclick = function() {
 
     // Reset factories
     for (let q = 1; q <= 7; q++) {
-        state[active][q] = 0;
+        state[active][q] = { companies: 0, workers: 0 };
     }
     // Reset plantations
-    state[active].plantations = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    state[active].plantations = {
+        1: { companies: 0, workers: 0 },
+        2: { companies: 0, workers: 0 },
+        3: { companies: 0, workers: 0 },
+        4: { companies: 0, workers: 0 },
+        5: { companies: 0, workers: 0 }
+    };
     // Reset modifiers
     state[active].countryBonus = 100;
     state[active].regionBonus = 0;
