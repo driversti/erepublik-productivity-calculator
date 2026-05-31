@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { rankRegions, countriesForIndustry } from './ranking';
+import { rankRegions, countriesForIndustry, allCountries } from './ranking';
 
 describe('rankRegions', () => {
   it('sums an industry\'s resource bonuses per region', () => {
@@ -49,5 +49,16 @@ describe('countriesForIndustry', () => {
     expect(list).toContain('Romania');
     expect(new Set(list).size).toBe(list.length); // no dupes
     expect([...list]).toEqual([...list].sort((a, b) => a.localeCompare(b, 'en')));
+  });
+});
+
+describe('allCountries', () => {
+  it('is a sorted, distinct superset of any single industry\'s country list', () => {
+    const all = allCountries();
+    expect(new Set(all).size).toBe(all.length); // no dupes
+    expect([...all]).toEqual([...all].sort((a, b) => a.localeCompare(b, 'en')));
+    for (const c of countriesForIndustry('aircraft')) {
+      expect(all).toContain(c);
+    }
   });
 });

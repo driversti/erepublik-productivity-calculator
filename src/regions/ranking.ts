@@ -47,3 +47,14 @@ export function countriesForIndustry(industry: Industry): string[] {
   }
   return [...set].sort((a, b) => a.localeCompare(b, 'en'));
 }
+
+/**
+ * All distinct `currentCountry` values in the dataset, sorted. Used for a
+ * country filter that stays stable across industry switches (so the selection
+ * persists even if the chosen country has no regions for the new industry).
+ */
+export function allCountries(): string[] {
+  const set = new Set<string>();
+  for (const region of REGION_RESOURCES) set.add(region.currentCountry);
+  return [...set].sort((a, b) => a.localeCompare(b, 'en'));
+}

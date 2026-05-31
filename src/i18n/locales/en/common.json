@@ -44,6 +44,7 @@
     "country": "Country",
     "allCountries": "All countries",
     "bonusValue": "+{{value}}%",
+    "empty": "No regions with this industry's resources in the selected country.",
     "snapshotNote": "Snapshot {{date}} · current ownership may be stale (regions change hands in war).",
     "columns": {
       "rank": "#",

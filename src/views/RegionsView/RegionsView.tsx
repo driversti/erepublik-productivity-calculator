@@ -4,7 +4,7 @@ import { INDUSTRIES } from '../../data/industries';
 import type { IndustryKey } from '../../data/types';
 import { industryLabel } from '../../i18n/names';
 import { SNAPSHOT_DATE, COUNTRY_FLAGS } from '../../data/regionResources';
-import { rankRegions, countriesForIndustry } from '../../regions/ranking';
+import { rankRegions, allCountries } from '../../regions/ranking';
 
 // eRepublik flag URLs are protocol-relative ("//..."); make them absolute https.
 const flagSrc = (url?: string): string | undefined =>
@@ -16,13 +16,10 @@ export function RegionsView() {
   const [country, setCountry] = useState<string>('');
 
   const ranked = rankRegions(industry, country ? { country } : undefined);
-  const countries = countriesForIndustry(industry);
-
-  // Available countries differ per industry, so reset the filter on switch.
-  const changeIndustry = (key: IndustryKey) => {
-    setIndustry(key);
-    setCountry('');
-  };
+  // All countries (not industry-specific) so the filter persists across industry
+  // switches — the chosen country stays selected even when the new industry has
+  // no regions there (then the table shows an empty-state note).
+  const countries = allCountries();
 
   return (
     <section className="regions-view" data-testid="regions-view">
@@ -34,7 +31,7 @@ export function RegionsView() {
               type="button"
               className={`regions-ind-btn${industry === cfg.key ? ' active' : ''}`}
               data-testid={`regions-ind-${cfg.key}`}
-              onClick={() => changeIndustry(cfg.key)}
+              onClick={() => setIndustry(cfg.key)}
             >
               {cfg.icon} {industryLabel(t, cfg)}
             </button>
@@ -61,6 +58,11 @@ export function RegionsView() {
         {t('regions.snapshotNote', { date: SNAPSHOT_DATE })}
       </p>
 
+      {ranked.length === 0 ? (
+        <p className="regions-empty" data-testid="regions-empty">
+          {t('regions.empty')}
+        </p>
+      ) : (
       <table className="regions-table">
         <thead>
           <tr>
@@ -101,6 +103,7 @@ export function RegionsView() {
           })}
         </tbody>
       </table>
+      )}
     </section>
   );
 }
