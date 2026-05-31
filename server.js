@@ -4,11 +4,19 @@ import https from 'node:https';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { trimMapData } from './server/trimMapData.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = Number(process.env.PORT) || 8080;
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+const REGIONS_FILE = path.join(DATA_DIR, 'regions.json');
+const MAP_DATA_URL =
+  'https://www.erepublik.com/en/main/map-data?updated_at=2007-01-01T00%3A00%3A00-08%3A00';
+const REFRESH_COOLDOWN_MS = 10 * 60 * 1000; // one successful refresh / 10 min
+let lastRefreshOk = 0;
+
 // Serve the Vite production build (run `npm run build` first). Falls back to the
 // repo root for assets that live outside dist (e.g. travelData.js) so existing
 // references keep working, and serves from the root entirely if dist is absent.
@@ -34,6 +42,69 @@ const MIME_TYPES = {
     '.ico': 'image/x-icon'
 };
 
+function sendJson(res, status, obj) {
+  res.writeHead(status, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(obj));
+}
+
+// POST /api/regions/refresh — fetch map-data from eRepublik with the caller's
+// erpk, trim, and persist. The erpk is used for the single outbound request and
+// never stored. Debounced to one successful refresh per cooldown window.
+async function handleRefresh(req, res) {
+  const now = Date.now();
+  if (now - lastRefreshOk < REFRESH_COOLDOWN_MS) {
+    const retryIn = Math.ceil((REFRESH_COOLDOWN_MS - (now - lastRefreshOk)) / 1000);
+    sendJson(res, 429, { error: `Recently refreshed — try again in ${retryIn}s` });
+    return;
+  }
+  let body = '';
+  req.on('data', (chunk) => {
+    body += chunk;
+    if (body.length > 1e6) req.destroy(); // guard against oversized bodies
+  });
+  req.on('end', async () => {
+    let erpk;
+    try {
+      erpk = JSON.parse(body).erpk;
+    } catch {
+      sendJson(res, 400, { error: 'Invalid JSON body' });
+      return;
+    }
+    if (!erpk || typeof erpk !== 'string') {
+      sendJson(res, 400, { error: 'Missing erpk' });
+      return;
+    }
+    try {
+      const mapRes = await fetch(MAP_DATA_URL, {
+        redirect: 'manual', // a 302 means the session was rejected — don't follow it
+        headers: {
+          Cookie: `erpk=${erpk}`,
+          'X-Requested-With': 'XMLHttpRequest',
+          Accept: 'application/json, text/javascript, */*; q=0.01',
+          'User-Agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36',
+          Referer: 'https://www.erepublik.com/en/military/campaigns',
+        },
+      });
+      if (mapRes.status !== 200) {
+        sendJson(res, 401, { error: 'eRepublik rejected the session (expired or invalid erpk)' });
+        return;
+      }
+      const raw = await mapRes.json();
+      const dataset = trimMapData(raw, new Date().toISOString().slice(0, 10));
+      await fs.promises.mkdir(DATA_DIR, { recursive: true });
+      const tmp = `${REGIONS_FILE}.tmp`;
+      await fs.promises.writeFile(tmp, JSON.stringify(dataset));
+      await fs.promises.rename(tmp, REGIONS_FILE); // atomic replace
+      lastRefreshOk = Date.now();
+      sendJson(res, 200, { ...dataset, count: dataset.regions.length });
+    } catch (err) {
+      console.error('Refresh failed:', err.message);
+      sendJson(res, 502, { error: 'Could not fetch map-data from eRepublik' });
+    }
+  });
+}
+
 const server = http.createServer((req, res) => {
     // Use WHATWG URL API — no legacy url.parse()
     let reqUrl;
@@ -49,7 +120,7 @@ const server = http.createServer((req, res) => {
 
     // CORS Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
@@ -101,6 +172,25 @@ const server = http.createServer((req, res) => {
                 res.end('Proxy error: ' + err.message);
             }
         });
+        return;
+    }
+
+    // Serve the stored region dataset (refreshed from eRepublik), if any.
+    if (pathname === '/api/regions' && req.method === 'GET') {
+        fs.readFile(REGIONS_FILE, (err, content) => {
+            if (err) {
+                res.writeHead(204); // no stored data yet — client uses the bundled seed
+                res.end();
+                return;
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' });
+            res.end(content);
+        });
+        return;
+    }
+
+    if (pathname === '/api/regions/refresh' && req.method === 'POST') {
+        handleRefresh(req, res);
         return;
     }
 

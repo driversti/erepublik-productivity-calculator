@@ -40,6 +40,7 @@ export default defineConfig({
     proxy: {
       // Live data still flows through the existing Node allowlist proxy on 8080.
       '/proxy': 'http://localhost:8080',
+      '/api': 'http://localhost:8080',
     },
   },
   build: { outDir: 'dist', emptyOutDir: true },
