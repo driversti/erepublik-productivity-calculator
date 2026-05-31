@@ -1,0 +1,177 @@
+/* Reset, body, game header, module nav, footer, theme toggle */
+
+.theme-toggle-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.theme-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.98);
+}
+
+/* Reset and Core Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Game Header (eRepublik Header Style) */
+.game-header {
+    background-color: #1e2936;
+    color: #ffffff;
+    padding: 0 20px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--erep-gold);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-title-wrapper h1 {
+    font-size: 13px !important;
+}
+
+.header-title-wrapper p {
+    display: none;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-brand {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 60%, var(--erep-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.logo-divider {
+    width: 1px;
+    height: 18px;
+    background-color: #4a5a6a;
+}
+
+.logo-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.active-module {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #2ecc71;
+}
+
+.module-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Module Navigation Bar */
+.module-nav {
+    background-color: #243342;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.module-nav .nav-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+}
+
+.nav-tab {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 6px 15px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+    border-bottom: 2px solid transparent;
+}
+
+.nav-tab:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.nav-tab.active {
+    color: #ffffff;
+    border-bottom-color: var(--erep-gold);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Footer Section */
+.game-footer {
+    margin-top: 40px;
+    background-color: #1e2936;
+    color: #94a3b8;
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    border-top: 3px solid var(--border-color);
+}
+

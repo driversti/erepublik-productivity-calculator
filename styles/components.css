@@ -1,0 +1,404 @@
+/* Shared UI atoms: cards, buttons, counters, factory cards, info boxes */
+
+/* Standard Game Card Styling */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-top: 3px solid var(--text-header);
+    border-radius: 4px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    background-color: var(--bg-header);
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header h2 {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-header);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* Buttons */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-secondary {
+    background-color: #e1e4e8;
+    color: #444d56;
+    border: 1px solid #cbd1d9;
+}
+
+.btn-secondary:hover {
+    background-color: #d1d5da;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Info Card Info Box */
+.info-card {
+    border-top-color: var(--erep-blue);
+}
+
+.info-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Main Workspace Styles */
+.workspace-card {
+    border-top-color: var(--erep-blue);
+}
+
+.main-header {
+    background-color: var(--bg-header);
+    padding: 16px 20px;
+}
+
+.header-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(0, 132, 180, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--erep-blue);
+    flex-shrink: 0;
+}
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.workspace-card h1 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-header);
+}
+
+.subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* Factories Cards Grid Layout */
+.factories-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Individual Factory Row Card */
+.factory-row-card {
+    display: grid;
+    grid-template-columns: 80px 180px 1fr 180px;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 12px 20px;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.factory-row-card:hover {
+    border-color: var(--erep-blue);
+    box-shadow: 0 2px 5px rgba(0, 132, 180, 0.1);
+    transform: translateX(4px);
+}
+
+.factory-avatar-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dynamic Star Display block */
+.factory-info-area {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.factory-title {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-header);
+}
+
+.stars-container {
+    display: flex;
+    gap: 2px;
+}
+
+.star-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--erep-gold);
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+}
+
+/* Factory stats indicators */
+.factory-stats-area {
+    display: flex;
+    gap: 30px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    padding-left: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stat-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #475569;
+}
+
+/* Custom interactive counter design */
+.factory-action-area {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.counter-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: #f1f5f9;
+    overflow: hidden;
+    height: 38px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: border-color var(--transition-fast);
+}
+
+.counter-group:focus-within {
+    border-color: var(--erep-blue);
+}
+
+.btn-counter {
+    background: none;
+    border: none;
+    width: 38px;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    font-size: 18px;
+    font-weight: 700;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    user-select: none;
+}
+
+.btn-counter:hover {
+    background-color: #e2e8f0;
+    color: var(--text-header);
+}
+
+.btn-counter:active {
+    background-color: #cbd5e1;
+}
+
+.counter-input {
+    width: 55px;
+    height: 100%;
+    border: none;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    background-color: #ffffff;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-header);
+    outline: none;
+    -moz-appearance: textfield;
+}
+
+.counter-input::-webkit-outer-spin-button,
+.counter-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* House cards: two compact Companies / Workers counters stacked in the action area */
+.house-counters {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    width: 100%;
+}
+
+.house-counter-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.house-counter-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.house-counter-label .max-hint {
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+.counter-group.counter-group-sm {
+    height: 28px;
+}
+
+.counter-group-sm .btn-counter {
+    width: 26px;
+    font-size: 15px;
+}
+
+.counter-group-sm .counter-input {
+    width: 38px;
+    font-size: 13px;
+}
+
+/* Factory Building SVG Styling */
+.factory-svg {
+    width: 48px;
+    height: 48px;
+    color: #64748b;
+    fill: #f1f5f9;
+}
+
+/* Real game icons fetched from the eRepublik CDN */
+.factory-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.factory-row-card:hover .factory-svg {
+    color: var(--erep-blue);
+}
+
+/* Primary Button Styling (eRepublik Action Style) */
+.btn-primary {
+    background-color: var(--erep-blue);
+    color: #ffffff;
+    border: 1px solid var(--erep-blue-hover);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+    background-color: var(--erep-blue-hover);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* Sync Button Anim */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.btn-primary.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+    color: transparent;
+}
+
+.btn-primary.loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-top: -8px;
+    margin-left: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@media (max-width: 680px) {
+    .factory-row-card {
+        grid-template-columns: 60px 1fr;
+        gap: 15px;
+    }
+    .factory-stats-area {
+        grid-column: 1 / span 2;
+        padding-left: 0;
+        margin-top: 10px;
+        border-top: 1px dashed var(--border-color);
+        padding-top: 8px;
+    }
+    .factory-action-area {
+        grid-column: 1 / span 2;
+        justify-content: center;
+        margin-top: 10px;
+    }
+}
+

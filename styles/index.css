@@ -1,0 +1,11 @@
+/* Aggregated stylesheet. Import order matters — keep variables first,
+   then base, then progressively more specific concern files. */
+@import './variables.css';
+@import './base.css';
+@import './layout.css';
+@import './components.css';
+@import './modifiers.css';
+@import './tables.css';
+@import './summary.css';
+@import './prices.css';
+@import './holdings.css';

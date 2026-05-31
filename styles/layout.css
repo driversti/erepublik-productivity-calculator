@@ -1,0 +1,71 @@
+/* Page layout grids: app containers, sidebar, split, workspace, responsive */
+
+/* Layout Grid Container */
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+/* Sidebar Layout */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Responsive collapse rules */
+@media (max-width: 900px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        order: 2;
+    }
+    .workspace {
+        order: 1;
+    }
+}
+
+/* Stacked Tables Dashboard Styles */
+.workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Wide Dashboard layout */
+.app-container-wide {
+    width: 100%;
+    max-width: 100%;
+    margin: 10px auto;
+    padding: 0 20px;
+    flex-grow: 1;
+}
+
+
+.main-content-split {
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 15px;
+    align-items: start;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1000px) {
+    .main-content-split {
+        grid-template-columns: 1fr;
+    }
+}
+

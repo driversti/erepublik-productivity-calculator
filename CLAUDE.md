@@ -58,10 +58,11 @@ src/
 ```
 
 `server.js` is an ESM (`type: module`) ~160-line `http` server: serves `dist/`
-(falling back to the repo root for assets outside the build, e.g. `styles.css`),
+(falling back to the repo root for assets outside the build, e.g. `travelData.js`),
 plus a `/proxy?url=…` GET endpoint allowlisted to `www.erepublik.com` and
-`service.erepublik.tools` over https only. PORT 8080 hardcoded. `styles.css` and
-`travelData.js` live at the repo root (imported by the React app).
+`service.erepublik.tools` over https only. PORT 8080 hardcoded. `travelData.js`
+lives at the repo root; styles live in `styles/` (a per-concern split imported via
+`styles/index.css` from `main.tsx`).
 
 ### State & module model
 

@@ -4,7 +4,7 @@ import type { Cell } from '../../calc/types';
 import { getIndustry } from '../../data/industries';
 import { useState } from 'react';
 import { useModule, useIndustryView, useHiredView, useSetFactoryCell, useIndustrySync, useSharedFlags } from '../../state/hooks';
-import { FactoryCard } from '../../components/FactoryCard';
+import { Counter } from '../../components/Counter';
 import { SummarySidebar } from './SummarySidebar';
 import { ModifiersPanel } from './ModifiersPanel';
 import { PricesPanel } from './PricesPanel';
@@ -34,7 +34,8 @@ export function IndustryView({ industryKey }: Props) {
   // per-card display (the headline KPIs flow through the calc views, which also
   // honor tycoon/WAM). WAM is a session-count multiplier, not a per-session-output
   // one, so it's correctly absent here.
-  const { hasTycoon } = useSharedFlags();
+  const shared = useSharedFlags();
+  const { hasTycoon } = shared;
   const factoryMult = (q: number) =>
     productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon, pollutionRate: pollutionAt(mod.qualityPollution, q) });
   const rmMult = () =>
@@ -48,62 +49,179 @@ export function IndustryView({ industryKey }: Props) {
   };
 
   return (
-    <main className="app-container" data-testid={`industry-view-${industryKey}`}>
-      {summary}
-      <section className="config-area">
-        <ModifiersPanel cfg={cfg} mod={mod} onSelectCountry={sync.selectCountry} onSelectRegion={sync.selectRegion} onSyncPrices={onSyncPrices} syncing={syncing} />
-        <PricesPanel cfg={cfg} mod={mod} />
+    <main className="app-container-wide" data-testid={`industry-view-${industryKey}`}>
+      <ModifiersPanel cfg={cfg} mod={mod} onSelectCountry={sync.selectCountry} onSelectRegion={sync.selectRegion} onSyncPrices={onSyncPrices} syncing={syncing} />
+      
+      <div className="main-content-split">
+        <aside className="left-side">
+          {summary}
+        </aside>
+        
+        <section className="workspace">
+          <div className="table-card">
+            <div className="card-header">
+              <h2>Your {cfg.label} Factories</h2>
+            </div>
+            <div className="card-body" data-testid="factories-container" style={{ padding: 0 }}>
+              <table className="dense-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '180px' }}>Quality</th>
+                    <th className="align-center" style={{ width: '120px' }}>Companies</th>
+                    <th className="align-center" style={{ width: '120px' }}>Workers</th>
+                    <th className="align-right">Output/Session</th>
+                    <th className="align-right">Daily Net Profit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cfg.factoriesData.map((def) => {
+                    const cell = readFactoryCell(cfg.type, mod, def.quality);
+                    const m = factoryMult(def.quality);
+                    const singleOutput = cfg.type === 'fw' ? roundNumber(def.baseOutput * m, 2) : def.baseOutput * m;
+                    
+                    const companies = cell.companies || 0;
+                    const maxWorkers = companies * def.maxEmployees;
+                    const workers = Math.min(cell.workers || 0, maxWorkers);
+                    const sessions = cfg.type === 'fw' ? ((shared.wamEnabled ? companies : 0) + workers) : workers;
+                    
+                    const singleRM = roundNumber((def.baseRM ?? 0) * m, 2);
+                    const cardOutput = singleOutput * sessions;
+                    const cardRM = singleRM * sessions;
+                    const cardRevenue = cardOutput * (mod.prices[def.quality] ?? 0) * (1 - mod.vat / 100);
+                    
+                    const taxPerSession = (mod.workTaxRate / 100) * mod.averageSalary;
+                    const factoryTax = cfg.type === 'fw' ? ((shared.wamEnabled ? companies : 0) * taxPerSession) : 0;
+                    const factoryLabor = workers * shared.offeredSalary;
+                    const rmPrice = shared[cfg.rmPriceKey] ?? 0;
+                    const factoryNetProfit = cardRevenue - factoryTax - factoryLabor - cardRM * rmPrice;
 
-        <div className="card">
-          <div className="card-header"><h2>Your {cfg.label} Factories</h2></div>
-          <div className="card-body factories-grid" data-testid="factories-container">
-            {cfg.factoriesData.map((def) => {
-              const cell = readFactoryCell(cfg.type, mod, def.quality);
-              const m = factoryMult(def.quality);
-              const singleOutput = cfg.type === 'fw' ? roundNumber(def.baseOutput * m, 2) : def.baseOutput * m;
-              return (
-                <FactoryCard
-                  key={def.quality}
-                  def={def}
-                  cell={cell}
-                  testId={`factory-card-${def.quality}`}
-                  iconUrl={factoryIconUrl(cfg, def.quality)}
-                  pollutionRate={pollutionAt(mod.qualityPollution, def.quality)}
-                  outputText={`${num(singleOutput)} / session`}
-                  onCompanies={(v) => setCell(industryKey, 'factory', def.quality, 'companies', v)}
-                  onWorkers={(v) => setCell(industryKey, 'factory', def.quality, 'workers', v)}
-                />
-              );
-            })}
+                    return (
+                      <tr key={def.quality} data-testid={`factory-card-${def.quality}`}>
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <img src={factoryIconUrl(cfg, def.quality)} alt={`Q${def.quality}`} className="factory-img" style={{ width: 24, height: 24 }} />
+                            <span style={{ fontWeight: 700 }}>Q{def.quality}</span>
+                            <span className="pollution-badge" style={{ color: pollutionAt(mod.qualityPollution, def.quality) > 0 ? '#e74c3c' : 'var(--text-secondary)' }}>
+                              ({pollutionAt(mod.qualityPollution, def.quality).toFixed(1)}%)
+                            </span>
+                          </div>
+                        </td>
+                        <td className="align-center">
+                          <Counter
+                            label="Companies"
+                            value={cell.companies || 0}
+                            max={9999}
+                            hideLabel
+                            onChange={(v) => setCell(industryKey, 'factory', def.quality, 'companies', v)}
+                          />
+                        </td>
+                        <td className="align-center">
+                          <Counter
+                            label="Workers"
+                            value={cell.workers || 0}
+                            max={maxWorkers}
+                            hideLabel
+                            onChange={(v) => setCell(industryKey, 'factory', def.quality, 'workers', v)}
+                          />
+                        </td>
+                        <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }}>
+                          {num(singleOutput)} / session
+                        </td>
+                        <td className={`align-right ${companies === 0 ? 'text-muted' : factoryNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }}>
+                          {companies === 0 ? '—' : `${factoryNetProfit >= 0 ? '+' : ''}${num(factoryNetProfit)} CC`}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
 
-        <div className="card">
-          <div className="card-header"><h2>Your {cfg.rmName} Companies</h2></div>
-          <div className="card-body factories-grid" data-testid="plantations-container">
-            {cfg.rmData.map((def) => {
-              const cell = readRmCell(cfg.type, mod, def.quality);
-              const singleOutput = gameRawProduction((def.baseOutput / 100) * rmMult());
-              const rmKind = cfg.type === 'fw' ? 'plantation' : 'rm';
-              return (
-                <FactoryCard
-                  key={def.quality}
-                  def={def}
-                  cell={cell}
-                  testId={`rm-card-${def.quality}`}
-                  iconUrl={rmIconUrl(cfg, def.quality)}
-                  pollutionRate={pollutionAt(mod.qualityPollution, 0)}
-                  outputText={`${num(singleOutput)} ${cfg.rmName} / session`}
-                  borderColor="#e67e22"
-                  hideWorkers={def.maxEmployees === 0}
-                  onCompanies={(v) => setCell(industryKey, rmKind, def.quality, 'companies', v)}
-                  onWorkers={(v) => setCell(industryKey, rmKind, def.quality, 'workers', v)}
-                />
-              );
-            })}
+          <div className="table-card">
+            <div className="card-header">
+              <h2>Your {cfg.rmName} Companies</h2>
+            </div>
+            <div className="card-body" data-testid="plantations-container" style={{ padding: 0 }}>
+              <table className="dense-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '180px' }}>Quality</th>
+                    <th className="align-center" style={{ width: '120px' }}>Companies</th>
+                    <th className="align-center" style={{ width: '120px' }}>Workers</th>
+                    <th className="align-right">Output/Session</th>
+                    <th className="align-right">Daily Net Profit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cfg.rmData.map((def) => {
+                    const cell = readRmCell(cfg.type, mod, def.quality);
+                    const m = rmMult();
+                    const singleOutput = gameRawProduction((def.baseOutput / 100) * m);
+                    const rmKind = cfg.type === 'fw' ? 'plantation' : 'rm';
+
+                    const companies = cell.companies || 0;
+                    const maxWorkers = companies * def.maxEmployees;
+                    const workers = Math.min(cell.workers || 0, maxWorkers);
+                    const sessions = cfg.type === 'fw' ? ((shared.wamEnabled ? companies : 0) + workers) : workers;
+                    
+                    const cardOutput = singleOutput * sessions;
+                    const taxPerSession = (mod.workTaxRate / 100) * mod.averageSalary;
+                    const plantTax = cfg.type === 'fw' ? ((shared.wamEnabled ? companies : 0) * taxPerSession) : 0;
+                    const plantLabor = workers * shared.offeredSalary;
+                    const rmPrice = shared[cfg.rmPriceKey] ?? 0;
+                    const producedValue = cardOutput * rmPrice;
+                    const plantNetProfit = producedValue - plantTax - plantLabor;
+
+                    return (
+                      <tr key={def.quality} data-testid={`rm-card-${def.quality}`}>
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <img src={rmIconUrl(cfg, def.quality)} alt={`Q${def.quality}`} className="factory-img" style={{ width: 24, height: 24 }} />
+                            <span style={{ fontWeight: 700 }}>Q{def.quality}</span>
+                            <span className="pollution-badge" style={{ color: pollutionAt(mod.qualityPollution, 0) > 0 ? '#e74c3c' : 'var(--text-secondary)' }}>
+                              ({pollutionAt(mod.qualityPollution, 0).toFixed(1)}%)
+                            </span>
+                          </div>
+                        </td>
+                        <td className="align-center">
+                          <Counter
+                            label="Companies"
+                            value={cell.companies || 0}
+                            max={9999}
+                            hideLabel
+                            onChange={(v) => setCell(industryKey, rmKind, def.quality, 'companies', v)}
+                          />
+                        </td>
+                        <td className="align-center">
+                          {def.maxEmployees > 0 ? (
+                            <Counter
+                              label="Workers"
+                              value={cell.workers || 0}
+                              max={maxWorkers}
+                              hideLabel
+                              onChange={(v) => setCell(industryKey, rmKind, def.quality, 'workers', v)}
+                            />
+                          ) : (
+                            <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>—</span>
+                          )}
+                        </td>
+                        <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }}>
+                          {num(singleOutput)} {cfg.rmName} / session
+                        </td>
+                        <td className={`align-right ${companies === 0 ? 'text-muted' : plantNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }}>
+                          {companies === 0 ? '—' : `${plantNetProfit >= 0 ? '+' : ''}${num(plantNetProfit)} CC`}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </section>
+          <PricesPanel cfg={cfg} mod={mod} />
+        </section>
+      </div>
     </main>
   );
 }

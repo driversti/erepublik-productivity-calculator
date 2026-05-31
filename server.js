@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 const PORT = 8080;
 // Serve the Vite production build (run `npm run build` first). Falls back to the
-// repo root for assets that live outside dist (e.g. styles.css) so existing
+// repo root for assets that live outside dist (e.g. travelData.js) so existing
 // references keep working, and serves from the root entirely if dist is absent.
 const DIST_DIR = path.join(__dirname, "dist");
 const PUBLIC_DIR = fs.existsSync(DIST_DIR) ? DIST_DIR : __dirname;

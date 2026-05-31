@@ -1,0 +1,65 @@
+/* Theme tokens (CSS custom properties) — light + dark */
+
+/* CSS Variables for eRepublik Authenticity */
+:root, [data-theme='light'] {
+    --bg-page: #e9edf0;
+    --bg-card: #ffffff;
+    --bg-header: #f6f8fa;
+    --bg-table-header: #e5ecf2;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-header: #2d3e50;
+    
+    /* eRepublik Brand Accents */
+    --erep-blue: #0084B4;
+    --erep-blue-hover: #006699;
+    --erep-green: #7ab700;
+    --erep-green-hover: #8ac007;
+    --erep-green-border: #5d8500;
+    --erep-gold: #f39c12;
+    --erep-gold-light: #f1c40f;
+    --border-color: #cbd3d8;
+    --border-color-hover: #b2c0cc;
+    
+    /* Input & Table styles */
+    --input-bg: #ffffff;
+    --input-border: #cbd3d8;
+    --table-row-hover: #f1f5f9;
+    --table-row-even: #f8fafc;
+    
+    /* Interactive & Layout */
+    --transition-fast: 0.15s ease-out;
+    --transition-normal: 0.25s ease-out;
+    --font-sans: 'Open Sans', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: 'Inter', 'Trebuchet MS', 'Lucida Sans Unicode', sans-serif;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme='dark'] {
+    --bg-page: #10161d;
+    --bg-card: #18202a;
+    --bg-header: #1f2a36;
+    --bg-table-header: #243241;
+    --text-primary: #cbd5e1;
+    --text-secondary: #94a3b8;
+    --text-header: #f1f5f9;
+    
+    /* eRepublik Brand Accents */
+    --erep-blue: #38bdf8;
+    --erep-blue-hover: #0ea5e9;
+    --erep-green: #4ade80;
+    --erep-green-hover: #22c55e;
+    --erep-green-border: #16a34a;
+    --erep-gold: #f59e0b;
+    --erep-gold-light: #fbbf24;
+    --border-color: #334155;
+    --border-color-hover: #475569;
+    
+    /* Input & Table styles */
+    --input-bg: #1e293b;
+    --input-border: #475569;
+    --table-row-hover: #243241;
+    --table-row-even: #1b2633;
+}
+

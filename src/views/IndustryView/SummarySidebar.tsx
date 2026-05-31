@@ -46,111 +46,110 @@ export function SummarySidebar(props: Props) {
   const produceHighlight = v.optionBNet > v.optionANet;
 
   return (
-    <aside className="sidebar">
-      <div className="card summary-card">
-        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2>Summary</h2>
-          <span style={{ fontSize: 9, fontWeight: 700, padding: '3px 6px', borderRadius: 4, color: 'white', textTransform: 'uppercase', background: v.producing ? 'var(--erep-gold)' : 'var(--erep-blue)' }}>
-            {v.producing ? 'Option B' : 'Option A'}
-          </span>
+    <div className="card summary-card">
+      <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2>Summary</h2>
+        <span style={{ fontSize: 9, fontWeight: 700, padding: '3px 6px', borderRadius: 4, color: 'white', textTransform: 'uppercase', background: v.producing ? 'var(--erep-gold)' : 'var(--erep-blue)' }}>
+          {v.producing ? 'Option B' : 'Option A'}
+        </span>
+      </div>
+      <div className="card-body">
+        <div className="kpi-list">
+          <div className="kpi-block">
+            <span className="kpi-label">Est. Daily Net Profit</span>
+            <span className={`kpi-value ${v.companies === 0 ? 'text-muted' : v.net >= 0 ? 'text-success' : 'text-danger'}`} data-testid="total-net-profit">{cc(v.net)}</span>
+          </div>
+          <hr className="kpi-divider" />
+          <div className="kpi-block-inline">
+            <span className="kpi-label">Total Companies</span>
+            <span className="kpi-value-small" data-testid="total-factories-count">{v.companies}</span>
+          </div>
+          <div className="kpi-block-inline">
+            <span className="kpi-label">{cfg.label} Output</span>
+            <span className="kpi-value-small" data-testid="total-output">{num(v.output)}</span>
+          </div>
+          <div className="kpi-block-inline">
+            <span className="kpi-label">{rm} Consumed</span>
+            <span className="kpi-value-small" data-testid="total-rm-required">{num(v.rmUsed)} {rm}</span>
+          </div>
+          <hr className="kpi-divider" />
+          <div className="kpi-block-inline">
+            <span className="kpi-label">Daily Revenue</span>
+            <span className={`kpi-value-small ${v.revenue === 0 ? 'text-muted' : 'kpi-blue'}`} data-testid="total-gross-revenue">{cc(v.revenue)}</span>
+          </div>
+          <div className="kpi-block-inline">
+            <span className="kpi-label">Daily {rm} Cost</span>
+            <span className={`kpi-value-small ${v.rmCost === 0 ? 'text-muted' : v.rmCost < 0 ? 'text-success' : 'kpi-gold'}`} data-testid="total-rm-cost">{cc(v.rmCost)}</span>
+          </div>
+          <div className="kpi-block-inline">
+            <span className="kpi-label">Gross Profit</span>
+            <span className={`kpi-value-small ${grossProfit === 0 ? 'text-muted' : grossProfit >= 0 ? 'text-success' : 'text-danger'}`} data-testid="total-gross-profit">{cc(grossProfit)}</span>
+          </div>
+          <div className="kpi-block-inline">
+            <span className="kpi-label">Daily Work Tax</span>
+            <span className={`kpi-value-small ${v.workTax === 0 ? 'text-muted' : 'kpi-red'}`} data-testid="total-work-tax">{v.workTax === 0 ? cc(0) : `-${cc(v.workTax)}`}</span>
+          </div>
+          <div className="kpi-block-inline">
+            <span className="kpi-label">Daily Salary</span>
+            <span className={`kpi-value-small ${v.salary === 0 ? 'text-muted' : 'kpi-red'}`} data-testid="total-salary">{v.salary === 0 ? cc(0) : `-${cc(v.salary)}`}</span>
+          </div>
         </div>
-        <div className="card-body">
-          <div className="kpi-list">
-            <div className="kpi-block">
-              <span className="kpi-label">Est. Daily Net Profit</span>
-              <span className={`kpi-value ${v.net >= 0 ? 'text-success' : 'text-danger'}`} data-testid="total-net-profit">{cc(v.net)}</span>
-            </div>
-            <hr className="kpi-divider" />
-            <div className="kpi-block-inline">
-              <span className="kpi-label">Total Companies</span>
-              <span className="kpi-value-small" data-testid="total-factories-count">{v.companies}</span>
-            </div>
-            <div className="kpi-block-inline">
-              <span className="kpi-label">{cfg.label} Output</span>
-              <span className="kpi-value-small" data-testid="total-output">{num(v.output)}</span>
-            </div>
-            <div className="kpi-block-inline">
-              <span className="kpi-label">{rm} Consumed</span>
-              <span className="kpi-value-small" data-testid="total-rm-required">{num(v.rmUsed)} {rm}</span>
-            </div>
-            <hr className="kpi-divider" />
-            <div className="kpi-block">
-              <span className="kpi-label">Daily Revenue</span>
-              <span className="kpi-value-small kpi-blue" data-testid="total-gross-revenue">{cc(v.revenue)}</span>
-            </div>
-            <div className="kpi-block">
-              <span className="kpi-label">Daily {rm} Cost</span>
-              <span className={`kpi-value-small ${v.rmCost < 0 ? 'text-success' : 'kpi-gold'}`} data-testid="total-rm-cost">{cc(v.rmCost)}</span>
-            </div>
-            <div className="kpi-block">
-              <span className="kpi-label">Gross Profit</span>
-              <span className={`kpi-value-small ${grossProfit >= 0 ? 'text-success' : 'text-danger'}`} data-testid="total-gross-profit">{cc(grossProfit)}</span>
-            </div>
-            <div className="kpi-block">
-              <span className="kpi-label">Daily Work Tax</span>
-              <span className="kpi-value-small kpi-red" data-testid="total-work-tax">-{cc(v.workTax)}</span>
-            </div>
-            <div className="kpi-block">
-              <span className="kpi-label">Daily Salary</span>
-              <span className="kpi-value-small kpi-red" data-testid="total-salary">-{cc(v.salary)}</span>
-            </div>
-          </div>
 
-          <hr className="section-divider" />
+        <hr className="section-divider" />
 
-          <div className="summary-details">
-            <h3 className="details-title">Inventory breakdown:</h3>
-            <ul className="breakdown-list" data-testid="breakdown-list">
-              {v.breakdown.length === 0 ? (
-                <li className="info-text" style={{ textAlign: 'center', fontStyle: 'italic' }}>No factories configured yet.</li>
-              ) : (
-                v.breakdown.map((b) => (
-                  <li className="breakdown-item" key={b.quality}>
-                    <span className="breakdown-label">Q{b.quality} ({b.companies}c / {b.workers}w)</span>
-                    <span className="breakdown-count" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                      <span>+{num(b.output)}</span>
-                      <span className={b.profit >= 0 ? 'text-success' : 'text-danger'} style={{ fontSize: 11, fontWeight: 700 }}>
-                        {b.profit >= 0 ? '+' : ''}{b.profit.toFixed(2)} CC
-                      </span>
+        <div className="summary-details">
+          <h3 className="details-title">Inventory breakdown:</h3>
+          <ul className="breakdown-list" data-testid="breakdown-list">
+            {v.breakdown.length === 0 ? (
+              <li className="info-text" style={{ textAlign: 'center', fontStyle: 'italic' }}>No factories configured yet.</li>
+            ) : (
+              v.breakdown.map((b) => (
+                <li className="breakdown-item" key={b.quality}>
+                  <span className="breakdown-label">Q{b.quality} ({b.companies}c / {b.workers}w)</span>
+                  <span className="breakdown-count" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                    <span>+{num(b.output)}</span>
+                    <span className={b.profit >= 0 ? 'text-success' : 'text-danger'} style={{ fontSize: 11, fontWeight: 700 }}>
+                      {b.profit >= 0 ? '+' : ''}{b.profit.toFixed(2)} CC
                     </span>
-                  </li>
-                ))
-              )}
-            </ul>
+                  </span>
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+
+        <hr className="section-divider" />
+
+        <div className="grain-comparison-section">
+          <h3 className="details-title">{rm} Strategy Comparison</h3>
+          <div className="kpi-block-inline" style={{ marginBottom: 4 }}>
+            <span className="kpi-label">{rm} Produced</span>
+            <span className="kpi-value-small kpi-gold">{v.rmProduced.toFixed(2)} {rm}</span>
           </div>
-
-          <hr className="section-divider" />
-
-          <div className="grain-comparison-section">
-            <h3 className="details-title">{rm} Strategy Comparison</h3>
-            <div className="kpi-block-inline" style={{ marginBottom: 4 }}>
-              <span className="kpi-label">{rm} Produced</span>
-              <span className="kpi-value-small kpi-gold">{v.rmProduced.toFixed(2)} {rm}</span>
+          <div className="kpi-block-inline" style={{ marginBottom: 10 }}>
+            <span className="kpi-label">{rm} Net Balance</span>
+            <span className={`kpi-value-small ${v.netBalance >= 0 ? 'text-success' : 'text-danger'}`} data-testid="rm-net-balance">
+              {v.netBalance >= 0 ? '+' : ''}{v.netBalance.toFixed(2)} {rm}
+            </span>
+          </div>
+          <div className="strategy-card-wrapper">
+            <div className="strategy-option-card" data-testid="strategy-buy-card" style={buyHighlight ? { borderColor: 'var(--erep-green)', background: 'rgba(122,183,0,0.05)' } : undefined}>
+              <div style={{ fontWeight: 700, fontSize: 12 }}>Option A: Buy {rm}</div>
+              <div style={{ fontSize: 11, marginTop: 2, color: 'var(--text-secondary)' }}>Market Cost: {v.optionABuy.toFixed(2)} CC</div>
+              <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>Net Profit: <span className={v.optionANet >= 0 ? 'text-success' : 'text-danger'}>{cc(v.optionANet)}</span></div>
             </div>
-            <div className="kpi-block-inline" style={{ marginBottom: 10 }}>
-              <span className="kpi-label">{rm} Net Balance</span>
-              <span className={`kpi-value-small ${v.netBalance >= 0 ? 'text-success' : 'text-danger'}`} data-testid="rm-net-balance">
-                {v.netBalance >= 0 ? '+' : ''}{v.netBalance.toFixed(2)} {rm}
-              </span>
+            <div className="strategy-option-card" data-testid="strategy-produce-card" style={produceHighlight ? { borderColor: 'var(--erep-green)', background: 'rgba(122,183,0,0.05)' } : undefined}>
+              <div style={{ fontWeight: 700, fontSize: 12 }}>Option B: Produce {rm}</div>
+              <div style={{ fontSize: 11, marginTop: 2, color: 'var(--text-secondary)' }}>Balance: {v.netBalance.toFixed(2)} {rm}</div>
+              <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>Net Profit: <span className={v.optionBNet >= 0 ? 'text-success' : 'text-danger'}>{cc(v.optionBNet)}</span></div>
             </div>
-            <div className="strategy-card-wrapper">
-              <div className="strategy-option-card" data-testid="strategy-buy-card" style={buyHighlight ? { borderColor: 'var(--erep-green)', background: 'rgba(122,183,0,0.05)' } : undefined}>
-                <div style={{ fontWeight: 700, fontSize: 12 }}>Option A: Buy {rm}</div>
-                <div style={{ fontSize: 11, marginTop: 2, color: 'var(--text-secondary)' }}>Market Cost: {v.optionABuy.toFixed(2)} CC</div>
-                <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>Net Profit: <span className={v.optionANet >= 0 ? 'text-success' : 'text-danger'}>{cc(v.optionANet)}</span></div>
-              </div>
-              <div className="strategy-option-card" data-testid="strategy-produce-card" style={produceHighlight ? { borderColor: 'var(--erep-green)', background: 'rgba(122,183,0,0.05)' } : undefined}>
-                <div style={{ fontWeight: 700, fontSize: 12 }}>Option B: Produce {rm}</div>
-                <div style={{ fontSize: 11, marginTop: 2, color: 'var(--text-secondary)' }}>Balance: {v.netBalance.toFixed(2)} {rm}</div>
-                <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>Net Profit: <span className={v.optionBNet >= 0 ? 'text-success' : 'text-danger'}>{cc(v.optionBNet)}</span></div>
-              </div>
-            </div>
-            <div data-testid="strategy-recommendation" style={{ marginTop: 10, fontSize: 11, fontWeight: 700, padding: 8, borderRadius: 6, textAlign: 'center', border: '1px solid var(--border-color)', background: 'var(--bg-header)' }}>
-              {recommendation(v.optionANet, v.optionBNet, rm)}
-            </div>
+          </div>
+          <div data-testid="strategy-recommendation" style={{ marginTop: 10, fontSize: 11, fontWeight: 700, padding: 8, borderRadius: 6, textAlign: 'center', border: '1px solid var(--border-color)', background: 'var(--bg-header)' }}>
+            {recommendation(v.optionANet, v.optionBNet, rm)}
           </div>
         </div>
       </div>
-    </aside>
+    </div>
   );
+
 }

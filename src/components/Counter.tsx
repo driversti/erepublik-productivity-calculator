@@ -6,14 +6,15 @@ interface CounterProps {
   label: string;
   value: number;
   max: number;
+  hideLabel?: boolean;
   onChange: (next: number) => void;
 }
 
-export function Counter({ label, value, max, onChange }: CounterProps) {
+export function Counter({ label, value, max, hideLabel, onChange }: CounterProps) {
   const clamp = (v: number) => Math.max(0, Math.min(max, Number.isFinite(v) ? v : 0));
   return (
     <div className="house-counter-row">
-      <span className="house-counter-label">{label}</span>
+      {!hideLabel && <span className="house-counter-label">{label}</span>}
       <div className="counter-group counter-group-sm">
         <button type="button" className="btn-counter" aria-label={`${label} minus`} onClick={() => onChange(clamp(value - 1))}>
           −
@@ -34,6 +35,7 @@ export function Counter({ label, value, max, onChange }: CounterProps) {
     </div>
   );
 }
+
 
 interface CounterGroupProps {
   companies: number;

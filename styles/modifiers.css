@@ -1,0 +1,223 @@
+/* Modifiers toolbar, control groups, sliders, switches, inputs, read-only fields */
+
+/* Modifiers Specific Elements */
+.modifiers-card {
+    border-top-color: var(--erep-gold);
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.control-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-header);
+}
+
+.value-badge {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 11px;
+    background-color: var(--bg-header);
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--erep-blue);
+}
+
+.slider-wrapper {
+    position: relative;
+    padding: 5px 0;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #cbd5e1;
+    border-radius: 3px;
+    outline: none;
+    margin: 8px 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--erep-blue);
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: transform var(--transition-fast);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.slider-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 0 2px;
+}
+
+/* Custom Switch Toggle */
+.toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-container + .toggle-container {
+    margin-top: 10px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: background-color var(--transition-fast);
+    border-radius: 22px;
+}
+
+.switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #ffffff;
+    transition: transform var(--transition-fast);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+input:checked + .switch-slider {
+    background-color: var(--erep-green);
+}
+
+input:checked + .switch-slider:before {
+    transform: translateX(22px);
+}
+
+/* Market Params Card & Inputs */
+.market-params-card {
+    border-top-color: var(--erep-blue);
+}
+
+.market-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-header);
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.market-input:focus {
+    border-color: var(--erep-blue);
+}
+
+/* Read-only modifier fields (bonuses synced from country/region selection) */
+.modifiers-toolbar .market-input.readonly-display {
+    background-color: var(--bg-header);
+    cursor: default;
+    font-weight: 700;
+    text-align: right;
+}
+.modifiers-toolbar .market-input.readonly-display:focus {
+    border-color: var(--border-color);
+}
+
+/* Country-derived, non-editable metric fields */
+.market-input.info-readonly {
+    background: var(--bg-header, #f2f2f2);
+    color: var(--text-secondary, #777);
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+/* Modifiers Toolbar layout styling */
+.modifiers-toolbar {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-top: 3px solid var(--text-header);
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow-sm);
+}
+
+.modifiers-toolbar .control-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+}
+
+.modifiers-toolbar .control-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.modifiers-toolbar .market-input {
+    height: 30px;
+    padding: 4px 6px;
+    font-size: 12px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text-header);
+    user-select: none;
+}
+

@@ -7,21 +7,23 @@ interface Props {
   mod: FwModule | HiredModule;
 }
 
-// Q1..maxQ product price inputs + the single RM price input. Uses the legacy
-// card / prices-grid / price-input-row classes.
+// Q1..maxQ product price inputs + the single RM price input. Rendered horizontally
+// under the tables to minimize vertical sidebar height.
 export function PricesPanel({ cfg, mod }: Props) {
   const setPrice = useSetModulePrice();
   const shared = useSharedFlags();
   const rmPriceValue = shared[cfg.rmPriceKey];
 
   return (
-    <div className="card food-prices-card">
-      <div className="card-header"><h2>{cfg.label} Prices (CC)</h2></div>
-      <div className="card-body">
-        <div className="prices-grid">
+    <div className="table-card" style={{ marginTop: 15 }}>
+      <div className="card-header">
+        <h2>{cfg.label} Market Prices (CC)</h2>
+      </div>
+      <div className="card-body" style={{ padding: '8px 12px' }}>
+        <div className="prices-horizontal-flow">
           {Array.from({ length: cfg.maxFactoryQuality }, (_, i) => i + 1).map((q) => (
-            <div className="price-input-row" key={q}>
-              <label className="food-price-label">Q{q} {cfg.label}</label>
+            <div className="price-inline-group" key={q}>
+              <label className="price-inline-label">Q{q}</label>
               <input
                 type="number"
                 className="food-price-input"
@@ -32,17 +34,18 @@ export function PricesPanel({ cfg, mod }: Props) {
               />
             </div>
           ))}
-        </div>
-        <div className="control-group" style={{ marginTop: 12, marginBottom: 0 }}>
-          <label className="control-label">{cfg.rmName} Price (CC)</label>
-          <input
-            type="number"
-            className="market-input"
-            step="0.01"
-            min="0"
-            value={rmPriceValue}
-            onChange={(e) => shared.setShared(cfg.rmPriceKey, parseFloat(e.target.value || '0'))}
-          />
+          <div className="price-inline-divider" />
+          <div className="price-inline-group">
+            <label className="price-inline-label">{cfg.rmName}</label>
+            <input
+              type="number"
+              className="food-price-input"
+              step="0.01"
+              min="0"
+              value={rmPriceValue}
+              onChange={(e) => shared.setShared(cfg.rmPriceKey, parseFloat(e.target.value || '0'))}
+            />
+          </div>
         </div>
       </div>
     </div>

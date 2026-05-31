@@ -1,0 +1,73 @@
+/* Prices grid + horizontal prices flow */
+
+/* Food Prices Card & Grid */
+.food-prices-card {
+    border-top-color: var(--erep-gold);
+}
+
+.prices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.price-input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.price-input-row label {
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+
+.food-price-input {
+    width: 65px;
+    padding: 4px 6px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    text-align: right;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.food-price-input:focus {
+    border-color: var(--erep-blue);
+}
+
+.prices-horizontal-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.price-inline-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.price-inline-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.price-inline-divider {
+    width: 1px;
+    height: 18px;
+    background-color: var(--border-color);
+}
+

@@ -1,0 +1,133 @@
+/* Summary sidebar: KPI blocks, accent colors, breakdown, status highlights */
+
+/* Summary Card Details */
+.kpi-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.kpi-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+.kpi-value {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--erep-blue);
+    line-height: 1.1;
+}
+
+.section-divider {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: 15px 0;
+}
+
+.details-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-header);
+    margin-bottom: 8px;
+}
+
+.breakdown-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+}
+
+.breakdown-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.breakdown-count {
+    font-weight: 700;
+    color: var(--text-header);
+}
+
+.reset-area {
+    margin-top: 20px;
+}
+
+/* KPI Accent Colors */
+.kpi-blue {
+    color: var(--erep-blue) !important;
+}
+
+.kpi-gold {
+    color: var(--erep-gold) !important;
+}
+
+.kpi-green {
+    color: var(--erep-green) !important;
+}
+
+.kpi-red {
+    color: #e74c3c !important;
+}
+
+
+/* Sidebar List and Elements */
+.kpi-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.kpi-block-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 2px 0;
+}
+
+.kpi-value-small {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-header);
+}
+
+.kpi-divider {
+    border: 0;
+    border-top: 1px dashed var(--border-color);
+    margin: 8px 0;
+}
+
+/* Status Highlights */
+.text-success {
+    color: var(--erep-green) !important;
+}
+
+.text-danger {
+    color: #e74c3c !important;
+}
+
+/* Zero / not-configured state: mute so real values stand out */
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
