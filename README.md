@@ -1,5 +1,9 @@
 # eRepublik Productivity & Profit Calculator
 
+[![Live demo](https://img.shields.io/badge/Live%20demo-epc.yurii.live-2ea44f?style=flat&logo=react&logoColor=white)](https://epc.yurii.live)
+
+🌐 **Try it live: [epc.yurii.live](https://epc.yurii.live)**
+
 A single-page web app that estimates **daily profit** for your
 [eRepublik](https://www.erepublik.com) companies across all four industries —
 food, weapons, houses, and aircraft weapons. Built with **Vite + React 19 +
