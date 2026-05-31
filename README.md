@@ -6,10 +6,6 @@ food, weapons, houses, and aircraft weapons. Built with **Vite + React 19 +
 TypeScript**. All calculations run client-side; the bundled Node server serves
 the production build and proxies game requests around CORS.
 
-> Migrating from the original zero-build vanilla-JS app (branch
-> `feat/react-migration`). The vanilla version is preserved on disk
-> (`index.legacy.html` + `app.js`) until the final cutover.
-
 ## Features
 
 - **Four industry modules** — Food, Weapons, Houses, and Aircraft Weapons, each
@@ -71,16 +67,24 @@ calc layer is bit-identical to the original `holdingsCalc.mjs`.
 
 ## Architecture
 
-| File | Responsibility |
-|------|----------------|
-| `index.html` | Static shell; rows, sections and KPIs are populated by JS by element id. |
-| `app.js` | The whole app: mutable `state` → `localStorage`, a single `render()` source of truth, the four industry modules + Holdings mode, live scrapers. |
-| `holdingsCalc.mjs` | Pure profit math for Holdings (rounding, productivity multiplier, per-industry & summed profit). Importable in the browser and in `node --test`. |
-| `travelData.js` | Static countries/regions maps for the location dropdowns. |
-| `server.js` | ~100-line HTTP server: static files + an allowlisted `/proxy` GET endpoint. |
-| `styles.css` | All styling. |
+A single React tree under `src/`, with a strict separation between **pure profit
+math** (no DOM, no React) and the UI that renders it.
 
-Design notes and per-feature specs/plans live under `docs/superpowers/`.
+| Path | Responsibility |
+|------|----------------|
+| `src/calc/` | **Pure profit math** — rounding, productivity multiplier, per-industry & summed profit. Golden-parity locked (`calc/golden.test.ts`). |
+| `src/state/` | One immutable reducer + Context, reached only via facade hooks (`state/hooks.ts`); `localStorage` load/migrate/save. |
+| `src/data/` | Static, typed game facts (factory/plantation/RM configs, building icon ids). |
+| `src/services/` | Live data via `/proxy` — pure parsers + thin fetchers for market prices and country/region modifiers. |
+| `src/components/` | Shared UI (Counter, IconImage, StarRating, FactoryCard, TabBar). |
+| `src/views/` | `IndustryView/` (one industry tab) and `HoldingsView/` (holdings mode). |
+| `server.js` | ESM `http` server: serves `dist/` + an allowlisted `/proxy` GET endpoint. |
+| `travelData.js` | Static countries/regions maps for the location dropdowns. |
+| `styles/` | Per-concern stylesheets, composed via `styles/index.css`. |
+
+Profit math is DOM-free and must stay golden-parity green; components reach state
+only through the `src/state/hooks.ts` facades, never raw dispatch. Design notes
+and per-feature specs/plans live under `docs/superpowers/`.
 
 ## Acknowledgements
 
