@@ -13,6 +13,7 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 # Pre-built assets (run `npm run build` first — release.sh does this) + server
 COPY dist ./dist
 COPY server.js ./
+COPY server ./server
 
 RUN chown -R appuser:appgroup /app
 USER appuser

@@ -51,7 +51,8 @@
     "erpkPlaceholder": "Paste erpk…",
     "refresh": "Refresh",
     "refreshing": "Refreshing…",
-    "refreshOk": "Updated — {{count}} regions",
+    "refreshOk_one": "Updated — {{count}} region",
+    "refreshOk_other": "Updated — {{count}} regions",
     "refreshError": "Refresh failed: {{message}}",
     "columns": {
       "rank": "#",

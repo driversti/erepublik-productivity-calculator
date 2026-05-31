@@ -74,7 +74,7 @@ describe('RegionsView', () => {
     await waitFor(() => expect(refreshRegionData).toHaveBeenCalledWith('ERPK-XYZ'));
     expect(await screen.findByText('Testland')).toBeInTheDocument();
     expect(screen.getByText(/Updated 2026-06-09/)).toBeInTheDocument();
-    expect(screen.getByText(/Updated — 1 regions/i)).toBeInTheDocument();
+    expect(screen.getByText(/Updated — 1 region\b/i)).toBeInTheDocument();
     expect(screen.getByTestId('regions-erpk')).toHaveValue('');
   });
 });
