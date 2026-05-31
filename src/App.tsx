@@ -6,6 +6,7 @@ import { HoldingsView } from './views/HoldingsView/HoldingsView';
 import { AppTooltip } from './components/AppTooltip';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function ActiveView() {
   const active = useActiveModule();
@@ -14,6 +15,7 @@ function ActiveView() {
 }
 
 export default function App() {
+  const { t } = useTranslation();
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('theme');
     return (saved as 'light' | 'dark') || 'light';
@@ -38,14 +40,14 @@ export default function App() {
               </svg>
             </div>
             <div className="header-title-wrapper">
-              <h1>eRepublik Productivity &amp; Profit Calculator</h1>
-              <p>Estimate daily profit across food, weapons, houses, aircraft &amp; holdings</p>
+              <h1>{t('header.title')}</h1>
+              <p>{t('header.subtitle')}</p>
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <LanguageSwitcher />
-            <button type="button" className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle theme">
-              {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+            <button type="button" className="theme-toggle-btn" onClick={toggleTheme} aria-label={t('theme.toggleAria')}>
+              {theme === 'light' ? t('theme.toDark') : t('theme.toLight')}
             </button>
           </div>
         </div>
@@ -53,7 +55,7 @@ export default function App() {
       <TabBar />
       <ActiveView />
       <footer className="game-footer">
-        eRepublik Productivity Calculator
+        {t('footer')}
       </footer>
       <AppTooltip />
     </StateProvider>

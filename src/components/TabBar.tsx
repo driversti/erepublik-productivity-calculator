@@ -1,10 +1,13 @@
 import { INDUSTRIES } from '../data/industries';
 import { useActiveModule, useSwitchModule } from '../state/hooks';
+import { useTranslation } from 'react-i18next';
+import { industryLabel } from '../i18n/names';
 
 // Industry tabs + the Holdings tab. Mirrors the legacy .module-nav / .nav-tab markup.
 export function TabBar() {
   const active = useActiveModule();
   const switchTo = useSwitchModule();
+  const { t } = useTranslation();
   return (
     <nav className="module-nav">
       <div className="nav-container">
@@ -16,7 +19,7 @@ export function TabBar() {
             data-testid={`tab-${cfg.key}`}
             onClick={() => switchTo(cfg.key)}
           >
-            {cfg.icon} {cfg.label}
+            {cfg.icon} {industryLabel(t, cfg)}
           </button>
         ))}
         <button
@@ -25,7 +28,7 @@ export function TabBar() {
           data-testid="tab-holdings"
           onClick={() => switchTo('holdings')}
         >
-          🗂️ Holdings
+          {t('tabs.holdings')}
         </button>
       </div>
     </nav>
