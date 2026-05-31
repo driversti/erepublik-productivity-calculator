@@ -1,0 +1,34 @@
+# Dependencies — not needed in the image (server.js uses only Node built-ins)
+node_modules/
+
+# NOTE: dist/ is intentionally NOT ignored — it is the artifact the image ships.
+# release.sh runs `npm run build` to refresh it before each buildx build.
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Documentation & status
+*.md
+docs/
+MIGRATION_STATUS.md
+
+# Local agent/tooling config
+.claude/
+.superpowers/
+.playwright-mcp/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Ad-hoc screenshots at repo root
+/*.png

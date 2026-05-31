@@ -1,0 +1,9 @@
+services:
+  calculator:
+    image: registry.yurii.live/erep-calculator:latest
+    container_name: erep-calculator
+    restart: unless-stopped
+    ports:
+      - "8085:8080"
+    environment:
+      - PORT=8080
