@@ -4,6 +4,10 @@ node_modules/
 # Build output
 dist/
 
+# Compiled config artifacts (vite.config.ts is the single source of truth)
+vite.config.js
+vite.config.d.ts
+
 # OS junk
 .DS_Store
 Thumbs.db
