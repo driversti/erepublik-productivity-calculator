@@ -37,4 +37,14 @@ describe('IndustryView', () => {
     // default prices are 0 → revenue 0; net stays 0.00 but the row exists
     expect(screen.getByTestId('total-net-profit')).toBeInTheDocument();
   });
+
+  it('per-card output includes the Tycoon bonus (regression: was hardcoded off)', async () => {
+    setup('food');
+    const card = screen.getByTestId('factory-card-1');
+    // Default: country 100% → mult 2 → Q1 food baseOutput 100 × 2 = 200.00 / session
+    expect(card).toHaveTextContent('200.00 / session');
+    // Enable Tycoon (+20%) → mult 2.2 → 220.00 / session
+    await userEvent.click(screen.getByRole('checkbox', { name: /Tycoon/i }));
+    expect(screen.getByTestId('factory-card-1')).toHaveTextContent('220.00 / session');
+  });
 });

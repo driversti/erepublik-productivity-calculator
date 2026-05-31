@@ -3,7 +3,7 @@ import type { FwModule, HiredModule } from '../../state/types';
 import type { Cell } from '../../calc/types';
 import { getIndustry } from '../../data/industries';
 import { useState } from 'react';
-import { useModule, useIndustryView, useHiredView, useSetFactoryCell, useIndustrySync } from '../../state/hooks';
+import { useModule, useIndustryView, useHiredView, useSetFactoryCell, useIndustrySync, useSharedFlags } from '../../state/hooks';
 import { FactoryCard } from '../../components/FactoryCard';
 import { SummarySidebar } from './SummarySidebar';
 import { ModifiersPanel } from './ModifiersPanel';
@@ -30,12 +30,15 @@ export function IndustryView({ industryKey }: Props) {
     ? <SummarySidebar kind="fw" cfg={cfg} view={fwView} />
     : <SummarySidebar kind="hired" cfg={cfg} view={hiredView} />;
 
-  // Per-card single-session output. Cards show base×country×region×pollution at
-  // the card level (tycoon/WAM affect totals, computed in the calc views).
+  // Per-card single-session output. Includes the Tycoon bonus to match the legacy
+  // per-card display (the headline KPIs flow through the calc views, which also
+  // honor tycoon/WAM). WAM is a session-count multiplier, not a per-session-output
+  // one, so it's correctly absent here.
+  const { hasTycoon } = useSharedFlags();
   const factoryMult = (q: number) =>
-    productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon: false, pollutionRate: pollutionAt(mod.qualityPollution, q) });
+    productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon, pollutionRate: pollutionAt(mod.qualityPollution, q) });
   const rmMult = () =>
-    productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon: false, pollutionRate: pollutionAt(mod.qualityPollution, 0) });
+    productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon, pollutionRate: pollutionAt(mod.qualityPollution, 0) });
 
   const sync = useIndustrySync(industryKey);
   const [syncing, setSyncing] = useState(false);
