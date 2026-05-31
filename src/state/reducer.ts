@@ -1,7 +1,8 @@
 // Pure, typed reducer for the whole app. Every case returns a new AppState.
-import type { AppState, FwModule, HiredModule, Holding } from './types';
+import type { AppState, FwModule, HiredModule, Holding, OptimizerState } from './types';
 import type { Cell } from '../calc/types';
 import type { IndustryKey } from '../data/types';
+import type { RankedRegion } from '../calc/optimizer';
 import { createHolding } from './blank';
 import { getIndustry } from '../data/industries';
 
@@ -34,7 +35,9 @@ export type Action =
   | { type: 'SET_HOLDING_FIELD'; id: string; field: 'workTaxRate' | 'averageSalary'; value: number }
   | { type: 'SET_MODULE_PRICES'; module: IndustryKey; prices: Record<number, number> }
   | { type: 'SET_HOLDING_LOCATION'; id: string; selectedCountryId: string; selectedRegionPermalink: string }
-  | { type: 'SET_HOLDING_MODIFIERS'; id: string; workTaxRate: number; averageSalary: number; perIndustry: Record<IndustryKey, { countryBonus: number; regionBonus: number; qualityPollution: Record<number, number>; vat: number }> };
+  | { type: 'SET_HOLDING_MODIFIERS'; id: string; workTaxRate: number; averageSalary: number; perIndustry: Record<IndustryKey, { countryBonus: number; regionBonus: number; qualityPollution: Record<number, number>; vat: number }> }
+  | { type: 'SET_OPTIMIZER_PARAMS'; payload: Partial<Pick<OptimizerState, 'industry' | 'threshold' | 'maxCandidates' | 'topN'>> }
+  | { type: 'SET_OPTIMIZER_RESULTS'; payload: { results: RankedRegion[]; baselineNet: number | null; skippedCount: number; fetchedAt: string } };
 
 function clampCompanies(v: number): number {
   return Math.max(0, Math.min(MAX_COMPANIES, Math.floor(v)));
@@ -273,6 +276,21 @@ export function reducer(state: AppState, action: Action): AppState {
           };
           return { ...h, workTaxRate: action.workTaxRate, averageSalary: action.averageSalary, industries };
         }),
+      };
+
+    case 'SET_OPTIMIZER_PARAMS':
+      return { ...state, optimizer: { ...state.optimizer, ...action.payload } };
+
+    case 'SET_OPTIMIZER_RESULTS':
+      return {
+        ...state,
+        optimizer: {
+          ...state.optimizer,
+          results: action.payload.results,
+          baselineNet: action.payload.baselineNet,
+          skippedCount: action.payload.skippedCount,
+          fetchedAt: action.payload.fetchedAt,
+        },
       };
 
     default:

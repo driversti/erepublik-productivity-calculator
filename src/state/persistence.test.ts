@@ -46,4 +46,58 @@ describe('persistence', () => {
     // Q7 food maxEmployees = 10
     expect(loadState().food[7].workers).toBe(10);
   });
+
+  it('migrates a v11-shaped blob (no optimizer) to include optimizer defaults', () => {
+    // Simulate a blob saved by v11 code — no optimizer key at all
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      activeModule: 'weapons',
+      hasTycoon: true,
+      food: { 1: { companies: 2, workers: 0 } },
+    }));
+    const s = loadState();
+    expect(s.activeModule).toBe('weapons');
+    expect(s.hasTycoon).toBe(true);
+    expect(s.food[1].companies).toBe(2);
+    // optimizer must be present with defaults
+    expect(s.optimizer).toBeDefined();
+    expect(s.optimizer.industry).toBe('food');
+    expect(s.optimizer.threshold).toBe(20);
+    expect(s.optimizer.maxCandidates).toBe(60);
+    expect(s.optimizer.topN).toBe(15);
+    expect(s.optimizer.results).toEqual([]);
+    expect(s.optimizer.baselineNet).toBeNull();
+    expect(s.optimizer.skippedCount).toBe(0);
+    expect(s.optimizer.fetchedAt).toBeNull();
+  });
+
+  it('persists optimizer params but NOT volatile results', () => {
+    // Simulate saving state after setting some params and results
+    const s = {
+      ...initialState(),
+      optimizer: {
+        industry: 'weapons' as const,
+        threshold: 30,
+        maxCandidates: 40,
+        topN: 10,
+        results: [{ region: {}, economics: {}, pollution: null, net: 999 }] as never,
+        baselineNet: 800,
+        skippedCount: 2,
+        fetchedAt: '2026-01-01T00:00:00Z',
+      },
+    };
+    saveState(s);
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY)!) as Record<string, unknown>;
+    // params must be saved
+    const opt = raw.optimizer as Record<string, unknown>;
+    expect(opt).toBeDefined();
+    expect(opt.industry).toBe('weapons');
+    expect(opt.threshold).toBe(30);
+    expect(opt.maxCandidates).toBe(40);
+    expect(opt.topN).toBe(10);
+    // volatile fields must be stripped
+    expect(opt.results).toBeUndefined();
+    expect(opt.baselineNet).toBeUndefined();
+    expect(opt.skippedCount).toBeUndefined();
+    expect(opt.fetchedAt).toBeUndefined();
+  });
 });
