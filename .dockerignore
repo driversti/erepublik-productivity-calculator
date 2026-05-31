@@ -16,7 +16,6 @@ docker-compose.yml
 # Documentation & status
 *.md
 docs/
-MIGRATION_STATUS.md
 
 # Local agent/tooling config
 .claude/
