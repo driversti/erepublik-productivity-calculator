@@ -1,0 +1,17 @@
+{
+  "header": {
+    "title": "Калькулятор продуктивності та прибутку eRepublik",
+    "subtitle": "Оцінка щоденного прибутку: їжа, зброя, будинки, літаки та холдинги"
+  },
+  "footer": "Калькулятор продуктивності eRepublik",
+  "theme": {
+    "toggleAria": "Перемкнути тему",
+    "toDark": "🌙 Темна тема",
+    "toLight": "☀️ Світла тема"
+  },
+  "language": { "label": "Мова", "en": "English", "uk": "Українська" },
+  "tabs": { "holdings": "🗂️ Холдинги" },
+  "labels": { "companies": "Компанії", "workers": "Працівники" },
+  "counter": { "minusAria": "{{label}} мінус", "plusAria": "{{label}} плюс" },
+  "buttons": { "syncLivePrices": "Оновити ціни", "syncing": "Оновлення…" }
+}

@@ -1,0 +1,39 @@
+{
+  "toolbar": {
+    "holding": "Холдинг",
+    "none": "— немає —",
+    "new": "+ Новий",
+    "rename": "Перейменувати",
+    "delete": "Видалити",
+    "clearCompanies": "Очистити компанії",
+    "newPrompt": "Назва нового холдингу:",
+    "newDefault": "Холдинг {{n}}",
+    "renamePrompt": "Перейменувати холдинг:",
+    "deleteConfirm": "Видалити холдинг «{{name}}»?",
+    "clearConfirm": "Очистити всі компанії в цьому холдингу? Локацію та синхронізовані бонуси збережено."
+  },
+  "location": {
+    "country": "Країна холдингу",
+    "region": "Регіон холдингу",
+    "selectCountry": "— Оберіть країну —",
+    "selectRegion": "— Оберіть регіон —",
+    "statusSynced": "Автосинхр.: Синхронізовано",
+    "statusNoRegion": "Автосинхр.: Регіон не обрано",
+    "statusNotConfigured": "Автосинхр.: Не налаштовано"
+  },
+  "summary": {
+    "title": "Підсумок холдингу",
+    "netProfit": "Загальний чистий прибуток",
+    "totalCompanies": "Усього компаній",
+    "revenue": "Дохід за день",
+    "rmNet": "Сировина (нетто)",
+    "workTax": "Податок на працю",
+    "salaries": "Зарплати",
+    "perIndustry": "За індустріями",
+    "empty": "У цьому холдингу ще немає компаній.",
+    "breakdownItem": "{{icon}} {{label}} ({{companies}}к)"
+  },
+  "section": {
+    "mods": "Країна +{{country}}% · Регіон +{{region}}% · Забруднення {{pollution}}%"
+  }
+}
