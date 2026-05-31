@@ -13,11 +13,25 @@ function ActiveView() {
 export default function App() {
   return (
     <StateProvider>
-      <header className="app-header">
-        <h1 className="app-title">eRepublik Productivity &amp; Profit Calculator</h1>
+      <header className="game-header">
+        <div className="header-container">
+          <div className="header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M3 3v18h18" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M7 14l3-4 3 3 4-6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <div className="header-title-wrapper">
+            <h1>eRepublik Productivity &amp; Profit Calculator</h1>
+            <p>Estimate daily profit across food, weapons, houses, aircraft &amp; holdings</p>
+          </div>
+        </div>
       </header>
       <TabBar />
       <ActiveView />
+      <footer className="game-footer">
+        eRepublik Productivity Calculator
+      </footer>
     </StateProvider>
   );
 }

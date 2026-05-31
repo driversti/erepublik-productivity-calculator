@@ -1,5 +1,6 @@
-// A single labelled counter row (Companies or Workers), reusing the legacy
-// .counter-* CSS classes. Clamps to [0, max] and reports the next value.
+// A single labelled counter row (Companies or Workers), using the legacy
+// .house-counter-row / .counter-group / .btn-counter / .counter-input classes.
+// Clamps to [0, max] and reports the next value.
 
 interface CounterProps {
   label: string;
@@ -9,16 +10,24 @@ interface CounterProps {
 }
 
 export function Counter({ label, value, max, onChange }: CounterProps) {
-  const clamp = (v: number) => Math.max(0, Math.min(max, v));
+  const clamp = (v: number) => Math.max(0, Math.min(max, Number.isFinite(v) ? v : 0));
   return (
-    <div className="counter-row">
-      <span className="counter-label">{label}</span>
-      <div className="counter-controls">
-        <button type="button" className="counter-btn btn-minus" aria-label={`${label} minus`} onClick={() => onChange(clamp(value - 1))}>
+    <div className="house-counter-row">
+      <span className="house-counter-label">{label}</span>
+      <div className="counter-group counter-group-sm">
+        <button type="button" className="btn-counter" aria-label={`${label} minus`} onClick={() => onChange(clamp(value - 1))}>
           −
         </button>
-        <span className="counter-value">{value}</span>
-        <button type="button" className="counter-btn btn-plus" aria-label={`${label} plus`} onClick={() => onChange(clamp(value + 1))}>
+        <input
+          type="number"
+          className="counter-input"
+          aria-label={label}
+          value={value}
+          min={0}
+          max={max}
+          onChange={(e) => onChange(clamp(parseInt(e.target.value || '0', 10)))}
+        />
+        <button type="button" className="btn-counter" aria-label={`${label} plus`} onClick={() => onChange(clamp(value + 1))}>
           +
         </button>
       </div>
@@ -35,12 +44,12 @@ interface CounterGroupProps {
   onWorkers: (v: number) => void;
 }
 
-// Companies + (optional) Workers, matching the legacy fwCounterGroupsHtml.
+// Companies + (optional) Workers, matching the legacy fwCounterGroupsHtml stack.
 export function CounterGroup({ companies, workers, maxWorkers, hideWorkers, onCompanies, onWorkers }: CounterGroupProps) {
   return (
-    <>
+    <div className="house-counters">
       <Counter label="Companies" value={companies} max={9999} onChange={onCompanies} />
       {!hideWorkers && <Counter label="Workers" value={workers} max={maxWorkers} onChange={onWorkers} />}
-    </>
+    </div>
   );
 }

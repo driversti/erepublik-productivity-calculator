@@ -12,7 +12,7 @@ export function HoldingsView() {
   const holding = api.activeHolding;
 
   return (
-    <main className="app-container" data-testid="holdings-view" style={{ display: 'block' }}>
+    <div data-testid="holdings-view">
       <HoldingToolbar api={api} />
 
       {!holding ? (
@@ -20,9 +20,8 @@ export function HoldingsView() {
           No holdings yet. Click <strong>+ New</strong> to create one.
         </div>
       ) : (
-        <div className="holdings-content" data-testid="hld-content" style={{ display: 'flex' }}>
-          <HoldingSummary holding={holding} />
-          <section className="holdings-main">
+        <div className="holdings-content" data-testid="hld-content">
+          <section className="holdings-workspace">
             <HoldingLocationBar holding={holding} />
             {INDUSTRIES.map((cfg) => {
               const result = computeHoldingIndustry(state, holding, cfg.key);
@@ -39,8 +38,9 @@ export function HoldingsView() {
               );
             })}
           </section>
+          <HoldingSummary holding={holding} />
         </div>
       )}
-    </main>
+    </div>
   );
 }

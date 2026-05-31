@@ -13,7 +13,8 @@ interface Props {
 }
 
 // Location dropdowns + modifier inputs. Manual number edits de-sync the location
-// (handled in the reducer via SET_MODULE_FIELD).
+// (handled in the reducer via SET_MODULE_FIELD). Uses the legacy card / form-row /
+// control-group / toggle-container / switch classes.
 export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSyncPrices, syncing }: Props) {
   const setField = useSetModuleField();
   const shared = useSharedFlags();
@@ -32,81 +33,96 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
       : 'Auto-sync: Not configured';
 
   return (
-    <div className="config-card">
-      <div className="config-header">
-        <span className="active-module"><span className="module-icon">{cfg.icon}</span><span className="module-name">{cfg.label} Industry</span></span>
+    <div className="card modifiers-card">
+      <div className="card-header">
+        <h2><span className="active-module"><span className="module-name">{cfg.icon} {cfg.label} Industry</span></span></h2>
       </div>
+      <div className="card-body">
+        <div className="form-row">
+          <div className="control-group">
+            <label className="control-label">Country</label>
+            <select className="market-input" value={mod.selectedCountryId} onChange={(e) => onSelectCountry(e.target.value)}>
+              <option value="">— Select country —</option>
+              {countryEntries.map(([id, c]) => (
+                <option key={id} value={id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="control-group">
+            <label className="control-label">Region</label>
+            <select className="market-input" value={mod.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => onSelectRegion(e.target.value)}>
+              <option value="">— Select region —</option>
+              {regionEntries.map(([id, r]) => (
+                <option key={id} value={r.permalink}>{r.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="sync-status text-muted" style={{ marginBottom: 8 }}>{syncStatus}</div>
 
-      <div className="modifier-grid">
-        <div className="market-input-group">
-          <span className="market-label">Country</span>
-          <select className="market-input" value={mod.selectedCountryId} onChange={(e) => onSelectCountry(e.target.value)}>
-            <option value="">— Select country —</option>
-            {countryEntries.map(([id, c]) => (
-              <option key={id} value={id}>{c.name}</option>
-            ))}
-          </select>
-        </div>
-        <div className="market-input-group">
-          <span className="market-label">Region</span>
-          <select className="market-input" value={mod.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => onSelectRegion(e.target.value)}>
-            <option value="">— Select region —</option>
-            {regionEntries.map(([id, r]) => (
-              <option key={id} value={r.permalink}>{r.name}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-      <div className="sync-status" style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-secondary)', margin: '6px 0' }}>{syncStatus}</div>
+        <hr className="section-divider" />
 
-      <div className="modifier-grid">
-        <div className="market-input-group">
-          <span className="market-label">Country {cfg.label} Bonus (%)</span>
-          <input type="number" className="market-input" min="0" max="100" value={mod.countryBonus}
-            onChange={(e) => setField(cfg.key, 'countryBonus', parseFloat(e.target.value || '0'))} />
+        <div className="form-row">
+          <div className="control-group">
+            <label className="control-label">Country {cfg.label} Bonus (%)</label>
+            <input type="number" className="market-input" min="0" max="100" value={mod.countryBonus}
+              onChange={(e) => setField(cfg.key, 'countryBonus', parseFloat(e.target.value || '0'))} />
+          </div>
+          <div className="control-group">
+            <label className="control-label">Region Bonus (%)</label>
+            <input type="number" className="market-input" min="0" max="100" value={mod.regionBonus}
+              onChange={(e) => setField(cfg.key, 'regionBonus', parseFloat(e.target.value || '0'))} />
+          </div>
         </div>
-        <div className="market-input-group">
-          <span className="market-label">Region Bonus (%)</span>
-          <input type="number" className="market-input" min="0" max="100" value={mod.regionBonus}
-            onChange={(e) => setField(cfg.key, 'regionBonus', parseFloat(e.target.value || '0'))} />
-        </div>
-        <label className="toggle-row market-input-group">
-          <input type="checkbox" checked={shared.hasTycoon} onChange={shared.toggleTycoon} /> Tycoon Pack (+20%)
-        </label>
-        {isFw && (
-          <label className="toggle-row market-input-group">
-            <input type="checkbox" checked={shared.wamEnabled} onChange={shared.toggleWam} /> Work as Manager
+
+        <div className="toggle-container">
+          <span className="control-label">Tycoon Pack (+20%)</span>
+          <label className="switch">
+            <input type="checkbox" aria-label="Tycoon Pack" checked={shared.hasTycoon} onChange={shared.toggleTycoon} />
+            <span className="switch-slider" />
           </label>
-        )}
+        </div>
         {isFw && (
-          <div className="market-input-group">
-            <span className="market-label">Work Tax (%)</span>
-            <input type="number" className="market-input" step="0.5" min="0" max="25" value={mod.workTaxRate}
-              onChange={(e) => setField(cfg.key, 'workTaxRate', parseFloat(e.target.value || '0'))} />
+          <div className="toggle-container">
+            <span className="control-label">Work as Manager</span>
+            <label className="switch">
+              <input type="checkbox" aria-label="Work as Manager" checked={shared.wamEnabled} onChange={shared.toggleWam} />
+              <span className="switch-slider" />
+            </label>
           </div>
         )}
-        {isFw && (
-          <div className="market-input-group">
-            <span className="market-label">Average Salary (CC)</span>
-            <input type="number" className="market-input" step="10" min="0" value={mod.averageSalary}
-              onChange={(e) => setField(cfg.key, 'averageSalary', parseFloat(e.target.value || '0'))} />
-          </div>
-        )}
-        <div className="market-input-group">
-          <span className="market-label">Offered Salary (CC)</span>
-          <input type="number" className="market-input" step="1" min="0" value={shared.offeredSalary}
-            onChange={(e) => shared.setShared('offeredSalary', parseFloat(e.target.value || '0'))} />
-        </div>
-        <div className="market-input-group">
-          <span className="market-label">VAT (%)</span>
-          <input type="number" className="market-input" step="0.5" min="0" max="50" value={mod.vat}
-            onChange={(e) => setField(cfg.key, 'vat', parseFloat(e.target.value || '0'))} />
-        </div>
-      </div>
 
-      <button type="button" className="btn btn-primary" style={{ marginTop: 12 }} onClick={onSyncPrices} disabled={syncing}>
-        {syncing ? 'Syncing…' : 'Sync Live Prices'}
-      </button>
+        <div className="form-row">
+          {isFw && (
+            <div className="control-group">
+              <label className="control-label">Work Tax (%)</label>
+              <input type="number" className="market-input" step="0.5" min="0" max="25" value={mod.workTaxRate}
+                onChange={(e) => setField(cfg.key, 'workTaxRate', parseFloat(e.target.value || '0'))} />
+            </div>
+          )}
+          {isFw && (
+            <div className="control-group">
+              <label className="control-label">Average Salary (CC)</label>
+              <input type="number" className="market-input" step="10" min="0" value={mod.averageSalary}
+                onChange={(e) => setField(cfg.key, 'averageSalary', parseFloat(e.target.value || '0'))} />
+            </div>
+          )}
+          <div className="control-group">
+            <label className="control-label">Offered Salary (CC)</label>
+            <input type="number" className="market-input" step="1" min="0" value={shared.offeredSalary}
+              onChange={(e) => shared.setShared('offeredSalary', parseFloat(e.target.value || '0'))} />
+          </div>
+          <div className="control-group">
+            <label className="control-label">VAT (%)</label>
+            <input type="number" className="market-input" step="0.5" min="0" max="50" value={mod.vat}
+              onChange={(e) => setField(cfg.key, 'vat', parseFloat(e.target.value || '0'))} />
+          </div>
+        </div>
+
+        <button type="button" className={`btn btn-primary${syncing ? ' loading' : ''}`} onClick={onSyncPrices} disabled={syncing}>
+          {syncing ? 'Syncing…' : 'Sync Live Prices'}
+        </button>
+      </div>
     </div>
   );
 }

@@ -4,7 +4,6 @@ import type { HiredView } from '../../calc/hiredView';
 
 const cc = (n: number) => `${n.toFixed(2)} CC`;
 const num = (n: number) => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-const cls = (n: number) => (n >= 0 ? 'kpi-value text-success' : 'kpi-value text-danger');
 
 interface FwProps { kind: 'fw'; cfg: IndustryConfig; view: IndustryView }
 interface HiredProps { kind: 'hired'; cfg: IndustryConfig; view: HiredView }
@@ -43,23 +42,25 @@ export function SummarySidebar(props: Props) {
   const rm = cfg.rmName;
   const v = normalize(props);
   const grossProfit = v.revenue - v.rmCost;
+  const buyHighlight = !v.producing && v.optionANet >= v.optionBNet;
+  const produceHighlight = v.optionBNet > v.optionANet;
 
   return (
-    <aside className="summary-sidebar">
-      <div className="summary-card">
-        <div className="summary-header">
-          <h2 className="summary-title">Profit Summary</h2>
-          <span className="strategy-badge" style={{ fontSize: 9, fontWeight: 700, padding: '3px 6px', borderRadius: 4, color: 'white', textTransform: 'uppercase', background: v.producing ? '#e67e22' : 'var(--erep-blue)' }}>
+    <aside className="sidebar">
+      <div className="card summary-card">
+        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2>Summary</h2>
+          <span style={{ fontSize: 9, fontWeight: 700, padding: '3px 6px', borderRadius: 4, color: 'white', textTransform: 'uppercase', background: v.producing ? 'var(--erep-gold)' : 'var(--erep-blue)' }}>
             {v.producing ? 'Option B' : 'Option A'}
           </span>
         </div>
-
-        <div className="summary-kpis">
-          <div className="kpi-block">
-            <span className="kpi-label">Est. Daily Net Profit</span>
-            <span className={cls(v.net)} data-testid="total-net-profit">{cc(v.net)}</span>
-          </div>
-          <div className="kpi-grid">
+        <div className="card-body">
+          <div className="kpi-list">
+            <div className="kpi-block">
+              <span className="kpi-label">Est. Daily Net Profit</span>
+              <span className={`kpi-value ${v.net >= 0 ? 'text-success' : 'text-danger'}`} data-testid="total-net-profit">{cc(v.net)}</span>
+            </div>
+            <hr className="kpi-divider" />
             <div className="kpi-block-inline">
               <span className="kpi-label">Total Companies</span>
               <span className="kpi-value-small" data-testid="total-factories-count">{v.companies}</span>
@@ -72,64 +73,81 @@ export function SummarySidebar(props: Props) {
               <span className="kpi-label">{rm} Consumed</span>
               <span className="kpi-value-small" data-testid="total-rm-required">{num(v.rmUsed)} {rm}</span>
             </div>
+            <hr className="kpi-divider" />
+            <div className="kpi-block">
+              <span className="kpi-label">Daily Revenue</span>
+              <span className="kpi-value-small kpi-blue" data-testid="total-gross-revenue">{cc(v.revenue)}</span>
+            </div>
+            <div className="kpi-block">
+              <span className="kpi-label">Daily {rm} Cost</span>
+              <span className={`kpi-value-small ${v.rmCost < 0 ? 'text-success' : 'kpi-gold'}`} data-testid="total-rm-cost">{cc(v.rmCost)}</span>
+            </div>
+            <div className="kpi-block">
+              <span className="kpi-label">Gross Profit</span>
+              <span className={`kpi-value-small ${grossProfit >= 0 ? 'text-success' : 'text-danger'}`} data-testid="total-gross-profit">{cc(grossProfit)}</span>
+            </div>
+            <div className="kpi-block">
+              <span className="kpi-label">Daily Work Tax</span>
+              <span className="kpi-value-small kpi-red" data-testid="total-work-tax">-{cc(v.workTax)}</span>
+            </div>
+            <div className="kpi-block">
+              <span className="kpi-label">Daily Salary</span>
+              <span className="kpi-value-small kpi-red" data-testid="total-salary">-{cc(v.salary)}</span>
+            </div>
           </div>
-        </div>
 
-        <div className="kpi-grid" style={{ marginTop: 8 }}>
-          <div className="kpi-block-inline"><span className="kpi-label">Daily Revenue</span><span className="kpi-value-small kpi-blue" data-testid="total-gross-revenue">{cc(v.revenue)}</span></div>
-          <div className="kpi-block-inline"><span className="kpi-label">Daily {rm} Cost</span><span className={v.rmCost < 0 ? 'kpi-value-small text-success' : 'kpi-value-small kpi-gold'} data-testid="total-rm-cost">{cc(v.rmCost)}</span></div>
-          <div className="kpi-block-inline"><span className="kpi-label">Gross Profit</span><span className={v.net >= 0 ? 'kpi-value-small text-success' : 'kpi-value-small text-danger'} data-testid="total-gross-profit">{cc(grossProfit)}</span></div>
-          <div className="kpi-block-inline"><span className="kpi-label">Daily Work Tax</span><span className="kpi-value-small kpi-red" data-testid="total-work-tax">-{cc(v.workTax)}</span></div>
-          <div className="kpi-block-inline"><span className="kpi-label">Daily Salary</span><span className="kpi-value-small kpi-red" data-testid="total-salary">-{cc(v.salary)}</span></div>
-        </div>
+          <hr className="section-divider" />
 
-        <div className="details-section">
-          <h3 className="details-title">Factory Breakdown</h3>
-          <ul className="breakdown-list" data-testid="breakdown-list">
-            {v.breakdown.length === 0 ? (
-              <li className="info-text">No factories configured yet.</li>
-            ) : (
-              v.breakdown.map((b) => (
-                <li className="breakdown-item" key={b.quality}>
-                  <span className="breakdown-label">Q{b.quality} ({b.companies}c / {b.workers}w)</span>
-                  <span className="breakdown-count" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <span>+{num(b.output)}</span>
-                    <span className={b.profit >= 0 ? 'text-success' : 'text-danger'} style={{ fontSize: 11, fontWeight: 700 }}>
-                      {b.profit >= 0 ? '+' : ''}{b.profit.toFixed(2)} CC
+          <div className="summary-details">
+            <h3 className="details-title">Inventory breakdown:</h3>
+            <ul className="breakdown-list" data-testid="breakdown-list">
+              {v.breakdown.length === 0 ? (
+                <li className="info-text" style={{ textAlign: 'center', fontStyle: 'italic' }}>No factories configured yet.</li>
+              ) : (
+                v.breakdown.map((b) => (
+                  <li className="breakdown-item" key={b.quality}>
+                    <span className="breakdown-label">Q{b.quality} ({b.companies}c / {b.workers}w)</span>
+                    <span className="breakdown-count" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                      <span>+{num(b.output)}</span>
+                      <span className={b.profit >= 0 ? 'text-success' : 'text-danger'} style={{ fontSize: 11, fontWeight: 700 }}>
+                        {b.profit >= 0 ? '+' : ''}{b.profit.toFixed(2)} CC
+                      </span>
                     </span>
-                  </span>
-                </li>
-              ))
-            )}
-          </ul>
-        </div>
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
 
-        <div className="details-section">
-          <h3 className="details-title" style={{ marginBottom: 8 }}>{rm} Strategy Comparison</h3>
-          <div className="kpi-block-inline" style={{ marginBottom: 6 }}>
-            <span className="kpi-label">{rm} Produced</span>
-            <span className="kpi-value-small" style={{ color: 'var(--erep-gold)', fontWeight: 700 }}>{v.rmProduced.toFixed(2)} {rm}</span>
-          </div>
-          <div className="kpi-block-inline" style={{ marginBottom: 10 }}>
-            <span className="kpi-label">{rm} Net Balance</span>
-            <span className={v.netBalance >= 0 ? 'kpi-value-small text-success' : 'kpi-value-small text-danger'} data-testid="rm-net-balance" style={{ fontWeight: 700 }}>
-              {v.netBalance >= 0 ? '+' : ''}{v.netBalance.toFixed(2)} {rm}
-            </span>
-          </div>
-          <div className="strategy-options">
-            <div className="strategy-option-card" data-testid="strategy-buy-card" style={{ border: `1px solid ${!v.producing && v.optionANet >= v.optionBNet ? 'var(--erep-green)' : 'var(--border-color)'}`, borderRadius: 6, padding: 10 }}>
-              <div style={{ fontWeight: 700, fontSize: 12 }}>Option A: Buy {rm}</div>
-              <div style={{ fontSize: 11, marginTop: 2, color: 'var(--text-secondary)' }}>Market Cost: {v.optionABuy.toFixed(2)} CC</div>
-              <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>Net Profit: <span className={v.optionANet >= 0 ? 'text-success' : 'text-danger'}>{cc(v.optionANet)}</span></div>
+          <hr className="section-divider" />
+
+          <div className="grain-comparison-section">
+            <h3 className="details-title">{rm} Strategy Comparison</h3>
+            <div className="kpi-block-inline" style={{ marginBottom: 4 }}>
+              <span className="kpi-label">{rm} Produced</span>
+              <span className="kpi-value-small kpi-gold">{v.rmProduced.toFixed(2)} {rm}</span>
             </div>
-            <div className="strategy-option-card" data-testid="strategy-produce-card" style={{ border: `1px solid ${v.optionBNet > v.optionANet ? 'var(--erep-green)' : 'var(--border-color)'}`, borderRadius: 6, padding: 10 }}>
-              <div style={{ fontWeight: 700, fontSize: 12 }}>Option B: Produce {rm}</div>
-              <div style={{ fontSize: 11, marginTop: 2, color: 'var(--text-secondary)' }}>Balance: {v.netBalance.toFixed(2)} {rm}</div>
-              <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>Net Profit: <span className={v.optionBNet >= 0 ? 'text-success' : 'text-danger'}>{cc(v.optionBNet)}</span></div>
+            <div className="kpi-block-inline" style={{ marginBottom: 10 }}>
+              <span className="kpi-label">{rm} Net Balance</span>
+              <span className={`kpi-value-small ${v.netBalance >= 0 ? 'text-success' : 'text-danger'}`} data-testid="rm-net-balance">
+                {v.netBalance >= 0 ? '+' : ''}{v.netBalance.toFixed(2)} {rm}
+              </span>
             </div>
-          </div>
-          <div data-testid="strategy-recommendation" style={{ marginTop: 10, fontSize: 11, fontWeight: 700, padding: 8, borderRadius: 6, textAlign: 'center', border: '1px solid var(--border-color)' }}>
-            {recommendation(v.optionANet, v.optionBNet, rm)}
+            <div className="strategy-card-wrapper">
+              <div className="strategy-option-card" data-testid="strategy-buy-card" style={buyHighlight ? { borderColor: 'var(--erep-green)', background: 'rgba(122,183,0,0.05)' } : undefined}>
+                <div style={{ fontWeight: 700, fontSize: 12 }}>Option A: Buy {rm}</div>
+                <div style={{ fontSize: 11, marginTop: 2, color: 'var(--text-secondary)' }}>Market Cost: {v.optionABuy.toFixed(2)} CC</div>
+                <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>Net Profit: <span className={v.optionANet >= 0 ? 'text-success' : 'text-danger'}>{cc(v.optionANet)}</span></div>
+              </div>
+              <div className="strategy-option-card" data-testid="strategy-produce-card" style={produceHighlight ? { borderColor: 'var(--erep-green)', background: 'rgba(122,183,0,0.05)' } : undefined}>
+                <div style={{ fontWeight: 700, fontSize: 12 }}>Option B: Produce {rm}</div>
+                <div style={{ fontSize: 11, marginTop: 2, color: 'var(--text-secondary)' }}>Balance: {v.netBalance.toFixed(2)} {rm}</div>
+                <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>Net Profit: <span className={v.optionBNet >= 0 ? 'text-success' : 'text-danger'}>{cc(v.optionBNet)}</span></div>
+              </div>
+            </div>
+            <div data-testid="strategy-recommendation" style={{ marginTop: 10, fontSize: 11, fontWeight: 700, padding: 8, borderRadius: 6, textAlign: 'center', border: '1px solid var(--border-color)', background: 'var(--bg-header)' }}>
+              {recommendation(v.optionANet, v.optionBNet, rm)}
+            </div>
           </div>
         </div>
       </div>

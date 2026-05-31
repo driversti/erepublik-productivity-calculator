@@ -54,9 +54,9 @@ export function IndustryView({ industryKey }: Props) {
         <ModifiersPanel cfg={cfg} mod={mod} onSelectCountry={sync.selectCountry} onSelectRegion={sync.selectRegion} onSyncPrices={onSyncPrices} syncing={syncing} />
         <PricesPanel cfg={cfg} mod={mod} />
 
-        <div className="config-card">
-          <h3 className="details-title">Your {cfg.label} Factories</h3>
-          <div className="factories-grid" data-testid="factories-container">
+        <div className="card">
+          <div className="card-header"><h2>Your {cfg.label} Factories</h2></div>
+          <div className="card-body factories-grid" data-testid="factories-container">
             {cfg.factoriesData.map((def) => {
               const cell = readFactoryCell(cfg.type, mod, def.quality);
               const m = factoryMult(def.quality);
@@ -78,9 +78,9 @@ export function IndustryView({ industryKey }: Props) {
           </div>
         </div>
 
-        <div className="config-card">
-          <h3 className="details-title">Your {cfg.rmName} Companies</h3>
-          <div className="factories-grid" data-testid="plantations-container">
+        <div className="card">
+          <div className="card-header"><h2>Your {cfg.rmName} Companies</h2></div>
+          <div className="card-body factories-grid" data-testid="plantations-container">
             {cfg.rmData.map((def) => {
               const cell = readRmCell(cfg.type, mod, def.quality);
               const singleOutput = gameRawProduction((def.baseOutput / 100) * rmMult());

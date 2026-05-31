@@ -18,8 +18,8 @@ describe('Counter', () => {
     expect(onChange).toHaveBeenLastCalledWith(5); // capped at max
   });
 
-  it('renders the current value', () => {
+  it('renders the current value in the input', () => {
     render(<Counter label="Workers" value={7} max={10} onChange={() => {}} />);
-    expect(screen.getByText('7')).toBeInTheDocument();
+    expect(screen.getByRole('spinbutton', { name: 'Workers' })).toHaveValue(7);
   });
 });

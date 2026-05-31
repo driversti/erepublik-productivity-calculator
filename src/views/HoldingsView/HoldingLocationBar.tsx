@@ -9,7 +9,8 @@ interface Props {
 
 // Location selects + "Sync Live Prices" for the active holding. Selecting a
 // region scrapes modifiers into every industry of the holding (legacy
-// syncHoldingModifiers); Sync Prices refreshes the shared price state.
+// syncHoldingModifiers). Uses the legacy card / holdings-location-bar /
+// control-group / holdings-sync-col classes.
 export function HoldingLocationBar({ holding }: Props) {
   const sync = useHoldingSync();
   const [syncing, setSyncing] = useState(false);
@@ -32,29 +33,29 @@ export function HoldingLocationBar({ holding }: Props) {
   };
 
   return (
-    <div className="card holdings-location-bar" style={{ display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap', padding: 12 }}>
-      <div className="market-input-group">
-        <span className="market-label">Holding Country</span>
-        <select className="market-input" value={holding.selectedCountryId} onChange={(e) => sync.selectCountry(holding.id, e.target.value)}>
-          <option value="">— Select country —</option>
-          {countryEntries.map(([id, c]) => (
-            <option key={id} value={id}>{c.name}</option>
-          ))}
-        </select>
+    <div className="card">
+      <div className="card-body holdings-location-bar">
+        <div className="control-group">
+          <label className="control-label">Holding Country</label>
+          <select className="market-input" value={holding.selectedCountryId} onChange={(e) => sync.selectCountry(holding.id, e.target.value)}>
+            <option value="">— Select country —</option>
+            {countryEntries.map(([id, c]) => (<option key={id} value={id}>{c.name}</option>))}
+          </select>
+        </div>
+        <div className="control-group">
+          <label className="control-label">Holding Region</label>
+          <select className="market-input" value={holding.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => sync.selectRegion(holding.id, e.target.value)}>
+            <option value="">— Select region —</option>
+            {regionEntries.map(([id, r]) => (<option key={id} value={r.permalink}>{r.name}</option>))}
+          </select>
+        </div>
+        <div className="holdings-sync-col">
+          <span className="sync-status text-muted">{status}</span>
+          <button type="button" className={`btn btn-primary${syncing ? ' loading' : ''}`} onClick={onSyncPrices} disabled={syncing}>
+            {syncing ? 'Syncing…' : 'Sync Live Prices'}
+          </button>
+        </div>
       </div>
-      <div className="market-input-group">
-        <span className="market-label">Holding Region</span>
-        <select className="market-input" value={holding.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => sync.selectRegion(holding.id, e.target.value)}>
-          <option value="">— Select region —</option>
-          {regionEntries.map(([id, r]) => (
-            <option key={id} value={r.permalink}>{r.name}</option>
-          ))}
-        </select>
-      </div>
-      <span className="sync-status" style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-secondary)' }}>{status}</span>
-      <button type="button" className="btn btn-primary" onClick={onSyncPrices} disabled={syncing}>
-        {syncing ? 'Syncing…' : 'Sync Live Prices'}
-      </button>
     </div>
   );
 }

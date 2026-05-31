@@ -22,7 +22,8 @@ describe('HoldingsView', () => {
     setup();
     await userEvent.click(screen.getByRole('button', { name: /\+ New/i }));
     expect(screen.getByTestId('hld-content')).toBeInTheDocument();
-    expect(screen.getByTestId('hld-tab-h1')).toHaveTextContent('Berlin');
+    expect(screen.getByTestId('hld-picker')).toHaveValue('h1');
+    expect(screen.getByRole('option', { name: 'Berlin' })).toBeInTheDocument();
     vi.restoreAllMocks();
   });
 

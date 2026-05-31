@@ -4,8 +4,8 @@ interface Props {
   api: HoldingsApi;
 }
 
-// Holding tabs + New/Rename/Delete/Clear actions. Ported from the legacy
-// holdings-bar; rename/new use window.prompt like the original.
+// Holding picker (dropdown) + New/Rename/Delete/Clear actions, matching the
+// legacy .holdings-toolbar / .holdings-picker / .holdings-actions markup.
 export function HoldingToolbar({ api }: Props) {
   const { holdings, activeHoldingId, activeHolding } = api;
 
@@ -30,25 +30,28 @@ export function HoldingToolbar({ api }: Props) {
   };
 
   return (
-    <div className="holdings-bar">
-      <div className="holdings-tabs" data-testid="hld-tabs">
-        {holdings.map((h) => (
-          <button
-            key={h.id}
-            type="button"
-            className={`nav-tab${h.id === activeHoldingId ? ' active' : ''}`}
-            data-testid={`hld-tab-${h.id}`}
-            onClick={() => api.switchTo(h.id)}
-          >
-            {h.name}
-          </button>
-        ))}
+    <div className="holdings-toolbar">
+      <div className="holdings-picker">
+        <label className="control-label" htmlFor="hld-select">Holding</label>
+        <select
+          id="hld-select"
+          className="market-input"
+          data-testid="hld-picker"
+          value={activeHoldingId}
+          disabled={holdings.length === 0}
+          onChange={(e) => api.switchTo(e.target.value)}
+        >
+          {holdings.length === 0 && <option value="">— none —</option>}
+          {holdings.map((h) => (
+            <option key={h.id} value={h.id}>{h.name}</option>
+          ))}
+        </select>
       </div>
       <div className="holdings-actions">
-        <button type="button" className="btn btn-primary btn-sm" onClick={onNew}>+ New</button>
-        <button type="button" className="btn btn-secondary btn-sm" onClick={onRename} disabled={!activeHolding}>Rename</button>
-        <button type="button" className="btn btn-secondary btn-sm" onClick={onDelete} disabled={!activeHolding}>Delete</button>
-        <button type="button" className="btn btn-secondary btn-sm" onClick={onClear} disabled={!activeHolding}>Clear Companies</button>
+        <button type="button" className="btn btn-primary" onClick={onNew}>+ New</button>
+        <button type="button" className="btn btn-secondary" onClick={onRename} disabled={!activeHolding}>Rename</button>
+        <button type="button" className="btn btn-secondary" onClick={onDelete} disabled={!activeHolding}>Delete</button>
+        <button type="button" className="btn btn-secondary" onClick={onClear} disabled={!activeHolding}>Clear Companies</button>
       </div>
     </div>
   );

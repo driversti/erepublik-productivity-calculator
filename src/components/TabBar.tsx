@@ -12,7 +12,7 @@ export function TabBar() {
           <button
             key={cfg.key}
             type="button"
-            className={`nav-tab${active === cfg.key ? ' active' : ''}`}
+            className={`nav-tab tab-${cfg.key}${active === cfg.key ? ' active' : ''}`}
             data-testid={`tab-${cfg.key}`}
             onClick={() => switchTo(cfg.key)}
           >

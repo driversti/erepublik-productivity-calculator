@@ -13,7 +13,7 @@ export function HoldingSummary({ holding }: Props) {
   const rows = sum.perIndustry.filter((p) => p.companies > 0);
 
   return (
-    <aside className="sidebar">
+    <aside className="holdings-summary">
       <div className="card summary-card">
         <div className="card-header"><h2>Holding Summary</h2></div>
         <div className="card-body">
@@ -31,7 +31,9 @@ export function HoldingSummary({ holding }: Props) {
             <div className="kpi-block"><span className="kpi-label">Work Tax</span><span className="kpi-value kpi-red" data-testid="hld-work-tax">-{cc(sum.workTax)}</span></div>
             <div className="kpi-block"><span className="kpi-label">Salaries</span><span className="kpi-value kpi-red" data-testid="hld-salary">-{cc(sum.salary)}</span></div>
           </div>
+          <hr className="section-divider" />
           <div className="summary-details">
+            <h3 className="details-title">Per industry</h3>
             <ul className="breakdown-list" data-testid="hld-breakdown">
               {rows.length === 0 ? (
                 <li className="info-text">No companies in this holding yet.</li>
