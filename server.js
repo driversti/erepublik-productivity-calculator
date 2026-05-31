@@ -58,11 +58,18 @@ async function handleRefresh(req, res) {
     return;
   }
   let body = '';
+  let aborted = false;
   req.on('data', (chunk) => {
+    if (aborted) return;
     body += chunk;
-    if (body.length > 1e6) req.destroy(); // guard against oversized bodies
+    if (body.length > 1e6) {
+      aborted = true;
+      sendJson(res, 413, { error: 'Request body too large' });
+      req.destroy();
+    }
   });
   req.on('end', async () => {
+    if (aborted) return;
     let erpk;
     try {
       erpk = JSON.parse(body).erpk;
@@ -92,13 +99,14 @@ async function handleRefresh(req, res) {
       }
       const raw = await mapRes.json();
       const dataset = trimMapData(raw, new Date().toISOString().slice(0, 10));
-      await fs.promises.mkdir(DATA_DIR, { recursive: true });
       const tmp = `${REGIONS_FILE}.tmp`;
+      await fs.promises.mkdir(DATA_DIR, { recursive: true });
       await fs.promises.writeFile(tmp, JSON.stringify(dataset));
       await fs.promises.rename(tmp, REGIONS_FILE); // atomic replace
       lastRefreshOk = Date.now();
       sendJson(res, 200, { ...dataset, count: dataset.regions.length });
     } catch (err) {
+      fs.promises.unlink(`${REGIONS_FILE}.tmp`).catch(() => {}); // best-effort cleanup
       console.error('Refresh failed:', err.message);
       sendJson(res, 502, { error: 'Could not fetch map-data from eRepublik' });
     }
