@@ -68,7 +68,7 @@ export interface Holding {
   };
 }
 
-export type ActiveModule = IndustryKey | 'holdings';
+export type ActiveModule = IndustryKey | 'holdings' | 'regions';
 
 export interface AppState {
   activeModule: ActiveModule;

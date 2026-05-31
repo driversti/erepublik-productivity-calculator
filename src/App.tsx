@@ -3,6 +3,7 @@ import { useActiveModule } from './state/hooks';
 import { TabBar } from './components/TabBar';
 import { IndustryView } from './views/IndustryView/IndustryView';
 import { HoldingsView } from './views/HoldingsView/HoldingsView';
+import { RegionsView } from './views/RegionsView/RegionsView';
 import { AppTooltip } from './components/AppTooltip';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { useState, useEffect } from 'react';
@@ -12,6 +13,7 @@ import { isRtl } from './i18n/config';
 function ActiveView() {
   const active = useActiveModule();
   if (active === 'holdings') return <HoldingsView />;
+  if (active === 'regions') return <RegionsView />;
   return <IndustryView industryKey={active} />;
 }
 

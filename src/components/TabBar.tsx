@@ -30,6 +30,14 @@ export function TabBar() {
         >
           {t('tabs.holdings')}
         </button>
+        <button
+          type="button"
+          className={`nav-tab${active === 'regions' ? ' active' : ''}`}
+          data-testid="tab-regions"
+          onClick={() => switchTo('regions')}
+        >
+          {t('tabs.regions')}
+        </button>
       </div>
     </nav>
   );
