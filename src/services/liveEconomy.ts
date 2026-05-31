@@ -13,7 +13,7 @@
  * with a different strategy; the fallback is not part of the public interface.
  */
 import type { IndustryKey } from '../data/types';
-import type { CountryEconomics, CountryEconomySource } from './economySource';
+import type { CountryEconomics, CountryEconomySource, RegionLiveDetails } from './economySource';
 import { countries, regions } from '../data/travel';
 import { getProxyUrl, erepUrl } from './proxy';
 import { normalizeCountryName } from './countryNames';
@@ -23,6 +23,7 @@ import {
   parseAverageSalary,
   parseWorkTax,
   parseVat,
+  parseRegionBonus,
   parseRegionPollution,
 } from './regions';
 import { mapWithLimit } from './concurrency';
@@ -90,18 +91,20 @@ export class LiveEconomySource implements CountryEconomySource {
   }
 
   /**
-   * Fetches real quality-indexed pollution maps for the given region ids.
+   * Fetches real region bonus + quality-indexed pollution maps for the given
+   * region ids. The region page is fetched ONCE per region and both the live
+   * bonus and pollution are parsed from it.
    *
    * Returns a Map keyed by region id. Missing region ids and failed fetches are
    * silently skipped.
    */
-  async getRegionPollution(
+  async getRegionDetails(
     industry: IndustryKey,
     regionIds: number[],
     onProgress?: (done: number, total: number) => void,
-  ): Promise<Map<number, Record<number, number>>> {
+  ): Promise<Map<number, RegionLiveDetails>> {
     const cfg = SCRAPE_CONFIG[industry];
-    const result = new Map<number, Record<number, number>>();
+    const result = new Map<number, RegionLiveDetails>();
     const total = regionIds.length;
     let done = 0;
 
@@ -115,7 +118,10 @@ export class LiveEconomySource implements CountryEconomySource {
         if (!res.ok) return; // server error — skip
 
         const html = await res.text();
-        result.set(regionId, parseRegionPollution(html, cfg));
+        result.set(regionId, {
+          regionBonus: parseRegionBonus(html, cfg),
+          pollution: parseRegionPollution(html, cfg),
+        });
       } catch {
         // skip this item on any network or parse error
       } finally {

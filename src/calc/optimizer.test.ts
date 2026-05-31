@@ -49,7 +49,19 @@ describe('rankRegions', () => {
     const candidates = [candidate(1, 'C', 50)];
     const economics = new Map([['C', econ(20, 1, 1, 1)]]);
     const clean = rankRegions(baseConfig, economics, candidates);
-    const polluted = rankRegions(baseConfig, economics, candidates, new Map([[1, { 0: 0, 1: 50 }]]));
+    const polluted = rankRegions(baseConfig, economics, candidates, new Map([[1, { pollution: { 0: 0, 1: 50 } }]]));
     expect(polluted[0].net).toBeLessThan(clean[0].net);
+  });
+
+  it('uses the live regionBonus override instead of the candidate estimate', () => {
+    // Candidate carries an offline (inflated) bonus of 75; the live detail says 15.
+    const candidates = [candidate(1, 'C', 75)];
+    const economics = new Map([['C', econ(20, 1, 1, 1)]]);
+    const offline = rankRegions(baseConfig, economics, candidates);
+    const live = rankRegions(baseConfig, economics, candidates, new Map([[1, { regionBonus: 15 }]]));
+    // A lower bonus yields lower output -> lower net, and is reflected on the row.
+    expect(live[0].regionBonus).toBe(15);
+    expect(offline[0].regionBonus).toBe(75);
+    expect(live[0].net).toBeLessThan(offline[0].net);
   });
 });

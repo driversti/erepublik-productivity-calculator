@@ -54,22 +54,25 @@ export async function runScan(
     onProgress({ phase: 'economics', done, total }),
   );
 
-  // Phase 2: rank with estimated (zero) pollution to find finalists.
+  // Phase 2: rank with estimated (zero) pollution + offline bonus to find finalists.
   const ranked = rankRegions(config, economics, candidates);
   const skippedCount = candidates.length - ranked.length;
   const top = ranked.slice(0, topN);
 
-  // Phase 3: fetch real pollution for finalists, then re-rank all candidates
-  // (only the finalists gain real pollution; the rest stay estimated).
-  const pollution = await source.getRegionPollution(
+  // Phase 3: fetch the live region page for each finalist (real bonus + real
+  // pollution), then re-rank ONLY the finalists with those live details — so the
+  // non-fetched candidates' offline estimates can't contaminate the displayed
+  // exact results.
+  const topCandidates = top.map((r) => ({ region: r.region, regionBonus: r.regionBonus }));
+  const details = await source.getRegionDetails(
     industry,
     top.map((r) => r.region.id),
     (done, total) => onProgress({ phase: 'pollution', done, total }),
   );
-  const finalRanked = rankRegions(config, economics, candidates, pollution);
+  const finalRanked = rankRegions(config, economics, topCandidates, details);
 
   return {
-    results: finalRanked.slice(0, topN),
+    results: finalRanked,
     baselineNet,
     skippedCount,
     fetchedAt: new Date().toISOString(),

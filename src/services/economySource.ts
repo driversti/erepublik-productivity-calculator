@@ -7,6 +7,14 @@ export interface CountryEconomics {
   vat: number;            // per-industry percent
 }
 
+/** Live, region-page-sourced details for a single region (Phase 3). */
+export interface RegionLiveDetails {
+  /** real in-game region production bonus for the industry (sum of resource bonuses) */
+  regionBonus: number;
+  /** quality-indexed pollution (index 0 = RM, 1..maxQ = factories) */
+  pollution: Record<number, number>;
+}
+
 export interface CountryEconomySource {
   /** economics for the given owner countries, keyed by the SAME country string used in regionResources.currentCountry */
   getCountryEconomics(
@@ -15,10 +23,10 @@ export interface CountryEconomySource {
     onProgress?: (done: number, total: number) => void,
   ): Promise<Map<string, CountryEconomics>>;
 
-  /** real quality-indexed pollution for specific regions (Phase 3) */
-  getRegionPollution(
+  /** real region bonus + quality-indexed pollution for specific regions (Phase 3) */
+  getRegionDetails(
     industry: IndustryKey,
     regionIds: number[],
     onProgress?: (done: number, total: number) => void,
-  ): Promise<Map<number, Record<number, number>>>;
+  ): Promise<Map<number, RegionLiveDetails>>;
 }
