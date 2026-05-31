@@ -61,7 +61,7 @@ describe('persistence', () => {
     // optimizer must be present with defaults
     expect(s.optimizer).toBeDefined();
     expect(s.optimizer.industry).toBe('food');
-    expect(s.optimizer.threshold).toBe(20);
+    expect(s.optimizer.threshold).toBe(10);
     expect(s.optimizer.maxCandidates).toBe(60);
     expect(s.optimizer.topN).toBe(15);
     expect(s.optimizer.results).toEqual([]);

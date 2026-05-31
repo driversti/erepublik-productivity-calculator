@@ -33,13 +33,17 @@ export function rankRegions(
   config: OptimizerConfig,
   economicsByCountry: Map<string, CountryEconomics>,
   candidates: RegionCandidate[],
-  pollutionByRegion?: Map<number, Record<number, number>>,
+  detailsByRegion?: Map<number, { regionBonus?: number; pollution?: Record<number, number> }>,
 ): RankedRegion[] {
   const out: RankedRegion[] = [];
-  for (const { region, regionBonus } of candidates) {
+  for (const { region, regionBonus: candidateBonus } of candidates) {
     const economics = economicsByCountry.get(region.currentCountry);
     if (!economics) continue;
-    const pollution = pollutionByRegion?.get(region.id) ?? null;
+    const details = detailsByRegion?.get(region.id);
+    // Prefer the live region-page bonus when available; otherwise fall back to
+    // the candidate's offline (normalized) estimate.
+    const regionBonus = details?.regionBonus ?? candidateBonus;
+    const pollution = details?.pollution ?? null;
     const qualityPollution = pollution ?? ZERO_POLLUTION;
 
     let net: number;

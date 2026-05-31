@@ -94,14 +94,14 @@ describe('reducer', () => {
       expect(b.optimizer.industry).toBe('weapons');
       expect(b.optimizer.topN).toBe(5);
       // untouched defaults survive
-      expect(b.optimizer.threshold).toBe(20);
+      expect(b.optimizer.threshold).toBe(10);
       expect(b.optimizer.maxCandidates).toBe(60);
     });
 
     it('is immutable: prior state object is not mutated', () => {
       const a = initialState();
       const b = reducer(a, { type: 'SET_OPTIMIZER_PARAMS', payload: { threshold: 50 } });
-      expect(a.optimizer.threshold).toBe(20); // prior state unchanged
+      expect(a.optimizer.threshold).toBe(10); // prior state unchanged
       expect(b.optimizer.threshold).toBe(50);
       expect(b.optimizer).not.toBe(a.optimizer); // new reference
       expect(b).not.toBe(a);

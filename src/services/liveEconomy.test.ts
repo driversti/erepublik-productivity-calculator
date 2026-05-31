@@ -19,7 +19,11 @@ const ECONOMY_HTML = `<html><body>
 </table>
 </body></html>`;
 
+// Region page carries both the per-resource bonus markup (food resource ids 1..5,
+// here 2 + 3 = 5) and the pollution JSON — both parsed from the SAME fetch.
 const REGION_HTML = `<html><body>
+<div data-resourceId="1" data-bonus="2"></div>
+<div data-resourceId="3" data-bonus="3"></div>
 <script>var regionPollutionDetails = {"1":[{"pollution":"2.50"},{"pollution":"3.00"},{"pollution":"N/A"},{"pollution":"4.00"},{"pollution":"5.00"},{"pollution":"6.00"},{"pollution":"7.00"},{"pollution":"8.00"}]};</script>
 </body></html>`;
 
@@ -143,28 +147,31 @@ describe('LiveEconomySource.getCountryEconomics', () => {
   });
 });
 
-describe('LiveEconomySource.getRegionPollution', () => {
-  it('parses a known region into a quality→pollution map keyed by region id', async () => {
+describe('LiveEconomySource.getRegionDetails', () => {
+  it('parses a known region into BOTH the live region bonus and the quality→pollution map, keyed by region id', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(makeOkResponse(REGION_HTML));
 
     const source = new LiveEconomySource();
     // Region 38 exists in travelData.js (Oltenia, Romania, permalink "Oltenia")
-    const result = await source.getRegionPollution('food', [38]);
+    const result = await source.getRegionDetails('food', [38]);
 
     expect(result.size).toBe(1);
-    const pollution = result.get(38);
-    expect(pollution).toBeDefined();
-    expect(pollution![0]).toBe(2.5);   // RM slot
-    expect(pollution![1]).toBe(3.0);   // Q1
-    expect(pollution![2]).toBe(0);     // N/A → 0
-    expect(pollution![7]).toBe(8.0);   // Q7
+    const details = result.get(38);
+    expect(details).toBeDefined();
+    // Live region bonus parsed from data-resourceId/data-bonus (2 + 3).
+    expect(details!.regionBonus).toBe(5);
+    const pollution = details!.pollution;
+    expect(pollution[0]).toBe(2.5);   // RM slot
+    expect(pollution[1]).toBe(3.0);   // Q1
+    expect(pollution[2]).toBe(0);     // N/A → 0
+    expect(pollution[7]).toBe(8.0);   // Q7
   });
 
   it('skips a region whose fetch returns !ok', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(makeFailResponse());
 
     const source = new LiveEconomySource();
-    const result = await source.getRegionPollution('food', [38]);
+    const result = await source.getRegionDetails('food', [38]);
 
     expect(result.size).toBe(0);
   });
@@ -174,7 +181,7 @@ describe('LiveEconomySource.getRegionPollution', () => {
 
     const source = new LiveEconomySource();
     // 999999 does not exist in travelData.js
-    const result = await source.getRegionPollution('food', [999999]);
+    const result = await source.getRegionDetails('food', [999999]);
 
     expect(result.size).toBe(0);
     expect(fetchMock).not.toHaveBeenCalled();
@@ -186,7 +193,7 @@ describe('LiveEconomySource.getRegionPollution', () => {
     const source = new LiveEconomySource();
     const progressCalls: [number, number][] = [];
 
-    await source.getRegionPollution('food', [38, 39], (done, total) => {
+    await source.getRegionDetails('food', [38, 39], (done, total) => {
       progressCalls.push([done, total]);
     });
 
@@ -197,7 +204,7 @@ describe('LiveEconomySource.getRegionPollution', () => {
   it('returns empty map for an empty list', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch');
     const source = new LiveEconomySource();
-    const result = await source.getRegionPollution('food', []);
+    const result = await source.getRegionDetails('food', []);
 
     expect(result.size).toBe(0);
     expect(fetchMock).not.toHaveBeenCalled();
@@ -211,7 +218,7 @@ describe('LiveEconomySource.getRegionPollution', () => {
 
     const source = new LiveEconomySource();
     // Must not throw
-    const result = await source.getRegionPollution('food', [38, 39]);
+    const result = await source.getRegionDetails('food', [38, 39]);
 
     // Throwing region is omitted
     expect(result.has(38)).toBe(false);

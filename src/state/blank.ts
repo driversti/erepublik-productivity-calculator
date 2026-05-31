@@ -67,7 +67,9 @@ function blankHoldingHired(): HoldingHiredIndustry {
 export function blankOptimizer(): OptimizerState {
   return {
     industry: 'food',
-    threshold: 20,
+    // Region bonus is on the real in-game scale (% production bonus). Most strong
+    // regions sit at ~10-18; 10 keeps the candidate set meaningful across industries.
+    threshold: 10,
     maxCandidates: 60,
     topN: 15,
     results: [],

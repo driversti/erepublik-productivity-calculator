@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { OptimizerView } from './OptimizerView';
 import { StateProvider } from '../../state/StateContext';
 import { STORAGE_KEY } from '../../state/persistence';
-import type { CountryEconomics, CountryEconomySource } from '../../services/economySource';
+import type { CountryEconomics, CountryEconomySource, RegionLiveDetails } from '../../services/economySource';
 import type { IndustryKey } from '../../data/types';
 import { SNAPSHOT_DATE } from '../../data/regionResources';
 
@@ -27,7 +27,9 @@ class StubSource implements CountryEconomySource {
     return m;
   }
 
-  async getRegionPollution(): Promise<Map<number, Record<number, number>>> {
+  async getRegionDetails(): Promise<Map<number, RegionLiveDetails>> {
+    // No live details: finalists keep their (normalized) offline bonus and
+    // estimated (zero) pollution.
     return new Map();
   }
 }
@@ -43,7 +45,10 @@ function seedState() {
       prices: { 1: 10 },
       vat: 1,
     },
-    optimizer: { industry: 'food', threshold: 20, maxCandidates: 10, topN: 5 },
+    // Threshold is in the normalized (in-game) bonus scale: offline bonuses are
+    // ÷5, so the top food regions sit around +18%. Keep it low enough to admit
+    // several candidates (Romania + USA owners) but above zero-bonus regions.
+    optimizer: { industry: 'food', threshold: 4, maxCandidates: 10, topN: 5 },
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
 }

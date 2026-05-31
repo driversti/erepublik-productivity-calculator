@@ -30,11 +30,11 @@ describe('RegionsView', () => {
     expect(screen.getAllByTestId('regions-row').length).toBeGreaterThan(0);
   });
 
-  it('switching industry to aircraft shows Dobrogea at +70%', async () => {
+  it('switching industry to aircraft shows Dobrogea at +14% (normalized from raw 70)', async () => {
     setup();
     await userEvent.click(screen.getByTestId('regions-ind-aircraft'));
     const dobrogea = screen.getByText('Dobrogea').closest('tr') as HTMLElement;
-    expect(within(dobrogea).getByText('+70%')).toBeInTheDocument();
+    expect(within(dobrogea).getByText('+14%')).toBeInTheDocument();
   });
 
   it('keeps the country filter when switching industries', async () => {
