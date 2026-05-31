@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "控股", "none": "— 無 —", "new": "+ 新增", "rename": "重新命名", "delete": "刪除",
+    "clearCompanies": "清除公司", "newPrompt": "新控股名稱：", "newDefault": "控股 {{n}}",
+    "renamePrompt": "重新命名控股：", "deleteConfirm": "確定刪除控股「{{name}}」？",
+    "clearConfirm": "清除此控股中的所有公司？將保留所在地與已同步的加成。"
+  },
+  "location": {
+    "country": "控股國家", "region": "控股地區", "selectCountry": "— 選擇國家 —", "selectRegion": "— 選擇地區 —",
+    "statusSynced": "自動同步：已同步", "statusNoRegion": "自動同步：尚未選擇地區", "statusNotConfigured": "自動同步：尚未設定"
+  },
+  "summary": {
+    "title": "控股摘要", "netProfit": "淨利總計", "totalCompanies": "公司總數", "revenue": "每日營收",
+    "rmNet": "原料（淨額）", "workTax": "工作稅", "salaries": "薪資", "perIndustry": "各產業",
+    "empty": "此控股中尚無公司。", "breakdownItem": "{{icon}} {{label}}（{{companies}}間）"
+  },
+  "section": { "mods": "國家 +{{country}}% · 地區 +{{region}}% · 汙染 {{pollution}}%" }
+}

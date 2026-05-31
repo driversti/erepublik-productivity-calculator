@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Holding", "none": "— nincs —", "new": "+ Új", "rename": "Átnevezés", "delete": "Törlés",
+    "clearCompanies": "Cégek törlése", "newPrompt": "Új holding neve:", "newDefault": "Holding {{n}}",
+    "renamePrompt": "Holding átnevezése:", "deleteConfirm": "Törlöd a(z) \"{{name}}\" holdingot?",
+    "clearConfirm": "Törlöd az összes céget ebben a holdingban? A hely és a szinkronizált bónuszok megmaradnak."
+  },
+  "location": {
+    "country": "Holding országa", "region": "Holding régiója", "selectCountry": "— Válassz országot —", "selectRegion": "— Válassz régiót —",
+    "statusSynced": "Automatikus szinkron: szinkronizálva", "statusNoRegion": "Automatikus szinkron: nincs régió kiválasztva", "statusNotConfigured": "Automatikus szinkron: nincs beállítva"
+  },
+  "summary": {
+    "title": "Holding összegzése", "netProfit": "Teljes nettó nyereség", "totalCompanies": "Cégek összesen", "revenue": "Napi bevétel",
+    "rmNet": "Nyersanyag (nettó)", "workTax": "Munkaadó", "salaries": "Bérek", "perIndustry": "Iparáganként",
+    "empty": "Még nincsenek cégek ebben a holdingban.", "breakdownItem": "{{icon}} {{label}} ({{companies}}c)"
+  },
+  "section": { "mods": "Ország +{{country}}% · Régió +{{region}}% · Szennyezés {{pollution}}%" }
+}

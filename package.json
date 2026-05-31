@@ -1,7 +1,7 @@
 {
   "name": "erep-calculator",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,6 +12,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "flag-icons": "^7.5.0",
     "i18next": "^26.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

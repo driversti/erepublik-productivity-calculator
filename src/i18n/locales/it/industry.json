@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "Cibo",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "Armi",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "Case",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "Aerei",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "Paese",
+    "region": "Regione",
+    "selectCountry": "Seleziona paese",
+    "selectRegion": "Seleziona regione",
+    "countryBonus": "Bonus Paese (%)",
+    "regionBonus": "Bonus Regione (%)",
+    "workTax": "Tassa sul Lavoro (%)",
+    "vat": "IVA (%)",
+    "avgSalary": "Salario medio",
+    "offeredCc": "Salario / lavoratore",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Pacchetto Tycoon",
+    "wam": "WAM",
+    "wamAria": "Lavora come Manager"
+  },
+  "prices": {
+    "header": "Prezzi di mercato {{label}} (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "Le tue fabbriche di {{label}}",
+    "rmHeader": "Le tue aziende {{rm}}",
+    "factoriesHeaderShort": "Fabbriche {{label}}",
+    "rmHeaderShort": "Aziende {{rm}}",
+    "headers": {
+      "quality": "Qualità",
+      "companies": "Aziende",
+      "workers": "Lavoratori",
+      "output": "Produzione/Sessione",
+      "netProfit": "Profitto Netto Giornaliero"
+    },
+    "outputSession": "{{value}} / sessione",
+    "outputSessionRm": "{{value}} {{rm}} / sessione"
+  },
+  "summary": {
+    "title": "Riepilogo",
+    "optionABadge": "Opzione A",
+    "optionBBadge": "Opzione B",
+    "netProfit": "Profitto Netto Giorn. stimato",
+    "totalCompanies": "Aziende totali",
+    "output": "Produzione {{label}}",
+    "rmConsumed": "{{rm}} consumato",
+    "revenue": "Ricavo giornaliero",
+    "rmCost": "Costo {{rm}} giornaliero",
+    "grossProfit": "Profitto lordo",
+    "workTax": "Tassa sul Lavoro giornaliera",
+    "salary": "Salario giornaliero",
+    "breakdownTitle": "Dettaglio inventario:",
+    "noFactories": "Nessuna fabbrica ancora configurata.",
+    "breakdownItem": "Q{{q}} ({{companies}}a / {{workers}}l)",
+    "comparisonTitle": "Confronto strategia {{rm}}",
+    "rmProduced": "{{rm}} prodotto",
+    "rmNetBalance": "Bilancio netto {{rm}}",
+    "optionABuyTitle": "Opzione A: Compra {{rm}}",
+    "optionAMarketCost": "Costo di mercato: {{cost}} CC",
+    "optionBProduceTitle": "Opzione B: Produci {{rm}}",
+    "optionBBalance": "Bilancio: {{balance}} {{rm}}",
+    "netProfitInline": "Profitto netto:",
+    "recommendA": "Raccomandazione: l'Opzione A (Compra {{rm}}) è più redditizia di {{delta}} CC/giorno",
+    "recommendB": "Raccomandazione: l'Opzione B (Produci) è più redditizia di {{delta}} CC/giorno",
+    "recommendEqual": "Raccomandazione: entrambe le opzioni sono ugualmente redditizie"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Υπολογιστής Παραγωγικότητας & Κέρδους eRepublik",
+    "subtitle": "Εκτίμηση ημερήσιου κέρδους σε τρόφιμα, όπλα, σπίτια, αεροσκάφη & συγκροτήματα"
+  },
+  "footer": "Υπολογιστής Παραγωγικότητας eRepublik",
+  "theme": {
+    "toggleAria": "Εναλλαγή θέματος",
+    "toDark": "🌙 Σκοτεινή λειτουργία",
+    "toLight": "☀️ Φωτεινή λειτουργία"
+  },
+  "language": {
+    "label": "Γλώσσα",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Συγκροτήματα"
+  },
+  "labels": {
+    "companies": "Επιχειρήσεις",
+    "workers": "Εργαζόμενοι"
+  },
+  "counter": {
+    "minusAria": "{{label}} μείον",
+    "plusAria": "{{label}} συν"
+  },
+  "buttons": {
+    "syncLivePrices": "Συγχρονισμός ζωντανών τιμών",
+    "syncing": "Συγχρονισμός…"
+  }
+}

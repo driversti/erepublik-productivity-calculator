@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Holding", "none": "— yok —", "new": "+ Yeni", "rename": "Yeniden Adlandır", "delete": "Sil",
+    "clearCompanies": "Şirketleri Temizle", "newPrompt": "Yeni holding adı:", "newDefault": "Holding {{n}}",
+    "renamePrompt": "Holdingi yeniden adlandır:", "deleteConfirm": "\"{{name}}\" holdingi silinsin mi?",
+    "clearConfirm": "Bu holdingdeki tüm şirketler temizlensin mi? Konum ve eşitlenen bonuslar korunur."
+  },
+  "location": {
+    "country": "Holding Ülkesi", "region": "Holding Bölgesi", "selectCountry": "— Ülke seçin —", "selectRegion": "— Bölge seçin —",
+    "statusSynced": "Otomatik eşitleme: Eşitlendi", "statusNoRegion": "Otomatik eşitleme: Bölge seçilmedi", "statusNotConfigured": "Otomatik eşitleme: Yapılandırılmadı"
+  },
+  "summary": {
+    "title": "Holding Özeti", "netProfit": "Toplam Net Kâr", "totalCompanies": "Toplam Şirket", "revenue": "Günlük Gelir",
+    "rmNet": "Ham Madde (net)", "workTax": "Çalışma Vergisi", "salaries": "Maaşlar", "perIndustry": "Sektör başına",
+    "empty": "Bu holdingde henüz şirket yok.", "breakdownItem": "{{icon}} {{label}} ({{companies}}ş)"
+  },
+  "section": { "mods": "Ülke +%{{country}} · Bölge +%{{region}} · Kirlilik %{{pollution}}" }
+}

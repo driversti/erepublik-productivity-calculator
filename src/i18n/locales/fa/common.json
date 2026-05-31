@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "ماشین‌حساب بهره‌وری و سود eRepublik",
+    "subtitle": "برآورد سود روزانه در غذا، سلاح، خانه، هواپیما و هلدینگ‌ها"
+  },
+  "footer": "ماشین‌حساب بهره‌وری eRepublik",
+  "theme": {
+    "toggleAria": "تغییر پوسته",
+    "toDark": "🌙 حالت تاریک",
+    "toLight": "☀️ حالت روشن"
+  },
+  "language": {
+    "label": "زبان",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ هلدینگ‌ها"
+  },
+  "labels": {
+    "companies": "شرکت‌ها",
+    "workers": "کارگران"
+  },
+  "counter": {
+    "minusAria": "{{label}} منها",
+    "plusAria": "{{label}} به‌علاوه"
+  },
+  "buttons": {
+    "syncLivePrices": "همگام‌سازی قیمت‌های زنده",
+    "syncing": "در حال همگام‌سازی…"
+  }
+}

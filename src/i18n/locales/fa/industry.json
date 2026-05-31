@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "غذا",     "rm": "FRM" },
+    "weapons":  { "label": "سلاح",    "rm": "WRM" },
+    "houses":   { "label": "خانه",    "rm": "HRM" },
+    "aircraft": { "label": "هواپیما", "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "کشور", "region": "منطقه", "selectCountry": "انتخاب کشور", "selectRegion": "انتخاب منطقه",
+    "countryBonus": "پاداش کشور (٪)", "regionBonus": "پاداش منطقه (٪)", "workTax": "مالیات کار (٪)", "vat": "مالیات بر ارزش افزوده (٪)",
+    "avgSalary": "میانگین دستمزد", "offeredCc": "دستمزد / کارگر", "tycoon": "Tycoon (+20%)", "tycoonAria": "بسته Tycoon",
+    "wam": "WAM", "wamAria": "کار به‌عنوان مدیر"
+  },
+  "prices": { "header": "قیمت‌های بازار {{label}} (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "کارخانه‌های {{label}} شما", "rmHeader": "شرکت‌های {{rm}} شما",
+    "factoriesHeaderShort": "کارخانه‌های {{label}}", "rmHeaderShort": "شرکت‌های {{rm}}",
+    "headers": { "quality": "کیفیت", "companies": "شرکت‌ها", "workers": "کارگران", "output": "تولید/جلسه", "netProfit": "سود خالص روزانه" },
+    "outputSession": "{{value}} / جلسه", "outputSessionRm": "{{value}} {{rm}} / جلسه"
+  },
+  "summary": {
+    "title": "خلاصه", "optionABadge": "گزینه A", "optionBBadge": "گزینه B", "netProfit": "سود خالص روزانه تخمینی",
+    "totalCompanies": "مجموع شرکت‌ها", "output": "تولید {{label}}", "rmConsumed": "{{rm}} مصرف‌شده",
+    "revenue": "درآمد روزانه", "rmCost": "هزینه روزانه {{rm}}", "grossProfit": "سود ناخالص", "workTax": "مالیات کار روزانه",
+    "salary": "دستمزد روزانه", "breakdownTitle": "تفکیک موجودی:", "noFactories": "هنوز هیچ کارخانه‌ای پیکربندی نشده است.",
+    "breakdownItem": "Q{{q}} ({{companies}}ش / {{workers}}ک)", "comparisonTitle": "مقایسه راهبرد {{rm}}",
+    "rmProduced": "{{rm}} تولیدشده", "rmNetBalance": "موازنه خالص {{rm}}", "optionABuyTitle": "گزینه A: خرید {{rm}}",
+    "optionAMarketCost": "هزینه بازار: {{cost}} CC", "optionBProduceTitle": "گزینه B: تولید {{rm}}",
+    "optionBBalance": "موازنه: {{balance}} {{rm}}", "netProfitInline": "سود خالص:",
+    "recommendA": "توصیه: گزینه A (خرید {{rm}}) با {{delta}} CC/روز سودآورتر است",
+    "recommendB": "توصیه: گزینه B (تولید) با {{delta}} CC/روز سودآورتر است",
+    "recommendEqual": "توصیه: هر دو گزینه به یک اندازه سودآور هستند"
+  }
+}

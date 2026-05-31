@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Калькулятар прадукцыйнасці і прыбытку eRepublik",
+    "subtitle": "Ацэнка штодзённага прыбытку па ежы, зброі, дамах, авіяцыі і холдынгах"
+  },
+  "footer": "Калькулятар прадукцыйнасці eRepublik",
+  "theme": {
+    "toggleAria": "Пераключыць тэму",
+    "toDark": "🌙 Цёмная тэма",
+    "toLight": "☀️ Светлая тэма"
+  },
+  "language": {
+    "label": "Мова",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Холдынгі"
+  },
+  "labels": {
+    "companies": "Кампаніі",
+    "workers": "Работнікі"
+  },
+  "counter": {
+    "minusAria": "{{label}} мінус",
+    "plusAria": "{{label}} плюс"
+  },
+  "buttons": {
+    "syncLivePrices": "Сінхранізаваць цэны",
+    "syncing": "Сінхранізацыя…"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "Ежа",      "rm": "FRM" },
+    "weapons":  { "label": "Зброя",     "rm": "WRM" },
+    "houses":   { "label": "Дамы",      "rm": "HRM" },
+    "aircraft": { "label": "Авіяцыя",   "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "Краіна", "region": "Рэгіён", "selectCountry": "Выберыце краіну", "selectRegion": "Выберыце рэгіён",
+    "countryBonus": "Бонус краіны (%)", "regionBonus": "Бонус рэгіёну (%)", "workTax": "Падатак на працу (%)", "vat": "ПДВ (%)",
+    "avgSalary": "Сярэдні заробак", "offeredCc": "Заробак / работнік", "tycoon": "Tycoon (+20%)", "tycoonAria": "Пакет Tycoon",
+    "wam": "WAM", "wamAria": "Праца як кіраўнік"
+  },
+  "prices": { "header": "Рынкавыя цэны {{label}} (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "Вашы фабрыкі {{label}}", "rmHeader": "Вашы кампаніі {{rm}}",
+    "factoriesHeaderShort": "Фабрыкі {{label}}", "rmHeaderShort": "Кампаніі {{rm}}",
+    "headers": { "quality": "Якасць", "companies": "Кампаніі", "workers": "Работнікі", "output": "Выпуск/сесія", "netProfit": "Штодзённы чысты прыбытак" },
+    "outputSession": "{{value}} / сесія", "outputSessionRm": "{{value}} {{rm}} / сесія"
+  },
+  "summary": {
+    "title": "Зводка", "optionABadge": "Варыянт A", "optionBBadge": "Варыянт B", "netProfit": "Прыбл. штодзённы чысты прыбытак",
+    "totalCompanies": "Усяго кампаній", "output": "Выпуск {{label}}", "rmConsumed": "Спажыта {{rm}}",
+    "revenue": "Штодзённы даход", "rmCost": "Штодзённы кошт {{rm}}", "grossProfit": "Валавы прыбытак", "workTax": "Штодзённы падатак на працу",
+    "salary": "Штодзённы заробак", "breakdownTitle": "Разбіўка інвентару:", "noFactories": "Фабрыкі яшчэ не наладжаны.",
+    "breakdownItem": "Q{{q}} ({{companies}}к / {{workers}}р)", "comparisonTitle": "Параўнанне стратэгій {{rm}}",
+    "rmProduced": "Выраблена {{rm}}", "rmNetBalance": "Чысты баланс {{rm}}", "optionABuyTitle": "Варыянт A: Купіць {{rm}}",
+    "optionAMarketCost": "Рынкавы кошт: {{cost}} CC", "optionBProduceTitle": "Варыянт B: Вырабіць {{rm}}",
+    "optionBBalance": "Баланс: {{balance}} {{rm}}", "netProfitInline": "Чысты прыбытак:",
+    "recommendA": "Рэкамендацыя: Варыянт A (Купіць {{rm}}) выгаднейшы на {{delta}} CC/дзень",
+    "recommendB": "Рэкамендацыя: Варыянт B (Вырабіць) выгаднейшы на {{delta}} CC/дзень",
+    "recommendEqual": "Рэкамендацыя: Абодва варыянты аднолькава выгадныя"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik 生产力与利润计算器",
+    "subtitle": "估算食品、武器、房屋、飞机及控股集团的每日利润"
+  },
+  "footer": "eRepublik 生产力计算器",
+  "theme": {
+    "toggleAria": "切换主题",
+    "toDark": "🌙 深色模式",
+    "toLight": "☀️ 浅色模式"
+  },
+  "language": {
+    "label": "语言",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ 控股集团"
+  },
+  "labels": {
+    "companies": "公司",
+    "workers": "工人"
+  },
+  "counter": {
+    "minusAria": "{{label}} 减少",
+    "plusAria": "{{label}} 增加"
+  },
+  "buttons": {
+    "syncLivePrices": "同步实时价格",
+    "syncing": "同步中…"
+  }
+}

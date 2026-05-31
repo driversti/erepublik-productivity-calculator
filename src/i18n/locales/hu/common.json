@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik termelékenység- és nyereségkalkulátor",
+    "subtitle": "Becsüld meg a napi nyereséget élelmiszer, fegyver, ház, repülőgép és holdingok esetén"
+  },
+  "footer": "eRepublik termelékenységi kalkulátor",
+  "theme": {
+    "toggleAria": "Téma váltása",
+    "toDark": "🌙 Sötét mód",
+    "toLight": "☀️ Világos mód"
+  },
+  "language": {
+    "label": "Nyelv",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdingok"
+  },
+  "labels": {
+    "companies": "Cégek",
+    "workers": "Munkások"
+  },
+  "counter": {
+    "minusAria": "{{label}} mínusz",
+    "plusAria": "{{label}} plusz"
+  },
+  "buttons": {
+    "syncLivePrices": "Élő árak szinkronizálása",
+    "syncing": "Szinkronizálás…"
+  }
+}

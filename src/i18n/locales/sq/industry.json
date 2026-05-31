@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "Ushqim",  "rm": "FRM" },
+    "weapons":  { "label": "Armë",     "rm": "WRM" },
+    "houses":   { "label": "Shtëpi",   "rm": "HRM" },
+    "aircraft": { "label": "Avionë",   "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "Shteti", "region": "Rajoni", "selectCountry": "Zgjidh shtetin", "selectRegion": "Zgjidh rajonin",
+    "countryBonus": "Bonusi i shtetit (%)", "regionBonus": "Bonusi i rajonit (%)", "workTax": "Taksa e punës (%)", "vat": "TVSH (%)",
+    "avgSalary": "Paga mesatare", "offeredCc": "Paga / punëtor", "tycoon": "Tycoon (+20%)", "tycoonAria": "Paketa Tycoon",
+    "wam": "WAM", "wamAria": "Puno si Menaxher"
+  },
+  "prices": { "header": "Çmimet e tregut për {{label}} (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "Fabrikat e tua të {{label}}", "rmHeader": "Kompanitë e tua {{rm}}",
+    "factoriesHeaderShort": "Fabrikat e {{label}}", "rmHeaderShort": "Kompanitë {{rm}}",
+    "headers": { "quality": "Cilësia", "companies": "Kompanitë", "workers": "Punëtorët", "output": "Prodhimi/Seancë", "netProfit": "Fitimi neto ditor" },
+    "outputSession": "{{value}} / seancë", "outputSessionRm": "{{value}} {{rm}} / seancë"
+  },
+  "summary": {
+    "title": "Përmbledhje", "optionABadge": "Opsioni A", "optionBBadge": "Opsioni B", "netProfit": "Fitimi neto ditor i vlerësuar",
+    "totalCompanies": "Totali i kompanive", "output": "Prodhimi i {{label}}", "rmConsumed": "{{rm}} e konsumuar",
+    "revenue": "Të ardhurat ditore", "rmCost": "Kostoja ditore e {{rm}}", "grossProfit": "Fitimi bruto", "workTax": "Taksa ditore e punës",
+    "salary": "Paga ditore", "breakdownTitle": "Ndarja e inventarit:", "noFactories": "Ende nuk ka fabrika të konfiguruara.",
+    "breakdownItem": "Q{{q}} ({{companies}}k / {{workers}}p)", "comparisonTitle": "Krahasimi i strategjisë për {{rm}}",
+    "rmProduced": "{{rm}} e prodhuar", "rmNetBalance": "Bilanci neto i {{rm}}", "optionABuyTitle": "Opsioni A: Bli {{rm}}",
+    "optionAMarketCost": "Kostoja e tregut: {{cost}} CC", "optionBProduceTitle": "Opsioni B: Prodho {{rm}}",
+    "optionBBalance": "Bilanci: {{balance}} {{rm}}", "netProfitInline": "Fitimi neto:",
+    "recommendA": "Rekomandim: Opsioni A (Bli {{rm}}) është më fitimprurës me {{delta}} CC/ditë",
+    "recommendB": "Rekomandim: Opsioni B (Prodho) është më fitimprurës me {{delta}} CC/ditë",
+    "recommendEqual": "Rekomandim: Të dy opsionet janë njësoj fitimprurëse"
+  }
+}

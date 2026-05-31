@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "Alimente",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "Arme",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "Locuințe",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "Avioane",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "Țară",
+    "region": "Regiune",
+    "selectCountry": "Selectează țara",
+    "selectRegion": "Selectează regiunea",
+    "countryBonus": "Bonus de țară (%)",
+    "regionBonus": "Bonus de regiune (%)",
+    "workTax": "Taxă pe muncă (%)",
+    "vat": "TVA (%)",
+    "avgSalary": "Salariu mediu",
+    "offeredCc": "Salariu / muncitor",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Pachet Tycoon",
+    "wam": "WAM",
+    "wamAria": "Muncă în calitate de manager"
+  },
+  "prices": {
+    "header": "Prețuri de piață {{label}} (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "Fabricile tale de {{label}}",
+    "rmHeader": "Companiile tale de {{rm}}",
+    "factoriesHeaderShort": "Fabrici de {{label}}",
+    "rmHeaderShort": "Companii de {{rm}}",
+    "headers": {
+      "quality": "Calitate",
+      "companies": "Companii",
+      "workers": "Muncitori",
+      "output": "Producție/Sesiune",
+      "netProfit": "Profit net zilnic"
+    },
+    "outputSession": "{{value}} / sesiune",
+    "outputSessionRm": "{{value}} {{rm}} / sesiune"
+  },
+  "summary": {
+    "title": "Rezumat",
+    "optionABadge": "Opțiunea A",
+    "optionBBadge": "Opțiunea B",
+    "netProfit": "Profit net zilnic est.",
+    "totalCompanies": "Total companii",
+    "output": "Producție {{label}}",
+    "rmConsumed": "{{rm}} consumat",
+    "revenue": "Venit zilnic",
+    "rmCost": "Cost zilnic {{rm}}",
+    "grossProfit": "Profit brut",
+    "workTax": "Taxă pe muncă zilnică",
+    "salary": "Salariu zilnic",
+    "breakdownTitle": "Detalierea inventarului:",
+    "noFactories": "Nicio fabrică configurată încă.",
+    "breakdownItem": "Q{{q}} ({{companies}}c / {{workers}}m)",
+    "comparisonTitle": "Comparația strategiilor {{rm}}",
+    "rmProduced": "{{rm}} produs",
+    "rmNetBalance": "Balanță netă {{rm}}",
+    "optionABuyTitle": "Opțiunea A: Cumpără {{rm}}",
+    "optionAMarketCost": "Cost de piață: {{cost}} CC",
+    "optionBProduceTitle": "Opțiunea B: Produce {{rm}}",
+    "optionBBalance": "Balanță: {{balance}} {{rm}}",
+    "netProfitInline": "Profit net:",
+    "recommendA": "Recomandare: Opțiunea A (Cumpără {{rm}}) este mai profitabilă cu {{delta}} CC/zi",
+    "recommendB": "Recomandare: Opțiunea B (Produce) este mai profitabilă cu {{delta}} CC/zi",
+    "recommendEqual": "Recomandare: Ambele opțiuni sunt la fel de profitabile"
+  }
+}

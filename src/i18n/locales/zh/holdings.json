@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "控股集团", "none": "— 无 —", "new": "+ 新建", "rename": "重命名", "delete": "删除",
+    "clearCompanies": "清空公司", "newPrompt": "新控股集团名称：", "newDefault": "控股集团 {{n}}",
+    "renamePrompt": "重命名控股集团：", "deleteConfirm": "删除控股集团“{{name}}”？",
+    "clearConfirm": "清空此控股集团中的所有公司？地区和已同步的加成将予以保留。"
+  },
+  "location": {
+    "country": "控股集团国家", "region": "控股集团地区", "selectCountry": "— 选择国家 —", "selectRegion": "— 选择地区 —",
+    "statusSynced": "自动同步：已同步", "statusNoRegion": "自动同步：未选择地区", "statusNotConfigured": "自动同步：未配置"
+  },
+  "summary": {
+    "title": "控股集团汇总", "netProfit": "净利润总额", "totalCompanies": "公司总数", "revenue": "每日收入",
+    "rmNet": "原材料（净）", "workTax": "工作税", "salaries": "工资", "perIndustry": "按行业",
+    "empty": "此控股集团中尚无公司。", "breakdownItem": "{{icon}} {{label}} ({{companies}}司)"
+  },
+  "section": { "mods": "国家 +{{country}}% · 地区 +{{region}}% · 污染 {{pollution}}%" }
+}

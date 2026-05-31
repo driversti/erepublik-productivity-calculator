@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "Żywność",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "Broń",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "Domy",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "Lotnictwo",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "Kraj",
+    "region": "Region",
+    "selectCountry": "Wybierz kraj",
+    "selectRegion": "Wybierz region",
+    "countryBonus": "Bonus kraju (%)",
+    "regionBonus": "Bonus regionu (%)",
+    "workTax": "Podatek od pracy (%)",
+    "vat": "VAT (%)",
+    "avgSalary": "Średnia pensja",
+    "offeredCc": "Pensja / pracownik",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Pakiet Tycoon",
+    "wam": "WAM",
+    "wamAria": "Praca jako menedżer"
+  },
+  "prices": {
+    "header": "Ceny rynkowe: {{label}} (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "Twoje fabryki: {{label}}",
+    "rmHeader": "Twoje firmy {{rm}}",
+    "factoriesHeaderShort": "Fabryki: {{label}}",
+    "rmHeaderShort": "Firmy {{rm}}",
+    "headers": {
+      "quality": "Jakość",
+      "companies": "Firmy",
+      "workers": "Pracownicy",
+      "output": "Produkcja/sesja",
+      "netProfit": "Dzienny zysk netto"
+    },
+    "outputSession": "{{value}} / sesja",
+    "outputSessionRm": "{{value}} {{rm}} / sesja"
+  },
+  "summary": {
+    "title": "Podsumowanie",
+    "optionABadge": "Opcja A",
+    "optionBBadge": "Opcja B",
+    "netProfit": "Szac. dzienny zysk netto",
+    "totalCompanies": "Liczba firm",
+    "output": "Produkcja: {{label}}",
+    "rmConsumed": "Zużyte {{rm}}",
+    "revenue": "Dzienny przychód",
+    "rmCost": "Dzienny koszt {{rm}}",
+    "grossProfit": "Zysk brutto",
+    "workTax": "Dzienny podatek od pracy",
+    "salary": "Dzienna pensja",
+    "breakdownTitle": "Podział inwentarza:",
+    "noFactories": "Nie skonfigurowano jeszcze żadnych fabryk.",
+    "breakdownItem": "Q{{q}} ({{companies}}f / {{workers}}p)",
+    "comparisonTitle": "Porównanie strategii {{rm}}",
+    "rmProduced": "Wyprodukowane {{rm}}",
+    "rmNetBalance": "Bilans netto {{rm}}",
+    "optionABuyTitle": "Opcja A: Kup {{rm}}",
+    "optionAMarketCost": "Koszt rynkowy: {{cost}} CC",
+    "optionBProduceTitle": "Opcja B: Produkuj {{rm}}",
+    "optionBBalance": "Bilans: {{balance}} {{rm}}",
+    "netProfitInline": "Zysk netto:",
+    "recommendA": "Rekomendacja: Opcja A (Kup {{rm}}) jest bardziej opłacalna o {{delta}} CC/dzień",
+    "recommendB": "Rekomendacja: Opcja B (Produkuj) jest bardziej opłacalna o {{delta}} CC/dzień",
+    "recommendEqual": "Rekomendacja: Obie opcje są równie opłacalne"
+  }
+}

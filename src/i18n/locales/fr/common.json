@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Calculateur de productivité et de profit eRepublik",
+    "subtitle": "Estimez le profit quotidien pour la nourriture, les armes, les maisons, l'aviation et les holdings"
+  },
+  "footer": "Calculateur de productivité eRepublik",
+  "theme": {
+    "toggleAria": "Changer de thème",
+    "toDark": "🌙 Mode sombre",
+    "toLight": "☀️ Mode clair"
+  },
+  "language": {
+    "label": "Langue",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdings"
+  },
+  "labels": {
+    "companies": "Entreprises",
+    "workers": "Travailleurs"
+  },
+  "counter": {
+    "minusAria": "{{label}} moins",
+    "plusAria": "{{label}} plus"
+  },
+  "buttons": {
+    "syncLivePrices": "Synchroniser les prix en direct",
+    "syncing": "Synchronisation…"
+  }
+}

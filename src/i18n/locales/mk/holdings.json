@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Холдинг", "none": "— ниеден —", "new": "+ Нов", "rename": "Преименувај", "delete": "Избриши",
+    "clearCompanies": "Исчисти компании", "newPrompt": "Име на нов холдинг:", "newDefault": "Холдинг {{n}}",
+    "renamePrompt": "Преименувај холдинг:", "deleteConfirm": "Да се избрише холдингот „{{name}}“?",
+    "clearConfirm": "Да се исчистат сите компании во овој холдинг? Локацијата и синхронизираните бонуси се задржуваат."
+  },
+  "location": {
+    "country": "Земја на холдинг", "region": "Регион на холдинг", "selectCountry": "— Избери земја —", "selectRegion": "— Избери регион —",
+    "statusSynced": "Авто-синхрон.: Синхронизирано", "statusNoRegion": "Авто-синхрон.: Регионот не е избран", "statusNotConfigured": "Авто-синхрон.: Не е конфигурирано"
+  },
+  "summary": {
+    "title": "Преглед на холдинг", "netProfit": "Вкупен нето профит", "totalCompanies": "Вкупно компании", "revenue": "Дневен приход",
+    "rmNet": "Суровина (нето)", "workTax": "Данок на работа", "salaries": "Плати", "perIndustry": "По индустрија",
+    "empty": "Сè уште нема компании во овој холдинг.", "breakdownItem": "{{icon}} {{label}} ({{companies}}к)"
+  },
+  "section": { "mods": "Земја +{{country}}% · Регион +{{region}}% · Загадување {{pollution}}%" }
+}

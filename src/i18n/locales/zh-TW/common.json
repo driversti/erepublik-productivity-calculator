@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik 生產力與利潤計算機",
+    "subtitle": "估算糧食、武器、房屋、飛機與控股的每日利潤"
+  },
+  "footer": "eRepublik 生產力計算機",
+  "theme": {
+    "toggleAria": "切換主題",
+    "toDark": "🌙 深色模式",
+    "toLight": "☀️ 淺色模式"
+  },
+  "language": {
+    "label": "語言",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ 控股"
+  },
+  "labels": {
+    "companies": "公司",
+    "workers": "員工"
+  },
+  "counter": {
+    "minusAria": "{{label}} 減少",
+    "plusAria": "{{label}} 增加"
+  },
+  "buttons": {
+    "syncLivePrices": "同步即時價格",
+    "syncing": "同步中…"
+  }
+}

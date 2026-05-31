@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "Nahrung",   "rm": "FRM" },
+    "weapons":  { "label": "Waffen",     "rm": "WRM" },
+    "houses":   { "label": "Häuser",     "rm": "HRM" },
+    "aircraft": { "label": "Flugzeuge",  "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "Land", "region": "Region", "selectCountry": "Land auswählen", "selectRegion": "Region auswählen",
+    "countryBonus": "Länderbonus (%)", "regionBonus": "Regionsbonus (%)", "workTax": "Arbeitssteuer (%)", "vat": "MwSt. (%)",
+    "avgSalary": "Durchschnittsgehalt", "offeredCc": "Gehalt / Arbeiter", "tycoon": "Tycoon (+20%)", "tycoonAria": "Tycoon-Paket",
+    "wam": "WAM", "wamAria": "Als Manager arbeiten"
+  },
+  "prices": { "header": "{{label}} Marktpreise (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "Deine {{label}}-Fabriken", "rmHeader": "Deine {{rm}}-Firmen",
+    "factoriesHeaderShort": "{{label}}-Fabriken", "rmHeaderShort": "{{rm}}-Firmen",
+    "headers": { "quality": "Qualität", "companies": "Firmen", "workers": "Arbeiter", "output": "Produktion/Session", "netProfit": "Täglicher Nettogewinn" },
+    "outputSession": "{{value}} / Session", "outputSessionRm": "{{value}} {{rm}} / Session"
+  },
+  "summary": {
+    "title": "Zusammenfassung", "optionABadge": "Option A", "optionBBadge": "Option B", "netProfit": "Gesch. täglicher Nettogewinn",
+    "totalCompanies": "Firmen gesamt", "output": "{{label}}-Produktion", "rmConsumed": "{{rm}} verbraucht",
+    "revenue": "Täglicher Umsatz", "rmCost": "Tägliche {{rm}}-Kosten", "grossProfit": "Bruttogewinn", "workTax": "Tägliche Arbeitssteuer",
+    "salary": "Tägliches Gehalt", "breakdownTitle": "Bestandsaufschlüsselung:", "noFactories": "Noch keine Fabriken konfiguriert.",
+    "breakdownItem": "Q{{q}} ({{companies}}F / {{workers}}A)", "comparisonTitle": "{{rm}}-Strategievergleich",
+    "rmProduced": "{{rm}} produziert", "rmNetBalance": "{{rm}}-Nettobilanz", "optionABuyTitle": "Option A: {{rm}} kaufen",
+    "optionAMarketCost": "Marktkosten: {{cost}} CC", "optionBProduceTitle": "Option B: {{rm}} produzieren",
+    "optionBBalance": "Bilanz: {{balance}} {{rm}}", "netProfitInline": "Nettogewinn:",
+    "recommendA": "Empfehlung: Option A ({{rm}} kaufen) ist um {{delta}} CC/Tag profitabler",
+    "recommendB": "Empfehlung: Option B (produzieren) ist um {{delta}} CC/Tag profitabler",
+    "recommendEqual": "Empfehlung: Beide Optionen sind gleich profitabel"
+  }
+}

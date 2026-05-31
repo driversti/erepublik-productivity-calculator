@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Calculadora de Produtividade e Lucro do eRepublik",
+    "subtitle": "Estime o lucro diário em alimentos, armas, casas, aviação e holdings"
+  },
+  "footer": "Calculadora de Produtividade do eRepublik",
+  "theme": {
+    "toggleAria": "Alternar tema",
+    "toDark": "🌙 Modo Escuro",
+    "toLight": "☀️ Modo Claro"
+  },
+  "language": {
+    "label": "Idioma",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdings"
+  },
+  "labels": {
+    "companies": "Empresas",
+    "workers": "Trabalhadores"
+  },
+  "counter": {
+    "minusAria": "{{label}} menos",
+    "plusAria": "{{label}} mais"
+  },
+  "buttons": {
+    "syncLivePrices": "Sincronizar Preços ao Vivo",
+    "syncing": "Sincronizando…"
+  }
+}

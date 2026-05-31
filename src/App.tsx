@@ -7,6 +7,7 @@ import { AppTooltip } from './components/AppTooltip';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { isRtl } from './i18n/config';
 
 function ActiveView() {
   const active = useActiveModule();
@@ -15,7 +16,7 @@ function ActiveView() {
 }
 
 export default function App() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('theme');
     return (saved as 'light' | 'dark') || 'light';
@@ -25,6 +26,13 @@ export default function App() {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // Keep <html lang> and text direction in sync with the active locale.
+  useEffect(() => {
+    const lng = i18n.resolvedLanguage ?? 'en';
+    document.documentElement.lang = lng;
+    document.documentElement.dir = isRtl(lng) ? 'rtl' : 'ltr';
+  }, [i18n.resolvedLanguage]);
 
   const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
 

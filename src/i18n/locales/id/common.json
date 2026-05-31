@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Kalkulator Produktivitas & Keuntungan eRepublik",
+    "subtitle": "Perkirakan keuntungan harian dari makanan, senjata, rumah, pesawat & holding"
+  },
+  "footer": "Kalkulator Produktivitas eRepublik",
+  "theme": {
+    "toggleAria": "Ganti tema",
+    "toDark": "🌙 Mode Gelap",
+    "toLight": "☀️ Mode Terang"
+  },
+  "language": {
+    "label": "Bahasa",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holding"
+  },
+  "labels": {
+    "companies": "Perusahaan",
+    "workers": "Pekerja"
+  },
+  "counter": {
+    "minusAria": "{{label}} kurang",
+    "plusAria": "{{label}} tambah"
+  },
+  "buttons": {
+    "syncLivePrices": "Sinkron Harga Langsung",
+    "syncing": "Menyinkronkan…"
+  }
+}

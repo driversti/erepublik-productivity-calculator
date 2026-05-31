@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Holding", "none": "— nessuna —", "new": "+ Nuova", "rename": "Rinomina", "delete": "Elimina",
+    "clearCompanies": "Svuota aziende", "newPrompt": "Nome nuova holding:", "newDefault": "Holding {{n}}",
+    "renamePrompt": "Rinomina holding:", "deleteConfirm": "Eliminare la holding \"{{name}}\"?",
+    "clearConfirm": "Svuotare tutte le aziende di questa holding? La posizione e i bonus sincronizzati vengono mantenuti."
+  },
+  "location": {
+    "country": "Paese della holding", "region": "Regione della holding", "selectCountry": "— Seleziona paese —", "selectRegion": "— Seleziona regione —",
+    "statusSynced": "Sincronizzazione automatica: Sincronizzato", "statusNoRegion": "Sincronizzazione automatica: Regione non selezionata", "statusNotConfigured": "Sincronizzazione automatica: Non configurato"
+  },
+  "summary": {
+    "title": "Riepilogo holding", "netProfit": "Profitto netto totale", "totalCompanies": "Aziende totali", "revenue": "Ricavo giornaliero",
+    "rmNet": "Materia prima (netto)", "workTax": "Tassa sul Lavoro", "salaries": "Salari", "perIndustry": "Per industria",
+    "empty": "Nessuna azienda in questa holding ancora.", "breakdownItem": "{{icon}} {{label}} ({{companies}}a)"
+  },
+  "section": { "mods": "Paese +{{country}}% · Regione +{{region}}% · Inquinamento {{pollution}}%" }
+}

@@ -1,11 +1,29 @@
 import { describe, it, expect } from 'vitest';
 import i18n, { resources } from './index';
+import { SUPPORTED_LOCALES } from './config';
 
 describe('i18n catalog', () => {
   it('registers all four namespaces for English', () => {
     expect(Object.keys(resources.en).sort()).toEqual(
       ['common', 'holdings', 'industry', 'tooltips'],
     );
+  });
+
+  it('registers all four namespaces for every supported locale', () => {
+    for (const loc of SUPPORTED_LOCALES) {
+      expect(Object.keys(resources[loc]).sort(), `${loc} namespaces`).toEqual(
+        ['common', 'holdings', 'industry', 'tooltips'],
+      );
+    }
+  });
+
+  it('names every supported locale in each common catalog', () => {
+    for (const loc of SUPPORTED_LOCALES) {
+      const { language } = resources[loc].common as { language: Record<string, string> };
+      for (const other of SUPPORTED_LOCALES) {
+        expect(language[other], `${loc} should name ${other}`).toBeTruthy();
+      }
+    }
   });
 
   it('resolves representative keys to real (non-key) strings', () => {

@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Llogaritësi i Produktivitetit dhe Fitimit në eRepublik",
+    "subtitle": "Vlerëso fitimin ditor për ushqim, armë, shtëpi, avionë dhe pronat"
+  },
+  "footer": "Llogaritësi i Produktivitetit në eRepublik",
+  "theme": {
+    "toggleAria": "Ndërro temën",
+    "toDark": "🌙 Modaliteti i errët",
+    "toLight": "☀️ Modaliteti i çelët"
+  },
+  "language": {
+    "label": "Gjuha",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Pronat"
+  },
+  "labels": {
+    "companies": "Kompanitë",
+    "workers": "Punëtorët"
+  },
+  "counter": {
+    "minusAria": "{{label}} minus",
+    "plusAria": "{{label}} plus"
+  },
+  "buttons": {
+    "syncLivePrices": "Sinkronizo çmimet e drejtpërdrejta",
+    "syncing": "Duke sinkronizuar…"
+  }
+}

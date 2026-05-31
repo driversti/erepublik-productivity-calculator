@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Holding", "none": "— nenhum —", "new": "+ Novo", "rename": "Renomear", "delete": "Excluir",
+    "clearCompanies": "Limpar Empresas", "newPrompt": "Nome do novo holding:", "newDefault": "Holding {{n}}",
+    "renamePrompt": "Renomear holding:", "deleteConfirm": "Excluir o holding \"{{name}}\"?",
+    "clearConfirm": "Limpar todas as empresas deste holding? A localização e os bônus sincronizados são mantidos."
+  },
+  "location": {
+    "country": "País do Holding", "region": "Região do Holding", "selectCountry": "— Selecionar país —", "selectRegion": "— Selecionar região —",
+    "statusSynced": "Sincronização automática: Sincronizado", "statusNoRegion": "Sincronização automática: Região não selecionada", "statusNotConfigured": "Sincronização automática: Não configurado"
+  },
+  "summary": {
+    "title": "Resumo do Holding", "netProfit": "Lucro Líquido Total", "totalCompanies": "Total de Empresas", "revenue": "Receita Diária",
+    "rmNet": "Matéria-prima (líquido)", "workTax": "Imposto de Trabalho", "salaries": "Salários", "perIndustry": "Por indústria",
+    "empty": "Nenhuma empresa neste holding ainda.", "breakdownItem": "{{icon}} {{label}} ({{companies}}e)"
+  },
+  "section": { "mods": "País +{{country}}% · Região +{{region}}% · Poluição {{pollution}}%" }
+}

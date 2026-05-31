@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "Gıda",   "rm": "FRM" },
+    "weapons":  { "label": "Silah",  "rm": "WRM" },
+    "houses":   { "label": "Ev",     "rm": "HRM" },
+    "aircraft": { "label": "Uçak",   "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "Ülke", "region": "Bölge", "selectCountry": "Ülke seçin", "selectRegion": "Bölge seçin",
+    "countryBonus": "Ülke Bonusu (%)", "regionBonus": "Bölge Bonusu (%)", "workTax": "Çalışma Vergisi (%)", "vat": "KDV (%)",
+    "avgSalary": "Ort. Maaş", "offeredCc": "Maaş / işçi", "tycoon": "Tycoon (+%20)", "tycoonAria": "Tycoon Paketi",
+    "wam": "WAM", "wamAria": "Yönetici Olarak Çalış"
+  },
+  "prices": { "header": "{{label}} Piyasa Fiyatları (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "{{label}} Fabrikalarınız", "rmHeader": "{{rm}} Şirketleriniz",
+    "factoriesHeaderShort": "{{label}} Fabrikaları", "rmHeaderShort": "{{rm}} Şirketleri",
+    "headers": { "quality": "Kalite", "companies": "Şirketler", "workers": "İşçiler", "output": "Üretim/Oturum", "netProfit": "Günlük Net Kâr" },
+    "outputSession": "{{value}} / oturum", "outputSessionRm": "{{value}} {{rm}} / oturum"
+  },
+  "summary": {
+    "title": "Özet", "optionABadge": "Seçenek A", "optionBBadge": "Seçenek B", "netProfit": "Tahmini Günlük Net Kâr",
+    "totalCompanies": "Toplam Şirket", "output": "{{label}} Üretimi", "rmConsumed": "Tüketilen {{rm}}",
+    "revenue": "Günlük Gelir", "rmCost": "Günlük {{rm}} Maliyeti", "grossProfit": "Brüt Kâr", "workTax": "Günlük Çalışma Vergisi",
+    "salary": "Günlük Maaş", "breakdownTitle": "Envanter dökümü:", "noFactories": "Henüz fabrika yapılandırılmadı.",
+    "breakdownItem": "Q{{q}} ({{companies}}ş / {{workers}}i)", "comparisonTitle": "{{rm}} Strateji Karşılaştırması",
+    "rmProduced": "Üretilen {{rm}}", "rmNetBalance": "{{rm}} Net Bakiye", "optionABuyTitle": "Seçenek A: {{rm}} Satın Al",
+    "optionAMarketCost": "Piyasa Maliyeti: {{cost}} CC", "optionBProduceTitle": "Seçenek B: {{rm}} Üret",
+    "optionBBalance": "Bakiye: {{balance}} {{rm}}", "netProfitInline": "Net Kâr:",
+    "recommendA": "Öneri: Seçenek A ({{rm}} Satın Al) günde {{delta}} CC daha kârlı",
+    "recommendB": "Öneri: Seçenek B (Üret) günde {{delta}} CC daha kârlı",
+    "recommendEqual": "Öneri: Her iki seçenek de eşit derecede kârlı"
+  }
+}

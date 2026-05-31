@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Calculadora de Productividad y Beneficio de eRepublik",
+    "subtitle": "Estima el beneficio diario en comida, armas, casas, aviones y holdings"
+  },
+  "footer": "Calculadora de Productividad de eRepublik",
+  "theme": {
+    "toggleAria": "Cambiar tema",
+    "toDark": "🌙 Modo Oscuro",
+    "toLight": "☀️ Modo Claro"
+  },
+  "language": {
+    "label": "Idioma",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdings"
+  },
+  "labels": {
+    "companies": "Empresas",
+    "workers": "Trabajadores"
+  },
+  "counter": {
+    "minusAria": "{{label}} menos",
+    "plusAria": "{{label}} más"
+  },
+  "buttons": {
+    "syncLivePrices": "Sincronizar Precios en Vivo",
+    "syncing": "Sincronizando…"
+  }
+}

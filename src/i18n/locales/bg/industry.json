@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "Храна",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "Оръжия",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "Къщи",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "Авиация",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "Държава",
+    "region": "Регион",
+    "selectCountry": "Изберете държава",
+    "selectRegion": "Изберете регион",
+    "countryBonus": "Бонус за държава (%)",
+    "regionBonus": "Бонус за регион (%)",
+    "workTax": "Данък върху труда (%)",
+    "vat": "ДДС (%)",
+    "avgSalary": "Средна заплата",
+    "offeredCc": "Заплата / работник",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Tycoon пакет",
+    "wam": "WAM",
+    "wamAria": "Работа като мениджър"
+  },
+  "prices": {
+    "header": "Пазарни цени за {{label}} (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "Вашите фабрики за {{label}}",
+    "rmHeader": "Вашите {{rm}} компании",
+    "factoriesHeaderShort": "Фабрики за {{label}}",
+    "rmHeaderShort": "{{rm}} компании",
+    "headers": {
+      "quality": "Качество",
+      "companies": "Компании",
+      "workers": "Работници",
+      "output": "Продукция/Сесия",
+      "netProfit": "Дневна нетна печалба"
+    },
+    "outputSession": "{{value}} / сесия",
+    "outputSessionRm": "{{value}} {{rm}} / сесия"
+  },
+  "summary": {
+    "title": "Обобщение",
+    "optionABadge": "Вариант A",
+    "optionBBadge": "Вариант Б",
+    "netProfit": "Прибл. дневна нетна печалба",
+    "totalCompanies": "Общо компании",
+    "output": "Продукция {{label}}",
+    "rmConsumed": "Изразходван {{rm}}",
+    "revenue": "Дневен приход",
+    "rmCost": "Дневен разход за {{rm}}",
+    "grossProfit": "Брутна печалба",
+    "workTax": "Дневен данък върху труда",
+    "salary": "Дневна заплата",
+    "breakdownTitle": "Разбивка на инвентара:",
+    "noFactories": "Все още няма конфигурирани фабрики.",
+    "breakdownItem": "Q{{q}} ({{companies}}к / {{workers}}р)",
+    "comparisonTitle": "Сравнение на стратегии за {{rm}}",
+    "rmProduced": "Произведен {{rm}}",
+    "rmNetBalance": "Нетен баланс на {{rm}}",
+    "optionABuyTitle": "Вариант A: Купи {{rm}}",
+    "optionAMarketCost": "Пазарна цена: {{cost}} CC",
+    "optionBProduceTitle": "Вариант Б: Произведи {{rm}}",
+    "optionBBalance": "Баланс: {{balance}} {{rm}}",
+    "netProfitInline": "Нетна печалба:",
+    "recommendA": "Препоръка: Вариант A (Купи {{rm}}) е по-печеливш с {{delta}} CC/ден",
+    "recommendB": "Препоръка: Вариант Б (Произведи) е по-печеливш с {{delta}} CC/ден",
+    "recommendEqual": "Препоръка: И двата варианта са еднакво печеливши"
+  }
+}

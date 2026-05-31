@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik калкулатор за продуктивност и профит",
+    "subtitle": "Процени дневен профит низ храна, оружје, куќи, авиони и холдинзи"
+  },
+  "footer": "eRepublik калкулатор за продуктивност",
+  "theme": {
+    "toggleAria": "Промени тема",
+    "toDark": "🌙 Темен режим",
+    "toLight": "☀️ Светол режим"
+  },
+  "language": {
+    "label": "Јазик",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Холдинзи"
+  },
+  "labels": {
+    "companies": "Компании",
+    "workers": "Работници"
+  },
+  "counter": {
+    "minusAria": "{{label}} намали",
+    "plusAria": "{{label}} зголеми"
+  },
+  "buttons": {
+    "syncLivePrices": "Синхронизирај живи цени",
+    "syncing": "Синхронизирам…"
+  }
+}

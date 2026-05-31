@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Calculator de productivitate și profit eRepublik",
+    "subtitle": "Estimează profitul zilnic pentru alimente, arme, locuințe, avioane și holdinguri"
+  },
+  "footer": "Calculator de productivitate eRepublik",
+  "theme": {
+    "toggleAria": "Comută tema",
+    "toDark": "🌙 Mod întunecat",
+    "toLight": "☀️ Mod luminos"
+  },
+  "language": {
+    "label": "Limbă",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdinguri"
+  },
+  "labels": {
+    "companies": "Companii",
+    "workers": "Muncitori"
+  },
+  "counter": {
+    "minusAria": "{{label}} minus",
+    "plusAria": "{{label}} plus"
+  },
+  "buttons": {
+    "syncLivePrices": "Sincronizează prețurile live",
+    "syncing": "Se sincronizează…"
+  }
+}

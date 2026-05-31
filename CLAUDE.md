@@ -143,12 +143,24 @@ maps raw game country/region/industry codes to display names. Tooltips use
 `react-tooltip` via the global `AppTooltip` + the `tip()` helper in
 `components/tooltip.ts`.
 
-To add a locale: add the code to `SUPPORTED_LOCALES` in `i18n/config.ts` and create
-`locales/<code>/{common,industry,holdings,tooltips}.json`. The `LanguageSwitcher`
-hides itself while only one locale exists and appears automatically once there are
-two. Persisted under `localStorage` key `erep_locale`. **Add user-facing strings to
-the catalogs, never hard-code them in components**; `i18n/i18n.test.ts` asserts every
-namespace loads and keys resolve.
+There are 24 locales. `src/i18n/index.ts` and `src/components/flagUrls.ts` are both
+**generated** — don't hand-edit them. To add a locale: (1) create
+`locales/<code>/{common,industry,holdings,tooltips}.json` (the non-English
+`industry.json` prepends a `names` block overriding industry/RM labels; EN omits it
+and resolves names from `data/industries.ts`); (2) add the code to `SUPPORTED_LOCALES`
+and a flag (ISO 3166-1 alpha-2) to `LOCALE_FLAG` in `i18n/config.ts` — plus
+`RTL_LOCALES` if it's right-to-left; (3) run `node scripts/gen-i18n-resources.mjs`,
+which regenerates `index.ts`, regenerates `flagUrls.ts`, and normalizes the
+`language` native-name map across every `common.json` (keeping each file's own
+`label`). Flags render from **flag-icons** SVGs — `flagUrls.ts` imports only the
+ones used (one per locale) as Vite assets, so no world-sprite CSS ships; `Flag.tsx`
+sets them as a `background-image`. `App.tsx` syncs `<html lang>` and `dir` to the
+active locale. The `LanguageSwitcher` sorts entries alphabetically by native name and
+hides itself while only one locale exists. "Tycoon" is a fixed bonus name — keep it
+literal in every locale, never translated. Persisted under `localStorage` key
+`erep_locale`. **Add user-facing strings to the catalogs, never hard-code them in
+components**; `i18n/i18n.test.ts` asserts every namespace loads for every locale and
+keys resolve.
 
 ## Deployment
 

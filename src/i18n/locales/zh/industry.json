@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "食品",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "武器",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "房屋",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "飞机",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "国家",
+    "region": "地区",
+    "selectCountry": "选择国家",
+    "selectRegion": "选择地区",
+    "countryBonus": "国家加成 (%)",
+    "regionBonus": "地区加成 (%)",
+    "workTax": "工作税 (%)",
+    "vat": "增值税 (%)",
+    "avgSalary": "平均工资",
+    "offeredCc": "工资 / 工人",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Tycoon礼包",
+    "wam": "WAM",
+    "wamAria": "以经理身份工作"
+  },
+  "prices": {
+    "header": "{{label}}市场价格 (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "你的{{label}}工厂",
+    "rmHeader": "你的{{rm}}公司",
+    "factoriesHeaderShort": "{{label}}工厂",
+    "rmHeaderShort": "{{rm}}公司",
+    "headers": {
+      "quality": "品质",
+      "companies": "公司",
+      "workers": "工人",
+      "output": "产量/场次",
+      "netProfit": "每日净利润"
+    },
+    "outputSession": "{{value}} / 场次",
+    "outputSessionRm": "{{value}} {{rm}} / 场次"
+  },
+  "summary": {
+    "title": "汇总",
+    "optionABadge": "方案 A",
+    "optionBBadge": "方案 B",
+    "netProfit": "预计每日净利润",
+    "totalCompanies": "公司总数",
+    "output": "{{label}}产量",
+    "rmConsumed": "{{rm}}消耗",
+    "revenue": "每日收入",
+    "rmCost": "每日{{rm}}成本",
+    "grossProfit": "毛利润",
+    "workTax": "每日工作税",
+    "salary": "每日工资",
+    "breakdownTitle": "库存明细：",
+    "noFactories": "尚未配置任何工厂。",
+    "breakdownItem": "Q{{q}} ({{companies}}司 / {{workers}}工)",
+    "comparisonTitle": "{{rm}}策略对比",
+    "rmProduced": "{{rm}}产量",
+    "rmNetBalance": "{{rm}}净余额",
+    "optionABuyTitle": "方案 A：购买{{rm}}",
+    "optionAMarketCost": "市场成本：{{cost}} CC",
+    "optionBProduceTitle": "方案 B：生产{{rm}}",
+    "optionBBalance": "余额：{{balance}} {{rm}}",
+    "netProfitInline": "净利润：",
+    "recommendA": "建议：方案 A（购买{{rm}}）的利润更高，每日多 {{delta}} CC",
+    "recommendB": "建议：方案 B（自行生产）的利润更高，每日多 {{delta}} CC",
+    "recommendEqual": "建议：两种方案的利润相同"
+  }
+}

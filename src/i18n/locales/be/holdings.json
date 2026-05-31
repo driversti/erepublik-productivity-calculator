@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Холдынг", "none": "— няма —", "new": "+ Новы", "rename": "Перайменаваць", "delete": "Выдаліць",
+    "clearCompanies": "Ачысціць кампаніі", "newPrompt": "Назва новага холдынгу:", "newDefault": "Холдынг {{n}}",
+    "renamePrompt": "Перайменаваць холдынг:", "deleteConfirm": "Выдаліць холдынг \"{{name}}\"?",
+    "clearConfirm": "Ачысціць усе кампаніі ў гэтым холдынгу? Месцазнаходжанне і сінхранізаваныя бонусы захоўваюцца."
+  },
+  "location": {
+    "country": "Краіна холдынгу", "region": "Рэгіён холдынгу", "selectCountry": "— Выберыце краіну —", "selectRegion": "— Выберыце рэгіён —",
+    "statusSynced": "Аўтасінхранізацыя: Сінхранізавана", "statusNoRegion": "Аўтасінхранізацыя: Рэгіён не выбраны", "statusNotConfigured": "Аўтасінхранізацыя: Не наладжана"
+  },
+  "summary": {
+    "title": "Зводка холдынгу", "netProfit": "Агульны чысты прыбытак", "totalCompanies": "Усяго кампаній", "revenue": "Штодзённы даход",
+    "rmNet": "Сыравіна (чыста)", "workTax": "Падатак на працу", "salaries": "Заробкі", "perIndustry": "Па галінах",
+    "empty": "У гэтым холдынгу яшчэ няма кампаній.", "breakdownItem": "{{icon}} {{label}} ({{companies}}к)"
+  },
+  "section": { "mods": "Краіна +{{country}}% · Рэгіён +{{region}}% · Забруджванне {{pollution}}%" }
+}

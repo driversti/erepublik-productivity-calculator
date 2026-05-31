@@ -33,6 +33,11 @@ export function LanguageSwitcher() {
 
   const current = (i18n.resolvedLanguage ?? SUPPORTED_LOCALES[0]) as Locale;
 
+  // Order the menu alphabetically by the displayed (native) language name.
+  const sortedLocales = [...SUPPORTED_LOCALES].sort((a, b) =>
+    t(`language.${a}`).localeCompare(t(`language.${b}`)),
+  );
+
   const select = (lng: Locale) => {
     i18n.changeLanguage(lng);
     localStorage.setItem(LOCALE_STORAGE_KEY, lng);
@@ -57,7 +62,7 @@ export function LanguageSwitcher() {
       </button>
       {open && (
         <ul className="lang-menu" role="listbox" aria-label={t('language.label')}>
-          {SUPPORTED_LOCALES.map((l) => (
+          {sortedLocales.map((l) => (
             <li key={l} role="none">
               <button
                 type="button"

@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik kalkulator produktivnosti i profita",
+    "subtitle": "Procijenite dnevni profit za hranu, oružje, kuće, zrakoplove i holdinge"
+  },
+  "footer": "eRepublik kalkulator produktivnosti",
+  "theme": {
+    "toggleAria": "Promijeni temu",
+    "toDark": "🌙 Tamni način",
+    "toLight": "☀️ Svijetli način"
+  },
+  "language": {
+    "label": "Jezik",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdinzi"
+  },
+  "labels": {
+    "companies": "Tvrtke",
+    "workers": "Radnici"
+  },
+  "counter": {
+    "minusAria": "{{label}} minus",
+    "plusAria": "{{label}} plus"
+  },
+  "buttons": {
+    "syncLivePrices": "Sinkroniziraj cijene uživo",
+    "syncing": "Sinkroniziranje…"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "Τρόφιμα",    "rm": "FRM" },
+    "weapons":  { "label": "Όπλα",        "rm": "WRM" },
+    "houses":   { "label": "Σπίτια",      "rm": "HRM" },
+    "aircraft": { "label": "Αεροσκάφη",   "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "Χώρα", "region": "Περιφέρεια", "selectCountry": "Επιλέξτε χώρα", "selectRegion": "Επιλέξτε περιφέρεια",
+    "countryBonus": "Μπόνους χώρας (%)", "regionBonus": "Μπόνους περιφέρειας (%)", "workTax": "Φόρος εργασίας (%)", "vat": "ΦΠΑ (%)",
+    "avgSalary": "Μέσος μισθός", "offeredCc": "Μισθός / εργαζόμενο", "tycoon": "Tycoon (+20%)", "tycoonAria": "Πακέτο Tycoon",
+    "wam": "WAM", "wamAria": "Εργασία ως διευθυντής"
+  },
+  "prices": { "header": "Τιμές αγοράς {{label}} (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "Τα εργοστάσιά σας {{label}}", "rmHeader": "Οι επιχειρήσεις σας {{rm}}",
+    "factoriesHeaderShort": "Εργοστάσια {{label}}", "rmHeaderShort": "Επιχειρήσεις {{rm}}",
+    "headers": { "quality": "Ποιότητα", "companies": "Επιχειρήσεις", "workers": "Εργαζόμενοι", "output": "Παραγωγή/Συνεδρία", "netProfit": "Ημερήσιο καθαρό κέρδος" },
+    "outputSession": "{{value}} / συνεδρία", "outputSessionRm": "{{value}} {{rm}} / συνεδρία"
+  },
+  "summary": {
+    "title": "Σύνοψη", "optionABadge": "Επιλογή Α", "optionBBadge": "Επιλογή Β", "netProfit": "Εκτ. ημερήσιο καθαρό κέρδος",
+    "totalCompanies": "Σύνολο επιχειρήσεων", "output": "Παραγωγή {{label}}", "rmConsumed": "Κατανάλωση {{rm}}",
+    "revenue": "Ημερήσια έσοδα", "rmCost": "Ημερήσιο κόστος {{rm}}", "grossProfit": "Μικτό κέρδος", "workTax": "Ημερήσιος φόρος εργασίας",
+    "salary": "Ημερήσιος μισθός", "breakdownTitle": "Ανάλυση αποθέματος:", "noFactories": "Δεν έχουν ρυθμιστεί ακόμη εργοστάσια.",
+    "breakdownItem": "Q{{q}} ({{companies}}επ / {{workers}}ερ)", "comparisonTitle": "Σύγκριση στρατηγικής {{rm}}",
+    "rmProduced": "Παραγωγή {{rm}}", "rmNetBalance": "Καθαρό υπόλοιπο {{rm}}", "optionABuyTitle": "Επιλογή Α: Αγορά {{rm}}",
+    "optionAMarketCost": "Κόστος αγοράς: {{cost}} CC", "optionBProduceTitle": "Επιλογή Β: Παραγωγή {{rm}}",
+    "optionBBalance": "Υπόλοιπο: {{balance}} {{rm}}", "netProfitInline": "Καθαρό κέρδος:",
+    "recommendA": "Σύσταση: Η Επιλογή Α (Αγορά {{rm}}) είναι πιο επικερδής κατά {{delta}} CC/ημέρα",
+    "recommendB": "Σύσταση: Η Επιλογή Β (Παραγωγή) είναι πιο επικερδής κατά {{delta}} CC/ημέρα",
+    "recommendEqual": "Σύσταση: Και οι δύο επιλογές είναι εξίσου επικερδείς"
+  }
+}

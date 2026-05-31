@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "Élelmiszer",  "rm": "FRM" },
+    "weapons":  { "label": "Fegyver",      "rm": "WRM" },
+    "houses":   { "label": "Ház",          "rm": "HRM" },
+    "aircraft": { "label": "Repülőgép",    "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "Ország", "region": "Régió", "selectCountry": "Válassz országot", "selectRegion": "Válassz régiót",
+    "countryBonus": "Országbónusz (%)", "regionBonus": "Régióbónusz (%)", "workTax": "Munkaadó (%)", "vat": "ÁFA (%)",
+    "avgSalary": "Átlagbér", "offeredCc": "Bér / munkás", "tycoon": "Tycoon (+20%)", "tycoonAria": "Tycoon csomag",
+    "wam": "WAM", "wamAria": "Munka menedzserként"
+  },
+  "prices": { "header": "{{label}} piaci árak (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "{{label}} gyáraid", "rmHeader": "{{rm}} cégeid",
+    "factoriesHeaderShort": "{{label}} gyárak", "rmHeaderShort": "{{rm}} cégek",
+    "headers": { "quality": "Minőség", "companies": "Cégek", "workers": "Munkások", "output": "Termelés/munkamenet", "netProfit": "Napi nettó nyereség" },
+    "outputSession": "{{value}} / munkamenet", "outputSessionRm": "{{value}} {{rm}} / munkamenet"
+  },
+  "summary": {
+    "title": "Összegzés", "optionABadge": "A lehetőség", "optionBBadge": "B lehetőség", "netProfit": "Becsült napi nettó nyereség",
+    "totalCompanies": "Cégek összesen", "output": "{{label}} termelés", "rmConsumed": "{{rm}} felhasználva",
+    "revenue": "Napi bevétel", "rmCost": "Napi {{rm}} költség", "grossProfit": "Bruttó nyereség", "workTax": "Napi munkaadó",
+    "salary": "Napi bér", "breakdownTitle": "Készlet részletezése:", "noFactories": "Még nincsenek gyárak beállítva.",
+    "breakdownItem": "Q{{q}} ({{companies}}c / {{workers}}m)", "comparisonTitle": "{{rm}} stratégia összehasonlítása",
+    "rmProduced": "{{rm}} megtermelve", "rmNetBalance": "{{rm}} nettó egyenleg", "optionABuyTitle": "A lehetőség: {{rm}} vásárlása",
+    "optionAMarketCost": "Piaci költség: {{cost}} CC", "optionBProduceTitle": "B lehetőség: {{rm}} termelése",
+    "optionBBalance": "Egyenleg: {{balance}} {{rm}}", "netProfitInline": "Nettó nyereség:",
+    "recommendA": "Javaslat: az A lehetőség ({{rm}} vásárlása) jövedelmezőbb {{delta}} CC/nap értékkel",
+    "recommendB": "Javaslat: a B lehetőség (termelés) jövedelmezőbb {{delta}} CC/nap értékkel",
+    "recommendEqual": "Javaslat: mindkét lehetőség egyformán jövedelmező"
+  }
+}

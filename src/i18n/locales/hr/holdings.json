@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Holding", "none": "— ništa —", "new": "+ Novi", "rename": "Preimenuj", "delete": "Izbriši",
+    "clearCompanies": "Očisti tvrtke", "newPrompt": "Naziv novog holdinga:", "newDefault": "Holding {{n}}",
+    "renamePrompt": "Preimenuj holding:", "deleteConfirm": "Izbrisati holding \"{{name}}\"?",
+    "clearConfirm": "Očistiti sve tvrtke u ovom holdingu? Lokacija i sinkronizirani bonusi se zadržavaju."
+  },
+  "location": {
+    "country": "Država holdinga", "region": "Regija holdinga", "selectCountry": "— Odaberite državu —", "selectRegion": "— Odaberite regiju —",
+    "statusSynced": "Auto-sinkronizacija: Sinkronizirano", "statusNoRegion": "Auto-sinkronizacija: Regija nije odabrana", "statusNotConfigured": "Auto-sinkronizacija: Nije konfigurirano"
+  },
+  "summary": {
+    "title": "Sažetak holdinga", "netProfit": "Ukupni neto profit", "totalCompanies": "Ukupno tvrtki", "revenue": "Dnevni prihod",
+    "rmNet": "Sirovina (neto)", "workTax": "Porez na rad", "salaries": "Plaće", "perIndustry": "Po industriji",
+    "empty": "Još nema tvrtki u ovom holdingu.", "breakdownItem": "{{icon}} {{label}} ({{companies}}t)"
+  },
+  "section": { "mods": "Država +{{country}}% · Regija +{{region}}% · Zagađenje {{pollution}}%" }
+}

@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "식량",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "무기",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "주택",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "항공기",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "국가",
+    "region": "지역",
+    "selectCountry": "국가 선택",
+    "selectRegion": "지역 선택",
+    "countryBonus": "국가 보너스 (%)",
+    "regionBonus": "지역 보너스 (%)",
+    "workTax": "근로세 (%)",
+    "vat": "부가가치세 (%)",
+    "avgSalary": "평균 임금",
+    "offeredCc": "임금 / 노동자",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Tycoon 팩",
+    "wam": "WAM",
+    "wamAria": "관리자로 근무"
+  },
+  "prices": {
+    "header": "{{label}} 시장 가격 (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "내 {{label}} 공장",
+    "rmHeader": "내 {{rm}} 회사",
+    "factoriesHeaderShort": "{{label}} 공장",
+    "rmHeaderShort": "{{rm}} 회사",
+    "headers": {
+      "quality": "품질",
+      "companies": "회사",
+      "workers": "노동자",
+      "output": "생산량/세션",
+      "netProfit": "일일 순수익"
+    },
+    "outputSession": "{{value}} / 세션",
+    "outputSessionRm": "{{value}} {{rm}} / 세션"
+  },
+  "summary": {
+    "title": "요약",
+    "optionABadge": "옵션 A",
+    "optionBBadge": "옵션 B",
+    "netProfit": "예상 일일 순수익",
+    "totalCompanies": "총 회사 수",
+    "output": "{{label}} 생산량",
+    "rmConsumed": "{{rm}} 소비량",
+    "revenue": "일일 매출",
+    "rmCost": "일일 {{rm}} 비용",
+    "grossProfit": "총 이익",
+    "workTax": "일일 근로세",
+    "salary": "일일 임금",
+    "breakdownTitle": "보유 내역:",
+    "noFactories": "아직 구성된 공장이 없습니다.",
+    "breakdownItem": "Q{{q}} ({{companies}}개 / {{workers}}명)",
+    "comparisonTitle": "{{rm}} 전략 비교",
+    "rmProduced": "{{rm}} 생산량",
+    "rmNetBalance": "{{rm}} 순잔액",
+    "optionABuyTitle": "옵션 A: {{rm}} 구매",
+    "optionAMarketCost": "시장 비용: {{cost}} CC",
+    "optionBProduceTitle": "옵션 B: {{rm}} 생산",
+    "optionBBalance": "잔액: {{balance}} {{rm}}",
+    "netProfitInline": "순수익:",
+    "recommendA": "권장: 옵션 A ({{rm}} 구매)가 하루 {{delta}} CC 더 유리합니다",
+    "recommendB": "권장: 옵션 B (생산)가 하루 {{delta}} CC 더 유리합니다",
+    "recommendEqual": "권장: 두 옵션의 수익성이 동일합니다"
+  }
+}

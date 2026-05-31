@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik Калкулатор за продуктивност и печалба",
+    "subtitle": "Изчислете дневната печалба от храна, оръжия, къщи, самолети и холдинги"
+  },
+  "footer": "eRepublik Калкулатор за продуктивност",
+  "theme": {
+    "toggleAria": "Превключи темата",
+    "toDark": "🌙 Тъмен режим",
+    "toLight": "☀️ Светъл режим"
+  },
+  "language": {
+    "label": "Език",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Холдинги"
+  },
+  "labels": {
+    "companies": "Компании",
+    "workers": "Работници"
+  },
+  "counter": {
+    "minusAria": "{{label}} минус",
+    "plusAria": "{{label}} плюс"
+  },
+  "buttons": {
+    "syncLivePrices": "Синхронизирай актуалните цени",
+    "syncing": "Синхронизиране…"
+  }
+}

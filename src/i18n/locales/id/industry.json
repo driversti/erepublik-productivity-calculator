@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "Makanan",  "rm": "FRM" },
+    "weapons":  { "label": "Senjata",  "rm": "WRM" },
+    "houses":   { "label": "Rumah",    "rm": "HRM" },
+    "aircraft": { "label": "Pesawat",  "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "Negara", "region": "Wilayah", "selectCountry": "Pilih negara", "selectRegion": "Pilih wilayah",
+    "countryBonus": "Bonus Negara (%)", "regionBonus": "Bonus Wilayah (%)", "workTax": "Pajak Kerja (%)", "vat": "PPN (%)",
+    "avgSalary": "Gaji Rata-rata", "offeredCc": "Gaji / pekerja", "tycoon": "Tycoon (+20%)", "tycoonAria": "Paket Tycoon",
+    "wam": "WAM", "wamAria": "Bekerja sebagai Manajer"
+  },
+  "prices": { "header": "Harga Pasar {{label}} (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "Pabrik {{label}} Anda", "rmHeader": "Perusahaan {{rm}} Anda",
+    "factoriesHeaderShort": "Pabrik {{label}}", "rmHeaderShort": "Perusahaan {{rm}}",
+    "headers": { "quality": "Kualitas", "companies": "Perusahaan", "workers": "Pekerja", "output": "Output/Sesi", "netProfit": "Keuntungan Bersih Harian" },
+    "outputSession": "{{value}} / sesi", "outputSessionRm": "{{value}} {{rm}} / sesi"
+  },
+  "summary": {
+    "title": "Ringkasan", "optionABadge": "Opsi A", "optionBBadge": "Opsi B", "netProfit": "Perk. Keuntungan Bersih Harian",
+    "totalCompanies": "Total Perusahaan", "output": "Output {{label}}", "rmConsumed": "{{rm}} Dikonsumsi",
+    "revenue": "Pendapatan Harian", "rmCost": "Biaya {{rm}} Harian", "grossProfit": "Keuntungan Kotor", "workTax": "Pajak Kerja Harian",
+    "salary": "Gaji Harian", "breakdownTitle": "Rincian inventaris:", "noFactories": "Belum ada pabrik yang dikonfigurasi.",
+    "breakdownItem": "Q{{q}} ({{companies}}p / {{workers}}k)", "comparisonTitle": "Perbandingan Strategi {{rm}}",
+    "rmProduced": "{{rm}} Diproduksi", "rmNetBalance": "Saldo Bersih {{rm}}", "optionABuyTitle": "Opsi A: Beli {{rm}}",
+    "optionAMarketCost": "Biaya Pasar: {{cost}} CC", "optionBProduceTitle": "Opsi B: Produksi {{rm}}",
+    "optionBBalance": "Saldo: {{balance}} {{rm}}", "netProfitInline": "Keuntungan Bersih:",
+    "recommendA": "Rekomendasi: Opsi A (Beli {{rm}}) lebih menguntungkan sebesar {{delta}} CC/hari",
+    "recommendB": "Rekomendasi: Opsi B (Produksi) lebih menguntungkan sebesar {{delta}} CC/hari",
+    "recommendEqual": "Rekomendasi: Kedua opsi sama-sama menguntungkan"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Calcolatore di Produttività e Profitto eRepublik",
+    "subtitle": "Stima il profitto giornaliero tra cibo, armi, case, aerei e holding"
+  },
+  "footer": "Calcolatore di Produttività eRepublik",
+  "theme": {
+    "toggleAria": "Cambia tema",
+    "toDark": "🌙 Modalità scura",
+    "toLight": "☀️ Modalità chiara"
+  },
+  "language": {
+    "label": "Lingua",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holding"
+  },
+  "labels": {
+    "companies": "Aziende",
+    "workers": "Lavoratori"
+  },
+  "counter": {
+    "minusAria": "{{label}} meno",
+    "plusAria": "{{label}} più"
+  },
+  "buttons": {
+    "syncLivePrices": "Sincronizza prezzi live",
+    "syncing": "Sincronizzazione…"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Prona", "none": "— asnjë —", "new": "+ E re", "rename": "Riemërto", "delete": "Fshi",
+    "clearCompanies": "Pastro kompanitë", "newPrompt": "Emri i pronës së re:", "newDefault": "Prona {{n}}",
+    "renamePrompt": "Riemërto pronën:", "deleteConfirm": "Të fshihet prona \"{{name}}\"?",
+    "clearConfirm": "Të pastrohen të gjitha kompanitë në këtë pronë? Vendndodhja dhe bonuset e sinkronizuara ruhen."
+  },
+  "location": {
+    "country": "Shteti i pronës", "region": "Rajoni i pronës", "selectCountry": "— Zgjidh shtetin —", "selectRegion": "— Zgjidh rajonin —",
+    "statusSynced": "Sinkronizim automatik: I sinkronizuar", "statusNoRegion": "Sinkronizim automatik: Rajoni s'është zgjedhur", "statusNotConfigured": "Sinkronizim automatik: Nuk është konfiguruar"
+  },
+  "summary": {
+    "title": "Përmbledhje e pronës", "netProfit": "Fitimi neto total", "totalCompanies": "Totali i kompanive", "revenue": "Të ardhurat ditore",
+    "rmNet": "Lënda e parë (neto)", "workTax": "Taksa e punës", "salaries": "Pagat", "perIndustry": "Sipas industrisë",
+    "empty": "Ende nuk ka kompani në këtë pronë.", "breakdownItem": "{{icon}} {{label}} ({{companies}}k)"
+  },
+  "section": { "mods": "Shteti +{{country}}% · Rajoni +{{region}}% · Ndotja {{pollution}}%" }
+}

@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Holding", "none": "— niciunul —", "new": "+ Nou", "rename": "Redenumește", "delete": "Șterge",
+    "clearCompanies": "Golește companiile", "newPrompt": "Numele noului holding:", "newDefault": "Holding {{n}}",
+    "renamePrompt": "Redenumește holdingul:", "deleteConfirm": "Ștergi holdingul „{{name}}”?",
+    "clearConfirm": "Golești toate companiile din acest holding? Locația și bonusurile sincronizate sunt păstrate."
+  },
+  "location": {
+    "country": "Țara holdingului", "region": "Regiunea holdingului", "selectCountry": "— Selectează țara —", "selectRegion": "— Selectează regiunea —",
+    "statusSynced": "Auto-sincronizare: Sincronizat", "statusNoRegion": "Auto-sincronizare: Regiune neselectată", "statusNotConfigured": "Auto-sincronizare: Neconfigurat"
+  },
+  "summary": {
+    "title": "Rezumatul holdingului", "netProfit": "Profit net total", "totalCompanies": "Total companii", "revenue": "Venit zilnic",
+    "rmNet": "Materie primă (net)", "workTax": "Taxă pe muncă", "salaries": "Salarii", "perIndustry": "Per industrie",
+    "empty": "Nicio companie în acest holding încă.", "breakdownItem": "{{icon}} {{label}} ({{companies}}c)"
+  },
+  "section": { "mods": "Țară +{{country}}% · Regiune +{{region}}% · Poluare {{pollution}}%" }
+}

@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "Храна",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "Оружје",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "Куће",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "Авиони",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "Држава",
+    "region": "Регион",
+    "selectCountry": "Изаберите државу",
+    "selectRegion": "Изаберите регион",
+    "countryBonus": "Бонус државе (%)",
+    "regionBonus": "Бонус региона (%)",
+    "workTax": "Порез на рад (%)",
+    "vat": "ПДВ (%)",
+    "avgSalary": "Просечна плата",
+    "offeredCc": "Плата / раднику",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Tycoon пакет",
+    "wam": "WAM",
+    "wamAria": "Рад као менаџер"
+  },
+  "prices": {
+    "header": "Тржишне цене за {{label}} (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "Ваше фабрике за {{label}}",
+    "rmHeader": "Ваше {{rm}} компаније",
+    "factoriesHeaderShort": "Фабрике за {{label}}",
+    "rmHeaderShort": "{{rm}} компаније",
+    "headers": {
+      "quality": "Квалитет",
+      "companies": "Компаније",
+      "workers": "Радници",
+      "output": "Производња/сесија",
+      "netProfit": "Дневни нето профит"
+    },
+    "outputSession": "{{value}} / сесија",
+    "outputSessionRm": "{{value}} {{rm}} / сесија"
+  },
+  "summary": {
+    "title": "Преглед",
+    "optionABadge": "Опција А",
+    "optionBBadge": "Опција Б",
+    "netProfit": "Проц. дневни нето профит",
+    "totalCompanies": "Укупно компанија",
+    "output": "Производња {{label}}",
+    "rmConsumed": "Потрошено {{rm}}",
+    "revenue": "Дневни приход",
+    "rmCost": "Дневни трошак {{rm}}",
+    "grossProfit": "Бруто профит",
+    "workTax": "Дневни порез на рад",
+    "salary": "Дневна плата",
+    "breakdownTitle": "Преглед инвентара:",
+    "noFactories": "Још нема подешених фабрика.",
+    "breakdownItem": "Q{{q}} ({{companies}}к / {{workers}}р)",
+    "comparisonTitle": "Поређење стратегија за {{rm}}",
+    "rmProduced": "Произведено {{rm}}",
+    "rmNetBalance": "Нето биланс {{rm}}",
+    "optionABuyTitle": "Опција А: Купи {{rm}}",
+    "optionAMarketCost": "Тржишни трошак: {{cost}} CC",
+    "optionBProduceTitle": "Опција Б: Производи {{rm}}",
+    "optionBBalance": "Биланс: {{balance}} {{rm}}",
+    "netProfitInline": "Нето профит:",
+    "recommendA": "Препорука: Опција А (Купи {{rm}}) је профитабилнија за {{delta}} CC/дан",
+    "recommendB": "Препорука: Опција Б (Производи) је профитабилнија за {{delta}} CC/дан",
+    "recommendEqual": "Препорука: Обе опције су подједнако профитабилне"
+  }
+}

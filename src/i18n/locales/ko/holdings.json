@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "지주회사", "none": "— 없음 —", "new": "+ 새로 만들기", "rename": "이름 변경", "delete": "삭제",
+    "clearCompanies": "회사 비우기", "newPrompt": "새 지주회사 이름:", "newDefault": "지주회사 {{n}}",
+    "renamePrompt": "지주회사 이름 변경:", "deleteConfirm": "지주회사 \"{{name}}\"을(를) 삭제하시겠습니까?",
+    "clearConfirm": "이 지주회사의 모든 회사를 비우시겠습니까? 위치와 동기화된 보너스는 유지됩니다."
+  },
+  "location": {
+    "country": "지주회사 국가", "region": "지주회사 지역", "selectCountry": "— 국가 선택 —", "selectRegion": "— 지역 선택 —",
+    "statusSynced": "자동 동기화: 동기화됨", "statusNoRegion": "자동 동기화: 지역이 선택되지 않음", "statusNotConfigured": "자동 동기화: 구성되지 않음"
+  },
+  "summary": {
+    "title": "지주회사 요약", "netProfit": "총 순수익", "totalCompanies": "총 회사 수", "revenue": "일일 매출",
+    "rmNet": "원자재 (순)", "workTax": "근로세", "salaries": "임금", "perIndustry": "산업별",
+    "empty": "이 지주회사에는 아직 회사가 없습니다.", "breakdownItem": "{{icon}} {{label}} ({{companies}}개)"
+  },
+  "section": { "mods": "국가 +{{country}}% · 지역 +{{region}}% · 오염 {{pollution}}%" }
+}

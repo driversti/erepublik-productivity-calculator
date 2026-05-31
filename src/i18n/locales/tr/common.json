@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik Üretkenlik ve Kâr Hesaplayıcısı",
+    "subtitle": "Gıda, silah, ev, uçak ve holdingler genelinde günlük kârı tahmin edin"
+  },
+  "footer": "eRepublik Üretkenlik Hesaplayıcısı",
+  "theme": {
+    "toggleAria": "Temayı değiştir",
+    "toDark": "🌙 Karanlık Mod",
+    "toLight": "☀️ Aydınlık Mod"
+  },
+  "language": {
+    "label": "Dil",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdingler"
+  },
+  "labels": {
+    "companies": "Şirketler",
+    "workers": "İşçiler"
+  },
+  "counter": {
+    "minusAria": "{{label}} eksi",
+    "plusAria": "{{label}} artı"
+  },
+  "buttons": {
+    "syncLivePrices": "Canlı Fiyatları Eşitle",
+    "syncing": "Eşitleniyor…"
+  }
+}

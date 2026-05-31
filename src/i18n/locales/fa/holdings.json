@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "هلدینگ", "none": "— هیچ‌کدام —", "new": "+ جدید", "rename": "تغییر نام", "delete": "حذف",
+    "clearCompanies": "پاک‌سازی شرکت‌ها", "newPrompt": "نام هلدینگ جدید:", "newDefault": "هلدینگ {{n}}",
+    "renamePrompt": "تغییر نام هلدینگ:", "deleteConfirm": "هلدینگ «{{name}}» حذف شود؟",
+    "clearConfirm": "همه شرکت‌های این هلدینگ پاک شوند؟ موقعیت مکانی و پاداش‌های همگام‌شده حفظ می‌شوند."
+  },
+  "location": {
+    "country": "کشور هلدینگ", "region": "منطقه هلدینگ", "selectCountry": "— انتخاب کشور —", "selectRegion": "— انتخاب منطقه —",
+    "statusSynced": "همگام‌سازی خودکار: همگام‌شده", "statusNoRegion": "همگام‌سازی خودکار: منطقه انتخاب نشده", "statusNotConfigured": "همگام‌سازی خودکار: پیکربندی نشده"
+  },
+  "summary": {
+    "title": "خلاصه هلدینگ", "netProfit": "مجموع سود خالص", "totalCompanies": "مجموع شرکت‌ها", "revenue": "درآمد روزانه",
+    "rmNet": "مواد خام (خالص)", "workTax": "مالیات کار", "salaries": "دستمزدها", "perIndustry": "به تفکیک صنعت",
+    "empty": "هنوز هیچ شرکتی در این هلدینگ نیست.", "breakdownItem": "{{icon}} {{label}} ({{companies}}ش)"
+  },
+  "section": { "mods": "کشور +{{country}}٪ · منطقه +{{region}}٪ · آلودگی {{pollution}}٪" }
+}

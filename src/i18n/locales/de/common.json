@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik Produktivitäts- & Profitrechner",
+    "subtitle": "Schätze den täglichen Gewinn aus Nahrung, Waffen, Häusern, Flugzeugen & Holdings"
+  },
+  "footer": "eRepublik Produktivitätsrechner",
+  "theme": {
+    "toggleAria": "Design umschalten",
+    "toDark": "🌙 Dunkelmodus",
+    "toLight": "☀️ Hellmodus"
+  },
+  "language": {
+    "label": "Sprache",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdings"
+  },
+  "labels": {
+    "companies": "Firmen",
+    "workers": "Arbeiter"
+  },
+  "counter": {
+    "minusAria": "{{label}} minus",
+    "plusAria": "{{label}} plus"
+  },
+  "buttons": {
+    "syncLivePrices": "Live-Preise synchronisieren",
+    "syncing": "Synchronisiere…"
+  }
+}

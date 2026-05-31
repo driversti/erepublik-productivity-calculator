@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Holding", "none": "— žiadny —", "new": "+ Nový", "rename": "Premenovať", "delete": "Odstrániť",
+    "clearCompanies": "Vymazať spoločnosti", "newPrompt": "Názov nového holdingu:", "newDefault": "Holding {{n}}",
+    "renamePrompt": "Premenovať holding:", "deleteConfirm": "Odstrániť holding „{{name}}“?",
+    "clearConfirm": "Vymazať všetky spoločnosti v tomto holdingu? Lokalita a synchronizované bonusy zostanú zachované."
+  },
+  "location": {
+    "country": "Krajina holdingu", "region": "Región holdingu", "selectCountry": "— Vyberte krajinu —", "selectRegion": "— Vyberte región —",
+    "statusSynced": "Automatická synchronizácia: Synchronizované", "statusNoRegion": "Automatická synchronizácia: Región nie je vybraný", "statusNotConfigured": "Automatická synchronizácia: Nenakonfigurované"
+  },
+  "summary": {
+    "title": "Súhrn holdingu", "netProfit": "Celkový čistý zisk", "totalCompanies": "Spoločnosti spolu", "revenue": "Denné tržby",
+    "rmNet": "Suroviny (netto)", "workTax": "Daň z práce", "salaries": "Mzdy", "perIndustry": "Podľa odvetvia",
+    "empty": "V tomto holdingu zatiaľ nie sú žiadne spoločnosti.", "breakdownItem": "{{icon}} {{label}} ({{companies}}s)"
+  },
+  "section": { "mods": "Krajina +{{country}} % · Región +{{region}} % · Znečistenie {{pollution}} %" }
+}

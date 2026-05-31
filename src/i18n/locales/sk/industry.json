@@ -1,0 +1,34 @@
+{
+  "names": {
+    "food":     { "label": "Potraviny",  "rm": "FRM" },
+    "weapons":  { "label": "Zbrane",      "rm": "WRM" },
+    "houses":   { "label": "Domy",        "rm": "HRM" },
+    "aircraft": { "label": "Lietadlá",    "rm": "ARM" }
+  },
+  "modifiers": {
+    "country": "Krajina", "region": "Región", "selectCountry": "Vyberte krajinu", "selectRegion": "Vyberte región",
+    "countryBonus": "Bonus krajiny (%)", "regionBonus": "Bonus regiónu (%)", "workTax": "Daň z práce (%)", "vat": "DPH (%)",
+    "avgSalary": "Priemerná mzda", "offeredCc": "Mzda / pracovník", "tycoon": "Tycoon (+20 %)", "tycoonAria": "Tycoon balík",
+    "wam": "WAM", "wamAria": "Práca ako manažér"
+  },
+  "prices": { "header": "Trhové ceny: {{label}} (CC)", "qLabel": "Q{{q}}" },
+  "tables": {
+    "factoriesHeader": "Vaše továrne: {{label}}", "rmHeader": "Vaše spoločnosti: {{rm}}",
+    "factoriesHeaderShort": "Továrne: {{label}}", "rmHeaderShort": "Spoločnosti: {{rm}}",
+    "headers": { "quality": "Kvalita", "companies": "Spoločnosti", "workers": "Pracovníci", "output": "Výstup/relácia", "netProfit": "Denný čistý zisk" },
+    "outputSession": "{{value}} / relácia", "outputSessionRm": "{{value}} {{rm}} / relácia"
+  },
+  "summary": {
+    "title": "Súhrn", "optionABadge": "Možnosť A", "optionBBadge": "Možnosť B", "netProfit": "Odhad. denný čistý zisk",
+    "totalCompanies": "Spoločnosti spolu", "output": "Výstup: {{label}}", "rmConsumed": "Spotrebované {{rm}}",
+    "revenue": "Denné tržby", "rmCost": "Denné náklady na {{rm}}", "grossProfit": "Hrubý zisk", "workTax": "Denná daň z práce",
+    "salary": "Denná mzda", "breakdownTitle": "Rozpis inventára:", "noFactories": "Zatiaľ nie sú nakonfigurované žiadne továrne.",
+    "breakdownItem": "Q{{q}} ({{companies}}s / {{workers}}p)", "comparisonTitle": "Porovnanie stratégií: {{rm}}",
+    "rmProduced": "Vyrobené {{rm}}", "rmNetBalance": "Čistá bilancia {{rm}}", "optionABuyTitle": "Možnosť A: Kúpiť {{rm}}",
+    "optionAMarketCost": "Trhové náklady: {{cost}} CC", "optionBProduceTitle": "Možnosť B: Vyrobiť {{rm}}",
+    "optionBBalance": "Bilancia: {{balance}} {{rm}}", "netProfitInline": "Čistý zisk:",
+    "recommendA": "Odporúčanie: Možnosť A (Kúpiť {{rm}}) je výhodnejšia o {{delta}} CC/deň",
+    "recommendB": "Odporúčanie: Možnosť B (Vyrobiť) je výhodnejšia o {{delta}} CC/deň",
+    "recommendEqual": "Odporúčanie: Obe možnosti sú rovnako výhodné"
+  }
+}

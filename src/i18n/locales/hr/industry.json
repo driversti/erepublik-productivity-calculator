@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "Hrana",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "Oružje",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "Kuće",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "Zrakoplovi",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "Država",
+    "region": "Regija",
+    "selectCountry": "Odaberite državu",
+    "selectRegion": "Odaberite regiju",
+    "countryBonus": "Bonus države (%)",
+    "regionBonus": "Bonus regije (%)",
+    "workTax": "Porez na rad (%)",
+    "vat": "PDV (%)",
+    "avgSalary": "Prosječna plaća",
+    "offeredCc": "Plaća / radnik",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Tycoon paket",
+    "wam": "WAM",
+    "wamAria": "Rad kao menadžer"
+  },
+  "prices": {
+    "header": "Tržišne cijene za {{label}} (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "Vaše tvornice za {{label}}",
+    "rmHeader": "Vaše {{rm}} tvrtke",
+    "factoriesHeaderShort": "{{label}} tvornice",
+    "rmHeaderShort": "{{rm}} tvrtke",
+    "headers": {
+      "quality": "Kvaliteta",
+      "companies": "Tvrtke",
+      "workers": "Radnici",
+      "output": "Proizvodnja/sesija",
+      "netProfit": "Dnevni neto profit"
+    },
+    "outputSession": "{{value}} / sesija",
+    "outputSessionRm": "{{value}} {{rm}} / sesija"
+  },
+  "summary": {
+    "title": "Sažetak",
+    "optionABadge": "Opcija A",
+    "optionBBadge": "Opcija B",
+    "netProfit": "Procij. dnevni neto profit",
+    "totalCompanies": "Ukupno tvrtki",
+    "output": "Proizvodnja {{label}}",
+    "rmConsumed": "Potrošeno {{rm}}",
+    "revenue": "Dnevni prihod",
+    "rmCost": "Dnevni trošak {{rm}}",
+    "grossProfit": "Bruto profit",
+    "workTax": "Dnevni porez na rad",
+    "salary": "Dnevna plaća",
+    "breakdownTitle": "Pregled inventara:",
+    "noFactories": "Još nema konfiguriranih tvornica.",
+    "breakdownItem": "Q{{q}} ({{companies}}t / {{workers}}r)",
+    "comparisonTitle": "Usporedba strategija za {{rm}}",
+    "rmProduced": "Proizvedeno {{rm}}",
+    "rmNetBalance": "Neto bilanca {{rm}}",
+    "optionABuyTitle": "Opcija A: Kupi {{rm}}",
+    "optionAMarketCost": "Tržišni trošak: {{cost}} CC",
+    "optionBProduceTitle": "Opcija B: Proizvedi {{rm}}",
+    "optionBBalance": "Bilanca: {{balance}} {{rm}}",
+    "netProfitInline": "Neto profit:",
+    "recommendA": "Preporuka: Opcija A (Kupi {{rm}}) profitabilnija je za {{delta}} CC/dan",
+    "recommendB": "Preporuka: Opcija B (Proizvedi) profitabilnija je za {{delta}} CC/dan",
+    "recommendEqual": "Preporuka: Obje opcije su jednako profitabilne"
+  }
+}

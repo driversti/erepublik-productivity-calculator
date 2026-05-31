@@ -9,9 +9,46 @@
     "toDark": "🌙 Dark Mode",
     "toLight": "☀️ Light Mode"
   },
-  "language": { "label": "Language", "en": "English", "uk": "Українська" },
-  "tabs": { "holdings": "🗂️ Holdings" },
-  "labels": { "companies": "Companies", "workers": "Workers" },
-  "counter": { "minusAria": "{{label}} minus", "plusAria": "{{label}} plus" },
-  "buttons": { "syncLivePrices": "Sync Live Prices", "syncing": "Syncing…" }
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ Holdings"
+  },
+  "labels": {
+    "companies": "Companies",
+    "workers": "Workers"
+  },
+  "counter": {
+    "minusAria": "{{label}} minus",
+    "plusAria": "{{label}} plus"
+  },
+  "buttons": {
+    "syncLivePrices": "Sync Live Prices",
+    "syncing": "Syncing…"
+  }
 }

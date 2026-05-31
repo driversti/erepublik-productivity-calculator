@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "eRepublik 생산성 및 수익 계산기",
+    "subtitle": "식량, 무기, 주택, 항공기 및 지주회사 전반의 일일 수익 추정"
+  },
+  "footer": "eRepublik 생산성 계산기",
+  "theme": {
+    "toggleAria": "테마 전환",
+    "toDark": "🌙 다크 모드",
+    "toLight": "☀️ 라이트 모드"
+  },
+  "language": {
+    "label": "언어",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская"
+  },
+  "tabs": {
+    "holdings": "🗂️ 지주회사"
+  },
+  "labels": {
+    "companies": "회사",
+    "workers": "노동자"
+  },
+  "counter": {
+    "minusAria": "{{label}} 감소",
+    "plusAria": "{{label}} 증가"
+  },
+  "buttons": {
+    "syncLivePrices": "실시간 가격 동기화",
+    "syncing": "동기화 중…"
+  }
+}

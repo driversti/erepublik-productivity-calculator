@@ -1,0 +1,18 @@
+{
+  "toolbar": {
+    "holding": "Holding", "none": "— tidak ada —", "new": "+ Baru", "rename": "Ganti Nama", "delete": "Hapus",
+    "clearCompanies": "Bersihkan Perusahaan", "newPrompt": "Nama holding baru:", "newDefault": "Holding {{n}}",
+    "renamePrompt": "Ganti nama holding:", "deleteConfirm": "Hapus holding \"{{name}}\"?",
+    "clearConfirm": "Bersihkan semua perusahaan di holding ini? Lokasi dan bonus yang tersinkron tetap disimpan."
+  },
+  "location": {
+    "country": "Negara Holding", "region": "Wilayah Holding", "selectCountry": "— Pilih negara —", "selectRegion": "— Pilih wilayah —",
+    "statusSynced": "Sinkron otomatis: Tersinkron", "statusNoRegion": "Sinkron otomatis: Wilayah belum dipilih", "statusNotConfigured": "Sinkron otomatis: Belum dikonfigurasi"
+  },
+  "summary": {
+    "title": "Ringkasan Holding", "netProfit": "Total Keuntungan Bersih", "totalCompanies": "Total Perusahaan", "revenue": "Pendapatan Harian",
+    "rmNet": "Bahan Baku (bersih)", "workTax": "Pajak Kerja", "salaries": "Gaji", "perIndustry": "Per industri",
+    "empty": "Belum ada perusahaan di holding ini.", "breakdownItem": "{{icon}} {{label}} ({{companies}}p)"
+  },
+  "section": { "mods": "Negara +{{country}}% · Wilayah +{{region}}% · Polusi {{pollution}}%" }
+}
