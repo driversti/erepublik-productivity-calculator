@@ -74,7 +74,7 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
       {isFw && (
         <div className="control-group">
           <label className="control-label">Avg Salary</label>
-          <input type="number" className="market-input readonly-display" style={{ width: '65px' }} value={mod.averageSalary} readOnly tabIndex={-1} title="Average salary — set by country selection" />
+          <input type="number" className="market-input readonly-display" style={{ width: '80px' }} value={mod.averageSalary} readOnly tabIndex={-1} title="Average salary — set by country selection" />
         </div>
       )}
 
