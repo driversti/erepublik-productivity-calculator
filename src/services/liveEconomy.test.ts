@@ -124,6 +124,23 @@ describe('LiveEconomySource.getCountryEconomics', () => {
     expect(result.size).toBe(0);
     expect(fetchMock).not.toHaveBeenCalled();
   });
+
+  it('resolves the batch when fetch THROWS for one country and still returns the other', async () => {
+    // Romania throws (network error), Serbia succeeds — batch must resolve, not reject.
+    vi.spyOn(globalThis, 'fetch')
+      .mockRejectedValueOnce(new Error('network'))
+      .mockResolvedValueOnce(makeOkResponse(ECONOMY_HTML));
+
+    const source = new LiveEconomySource();
+    // Must not throw
+    const result = await source.getCountryEconomics('food', ['Romania', 'Serbia']);
+
+    // Throwing country is omitted
+    expect(result.has('Romania')).toBe(false);
+    // Succeeding country is present
+    expect(result.has('Serbia')).toBe(true);
+    expect(result.size).toBe(1);
+  });
 });
 
 describe('LiveEconomySource.getRegionPollution', () => {
@@ -184,5 +201,22 @@ describe('LiveEconomySource.getRegionPollution', () => {
 
     expect(result.size).toBe(0);
     expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('resolves the batch when fetch THROWS for one region and still returns the other', async () => {
+    // Region 38 throws (network error), region 39 succeeds — batch must resolve, not reject.
+    vi.spyOn(globalThis, 'fetch')
+      .mockRejectedValueOnce(new Error('network'))
+      .mockResolvedValueOnce(makeOkResponse(REGION_HTML));
+
+    const source = new LiveEconomySource();
+    // Must not throw
+    const result = await source.getRegionPollution('food', [38, 39]);
+
+    // Throwing region is omitted
+    expect(result.has(38)).toBe(false);
+    // Succeeding region is present
+    expect(result.has(39)).toBe(true);
+    expect(result.size).toBe(1);
   });
 });

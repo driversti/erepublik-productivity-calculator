@@ -30,13 +30,15 @@ import { mapWithLimit } from './concurrency';
 const CONCURRENCY = 5;
 const VAT_FALLBACK = 0;
 
-/** Build a name → country-entry index from the travel data (done once per call). */
-function buildNameIndex(): Map<string, { permalink: string }> {
-  const index = new Map<string, { permalink: string }>();
+/** Lazily-built name → country-entry index (built once, reused on every call). */
+let _nameIndex: Map<string, { permalink: string }> | null = null;
+function getNameIndex(): Map<string, { permalink: string }> {
+  if (_nameIndex) return _nameIndex;
+  _nameIndex = new Map<string, { permalink: string }>();
   for (const country of Object.values(countries)) {
-    index.set(country.name, { permalink: country.permalink });
+    _nameIndex.set(country.name, { permalink: country.permalink });
   }
-  return index;
+  return _nameIndex;
 }
 
 export class LiveEconomySource implements CountryEconomySource {
@@ -53,7 +55,7 @@ export class LiveEconomySource implements CountryEconomySource {
     onProgress?: (done: number, total: number) => void,
   ): Promise<Map<string, CountryEconomics>> {
     const cfg = SCRAPE_CONFIG[industry];
-    const nameIndex = buildNameIndex();
+    const nameIndex = getNameIndex();
     const result = new Map<string, CountryEconomics>();
     const total = countryNames.length;
     let done = 0;
@@ -76,6 +78,8 @@ export class LiveEconomySource implements CountryEconomySource {
           vat: parseVat(html, cfg, VAT_FALLBACK),
         };
         result.set(inputName, economics);
+      } catch {
+        // skip this item on any network or parse error
       } finally {
         done++;
         onProgress?.(done, total);
@@ -112,6 +116,8 @@ export class LiveEconomySource implements CountryEconomySource {
 
         const html = await res.text();
         result.set(regionId, parseRegionPollution(html, cfg));
+      } catch {
+        // skip this item on any network or parse error
       } finally {
         done++;
         onProgress?.(done, total);
