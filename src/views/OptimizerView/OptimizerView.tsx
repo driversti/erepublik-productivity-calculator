@@ -29,7 +29,7 @@ interface Props {
 export function OptimizerView({ source = DEFAULT_SOURCE }: Props) {
   const { t } = useTranslation();
   const { optimizer, setParams, setResults } = useOptimizer();
-  const { industry, threshold, maxCandidates, topN, results, baselineNet, skippedCount, fetchedAt } = optimizer;
+  const { industry, threshold, maxCandidates, topN, results, baselineNet, skippedCount, fetchedAt, ownersSnapshot } = optimizer;
 
   const cfg = getIndustry(industry);
   const mod = useModule(industry);
@@ -189,6 +189,9 @@ export function OptimizerView({ source = DEFAULT_SOURCE }: Props) {
             )}
             {fetchedAt && (
               <p className="optimizer-fetched-at">{t('optimizer.fetchedAt', { date: new Date(fetchedAt).toLocaleString() })}</p>
+            )}
+            {ownersSnapshot && (
+              <p className="optimizer-owners-snapshot" data-testid="optimizer-owners-snapshot">{t('optimizer.ownersSnapshot', { date: ownersSnapshot })}</p>
             )}
           </div>
           <ResultsTable results={results} baselineNet={baselineNet} countryFlags={countryFlags} />

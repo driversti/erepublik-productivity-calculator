@@ -37,7 +37,7 @@ export type Action =
   | { type: 'SET_HOLDING_LOCATION'; id: string; selectedCountryId: string; selectedRegionPermalink: string }
   | { type: 'SET_HOLDING_MODIFIERS'; id: string; workTaxRate: number; averageSalary: number; perIndustry: Record<IndustryKey, { countryBonus: number; regionBonus: number; qualityPollution: Record<number, number>; vat: number }> }
   | { type: 'SET_OPTIMIZER_PARAMS'; payload: Partial<Pick<OptimizerState, 'industry' | 'threshold' | 'maxCandidates' | 'topN'>> }
-  | { type: 'SET_OPTIMIZER_RESULTS'; payload: { results: RankedRegion[]; baselineNet: number | null; skippedCount: number; fetchedAt: string } };
+  | { type: 'SET_OPTIMIZER_RESULTS'; payload: { results: RankedRegion[]; baselineNet: number | null; skippedCount: number; fetchedAt: string; ownersSnapshot: string } };
 
 function clampCompanies(v: number): number {
   return Math.max(0, Math.min(MAX_COMPANIES, Math.floor(v)));
@@ -290,6 +290,7 @@ export function reducer(state: AppState, action: Action): AppState {
           baselineNet: action.payload.baselineNet,
           skippedCount: action.payload.skippedCount,
           fetchedAt: action.payload.fetchedAt,
+          ownersSnapshot: action.payload.ownersSnapshot,
         },
       };
 

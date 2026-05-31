@@ -123,19 +123,20 @@ describe('reducer', () => {
       const fakeResults = [{ region: { id: 1, name: 'Paris', currentCountry: 'France', originalCountry: 'France', resources: [] }, regionBonus: 40, economics: { countryBonus: 120, workTaxRate: 5, averageSalary: 60, vat: 15 }, pollution: null, net: 999 }] as import('./types').OptimizerState['results'];
       const b = reducer(a, {
         type: 'SET_OPTIMIZER_RESULTS',
-        payload: { results: fakeResults, baselineNet: 800, skippedCount: 3, fetchedAt: '2026-01-01T00:00:00Z' },
+        payload: { results: fakeResults, baselineNet: 800, skippedCount: 3, fetchedAt: '2026-01-01T00:00:00Z', ownersSnapshot: '2026-05-31' },
       });
       expect(b.optimizer.results).toHaveLength(1);
       expect(b.optimizer.baselineNet).toBe(800);
       expect(b.optimizer.skippedCount).toBe(3);
       expect(b.optimizer.fetchedAt).toBe('2026-01-01T00:00:00Z');
+      expect(b.optimizer.ownersSnapshot).toBe('2026-05-31');
     });
 
     it('is immutable: prior state object is not mutated', () => {
       const a = initialState();
       const b = reducer(a, {
         type: 'SET_OPTIMIZER_RESULTS',
-        payload: { results: [], baselineNet: 500, skippedCount: 1, fetchedAt: '2026-01-01T00:00:00Z' },
+        payload: { results: [], baselineNet: 500, skippedCount: 1, fetchedAt: '2026-01-01T00:00:00Z', ownersSnapshot: '2026-05-31' },
       });
       expect(a.optimizer.baselineNet).toBeNull(); // prior state unchanged
       expect(b.optimizer.baselineNet).toBe(500);

@@ -27,6 +27,7 @@ export interface ScanOutcome {
   baselineNet: number | null;
   skippedCount: number;
   fetchedAt: string;
+  ownersSnapshot: string;
 }
 
 /**
@@ -72,5 +73,6 @@ export async function runScan(
     baselineNet,
     skippedCount,
     fetchedAt: new Date().toISOString(),
+    ownersSnapshot: dataset.fetchedAt,
   };
 }

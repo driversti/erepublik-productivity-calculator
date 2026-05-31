@@ -74,6 +74,7 @@ export function blankOptimizer(): OptimizerState {
     baselineNet: null,
     skippedCount: 0,
     fetchedAt: null,
+    ownersSnapshot: null,
   };
 }
 

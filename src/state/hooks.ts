@@ -290,7 +290,7 @@ export function useHoldingSummary(holding: Holding): HoldingTotals {
 export interface OptimizerApi {
   optimizer: OptimizerState;
   setParams: (partial: Partial<Pick<OptimizerState, 'industry' | 'threshold' | 'maxCandidates' | 'topN'>>) => void;
-  setResults: (payload: { results: RankedRegion[]; baselineNet: number | null; skippedCount: number; fetchedAt: string }) => void;
+  setResults: (payload: { results: RankedRegion[]; baselineNet: number | null; skippedCount: number; fetchedAt: string; ownersSnapshot: string }) => void;
 }
 
 export function useOptimizer(): OptimizerApi {

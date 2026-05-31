@@ -78,6 +78,7 @@ export interface OptimizerState {
   baselineNet: number | null;
   skippedCount: number;
   fetchedAt: string | null;
+  ownersSnapshot: string | null;
 }
 
 export type ActiveModule = IndustryKey | 'holdings' | 'regions' | 'optimizer';

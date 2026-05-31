@@ -7,6 +7,7 @@ import { StateProvider } from '../../state/StateContext';
 import { STORAGE_KEY } from '../../state/persistence';
 import type { CountryEconomics, CountryEconomySource } from '../../services/economySource';
 import type { IndustryKey } from '../../data/types';
+import { SNAPSHOT_DATE } from '../../data/regionResources';
 
 // A stub economy source. Provides economics for only TWO of the bundled food
 // candidates' real owner countries (Romania, USA) — the rest are intentionally
@@ -95,5 +96,14 @@ describe('OptimizerView', () => {
     await userEvent.click(screen.getByTestId('optimizer-scan'));
     // Only Romania + USA economics provided; other owner countries are skipped.
     await waitFor(() => expect(screen.getByTestId('optimizer-skipped')).toBeInTheDocument());
+  });
+
+  it('renders the region-ownership snapshot date after a scan', async () => {
+    setup();
+    await userEvent.click(screen.getByTestId('optimizer-scan'));
+    // The bundled dataset's fetchedAt equals SNAPSHOT_DATE — a known constant.
+    const el = await screen.findByTestId('optimizer-owners-snapshot');
+    expect(el).toBeInTheDocument();
+    expect(el.textContent).toContain(SNAPSHOT_DATE);
   });
 });
