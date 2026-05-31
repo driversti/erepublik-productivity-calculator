@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RegionsView } from './RegionsView';
+import { SNAPSHOT_DATE } from '../../data/regionResources';
 
 function setup() {
   return render(<RegionsView />);
@@ -11,7 +12,7 @@ describe('RegionsView', () => {
   it('renders a ranked list with the snapshot note', () => {
     setup();
     expect(screen.getByTestId('regions-view')).toBeInTheDocument();
-    expect(screen.getByText(/Snapshot 2026-05-31/)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`Snapshot ${SNAPSHOT_DATE}`))).toBeInTheDocument();
     expect(screen.getAllByTestId('regions-row').length).toBeGreaterThan(0);
   });
 

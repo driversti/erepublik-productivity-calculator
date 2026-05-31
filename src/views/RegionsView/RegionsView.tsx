@@ -64,11 +64,11 @@ export function RegionsView() {
       <table className="regions-table">
         <thead>
           <tr>
-            <th>{t('regions.columns.rank')}</th>
-            <th>{t('regions.columns.region')}</th>
-            <th>{t('regions.columns.country')}</th>
-            <th>{t('regions.columns.bonus')}</th>
-            <th>{t('regions.columns.resources')}</th>
+            <th scope="col">{t('regions.columns.rank')}</th>
+            <th scope="col">{t('regions.columns.region')}</th>
+            <th scope="col">{t('regions.columns.country')}</th>
+            <th scope="col">{t('regions.columns.bonus')}</th>
+            <th scope="col">{t('regions.columns.resources')}</th>
           </tr>
         </thead>
         <tbody>
@@ -78,9 +78,11 @@ export function RegionsView() {
               <tr key={row.region.id} data-testid="regions-row">
                 <td className="regions-rank">{i + 1}</td>
                 <td>{row.region.name}</td>
-                <td className="regions-country-cell" data-testid="regions-country-cell">
-                  {src && <img className="regions-flag" src={src} alt="" aria-hidden="true" />}
-                  {row.region.currentCountry}
+                <td data-testid="regions-country-cell">
+                  <span className="regions-country-cell">
+                    {src && <img className="regions-flag" src={src} alt="" aria-hidden="true" />}
+                    {row.region.currentCountry}
+                  </span>
                 </td>
                 <td className="regions-bonus">
                   {t('regions.bonusValue', { value: row.totalBonus })}
