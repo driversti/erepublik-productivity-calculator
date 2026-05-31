@@ -140,7 +140,15 @@ const server = http.createServer((req, res) => {
                 res.end('Server Error: ' + err.code);
             }
         } else {
-            res.writeHead(200, { 'Content-Type': contentType });
+            // HTML must never be cached: it references content-hashed asset
+            // filenames that change every build. A stale cached index.html would
+            // point at a deleted JS bundle (404) and the app would break. Hashed
+            // assets under /assets are safe to cache long-term.
+            const isHtml = extname === '.html' || decodedPath === '/';
+            const cacheControl = isHtml
+                ? 'no-cache, no-store, must-revalidate'
+                : (decodedPath.startsWith('/assets/') ? 'public, max-age=31536000, immutable' : 'no-cache');
+            res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheControl });
             res.end(content, 'utf-8');
         }
     });
