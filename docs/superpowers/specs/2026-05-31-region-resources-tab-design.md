@@ -91,14 +91,20 @@ export function rankRegions(
 
 Logic: filter regions that contain ≥1 resource of `industry`; sum those bonuses;
 optional country filter on `currentCountry`; stable sort by `totalBonus` desc,
-tie-break by `name` asc.
+tie-break by `name` asc. Also exports `allCountries(): string[]` (every distinct
+`currentCountry` in the dataset, sorted) to populate a filter that stays stable
+across industry switches.
 
 ### 3. UI — `src/views/RegionsView/RegionsView.tsx`
 
 - **Industry switcher** — 4 options (food / weapons / houses / aircraft), styled
   like the existing tab buttons; local `useState`, default `food`.
-- **Country filter** — dropdown built from the distinct `currentCountry` values
-  present for the selected industry, plus an "All" option; local `useState`.
+- **Country filter** — dropdown of **all** dataset countries (`allCountries()`),
+  plus an "All" option; local `useState`. Sourcing from all countries (rather
+  than per-industry) keeps the selection **stable across industry switches** so a
+  player can track one country through every industry; the controlled select
+  therefore never holds a value missing from its options. Switching industry
+  does **not** reset the country filter.
 - **List** — one row per ranked region:
   `rank · region name · flag + country · total bonus % · resource chips`
   (e.g. `Magnesium +10`, `Cobalt +25`). Flag from `COUNTRY_FLAGS`.
@@ -119,9 +125,9 @@ Add a `regions` block to the **`common`** namespace (already loaded for every
 locale) rather than introducing a new namespace across all 24 locales. Strings:
 tab label, industry-switcher labels (reuse existing industry names where
 possible), country-filter "All" label, column headers, the snapshot/staleness
-note. **Country names** render through the existing `i18n/names.ts` helper.
-**Region and resource names stay literal** (game-canonical English, like
-"Tycoon") — not translated.
+note, plus an empty-state message. **Country, region and resource names stay
+literal** (game-canonical English, like "Tycoon") — not translated (there is no
+country-name i18n helper, and inventing one is out of scope).
 
 ## Data flow
 
