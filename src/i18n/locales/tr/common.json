@@ -38,7 +38,64 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holdingler"
+    "holdings": "🗂️ Holdingler",
+    "regions": "🌍 Bölgeler",
+    "optimizer": "🎯 Optimize Edici"
+  },
+  "optimizer": {
+    "title": "Bölge Kâr Optimize Edici",
+    "intro": "Bir sektör seçin ve mevcut fabrika kurulumunuzla en yüksek tahmini günlük net kârı veren dünya bölgelerini tarayın.",
+    "industry": "Sektör",
+    "threshold": "Min. bölge bonusu (%)",
+    "maxCandidates": "Maks. aday",
+    "topN": "Finalistler (ilk N)",
+    "scan": "Tara",
+    "scanning": "Taranıyor…",
+    "noCandidates": "Eşleşen bölge yok — minimum bölge bonusunu düşürün.",
+    "error": "Tarama başarısız oldu. Lütfen tekrar deneyin.",
+    "phaseEconomics": "Ekonomi verileri alınıyor {{done}}/{{total}}",
+    "phasePollution": "Kirlilik hassaslaştırılıyor {{done}}/{{total}}",
+    "baseline": "Mevcut kurulumunuz: {{net}} CC/gün",
+    "baselineNone": "Temel değer yok — bir sektör sekmesinde fabrikalarınızı yapılandırın.",
+    "fetchedAt": "Veri tarihi: {{date}}",
+    "ownersSnapshot": "Bölge sahipliği anlık görüntüsü: {{date}}",
+    "skipped_one": "{{count}} aday atlandı (ülkesi için ekonomi verisi yok).",
+    "skipped_other": "{{count}} aday atlandı (ülkeleri için ekonomi verisi yok).",
+    "pollutionEstimate": "tahmini",
+    "columns": {
+      "rank": "#",
+      "region": "Bölge",
+      "country": "Ülke",
+      "regionBonus": "Bölge bonusu",
+      "countryBonus": "Ülke bonusu",
+      "salary": "Ort. maaş",
+      "workTax": "Çalışma vergisi",
+      "vat": "KDV",
+      "net": "Net/gün",
+      "delta": "Δ temele göre"
+    }
+  },
+  "regions": {
+    "country": "Ülke",
+    "allCountries": "Tüm ülkeler",
+    "bonusValue": "+{{value}}%",
+    "empty": "Seçili ülkede bu sektörün kaynaklarına sahip bölge yok.",
+    "updated": "Güncellendi {{date}} · mevcut sahiplik savaşta değişebilir",
+    "updateData": "Verileri güncelle",
+    "erpkLabel": "eRepublik oturum çerezi (erpk)",
+    "erpkPlaceholder": "erpk yapıştır…",
+    "refresh": "Yenile",
+    "refreshing": "Yenileniyor…",
+    "refreshOk_one": "Güncellendi — {{count}} bölge",
+    "refreshOk_other": "Güncellendi — {{count}} bölge",
+    "refreshError": "Yenileme başarısız: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Bölge",
+      "country": "Ülke",
+      "bonus": "Bonus",
+      "resources": "Kaynaklar"
+    }
   },
   "labels": {
     "companies": "Şirketler",

@@ -38,7 +38,66 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holdingi"
+    "holdings": "🗂️ Holdingi",
+    "regions": "🌍 Regiony",
+    "optimizer": "🎯 Optymalizator"
+  },
+  "optimizer": {
+    "title": "Optymalizator zysku z regionów",
+    "intro": "Wybierz branżę i przeskanuj regiony świata, aby znaleźć najlepszy szacowany dzienny zysk netto przy obecnej konfiguracji fabryk.",
+    "industry": "Branża",
+    "threshold": "Min. bonus regionu (%)",
+    "maxCandidates": "Maks. kandydatów",
+    "topN": "Finaliści (top N)",
+    "scan": "Skanuj",
+    "scanning": "Skanowanie…",
+    "noCandidates": "Brak pasujących regionów — obniż minimalny bonus regionu.",
+    "error": "Skanowanie nie powiodło się. Spróbuj ponownie.",
+    "phaseEconomics": "Pobieranie danych ekonomicznych {{done}}/{{total}}",
+    "phasePollution": "Doprecyzowywanie zanieczyszczenia {{done}}/{{total}}",
+    "baseline": "Twoja obecna konfiguracja: {{net}} CC/dzień",
+    "baselineNone": "Brak punktu odniesienia — skonfiguruj fabryki w zakładce branży.",
+    "fetchedAt": "Dane na dzień {{date}}",
+    "ownersSnapshot": "Migawka własności regionów: {{date}}",
+    "skipped_one": "Pominięto {{count}} kandydata (brak danych ekonomicznych dla jego kraju).",
+    "skipped_few": "Pominięto {{count}} kandydatów (brak danych ekonomicznych dla ich krajów).",
+    "skipped_many": "Pominięto {{count}} kandydatów (brak danych ekonomicznych dla ich krajów).",
+    "pollutionEstimate": "szacunek",
+    "columns": {
+      "rank": "#",
+      "region": "Region",
+      "country": "Kraj",
+      "regionBonus": "Bonus regionu",
+      "countryBonus": "Bonus kraju",
+      "salary": "Śr. wynagrodzenie",
+      "workTax": "Podatek od pracy",
+      "vat": "VAT",
+      "net": "Netto/dzień",
+      "delta": "Δ wzgl. odniesienia"
+    }
+  },
+  "regions": {
+    "country": "Kraj",
+    "allCountries": "Wszystkie kraje",
+    "bonusValue": "+{{value}}%",
+    "empty": "Brak regionów z surowcami tej branży w wybranym kraju.",
+    "updated": "Zaktualizowano {{date}} · obecna własność może się zmienić podczas wojny",
+    "updateData": "Aktualizuj dane",
+    "erpkLabel": "Twoje ciasteczko sesji eRepublik (erpk)",
+    "erpkPlaceholder": "Wklej erpk…",
+    "refresh": "Odśwież",
+    "refreshing": "Odświeżanie…",
+    "refreshOk_one": "Zaktualizowano — {{count}} region",
+    "refreshOk_few": "Zaktualizowano — {{count}} regiony",
+    "refreshOk_many": "Zaktualizowano — {{count}} regionów",
+    "refreshError": "Odświeżanie nie powiodło się: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Region",
+      "country": "Kraj",
+      "bonus": "Bonus",
+      "resources": "Surowce"
+    }
   },
   "labels": {
     "companies": "Firmy",

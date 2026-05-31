@@ -38,7 +38,62 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ 控股"
+    "holdings": "🗂️ 控股",
+    "regions": "🌍 地區",
+    "optimizer": "🎯 最佳化"
+  },
+  "optimizer": {
+    "title": "地區利潤最佳化",
+    "intro": "選擇一個產業，依你目前的工廠設定掃描全球地區，找出預估每日淨利最高的地點。",
+    "industry": "產業",
+    "threshold": "最低地區加成（%）",
+    "maxCandidates": "候選地區上限",
+    "topN": "決選（前 N 名）",
+    "scan": "掃描",
+    "scanning": "掃描中…",
+    "noCandidates": "沒有符合的地區——請降低最低地區加成。",
+    "error": "掃描失敗，請再試一次。",
+    "phaseEconomics": "取得經濟數據 {{done}}/{{total}}",
+    "phasePollution": "精算污染 {{done}}/{{total}}",
+    "baseline": "你目前的設定：{{net}} CC/天",
+    "baselineNone": "沒有基準——請先在產業分頁中設定你的工廠。",
+    "fetchedAt": "數據截至 {{date}}",
+    "ownersSnapshot": "地區歸屬快照：{{date}}",
+    "skipped_other": "已略過 {{count}} 個候選地區（其所屬國家沒有經濟數據）。",
+    "pollutionEstimate": "估計值",
+    "columns": {
+      "rank": "#",
+      "region": "地區",
+      "country": "國家",
+      "regionBonus": "地區加成",
+      "countryBonus": "國家加成",
+      "salary": "平均薪資",
+      "workTax": "工作稅",
+      "vat": "VAT",
+      "net": "淨利/天",
+      "delta": "Δ 相較基準"
+    }
+  },
+  "regions": {
+    "country": "國家",
+    "allCountries": "所有國家",
+    "bonusValue": "+{{value}}%",
+    "empty": "所選國家中沒有具備此產業資源的地區。",
+    "updated": "更新於 {{date}} · 目前歸屬可能因戰爭而改變",
+    "updateData": "更新數據",
+    "erpkLabel": "你的 eRepublik 工作階段 cookie（erpk）",
+    "erpkPlaceholder": "貼上 erpk…",
+    "refresh": "重新整理",
+    "refreshing": "重新整理中…",
+    "refreshOk_other": "已更新——{{count}} 個地區",
+    "refreshError": "重新整理失敗：{{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "地區",
+      "country": "國家",
+      "bonus": "加成",
+      "resources": "資源"
+    }
   },
   "labels": {
     "companies": "公司",

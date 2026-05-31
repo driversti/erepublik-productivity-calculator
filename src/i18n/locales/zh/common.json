@@ -38,7 +38,62 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ 控股集团"
+    "holdings": "🗂️ 控股集团",
+    "regions": "🌍 地区",
+    "optimizer": "🎯 优化器"
+  },
+  "optimizer": {
+    "title": "地区利润优化器",
+    "intro": "选择一个行业，使用你当前的工厂配置扫描全球地区，找出预估每日净利润最高的地区。",
+    "industry": "行业",
+    "threshold": "最低地区加成 (%)",
+    "maxCandidates": "最大候选数",
+    "topN": "入围名单（前 N 名）",
+    "scan": "扫描",
+    "scanning": "扫描中…",
+    "noCandidates": "没有符合条件的地区——请降低最低地区加成。",
+    "error": "扫描失败，请重试。",
+    "phaseEconomics": "正在获取经济数据 {{done}}/{{total}}",
+    "phasePollution": "正在精算污染 {{done}}/{{total}}",
+    "baseline": "你当前的配置：{{net}} CC/天",
+    "baselineNone": "无基准——请在行业标签页中配置你的工厂。",
+    "fetchedAt": "数据截至 {{date}}",
+    "ownersSnapshot": "地区归属快照：{{date}}",
+    "skipped_other": "已跳过 {{count}} 个候选地区（其所属国家无经济数据）。",
+    "pollutionEstimate": "预估",
+    "columns": {
+      "rank": "#",
+      "region": "地区",
+      "country": "国家",
+      "regionBonus": "地区加成",
+      "countryBonus": "国家加成",
+      "salary": "平均工资",
+      "workTax": "工作税",
+      "vat": "增值税",
+      "net": "净利润/天",
+      "delta": "Δ 相较基准"
+    }
+  },
+  "regions": {
+    "country": "国家",
+    "allCountries": "所有国家",
+    "bonusValue": "+{{value}}%",
+    "empty": "所选国家中没有拥有该行业资源的地区。",
+    "updated": "更新于 {{date}} · 当前归属可能因战争而改变",
+    "updateData": "更新数据",
+    "erpkLabel": "你的 eRepublik 会话 Cookie (erpk)",
+    "erpkPlaceholder": "粘贴 erpk…",
+    "refresh": "刷新",
+    "refreshing": "刷新中…",
+    "refreshOk_other": "已更新——{{count}} 个地区",
+    "refreshError": "刷新失败：{{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "地区",
+      "country": "国家",
+      "bonus": "加成",
+      "resources": "资源"
+    }
   },
   "labels": {
     "companies": "公司",

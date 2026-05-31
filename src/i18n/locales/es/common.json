@@ -38,7 +38,64 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holdings"
+    "holdings": "🗂️ Holdings",
+    "regions": "🌍 Regiones",
+    "optimizer": "🎯 Optimizador"
+  },
+  "optimizer": {
+    "title": "Optimizador de beneficio por región",
+    "intro": "Elige una industria y analiza las regiones del mundo para encontrar el mejor beneficio neto diario estimado con tu configuración de fábricas actual.",
+    "industry": "Industria",
+    "threshold": "Bonus mínimo de región (%)",
+    "maxCandidates": "Máximo de candidatas",
+    "topN": "Finalistas (top N)",
+    "scan": "Analizar",
+    "scanning": "Analizando…",
+    "noCandidates": "Ninguna región coincide: reduce el bonus mínimo de región.",
+    "error": "El análisis falló. Inténtalo de nuevo.",
+    "phaseEconomics": "Obteniendo datos económicos {{done}}/{{total}}",
+    "phasePollution": "Refinando contaminación {{done}}/{{total}}",
+    "baseline": "Tu configuración actual: {{net}} CC/día",
+    "baselineNone": "Sin referencia: configura tus fábricas en una pestaña de industria.",
+    "fetchedAt": "Datos del {{date}}",
+    "ownersSnapshot": "Instantánea de propiedad de regiones: {{date}}",
+    "skipped_one": "{{count}} candidata omitida (sin datos económicos de su país).",
+    "skipped_other": "{{count}} candidatas omitidas (sin datos económicos de su país).",
+    "pollutionEstimate": "estimación",
+    "columns": {
+      "rank": "#",
+      "region": "Región",
+      "country": "País",
+      "regionBonus": "Bonus de región",
+      "countryBonus": "Bonus de país",
+      "salary": "Salario medio",
+      "workTax": "Impuesto laboral",
+      "vat": "IVA",
+      "net": "Neto/día",
+      "delta": "Δ vs referencia"
+    }
+  },
+  "regions": {
+    "country": "País",
+    "allCountries": "Todos los países",
+    "bonusValue": "+{{value}}%",
+    "empty": "No hay regiones con los recursos de esta industria en el país seleccionado.",
+    "updated": "Actualizado {{date}} · la propiedad actual puede cambiar en guerra",
+    "updateData": "Actualizar datos",
+    "erpkLabel": "Tu cookie de sesión de eRepublik (erpk)",
+    "erpkPlaceholder": "Pega el erpk…",
+    "refresh": "Actualizar",
+    "refreshing": "Actualizando…",
+    "refreshOk_one": "Actualizado: {{count}} región",
+    "refreshOk_other": "Actualizado: {{count}} regiones",
+    "refreshError": "La actualización falló: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Región",
+      "country": "País",
+      "bonus": "Bonus",
+      "resources": "Recursos"
+    }
   },
   "labels": {
     "companies": "Empresas",

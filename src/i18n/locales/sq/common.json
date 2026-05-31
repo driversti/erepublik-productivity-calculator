@@ -38,7 +38,64 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Pronat"
+    "holdings": "🗂️ Pronat",
+    "regions": "🌍 Rajonet",
+    "optimizer": "🎯 Optimizuesi"
+  },
+  "optimizer": {
+    "title": "Optimizuesi i fitimit sipas rajonit",
+    "intro": "Zgjidh një industri dhe skano rajonet e botës për fitimin më të mirë të vlerësuar neto ditor duke përdorur konfigurimin aktual të fabrikës.",
+    "industry": "Industria",
+    "threshold": "Bonusi minimal i rajonit (%)",
+    "maxCandidates": "Maks. kandidatë",
+    "topN": "Finalistët (top N)",
+    "scan": "Skano",
+    "scanning": "Duke skanuar…",
+    "noCandidates": "Asnjë rajon nuk përputhet — ul bonusin minimal të rajonit.",
+    "error": "Skanimi dështoi. Provo përsëri.",
+    "phaseEconomics": "Duke marrë ekonominë {{done}}/{{total}}",
+    "phasePollution": "Duke rafinuar ndotjen {{done}}/{{total}}",
+    "baseline": "Konfigurimi yt aktual: {{net}} CC/ditë",
+    "baselineNone": "Pa bazë — konfiguro fabrikat e tua në një skedë industrie.",
+    "fetchedAt": "Të dhënat më {{date}}",
+    "ownersSnapshot": "Pamja e pronësisë së rajonit: {{date}}",
+    "skipped_one": "{{count}} kandidat u anashkalua (nuk ka të dhëna ekonomike për shtetin e tij).",
+    "skipped_other": "{{count}} kandidatë u anashkaluan (nuk ka të dhëna ekonomike për shtetet e tyre).",
+    "pollutionEstimate": "vlerësim",
+    "columns": {
+      "rank": "#",
+      "region": "Rajoni",
+      "country": "Shteti",
+      "regionBonus": "Bonusi i rajonit",
+      "countryBonus": "Bonusi i shtetit",
+      "salary": "Paga mesatare",
+      "workTax": "Taksa e punës",
+      "vat": "TVSH",
+      "net": "Neto/ditë",
+      "delta": "Δ kundrejt bazës"
+    }
+  },
+  "regions": {
+    "country": "Shteti",
+    "allCountries": "Të gjitha shtetet",
+    "bonusValue": "+{{value}}%",
+    "empty": "Asnjë rajon me burimet e kësaj industrie në shtetin e zgjedhur.",
+    "updated": "Përditësuar më {{date}} · pronësia aktuale mund të ndryshojë në luftë",
+    "updateData": "Përditëso të dhënat",
+    "erpkLabel": "Cookie-ja jote e sesionit eRepublik (erpk)",
+    "erpkPlaceholder": "Ngjit erpk…",
+    "refresh": "Rifresko",
+    "refreshing": "Duke rifreskuar…",
+    "refreshOk_one": "Përditësuar — {{count}} rajon",
+    "refreshOk_other": "Përditësuar — {{count}} rajone",
+    "refreshError": "Rifreskimi dështoi: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Rajoni",
+      "country": "Shteti",
+      "bonus": "Bonusi",
+      "resources": "Burimet"
+    }
   },
   "labels": {
     "companies": "Kompanitë",

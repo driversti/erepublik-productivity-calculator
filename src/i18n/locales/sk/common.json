@@ -38,7 +38,66 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holdingy"
+    "holdings": "🗂️ Holdingy",
+    "regions": "🌍 Regióny",
+    "optimizer": "🎯 Optimalizátor"
+  },
+  "optimizer": {
+    "title": "Optimalizátor zisku regiónov",
+    "intro": "Vyberte odvetvie a prehľadajte svetové regióny, aby ste s aktuálnym nastavením tovární našli najlepší odhadovaný denný čistý zisk.",
+    "industry": "Odvetvie",
+    "threshold": "Min. bonus regiónu (%)",
+    "maxCandidates": "Max. kandidátov",
+    "topN": "Finalisti (top N)",
+    "scan": "Skenovať",
+    "scanning": "Skenuje sa…",
+    "noCandidates": "Žiadne regióny nevyhovujú — znížte minimálny bonus regiónu.",
+    "error": "Skenovanie zlyhalo. Skúste to znova.",
+    "phaseEconomics": "Načítavajú sa ekonomické údaje {{done}}/{{total}}",
+    "phasePollution": "Spresňuje sa znečistenie {{done}}/{{total}}",
+    "baseline": "Vaše aktuálne nastavenie: {{net}} CC/deň",
+    "baselineNone": "Žiadny základ — nastavte svoje továrne na karte odvetvia.",
+    "fetchedAt": "Údaje k {{date}}",
+    "ownersSnapshot": "Snímka vlastníctva regiónov: {{date}}",
+    "skipped_one": "{{count}} kandidát preskočený (žiadne ekonomické údaje pre jeho krajinu).",
+    "skipped_few": "{{count}} kandidáti preskočení (žiadne ekonomické údaje pre ich krajinu).",
+    "skipped_other": "{{count}} kandidátov preskočených (žiadne ekonomické údaje pre ich krajinu).",
+    "pollutionEstimate": "odhad",
+    "columns": {
+      "rank": "#",
+      "region": "Región",
+      "country": "Krajina",
+      "regionBonus": "Bonus regiónu",
+      "countryBonus": "Bonus krajiny",
+      "salary": "Priem. mzda",
+      "workTax": "Daň z práce",
+      "vat": "DPH",
+      "net": "Čistý/deň",
+      "delta": "Δ oproti základu"
+    }
+  },
+  "regions": {
+    "country": "Krajina",
+    "allCountries": "Všetky krajiny",
+    "bonusValue": "+{{value}}%",
+    "empty": "Vo vybranej krajine nie sú žiadne regióny so surovinami tohto odvetvia.",
+    "updated": "Aktualizované {{date}} · aktuálne vlastníctvo sa môže vo vojne zmeniť",
+    "updateData": "Aktualizovať údaje",
+    "erpkLabel": "Vaša relácia eRepublik (cookie erpk)",
+    "erpkPlaceholder": "Vložte erpk…",
+    "refresh": "Obnoviť",
+    "refreshing": "Obnovuje sa…",
+    "refreshOk_one": "Aktualizované — {{count}} región",
+    "refreshOk_few": "Aktualizované — {{count}} regióny",
+    "refreshOk_other": "Aktualizované — {{count}} regiónov",
+    "refreshError": "Obnovenie zlyhalo: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Región",
+      "country": "Krajina",
+      "bonus": "Bonus",
+      "resources": "Suroviny"
+    }
   },
   "labels": {
     "companies": "Spoločnosti",

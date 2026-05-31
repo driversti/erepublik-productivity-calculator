@@ -38,7 +38,66 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holdinzi"
+    "holdings": "🗂️ Holdinzi",
+    "regions": "🌍 Regije",
+    "optimizer": "🎯 Optimizator"
+  },
+  "optimizer": {
+    "title": "Optimizator profita po regijama",
+    "intro": "Odaberite industriju i pretražite svjetske regije za najbolji procijenjeni dnevni neto profit s vašom trenutnom postavom tvornica.",
+    "industry": "Industrija",
+    "threshold": "Min. bonus regije (%)",
+    "maxCandidates": "Najviše kandidata",
+    "topN": "Finalisti (top N)",
+    "scan": "Skeniraj",
+    "scanning": "Skeniranje…",
+    "noCandidates": "Nijedna regija ne odgovara — smanjite minimalni bonus regije.",
+    "error": "Skeniranje nije uspjelo. Pokušajte ponovno.",
+    "phaseEconomics": "Dohvaćanje ekonomije {{done}}/{{total}}",
+    "phasePollution": "Pročišćavanje zagađenja {{done}}/{{total}}",
+    "baseline": "Vaša trenutna postava: {{net}} CC/dan",
+    "baselineNone": "Nema osnovice — postavite svoje tvornice na kartici industrije.",
+    "fetchedAt": "Podaci na dan {{date}}",
+    "ownersSnapshot": "Snimka vlasništva regija: {{date}}",
+    "skipped_one": "{{count}} kandidat preskočen (nema ekonomskih podataka za njegovu državu).",
+    "skipped_few": "{{count}} kandidata preskočena (nema ekonomskih podataka za njihovu državu).",
+    "skipped_other": "{{count}} kandidata preskočeno (nema ekonomskih podataka za njihovu državu).",
+    "pollutionEstimate": "procjena",
+    "columns": {
+      "rank": "#",
+      "region": "Regija",
+      "country": "Država",
+      "regionBonus": "Bonus regije",
+      "countryBonus": "Bonus države",
+      "salary": "Prosj. plaća",
+      "workTax": "Porez na rad",
+      "vat": "PDV",
+      "net": "Neto/dan",
+      "delta": "Δ u odnosu na osnovicu"
+    }
+  },
+  "regions": {
+    "country": "Država",
+    "allCountries": "Sve države",
+    "bonusValue": "+{{value}}%",
+    "empty": "Nema regija s resursima ove industrije u odabranoj državi.",
+    "updated": "Ažurirano {{date}} · trenutno vlasništvo može se promijeniti u ratu",
+    "updateData": "Ažuriraj podatke",
+    "erpkLabel": "Vaš eRepublik kolačić sesije (erpk)",
+    "erpkPlaceholder": "Zalijepite erpk…",
+    "refresh": "Osvježi",
+    "refreshing": "Osvježavanje…",
+    "refreshOk_one": "Ažurirano — {{count}} regija",
+    "refreshOk_few": "Ažurirano — {{count}} regije",
+    "refreshOk_other": "Ažurirano — {{count}} regija",
+    "refreshError": "Osvježavanje nije uspjelo: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Regija",
+      "country": "Država",
+      "bonus": "Bonus",
+      "resources": "Resursi"
+    }
   },
   "labels": {
     "companies": "Tvrtke",

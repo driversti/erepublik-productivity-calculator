@@ -38,7 +38,62 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holding"
+    "holdings": "🗂️ Holding",
+    "regions": "🌍 Region",
+    "optimizer": "🎯 Pengoptimal"
+  },
+  "optimizer": {
+    "title": "Pengoptimal Keuntungan Region",
+    "intro": "Pilih industri dan pindai region dunia untuk estimasi keuntungan bersih harian terbaik menggunakan pengaturan pabrik Anda saat ini.",
+    "industry": "Industri",
+    "threshold": "Bonus region minimum (%)",
+    "maxCandidates": "Kandidat maksimum",
+    "topN": "Finalis (top N)",
+    "scan": "Pindai",
+    "scanning": "Memindai…",
+    "noCandidates": "Tidak ada region yang cocok — turunkan bonus region minimum.",
+    "error": "Pemindaian gagal. Silakan coba lagi.",
+    "phaseEconomics": "Mengambil data ekonomi {{done}}/{{total}}",
+    "phasePollution": "Menyempurnakan polusi {{done}}/{{total}}",
+    "baseline": "Pengaturan Anda saat ini: {{net}} CC/hari",
+    "baselineNone": "Tidak ada baseline — atur pabrik Anda di tab industri.",
+    "fetchedAt": "Data per {{date}}",
+    "ownersSnapshot": "Snapshot kepemilikan region: {{date}}",
+    "skipped_other": "{{count}} kandidat dilewati (tidak ada data ekonomi untuk negaranya).",
+    "pollutionEstimate": "estimasi",
+    "columns": {
+      "rank": "#",
+      "region": "Region",
+      "country": "Negara",
+      "regionBonus": "Bonus region",
+      "countryBonus": "Bonus negara",
+      "salary": "Gaji rata-rata",
+      "workTax": "Pajak kerja",
+      "vat": "PPN",
+      "net": "Bersih/hari",
+      "delta": "Δ vs baseline"
+    }
+  },
+  "regions": {
+    "country": "Negara",
+    "allCountries": "Semua negara",
+    "bonusValue": "+{{value}}%",
+    "empty": "Tidak ada region dengan sumber daya industri ini di negara yang dipilih.",
+    "updated": "Diperbarui {{date}} · kepemilikan saat ini dapat berubah saat perang",
+    "updateData": "Perbarui data",
+    "erpkLabel": "Cookie sesi eRepublik Anda (erpk)",
+    "erpkPlaceholder": "Tempel erpk…",
+    "refresh": "Segarkan",
+    "refreshing": "Menyegarkan…",
+    "refreshOk_other": "Diperbarui — {{count}} region",
+    "refreshError": "Penyegaran gagal: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Region",
+      "country": "Negara",
+      "bonus": "Bonus",
+      "resources": "Sumber daya"
+    }
   },
   "labels": {
     "companies": "Perusahaan",

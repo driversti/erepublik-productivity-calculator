@@ -39,7 +39,40 @@
   },
   "tabs": {
     "holdings": "🗂️ ホールディングス",
-    "regions": "🌍 地域"
+    "regions": "🌍 地域",
+    "optimizer": "🎯 最適化"
+  },
+  "optimizer": {
+    "title": "地域収益最適化",
+    "intro": "産業を選び、現在の工場設定で日次純利益の見積もりが最も高い世界の地域をスキャンします。",
+    "industry": "産業",
+    "threshold": "最低地域ボーナス (%)",
+    "maxCandidates": "最大候補数",
+    "topN": "ファイナリスト (上位 N)",
+    "scan": "スキャン",
+    "scanning": "スキャン中…",
+    "noCandidates": "一致する地域がありません — 最低地域ボーナスを下げてください。",
+    "error": "スキャンに失敗しました。もう一度お試しください。",
+    "phaseEconomics": "経済データ取得中 {{done}}/{{total}}",
+    "phasePollution": "汚染データ精査中 {{done}}/{{total}}",
+    "baseline": "現在の設定: {{net}} CC/日",
+    "baselineNone": "基準なし — 産業タブで工場を設定してください。",
+    "fetchedAt": "データ取得時点: {{date}}",
+    "ownersSnapshot": "地域領有状況のスナップショット: {{date}}",
+    "skipped_other": "{{count}} 件の候補をスキップしました (その国の経済データがありません)。",
+    "pollutionEstimate": "推定",
+    "columns": {
+      "rank": "#",
+      "region": "地域",
+      "country": "国",
+      "regionBonus": "地域ボーナス",
+      "countryBonus": "国ボーナス",
+      "salary": "平均給与",
+      "workTax": "労働税",
+      "vat": "VAT",
+      "net": "純利益/日",
+      "delta": "Δ 基準比"
+    }
   },
   "regions": {
     "country": "国",

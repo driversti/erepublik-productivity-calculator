@@ -38,7 +38,66 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holdinguri"
+    "holdings": "🗂️ Holdinguri",
+    "regions": "🌍 Regiuni",
+    "optimizer": "🎯 Optimizator"
+  },
+  "optimizer": {
+    "title": "Optimizator de profit pe regiuni",
+    "intro": "Alege o industrie și scanează regiunile lumii pentru cel mai bun profit net zilnic estimat, folosind configurația ta actuală de fabrici.",
+    "industry": "Industrie",
+    "threshold": "Bonus minim de regiune (%)",
+    "maxCandidates": "Candidați maximi",
+    "topN": "Finaliști (primii N)",
+    "scan": "Scanează",
+    "scanning": "Se scanează…",
+    "noCandidates": "Nicio regiune nu se potrivește — scade bonusul minim de regiune.",
+    "error": "Scanarea a eșuat. Încearcă din nou.",
+    "phaseEconomics": "Se preiau datele economice {{done}}/{{total}}",
+    "phasePollution": "Se rafinează poluarea {{done}}/{{total}}",
+    "baseline": "Configurația ta actuală: {{net}} CC/zi",
+    "baselineNone": "Fără referință — configurează-ți fabricile pe un tab de industrie.",
+    "fetchedAt": "Date la data de {{date}}",
+    "ownersSnapshot": "Instantaneu al proprietății regiunilor: {{date}}",
+    "skipped_one": "{{count}} candidat omis (fără date economice pentru țara sa).",
+    "skipped_few": "{{count}} candidați omiși (fără date economice pentru țările lor).",
+    "skipped_other": "{{count}} de candidați omiși (fără date economice pentru țările lor).",
+    "pollutionEstimate": "estimare",
+    "columns": {
+      "rank": "#",
+      "region": "Regiune",
+      "country": "Țară",
+      "regionBonus": "Bonus regiune",
+      "countryBonus": "Bonus țară",
+      "salary": "Salariu mediu",
+      "workTax": "Taxă pe muncă",
+      "vat": "TVA",
+      "net": "Net/zi",
+      "delta": "Δ față de referință"
+    }
+  },
+  "regions": {
+    "country": "Țară",
+    "allCountries": "Toate țările",
+    "bonusValue": "+{{value}}%",
+    "empty": "Nicio regiune cu resursele acestei industrii în țara selectată.",
+    "updated": "Actualizat {{date}} · proprietatea actuală se poate schimba în război",
+    "updateData": "Actualizează datele",
+    "erpkLabel": "Cookie-ul sesiunii tale eRepublik (erpk)",
+    "erpkPlaceholder": "Lipește erpk…",
+    "refresh": "Reîmprospătează",
+    "refreshing": "Se reîmprospătează…",
+    "refreshOk_one": "Actualizat — {{count}} regiune",
+    "refreshOk_few": "Actualizat — {{count}} regiuni",
+    "refreshOk_other": "Actualizat — {{count}} de regiuni",
+    "refreshError": "Reîmprospătarea a eșuat: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Regiune",
+      "country": "Țară",
+      "bonus": "Bonus",
+      "resources": "Resurse"
+    }
   },
   "labels": {
     "companies": "Companii",

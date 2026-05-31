@@ -38,7 +38,62 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ 지주회사"
+    "holdings": "🗂️ 지주회사",
+    "regions": "🌍 지역",
+    "optimizer": "🎯 최적화"
+  },
+  "optimizer": {
+    "title": "지역 수익 최적화",
+    "intro": "산업을 선택하면 현재 공장 설정을 기준으로 일일 순수익이 가장 높은 세계 지역을 검색합니다.",
+    "industry": "산업",
+    "threshold": "최소 지역 보너스 (%)",
+    "maxCandidates": "최대 후보 수",
+    "topN": "최종 후보 (상위 N)",
+    "scan": "검색",
+    "scanning": "검색 중…",
+    "noCandidates": "일치하는 지역이 없습니다 — 최소 지역 보너스를 낮추세요.",
+    "error": "검색에 실패했습니다. 다시 시도해 주세요.",
+    "phaseEconomics": "경제 데이터 가져오는 중 {{done}}/{{total}}",
+    "phasePollution": "오염도 보정 중 {{done}}/{{total}}",
+    "baseline": "현재 설정: {{net}} CC/일",
+    "baselineNone": "기준값 없음 — 산업 탭에서 공장을 설정하세요.",
+    "fetchedAt": "{{date}} 기준 데이터",
+    "ownersSnapshot": "지역 소유 현황: {{date}}",
+    "skipped_other": "{{count}}개 후보를 건너뛰었습니다 (해당 국가의 경제 데이터 없음).",
+    "pollutionEstimate": "추정치",
+    "columns": {
+      "rank": "#",
+      "region": "지역",
+      "country": "국가",
+      "regionBonus": "지역 보너스",
+      "countryBonus": "국가 보너스",
+      "salary": "평균 급여",
+      "workTax": "근로세",
+      "vat": "VAT",
+      "net": "순수익/일",
+      "delta": "Δ 기준값 대비"
+    }
+  },
+  "regions": {
+    "country": "국가",
+    "allCountries": "전체 국가",
+    "bonusValue": "+{{value}}%",
+    "empty": "선택한 국가에 이 산업의 자원이 있는 지역이 없습니다.",
+    "updated": "{{date}} 업데이트 · 현재 소유권은 전쟁으로 바뀔 수 있습니다",
+    "updateData": "데이터 업데이트",
+    "erpkLabel": "eRepublik 세션 쿠키 (erpk)",
+    "erpkPlaceholder": "erpk 붙여넣기…",
+    "refresh": "새로고침",
+    "refreshing": "새로고침 중…",
+    "refreshOk_other": "업데이트됨 — {{count}}개 지역",
+    "refreshError": "새로고침 실패: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "지역",
+      "country": "국가",
+      "bonus": "보너스",
+      "resources": "자원"
+    }
   },
   "labels": {
     "companies": "회사",

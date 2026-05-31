@@ -38,7 +38,64 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holdingok"
+    "holdings": "🗂️ Holdingok",
+    "regions": "🌍 Régiók",
+    "optimizer": "🎯 Optimalizáló"
+  },
+  "optimizer": {
+    "title": "Régió profitoptimalizáló",
+    "intro": "Válassz iparágat, és vizsgáld át a világ régióit a legjobb becsült napi nettó profitért a jelenlegi gyárbeállításoddal.",
+    "industry": "Iparág",
+    "threshold": "Min. régióbónusz (%)",
+    "maxCandidates": "Max. jelöltek",
+    "topN": "Döntősök (top N)",
+    "scan": "Keresés",
+    "scanning": "Keresés…",
+    "noCandidates": "Nincs megfelelő régió — csökkentsd a minimális régióbónuszt.",
+    "error": "A keresés sikertelen. Próbáld újra.",
+    "phaseEconomics": "Gazdasági adatok letöltése {{done}}/{{total}}",
+    "phasePollution": "Szennyezés finomítása {{done}}/{{total}}",
+    "baseline": "A jelenlegi beállításod: {{net}} CC/nap",
+    "baselineNone": "Nincs viszonyítási alap — állítsd be a gyáraidat egy iparág fülön.",
+    "fetchedAt": "Adatok: {{date}}",
+    "ownersSnapshot": "Régiótulajdon-pillanatkép: {{date}}",
+    "skipped_one": "{{count}} jelölt kihagyva (nincs gazdasági adat az országához).",
+    "skipped_other": "{{count}} jelölt kihagyva (nincs gazdasági adat az országukhoz).",
+    "pollutionEstimate": "becslés",
+    "columns": {
+      "rank": "#",
+      "region": "Régió",
+      "country": "Ország",
+      "regionBonus": "Régióbónusz",
+      "countryBonus": "Országbónusz",
+      "salary": "Átl. fizetés",
+      "workTax": "Munkaadói adó",
+      "vat": "ÁFA",
+      "net": "Nettó/nap",
+      "delta": "Δ az alaphoz képest"
+    }
+  },
+  "regions": {
+    "country": "Ország",
+    "allCountries": "Összes ország",
+    "bonusValue": "+{{value}}%",
+    "empty": "Nincs ehhez az iparághoz tartozó nyersanyaggal rendelkező régió a kiválasztott országban.",
+    "updated": "Frissítve {{date}} · a jelenlegi tulajdonviszony háborúban változhat",
+    "updateData": "Adatok frissítése",
+    "erpkLabel": "Az eRepublik munkamenet-sütid (erpk)",
+    "erpkPlaceholder": "Illeszd be az erpk-t…",
+    "refresh": "Frissítés",
+    "refreshing": "Frissítés…",
+    "refreshOk_one": "Frissítve — {{count}} régió",
+    "refreshOk_other": "Frissítve — {{count}} régió",
+    "refreshError": "A frissítés sikertelen: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Régió",
+      "country": "Ország",
+      "bonus": "Bónusz",
+      "resources": "Nyersanyagok"
+    }
   },
   "labels": {
     "companies": "Cégek",

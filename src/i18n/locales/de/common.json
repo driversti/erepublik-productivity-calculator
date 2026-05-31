@@ -38,7 +38,64 @@
     "ja": "日本語"
   },
   "tabs": {
-    "holdings": "🗂️ Holdings"
+    "holdings": "🗂️ Holdings",
+    "regions": "🌍 Regionen",
+    "optimizer": "🎯 Optimierer"
+  },
+  "optimizer": {
+    "title": "Regionen-Gewinnoptimierer",
+    "intro": "Wähle eine Branche und durchsuche die Regionen der Welt nach dem besten geschätzten täglichen Nettogewinn mit deinem aktuellen Fabrik-Setup.",
+    "industry": "Branche",
+    "threshold": "Min. Regionsbonus (%)",
+    "maxCandidates": "Max. Kandidaten",
+    "topN": "Finalisten (Top N)",
+    "scan": "Scannen",
+    "scanning": "Scanne…",
+    "noCandidates": "Keine Region passt – senke den minimalen Regionsbonus.",
+    "error": "Scan fehlgeschlagen. Bitte versuche es erneut.",
+    "phaseEconomics": "Wirtschaftsdaten werden geladen {{done}}/{{total}}",
+    "phasePollution": "Verschmutzung wird verfeinert {{done}}/{{total}}",
+    "baseline": "Dein aktuelles Setup: {{net}} CC/Tag",
+    "baselineNone": "Keine Grundlinie – richte deine Fabriken in einem Branchen-Tab ein.",
+    "fetchedAt": "Daten vom {{date}}",
+    "ownersSnapshot": "Momentaufnahme des Regionsbesitzes: {{date}}",
+    "skipped_one": "{{count}} Kandidat übersprungen (keine Wirtschaftsdaten für sein Land).",
+    "skipped_other": "{{count}} Kandidaten übersprungen (keine Wirtschaftsdaten für ihr Land).",
+    "pollutionEstimate": "Schätzung",
+    "columns": {
+      "rank": "#",
+      "region": "Region",
+      "country": "Land",
+      "regionBonus": "Regionsbonus",
+      "countryBonus": "Länderbonus",
+      "salary": "Durchschn. Lohn",
+      "workTax": "Arbeitssteuer",
+      "vat": "MwSt.",
+      "net": "Netto/Tag",
+      "delta": "Δ vs. Grundlinie"
+    }
+  },
+  "regions": {
+    "country": "Land",
+    "allCountries": "Alle Länder",
+    "bonusValue": "+{{value}}%",
+    "empty": "Keine Regionen mit den Ressourcen dieser Branche im gewählten Land.",
+    "updated": "Aktualisiert {{date}} · der aktuelle Besitz kann sich im Krieg ändern",
+    "updateData": "Daten aktualisieren",
+    "erpkLabel": "Dein eRepublik-Sitzungscookie (erpk)",
+    "erpkPlaceholder": "erpk einfügen…",
+    "refresh": "Aktualisieren",
+    "refreshing": "Aktualisiere…",
+    "refreshOk_one": "Aktualisiert – {{count}} Region",
+    "refreshOk_other": "Aktualisiert – {{count}} Regionen",
+    "refreshError": "Aktualisierung fehlgeschlagen: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "Region",
+      "country": "Land",
+      "bonus": "Bonus",
+      "resources": "Ressourcen"
+    }
   },
   "labels": {
     "companies": "Firmen",
