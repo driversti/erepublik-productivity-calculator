@@ -4,6 +4,7 @@ import { TabBar } from './components/TabBar';
 import { IndustryView } from './views/IndustryView/IndustryView';
 import { HoldingsView } from './views/HoldingsView/HoldingsView';
 import { AppTooltip } from './components/AppTooltip';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { useState, useEffect } from 'react';
 
 function ActiveView() {
@@ -41,9 +42,12 @@ export default function App() {
               <p>Estimate daily profit across food, weapons, houses, aircraft &amp; holdings</p>
             </div>
           </div>
-          <button type="button" className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle theme">
-            {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <LanguageSwitcher />
+            <button type="button" className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle theme">
+              {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+            </button>
+          </div>
         </div>
       </header>
       <TabBar />
