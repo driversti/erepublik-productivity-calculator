@@ -1,3 +1,9 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
 # OS junk
 .DS_Store
 Thumbs.db
@@ -18,3 +24,6 @@ Thumbs.db
 
 # Ad-hoc screenshots at repo root (docs/screenshots/ is intentional)
 /*.png
+
+# Visual brainstorming companion
+.superpowers/
