@@ -37,6 +37,10 @@ describe('rankRegions', () => {
     expect(ro.length).toBeLessThanOrEqual(all.length);
     expect(ro.every((r) => r.region.currentCountry === 'Romania')).toBe(true);
   });
+
+  it('returns an empty array when the country filter matches no region with the industry', () => {
+    expect(rankRegions('aircraft', { country: '__no_such_country__' })).toHaveLength(0);
+  });
 });
 
 describe('countriesForIndustry', () => {
@@ -44,6 +48,6 @@ describe('countriesForIndustry', () => {
     const list = countriesForIndustry('aircraft');
     expect(list).toContain('Romania');
     expect(new Set(list).size).toBe(list.length); // no dupes
-    expect([...list]).toEqual([...list].sort((a, b) => a.localeCompare(b)));
+    expect([...list]).toEqual([...list].sort((a, b) => a.localeCompare(b, 'en')));
   });
 });

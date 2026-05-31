@@ -32,7 +32,7 @@ export function rankRegions(
     ranked.push({ region, totalBonus, matched });
   }
   ranked.sort(
-    (a, b) => b.totalBonus - a.totalBonus || a.region.name.localeCompare(b.region.name),
+    (a, b) => b.totalBonus - a.totalBonus || a.region.name.localeCompare(b.region.name, 'en'),
   );
   return ranked;
 }
@@ -45,5 +45,5 @@ export function countriesForIndustry(industry: Industry): string[] {
       set.add(region.currentCountry);
     }
   }
-  return [...set].sort((a, b) => a.localeCompare(b));
+  return [...set].sort((a, b) => a.localeCompare(b, 'en'));
 }
