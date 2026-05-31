@@ -13,15 +13,18 @@ eRepublik **Productivity / Profit Calculator** — a single-page web app that es
 
 ```bash
 npm install
-npm run dev      # Vite dev server (HMR) on http://localhost:5173; proxies /proxy → 8080
-npm run build    # tsc --noEmit && vite build → dist/
-node server.js   # serves dist/ + /proxy on http://localhost:8080
-npm test         # vitest: calc golden-parity, state, components, views
+npm run dev               # Vite (HMR) on :5173; auto-spawns server.js on :8080, proxies /proxy → 8080
+npm run build             # tsc --noEmit && vite build → dist/
+npm run serve             # node server.js — serves dist/ + /proxy on :8080 (production)
+npm test                  # vitest run: calc golden-parity, state, components, views, i18n
+npm run test:watch        # vitest watch mode
+npx vitest run src/calc/golden.test.ts   # run a single test file
 ```
 
-**Dev:** run `npm run dev` and `node server.js` together — Vite serves the UI with
-HMR; the Node server provides the `/proxy` endpoint (Vite proxies `/proxy` → 8080).
-**Production:** `npm run build`, then `node server.js` serves the built app from
+**Dev:** just `npm run dev`. A `vite.config.ts` plugin (`proxyServerPlugin`) boots
+`server.js` on :8080 for you and tears it down on exit — it skips spawning if
+something is already listening on 8080, so a manually started server is reused.
+**Production:** `npm run build`, then `npm run serve` (or `node server.js`) serves
 `dist/`. All live data fetches go through `/proxy` to bypass CORS.
 
 ## Architecture
@@ -51,7 +54,11 @@ src/
 │   └── hooks.ts               # domain facade hooks (components never touch dispatch directly)
 ├── services/                  # live data via /proxy (pure parsers + thin fetchers)
 │   ├── proxy.ts, livePrices.ts, regions.ts
-├── components/                # shared: Counter, IconImage, StarRating, FactoryCard, TabBar
+├── i18n/                      # react-i18next: synchronous init, bundled JSON catalogs
+│   ├── index.ts, config.ts    # global instance + SUPPORTED_LOCALES/loadLocale
+│   ├── names.ts               # localized country/region/industry name helpers
+│   └── locales/en/*.json      # 4 namespaces: common, industry, holdings, tooltips
+├── components/                # shared: Counter, IconImage, StarRating, TabBar, LanguageSwitcher, AppTooltip
 └── views/
     ├── IndustryView/          # one industry tab (Summary, Modifiers, Prices, grids)
     └── HoldingsView/          # holdings (toolbar, location bar, per-industry sections, summary)
@@ -60,7 +67,8 @@ src/
 `server.js` is an ESM (`type: module`) ~160-line `http` server: serves `dist/`
 (falling back to the repo root for assets outside the build, e.g. `travelData.js`),
 plus a `/proxy?url=…` GET endpoint allowlisted to `www.erepublik.com` and
-`service.erepublik.tools` over https only. PORT 8080 hardcoded. `travelData.js`
+`service.erepublik.tools` over https only. Port is `process.env.PORT || 8080`.
+`travelData.js`
 lives at the repo root; styles live in `styles/` (a per-concern split imported via
 `styles/index.css` from `main.tsx`).
 
@@ -125,14 +133,43 @@ Manually editing any modifier input **de-syncs** the location selection (clears
 country/region) — this is intentional (`SET_MODULE_FIELD` in the reducer);
 preserve it. A bulk price sync does NOT de-sync.
 
+### Localization (i18n)
+
+`src/i18n/index.ts` inits a single global `react-i18next` instance **synchronously**
+from bundled JSON (no Suspense, no `<I18nextProvider>`, no key-flash — tests render
+immediately). Four namespaces: `common`, `industry`, `holdings`, `tooltips`
+(`defaultNS: 'common'`). UI text comes from `useTranslation(ns)`; `i18n/names.ts`
+maps raw game country/region/industry codes to display names. Tooltips use
+`react-tooltip` via the global `AppTooltip` + the `tip()` helper in
+`components/tooltip.ts`.
+
+To add a locale: add the code to `SUPPORTED_LOCALES` in `i18n/config.ts` and create
+`locales/<code>/{common,industry,holdings,tooltips}.json`. The `LanguageSwitcher`
+hides itself while only one locale exists and appears automatically once there are
+two. Persisted under `localStorage` key `erep_locale`. **Add user-facing strings to
+the catalogs, never hard-code them in components**; `i18n/i18n.test.ts` asserts every
+namespace loads and keys resolve.
+
+## Deployment
+
+Dockerized like the rest of the monorepo. `release.sh` builds the Vite bundle **on
+the host** (`npm ci && npm run build`) — esbuild is fragile inside buildkit/QEMU —
+then `docker buildx` builds a multi-arch (`amd64,arm64`) image that just *copies*
+`dist/` + `server.js` (no node_modules, no in-image compile) and pushes
+`registry.yurii.live/erep-calculator:{version,latest}`. Version comes from
+`package.json`. `docker-compose.yml` runs it as `erep-calculator`, host `:8085` →
+container `:8080`. `server.js` honors `PORT` (defaults 8080).
+
 ## Conventions
 
 - TypeScript strict; `npm run build` runs `tsc --noEmit` before `vite build`.
 - Profit math is pure and DOM-free (`src/calc`) and must stay golden-parity green.
 - Components reach state only through `src/state/hooks.ts` facades, never raw dispatch.
 - All currency display is `.toFixed(2)` CC; company counts cap at 9999 per quality.
-- Keep dependencies minimal — React + Vite + Vitest + Testing Library only, unless
-  explicitly asked.
+- Keep dependencies minimal — React + Vite + Vitest + Testing Library, plus
+  `i18next`/`react-i18next` (localization) and `react-tooltip` (tooltips). Add
+  nothing else unless explicitly asked.
+- User-facing text lives in `src/i18n/locales/*` catalogs, never inline in JSX.
 ```
 
 (The legacy vanilla app — `app.js`, `holdingsCalc.mjs`, `index.legacy.html` — was

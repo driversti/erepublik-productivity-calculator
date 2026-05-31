@@ -9,7 +9,7 @@
     "toDark": "🌙 Dark Mode",
     "toLight": "☀️ Light Mode"
   },
-  "language": { "label": "Language" },
+  "language": { "label": "Language", "en": "English", "uk": "Українська" },
   "tabs": { "holdings": "🗂️ Holdings" },
   "labels": { "companies": "Companies", "workers": "Workers" },
   "counter": { "minusAria": "{{label}} minus", "plusAria": "{{label}} plus" },

@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "Їжа",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "Зброя",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "Будинки",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "Літаки",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "Країна",
+    "region": "Регіон",
+    "selectCountry": "Оберіть країну",
+    "selectRegion": "Оберіть регіон",
+    "countryBonus": "Бонус країни (%)",
+    "regionBonus": "Бонус регіону (%)",
+    "workTax": "Податок на працю (%)",
+    "vat": "ПДВ (%)",
+    "avgSalary": "Середня зарплата",
+    "offeredCc": "ЗП 1 працівнику",
+    "tycoon": "Магнат (+20%)",
+    "tycoonAria": "Пакет Магнат",
+    "wam": "WAM",
+    "wamAria": "Робота як менеджер"
+  },
+  "prices": {
+    "header": "Ринкові ціни {{label}} (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "Ваші фабрики {{label}}",
+    "rmHeader": "Ваші компанії {{rm}}",
+    "factoriesHeaderShort": "Фабрики {{label}}",
+    "rmHeaderShort": "Компанії {{rm}}",
+    "headers": {
+      "quality": "Якість",
+      "companies": "Компанії",
+      "workers": "Працівники",
+      "output": "Виробництво/сесія",
+      "netProfit": "Чистий прибуток/день"
+    },
+    "outputSession": "{{value}} / сесія",
+    "outputSessionRm": "{{value}} {{rm}} / сесія"
+  },
+  "summary": {
+    "title": "Підсумок",
+    "optionABadge": "Варіант A",
+    "optionBBadge": "Варіант B",
+    "netProfit": "Очікуваний чистий прибуток/день",
+    "totalCompanies": "Усього компаній",
+    "output": "Виробництво {{label}}",
+    "rmConsumed": "Спожито {{rm}}",
+    "revenue": "Дохід за день",
+    "rmCost": "Витрати на {{rm}} за день",
+    "grossProfit": "Валовий прибуток",
+    "workTax": "Податок на працю за день",
+    "salary": "Зарплати за день",
+    "breakdownTitle": "Розподіл інвентарю:",
+    "noFactories": "Фабрики ще не налаштовані.",
+    "breakdownItem": "Q{{q}} ({{companies}}к / {{workers}}п)",
+    "comparisonTitle": "Порівняння стратегій {{rm}}",
+    "rmProduced": "Вироблено {{rm}}",
+    "rmNetBalance": "Чистий баланс {{rm}}",
+    "optionABuyTitle": "Варіант A: Купити {{rm}}",
+    "optionAMarketCost": "Ринкова вартість: {{cost}} CC",
+    "optionBProduceTitle": "Варіант B: Виробляти {{rm}}",
+    "optionBBalance": "Баланс: {{balance}} {{rm}}",
+    "netProfitInline": "Чистий прибуток:",
+    "recommendA": "Рекомендація: Варіант A (Купити {{rm}}) вигідніший на {{delta}} CC/день",
+    "recommendB": "Рекомендація: Варіант B (Виробляти) вигідніший на {{delta}} CC/день",
+    "recommendEqual": "Рекомендація: Обидва варіанти однаково вигідні"
+  }
+}

@@ -5,6 +5,10 @@ import enCommon from './locales/en/common.json';
 import enIndustry from './locales/en/industry.json';
 import enHoldings from './locales/en/holdings.json';
 import enTooltips from './locales/en/tooltips.json';
+import ukCommon from './locales/uk/common.json';
+import ukIndustry from './locales/uk/industry.json';
+import ukHoldings from './locales/uk/holdings.json';
+import ukTooltips from './locales/uk/tooltips.json';
 
 export const resources = {
   en: {
@@ -12,6 +16,12 @@ export const resources = {
     industry: enIndustry,
     holdings: enHoldings,
     tooltips: enTooltips,
+  },
+  uk: {
+    common: ukCommon,
+    industry: ukIndustry,
+    holdings: ukHoldings,
+    tooltips: ukTooltips,
   },
 } as const;
 
