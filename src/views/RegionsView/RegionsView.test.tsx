@@ -1,19 +1,32 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+// Mock the data service: fetch returns the bundled seed; refresh is a spy.
+vi.mock('../../services/regionData', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../services/regionData')>();
+  return {
+    ...actual,
+    fetchRegionData: vi.fn(async () => actual.BUNDLED_DATASET),
+    refreshRegionData: vi.fn(),
+  };
+});
+
 import { RegionsView } from './RegionsView';
-import { SNAPSHOT_DATE } from '../../data/regionResources';
+import { BUNDLED_DATASET, refreshRegionData } from '../../services/regionData';
 import { allCountries, countriesForIndustry } from '../../regions/ranking';
+
+beforeEach(() => vi.clearAllMocks());
 
 function setup() {
   return render(<RegionsView />);
 }
 
 describe('RegionsView', () => {
-  it('renders a ranked list with the snapshot note', () => {
+  it('renders a ranked list with the updated-date note', () => {
     setup();
     expect(screen.getByTestId('regions-view')).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(`Snapshot ${SNAPSHOT_DATE}`))).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`Updated ${BUNDLED_DATASET.fetchedAt}`))).toBeInTheDocument();
     expect(screen.getAllByTestId('regions-row').length).toBeGreaterThan(0);
   });
 
@@ -24,22 +37,11 @@ describe('RegionsView', () => {
     expect(within(dobrogea).getByText('+70%')).toBeInTheDocument();
   });
 
-  it('country filter narrows rows to the chosen country', async () => {
-    setup();
-    await userEvent.click(screen.getByTestId('regions-ind-aircraft'));
-    await userEvent.selectOptions(screen.getByTestId('regions-country'), 'Romania');
-    const rows = screen.getAllByTestId('regions-row');
-    for (const row of rows) {
-      expect(within(row).getByTestId('regions-country-cell')).toHaveTextContent('Romania');
-    }
-  });
-
   it('keeps the country filter when switching industries', async () => {
     setup();
     await userEvent.click(screen.getByTestId('regions-ind-aircraft'));
     await userEvent.selectOptions(screen.getByTestId('regions-country'), 'Romania');
     await userEvent.click(screen.getByTestId('regions-ind-food'));
-    // Filter persists across the switch (Romania also has food regions).
     expect(screen.getByTestId('regions-country')).toHaveValue('Romania');
     const rows = screen.getAllByTestId('regions-row');
     expect(rows.length).toBeGreaterThan(0);
@@ -49,14 +51,28 @@ describe('RegionsView', () => {
   });
 
   it('shows the empty state when the chosen country has no regions for the industry', async () => {
-    // Pick a country that exists in the dataset but has no aircraft regions.
-    const aircraftCountries = new Set(countriesForIndustry('aircraft'));
-    const missing = allCountries().find((c) => !aircraftCountries.has(c));
+    const aircraftCountries = new Set(countriesForIndustry(BUNDLED_DATASET.regions, 'aircraft'));
+    const missing = allCountries(BUNDLED_DATASET.regions).find((c) => !aircraftCountries.has(c));
     expect(missing, 'dataset should contain a country with no aircraft regions').toBeTruthy();
     setup();
     await userEvent.click(screen.getByTestId('regions-ind-aircraft'));
     await userEvent.selectOptions(screen.getByTestId('regions-country'), missing!);
     expect(screen.getByTestId('regions-empty')).toBeInTheDocument();
     expect(screen.queryAllByTestId('regions-row')).toHaveLength(0);
+  });
+
+  it('refreshes data via the erpk form and updates the list', async () => {
+    vi.mocked(refreshRegionData).mockResolvedValue({
+      fetchedAt: '2026-06-09',
+      regions: [{ id: 1, name: 'Testland', originalCountry: 'Testia', currentCountry: 'Testia', resources: [{ name: 'Grain', industry: 'food', bonus: 30 }] }],
+      countryFlags: {},
+    });
+    setup();
+    await userEvent.click(screen.getByTestId('regions-refresh-toggle'));
+    await userEvent.type(screen.getByTestId('regions-erpk'), 'ERPK-XYZ');
+    await userEvent.click(screen.getByTestId('regions-refresh-submit'));
+    await waitFor(() => expect(refreshRegionData).toHaveBeenCalledWith('ERPK-XYZ'));
+    expect(await screen.findByText('Testland')).toBeInTheDocument();
+    expect(screen.getByText(/Updated 2026-06-09/)).toBeInTheDocument();
   });
 });
