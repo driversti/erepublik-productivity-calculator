@@ -153,3 +153,97 @@
   color: #c62828;
   font-size: 0.85em;
 }
+
+/* --- Optimizer view --- */
+.optimizer-view {
+  padding: 16px;
+}
+
+.optimizer-intro h2 {
+  margin: 0 0 4px;
+}
+
+.optimizer-intro p {
+  margin: 0 0 12px;
+  opacity: 0.8;
+}
+
+.optimizer-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.optimizer-industry-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.optimizer-field {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85em;
+  gap: 2px;
+}
+
+.optimizer-field input {
+  width: 110px;
+  padding: 5px 8px;
+}
+
+.optimizer-scan-btn {
+  padding: 7px 16px;
+  font-weight: 600;
+}
+
+.optimizer-progress {
+  font-size: 0.9em;
+  opacity: 0.85;
+}
+
+.optimizer-error {
+  color: #c62828;
+}
+
+.optimizer-summary {
+  margin: 8px 0;
+}
+
+.optimizer-baseline {
+  font-weight: 600;
+  margin: 0 0 2px;
+}
+
+.optimizer-skipped {
+  font-size: 0.85em;
+  opacity: 0.8;
+  margin: 0 0 2px;
+}
+
+.optimizer-fetched-at {
+  font-size: 0.8em;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.optimizer-net {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.optimizer-estimate-badge {
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 6px;
+  font-size: 0.7em;
+  font-weight: 500;
+  background: var(--border-color, #e0e0e0);
+  opacity: 0.85;
+}
+
+.optimizer-delta {
+  white-space: nowrap;
+}

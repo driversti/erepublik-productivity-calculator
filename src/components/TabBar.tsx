@@ -38,6 +38,14 @@ export function TabBar() {
         >
           {t('tabs.regions')}
         </button>
+        <button
+          type="button"
+          className={`nav-tab${active === 'optimizer' ? ' active' : ''}`}
+          data-testid="tab-optimizer"
+          onClick={() => switchTo('optimizer')}
+        >
+          {t('tabs.optimizer')}
+        </button>
       </div>
     </nav>
   );

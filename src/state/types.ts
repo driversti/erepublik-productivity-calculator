@@ -80,7 +80,7 @@ export interface OptimizerState {
   fetchedAt: string | null;
 }
 
-export type ActiveModule = IndustryKey | 'holdings' | 'regions';
+export type ActiveModule = IndustryKey | 'holdings' | 'regions' | 'optimizer';
 
 export interface AppState {
   activeModule: ActiveModule;

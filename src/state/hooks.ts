@@ -44,7 +44,7 @@ export function useModule(key: IndustryKey): FwModule | HiredModule {
 }
 
 // Extract a numeric-keyed Cells map from an fw module's factory cells.
-function fwFactoryCells(mod: FwModule, maxQ: number): Cells {
+export function fwFactoryCells(mod: FwModule, maxQ: number): Cells {
   const out: Cells = {};
   for (let q = 1; q <= maxQ; q++) out[q] = mod[q] ?? { companies: 0, workers: 0 };
   return out;
