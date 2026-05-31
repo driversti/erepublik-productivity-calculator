@@ -12,6 +12,7 @@ const localesDir = join(root, 'src/i18n/locales');
 const LOCALES = [
   'en', 'uk', 'hr', 'tr', 'ro', 'bg', 'pl', 'it', 'es', 'fr', 'de', 'fa',
   'pt', 'zh', 'id', 'el', 'hu', 'ko', 'mk', 'sk', 'sq', 'sr', 'zh-TW', 'be',
+  'ja',
 ];
 
 // Native (endonym) names — constant across every catalog.
@@ -21,6 +22,7 @@ const NAMES = {
   de: 'Deutsch', fa: 'فارسی', pt: 'Português', zh: '中文', id: 'Bahasa Indonesia',
   el: 'Ελληνικά', hu: 'Magyar', ko: '한국어', mk: 'Македонски', sk: 'Slovenčina',
   sq: 'Shqip', sr: 'Српски', 'zh-TW': '繁體中文', be: 'Беларуская',
+  ja: '日本語',
 };
 
 const NS = ['common', 'industry', 'holdings', 'tooltips'];

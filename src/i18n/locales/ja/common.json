@@ -1,0 +1,78 @@
+{
+  "header": {
+    "title": "eRepublik 生産性・収益計算機",
+    "subtitle": "食料・武器・住宅・航空機・ホールディングスの日次収益を見積もり"
+  },
+  "footer": "eRepublik 生産性計算機",
+  "theme": {
+    "toggleAria": "テーマ切り替え",
+    "toDark": "🌙 ダークモード",
+    "toLight": "☀️ ライトモード"
+  },
+  "language": {
+    "label": "言語",
+    "en": "English",
+    "uk": "Українська",
+    "hr": "Hrvatski",
+    "tr": "Türkçe",
+    "ro": "Română",
+    "bg": "Български",
+    "pl": "Polski",
+    "it": "Italiano",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch",
+    "fa": "فارسی",
+    "pt": "Português",
+    "zh": "中文",
+    "id": "Bahasa Indonesia",
+    "el": "Ελληνικά",
+    "hu": "Magyar",
+    "ko": "한국어",
+    "mk": "Македонски",
+    "sk": "Slovenčina",
+    "sq": "Shqip",
+    "sr": "Српски",
+    "zh-TW": "繁體中文",
+    "be": "Беларуская",
+    "ja": "日本語"
+  },
+  "tabs": {
+    "holdings": "🗂️ ホールディングス",
+    "regions": "🌍 地域"
+  },
+  "regions": {
+    "country": "国",
+    "allCountries": "すべての国",
+    "bonusValue": "+{{value}}%",
+    "empty": "選択した国に、この産業の資源を持つ地域がありません。",
+    "updated": "更新 {{date}} · 現在の領有状況は戦争で変わる可能性があります",
+    "updateData": "データを更新",
+    "erpkLabel": "eRepublik セッションクッキー (erpk)",
+    "erpkPlaceholder": "erpk を貼り付け…",
+    "refresh": "更新",
+    "refreshing": "更新中…",
+    "refreshOk_one": "更新完了 — {{count}} 地域",
+    "refreshOk_other": "更新完了 — {{count}} 地域",
+    "refreshError": "更新に失敗しました: {{message}}",
+    "columns": {
+      "rank": "#",
+      "region": "地域",
+      "country": "国",
+      "bonus": "ボーナス",
+      "resources": "資源"
+    }
+  },
+  "labels": {
+    "companies": "会社",
+    "workers": "労働者"
+  },
+  "counter": {
+    "minusAria": "{{label}} 減らす",
+    "plusAria": "{{label}} 増やす"
+  },
+  "buttons": {
+    "syncLivePrices": "ライブ価格を同期",
+    "syncing": "同期中…"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "toolbar": {
+    "holding": "ホールディング",
+    "none": "— なし —",
+    "new": "+ 新規",
+    "rename": "名前を変更",
+    "delete": "削除",
+    "clearCompanies": "会社をクリア",
+    "newPrompt": "新しいホールディング名:",
+    "newDefault": "ホールディング {{n}}",
+    "renamePrompt": "ホールディング名を変更:",
+    "deleteConfirm": "ホールディング \"{{name}}\" を削除しますか？",
+    "clearConfirm": "このホールディングのすべての会社をクリアしますか？場所と同期されたボーナスは保持されます。"
+  },
+  "location": {
+    "country": "ホールディングの国",
+    "region": "ホールディングの地域",
+    "selectCountry": "— 国を選択 —",
+    "selectRegion": "— 地域を選択 —",
+    "statusSynced": "自動同期: 同期済み",
+    "statusNoRegion": "自動同期: 地域が選択されていません",
+    "statusNotConfigured": "自動同期: 未設定"
+  },
+  "summary": {
+    "title": "ホールディング概要",
+    "netProfit": "総純利益",
+    "totalCompanies": "総会社数",
+    "revenue": "日次売上",
+    "rmNet": "原材料 (純)",
+    "workTax": "労働税",
+    "salaries": "給与",
+    "perIndustry": "産業別",
+    "empty": "このホールディングにはまだ会社がありません。",
+    "breakdownItem": "{{icon}} {{label}} ({{companies}}社)"
+  },
+  "section": {
+    "mods": "国 +{{country}}% · 地域 +{{region}}% · 汚染 {{pollution}}%"
+  }
+}

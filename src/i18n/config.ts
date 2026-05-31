@@ -6,6 +6,7 @@ export const LOCALE_STORAGE_KEY = 'erep_locale';
 export const SUPPORTED_LOCALES = [
   'en', 'uk', 'hr', 'tr', 'ro', 'bg', 'pl', 'it', 'es', 'fr', 'de', 'fa',
   'pt', 'zh', 'id', 'el', 'hu', 'ko', 'mk', 'sk', 'sq', 'sr', 'zh-TW', 'be',
+  'ja',
 ] as const;
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = 'en';
@@ -20,7 +21,7 @@ export const LOCALE_FLAG: Record<Locale, string> = {
   en: 'gb', uk: 'ua', hr: 'hr', tr: 'tr', ro: 'ro', bg: 'bg', pl: 'pl',
   it: 'it', es: 'es', fr: 'fr', de: 'de', fa: 'ir', pt: 'pt', zh: 'cn',
   id: 'id', el: 'gr', hu: 'hu', ko: 'kr', mk: 'mk', sk: 'sk', sq: 'al',
-  sr: 'rs', 'zh-TW': 'tw', be: 'by',
+  sr: 'rs', 'zh-TW': 'tw', be: 'by', ja: 'jp',
 };
 
 export function loadLocale(): Locale {

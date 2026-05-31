@@ -1,0 +1,83 @@
+{
+  "names": {
+    "food": {
+      "label": "食料",
+      "rm": "FRM"
+    },
+    "weapons": {
+      "label": "武器",
+      "rm": "WRM"
+    },
+    "houses": {
+      "label": "住宅",
+      "rm": "HRM"
+    },
+    "aircraft": {
+      "label": "航空機",
+      "rm": "ARM"
+    }
+  },
+  "modifiers": {
+    "country": "国",
+    "region": "地域",
+    "selectCountry": "国を選択",
+    "selectRegion": "地域を選択",
+    "countryBonus": "国ボーナス (%)",
+    "regionBonus": "地域ボーナス (%)",
+    "workTax": "労働税 (%)",
+    "vat": "付加価値税 (%)",
+    "avgSalary": "平均給与",
+    "offeredCc": "給与 / 労働者",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Tycoon パック",
+    "wam": "WAM",
+    "wamAria": "マネージャーとして勤務"
+  },
+  "prices": {
+    "header": "{{label}} 市場価格 (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "あなたの {{label}} 工場",
+    "rmHeader": "あなたの {{rm}} 会社",
+    "factoriesHeaderShort": "{{label}} 工場",
+    "rmHeaderShort": "{{rm}} 会社",
+    "headers": {
+      "quality": "品質",
+      "companies": "会社",
+      "workers": "労働者",
+      "output": "生産量/セッション",
+      "netProfit": "日次純利益"
+    },
+    "outputSession": "{{value}} / セッション",
+    "outputSessionRm": "{{value}} {{rm}} / セッション"
+  },
+  "summary": {
+    "title": "概要",
+    "optionABadge": "オプション A",
+    "optionBBadge": "オプション B",
+    "netProfit": "推定日次純利益",
+    "totalCompanies": "総会社数",
+    "output": "{{label}} 生産量",
+    "rmConsumed": "{{rm}} 消費量",
+    "revenue": "日次売上",
+    "rmCost": "日次 {{rm}} コスト",
+    "grossProfit": "粗利益",
+    "workTax": "日次労働税",
+    "salary": "日次給与",
+    "breakdownTitle": "在庫の内訳:",
+    "noFactories": "まだ工場が設定されていません。",
+    "breakdownItem": "Q{{q}} ({{companies}}社 / {{workers}}人)",
+    "comparisonTitle": "{{rm}} 戦略比較",
+    "rmProduced": "{{rm}} 生産量",
+    "rmNetBalance": "{{rm}} 純残高",
+    "optionABuyTitle": "オプション A: {{rm}} を購入",
+    "optionAMarketCost": "市場コスト: {{cost}} CC",
+    "optionBProduceTitle": "オプション B: {{rm}} を生産",
+    "optionBBalance": "残高: {{balance}} {{rm}}",
+    "netProfitInline": "純利益:",
+    "recommendA": "推奨: オプション A ({{rm}} を購入) が1日あたり {{delta}} CC 有利です",
+    "recommendB": "推奨: オプション B (生産) が1日あたり {{delta}} CC 有利です",
+    "recommendEqual": "推奨: 両オプションの収益性は同等です"
+  }
+}
