@@ -10,6 +10,9 @@ import { ModifiersPanel } from './ModifiersPanel';
 import { PricesPanel } from './PricesPanel';
 import { factoryIconUrl, rmIconUrl } from './icons';
 import { productivityMultiplier, pollutionAt, roundNumber, gameRawProduction } from '../../calc/rounding';
+import { useTranslation } from 'react-i18next';
+import { tip } from '../../components/tooltip';
+import { industryLabel, industryRm } from '../../i18n/names';
 
 const num = (n: number) => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -18,6 +21,7 @@ interface Props {
 }
 
 export function IndustryView({ industryKey }: Props) {
+  const { t } = useTranslation(['common', 'industry', 'tooltips']);
   const cfg = getIndustry(industryKey);
   const mod = useModule(industryKey);
   const setCell = useSetFactoryCell();
@@ -51,26 +55,26 @@ export function IndustryView({ industryKey }: Props) {
   return (
     <main className="app-container-wide" data-testid={`industry-view-${industryKey}`}>
       <ModifiersPanel cfg={cfg} mod={mod} onSelectCountry={sync.selectCountry} onSelectRegion={sync.selectRegion} onSyncPrices={onSyncPrices} syncing={syncing} />
-      
+
       <div className="main-content-split">
         <aside className="left-side">
           {summary}
         </aside>
-        
+
         <section className="workspace">
           <div className="table-card">
             <div className="card-header">
-              <h2>Your {cfg.label} Factories</h2>
+              <h2>{t('industry:tables.factoriesHeader', { label: industryLabel(t, cfg) })}</h2>
             </div>
             <div className="card-body" data-testid="factories-container" style={{ padding: 0 }}>
               <table className="dense-table">
                 <thead>
                   <tr>
-                    <th style={{ width: '180px' }}>Quality</th>
-                    <th className="align-center" style={{ width: '120px' }}>Companies</th>
-                    <th className="align-center" style={{ width: '120px' }}>Workers</th>
-                    <th className="align-right">Output/Session</th>
-                    <th className="align-right">Daily Net Profit</th>
+                    <th style={{ width: '180px' }} {...tip(t('tooltips:colQuality'))}>{t('industry:tables.headers.quality')}</th>
+                    <th className="align-center" style={{ width: '120px' }} {...tip(t('tooltips:colCompanies'))}>{t('industry:tables.headers.companies')}</th>
+                    <th className="align-center" style={{ width: '120px' }} {...tip(t('tooltips:colWorkers'))}>{t('industry:tables.headers.workers')}</th>
+                    <th className="align-right" {...tip(t('tooltips:colOutput'))}>{t('industry:tables.headers.output')}</th>
+                    <th className="align-right" {...tip(t('tooltips:colNetProfit'))}>{t('industry:tables.headers.netProfit')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -78,17 +82,17 @@ export function IndustryView({ industryKey }: Props) {
                     const cell = readFactoryCell(cfg.type, mod, def.quality);
                     const m = factoryMult(def.quality);
                     const singleOutput = cfg.type === 'fw' ? roundNumber(def.baseOutput * m, 2) : def.baseOutput * m;
-                    
+
                     const companies = cell.companies || 0;
                     const maxWorkers = companies * def.maxEmployees;
                     const workers = Math.min(cell.workers || 0, maxWorkers);
                     const sessions = cfg.type === 'fw' ? ((shared.wamEnabled ? companies : 0) + workers) : workers;
-                    
+
                     const singleRM = roundNumber((def.baseRM ?? 0) * m, 2);
                     const cardOutput = singleOutput * sessions;
                     const cardRM = singleRM * sessions;
                     const cardRevenue = cardOutput * (mod.prices[def.quality] ?? 0) * (1 - mod.vat / 100);
-                    
+
                     const taxPerSession = (mod.workTaxRate / 100) * mod.averageSalary;
                     const factoryTax = cfg.type === 'fw' ? ((shared.wamEnabled ? companies : 0) * taxPerSession) : 0;
                     const factoryLabor = workers * shared.offeredSalary;
@@ -108,7 +112,7 @@ export function IndustryView({ industryKey }: Props) {
                         </td>
                         <td className="align-center">
                           <Counter
-                            label="Companies"
+                            label={t('labels.companies')}
                             value={cell.companies || 0}
                             max={9999}
                             hideLabel
@@ -117,17 +121,17 @@ export function IndustryView({ industryKey }: Props) {
                         </td>
                         <td className="align-center">
                           <Counter
-                            label="Workers"
+                            label={t('labels.workers')}
                             value={cell.workers || 0}
                             max={maxWorkers}
                             hideLabel
                             onChange={(v) => setCell(industryKey, 'factory', def.quality, 'workers', v)}
                           />
                         </td>
-                        <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }}>
-                          {num(singleOutput)} / session
+                        <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }} {...tip(t('tooltips:colOutput'))}>
+                          {t('industry:tables.outputSession', { value: num(singleOutput) })}
                         </td>
-                        <td className={`align-right ${companies === 0 ? 'text-muted' : factoryNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }}>
+                        <td className={`align-right ${companies === 0 ? 'text-muted' : factoryNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }} {...tip(t('tooltips:colNetProfit'))}>
                           {companies === 0 ? '—' : `${factoryNetProfit >= 0 ? '+' : ''}${num(factoryNetProfit)} CC`}
                         </td>
                       </tr>
@@ -140,17 +144,17 @@ export function IndustryView({ industryKey }: Props) {
 
           <div className="table-card">
             <div className="card-header">
-              <h2>Your {cfg.rmName} Companies</h2>
+              <h2>{t('industry:tables.rmHeader', { rm: industryRm(t, cfg) })}</h2>
             </div>
             <div className="card-body" data-testid="plantations-container" style={{ padding: 0 }}>
               <table className="dense-table">
                 <thead>
                   <tr>
-                    <th style={{ width: '180px' }}>Quality</th>
-                    <th className="align-center" style={{ width: '120px' }}>Companies</th>
-                    <th className="align-center" style={{ width: '120px' }}>Workers</th>
-                    <th className="align-right">Output/Session</th>
-                    <th className="align-right">Daily Net Profit</th>
+                    <th style={{ width: '180px' }} {...tip(t('tooltips:colQuality'))}>{t('industry:tables.headers.quality')}</th>
+                    <th className="align-center" style={{ width: '120px' }} {...tip(t('tooltips:colCompanies'))}>{t('industry:tables.headers.companies')}</th>
+                    <th className="align-center" style={{ width: '120px' }} {...tip(t('tooltips:colWorkers'))}>{t('industry:tables.headers.workers')}</th>
+                    <th className="align-right" {...tip(t('tooltips:colOutput'))}>{t('industry:tables.headers.output')}</th>
+                    <th className="align-right" {...tip(t('tooltips:colNetProfit'))}>{t('industry:tables.headers.netProfit')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -164,7 +168,7 @@ export function IndustryView({ industryKey }: Props) {
                     const maxWorkers = companies * def.maxEmployees;
                     const workers = Math.min(cell.workers || 0, maxWorkers);
                     const sessions = cfg.type === 'fw' ? ((shared.wamEnabled ? companies : 0) + workers) : workers;
-                    
+
                     const cardOutput = singleOutput * sessions;
                     const taxPerSession = (mod.workTaxRate / 100) * mod.averageSalary;
                     const plantTax = cfg.type === 'fw' ? ((shared.wamEnabled ? companies : 0) * taxPerSession) : 0;
@@ -186,7 +190,7 @@ export function IndustryView({ industryKey }: Props) {
                         </td>
                         <td className="align-center">
                           <Counter
-                            label="Companies"
+                            label={t('labels.companies')}
                             value={cell.companies || 0}
                             max={9999}
                             hideLabel
@@ -196,7 +200,7 @@ export function IndustryView({ industryKey }: Props) {
                         <td className="align-center">
                           {def.maxEmployees > 0 ? (
                             <Counter
-                              label="Workers"
+                              label={t('labels.workers')}
                               value={cell.workers || 0}
                               max={maxWorkers}
                               hideLabel
@@ -206,10 +210,10 @@ export function IndustryView({ industryKey }: Props) {
                             <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>—</span>
                           )}
                         </td>
-                        <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }}>
-                          {num(singleOutput)} {cfg.rmName} / session
+                        <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }} {...tip(t('tooltips:colOutput'))}>
+                          {t('industry:tables.outputSessionRm', { value: num(singleOutput), rm: industryRm(t, cfg) })}
                         </td>
-                        <td className={`align-right ${companies === 0 ? 'text-muted' : plantNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }}>
+                        <td className={`align-right ${companies === 0 ? 'text-muted' : plantNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }} {...tip(t('tooltips:colNetProfit'))}>
                           {companies === 0 ? '—' : `${plantNetProfit >= 0 ? '+' : ''}${num(plantNetProfit)} CC`}
                         </td>
                       </tr>

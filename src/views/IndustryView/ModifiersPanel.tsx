@@ -2,6 +2,8 @@ import type { IndustryConfig } from '../../data/types';
 import type { FwModule, HiredModule } from '../../state/types';
 import { useSharedFlags } from '../../state/hooks';
 import { countries, regions } from '../../data/travel';
+import { useTranslation } from 'react-i18next';
+import { tip } from '../../components/tooltip';
 
 interface Props {
   cfg: IndustryConfig;
@@ -16,6 +18,7 @@ interface Props {
 // (handled in the reducer via SET_MODULE_FIELD). Uses the legacy card / form-row /
 // control-group / toggle-container / switch classes.
 export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSyncPrices, syncing }: Props) {
+  const { t } = useTranslation(['common', 'industry', 'tooltips']);
   const shared = useSharedFlags();
   const isFw = cfg.type === 'fw';
 
@@ -28,9 +31,9 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
   return (
     <div className="modifiers-toolbar">
       <div className="control-group">
-        <label className="control-label">Country</label>
-        <select className="market-input" style={{ width: '130px' }} value={mod.selectedCountryId} onChange={(e) => onSelectCountry(e.target.value)}>
-          <option value="">Select country</option>
+        <label className="control-label">{t('industry:modifiers.country')}</label>
+        <select className="market-input" style={{ width: '130px' }} value={mod.selectedCountryId} onChange={(e) => onSelectCountry(e.target.value)} {...tip(t('tooltips:country'))}>
+          <option value="">{t('industry:modifiers.selectCountry')}</option>
           {countryEntries.map(([id, c]) => (
             <option key={id} value={id}>{c.name}</option>
           ))}
@@ -38,9 +41,9 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
       </div>
 
       <div className="control-group">
-        <label className="control-label">Region</label>
-        <select className="market-input" style={{ width: '130px' }} value={mod.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => onSelectRegion(e.target.value)}>
-          <option value="">Select region</option>
+        <label className="control-label">{t('industry:modifiers.region')}</label>
+        <select className="market-input" style={{ width: '130px' }} value={mod.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => onSelectRegion(e.target.value)} {...tip(t('tooltips:region'))}>
+          <option value="">{t('industry:modifiers.selectRegion')}</option>
           {regionEntries.map(([id, r]) => (
             <option key={id} value={r.permalink}>{r.name}</option>
           ))}
@@ -49,56 +52,56 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
 
       {/* Bonuses are derived from the selected country/region and synced — display-only. */}
       <div className="control-group">
-        <label className="control-label">Country Bonus (%)</label>
-        <input type="number" className="market-input readonly-display" style={{ width: '60px' }} value={mod.countryBonus} readOnly tabIndex={-1} title="Country production bonus — set by country selection" />
+        <label className="control-label">{t('industry:modifiers.countryBonus')}</label>
+        <input type="number" className="market-input readonly-display" style={{ width: '60px' }} value={mod.countryBonus} readOnly tabIndex={-1} {...tip(t('tooltips:countryBonus'))} />
       </div>
 
       <div className="control-group">
-        <label className="control-label">Region Bonus (%)</label>
-        <input type="number" className="market-input readonly-display" style={{ width: '60px' }} value={mod.regionBonus} readOnly tabIndex={-1} title="Region production bonus — set by region selection" />
+        <label className="control-label">{t('industry:modifiers.regionBonus')}</label>
+        <input type="number" className="market-input readonly-display" style={{ width: '60px' }} value={mod.regionBonus} readOnly tabIndex={-1} {...tip(t('tooltips:regionBonus'))} />
       </div>
 
       {/* Work Tax, VAT and Avg Salary are derived from the selected country's economy — display-only. */}
       {isFw && (
         <div className="control-group">
-          <label className="control-label">Work Tax (%)</label>
-          <input type="number" className="market-input readonly-display" style={{ width: '55px' }} value={mod.workTaxRate} readOnly tabIndex={-1} title="Work tax — set by country selection" />
+          <label className="control-label">{t('industry:modifiers.workTax')}</label>
+          <input type="number" className="market-input readonly-display" style={{ width: '55px' }} value={mod.workTaxRate} readOnly tabIndex={-1} {...tip(t('tooltips:workTax'))} />
         </div>
       )}
 
       <div className="control-group">
-        <label className="control-label">VAT (%)</label>
-        <input type="number" className="market-input readonly-display" style={{ width: '55px' }} value={mod.vat} readOnly tabIndex={-1} title="VAT — set by country selection" />
+        <label className="control-label">{t('industry:modifiers.vat')}</label>
+        <input type="number" className="market-input readonly-display" style={{ width: '55px' }} value={mod.vat} readOnly tabIndex={-1} {...tip(t('tooltips:vat'))} />
       </div>
 
       {isFw && (
         <div className="control-group">
-          <label className="control-label">Avg Salary</label>
-          <input type="number" className="market-input readonly-display" style={{ width: '80px' }} value={mod.averageSalary} readOnly tabIndex={-1} title="Average salary — set by country selection" />
+          <label className="control-label">{t('industry:modifiers.avgSalary')}</label>
+          <input type="number" className="market-input readonly-display" style={{ width: '80px' }} value={mod.averageSalary} readOnly tabIndex={-1} {...tip(t('tooltips:avgSalary'))} />
         </div>
       )}
 
       <div className="control-group">
-        <label className="control-label">Offered CC</label>
+        <label className="control-label">{t('industry:modifiers.offeredCc')}</label>
         <input type="number" className="market-input" style={{ width: '65px' }} step="1" min="0" value={shared.offeredSalary}
-          onChange={(e) => shared.setShared('offeredSalary', parseFloat(e.target.value || '0'))} />
+          onChange={(e) => shared.setShared('offeredSalary', parseFloat(e.target.value || '0'))} {...tip(t('tooltips:offeredCc'))} />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4, paddingLeft: 5 }}>
-        <label className="checkbox-label" aria-label="Tycoon Pack">
+        <label className="checkbox-label" aria-label={t('industry:modifiers.tycoonAria')} {...tip(t('tooltips:tycoon'))}>
           <input type="checkbox" checked={shared.hasTycoon} onChange={shared.toggleTycoon} />
-          Tycoon (+20%)
+          {t('industry:modifiers.tycoon')}
         </label>
         {isFw && (
-          <label className="checkbox-label" aria-label="Work as Manager">
+          <label className="checkbox-label" aria-label={t('industry:modifiers.wamAria')} {...tip(t('tooltips:wam'))}>
             <input type="checkbox" checked={shared.wamEnabled} onChange={shared.toggleWam} />
-            WAM
+            {t('industry:modifiers.wam')}
           </label>
         )}
       </div>
 
-      <button type="button" className={`btn btn-primary${syncing ? ' loading' : ''}`} style={{ marginLeft: 'auto', width: 'auto', padding: '6px 12px', height: '30px' }} onClick={onSyncPrices} disabled={syncing}>
-        {syncing ? 'Syncing…' : 'Sync Live Prices'}
+      <button type="button" className={`btn btn-primary${syncing ? ' loading' : ''}`} style={{ marginLeft: 'auto', width: 'auto', padding: '6px 12px', height: '30px' }} onClick={onSyncPrices} disabled={syncing} {...tip(t('tooltips:syncPrices'))}>
+        {syncing ? t('buttons.syncing') : t('buttons.syncLivePrices')}
       </button>
     </div>
   );
