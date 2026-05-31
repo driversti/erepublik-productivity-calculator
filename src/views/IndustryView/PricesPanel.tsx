@@ -3,7 +3,7 @@ import type { FwModule, HiredModule } from '../../state/types';
 import { useSetModulePrice, useSharedFlags } from '../../state/hooks';
 import { useTranslation } from 'react-i18next';
 import { tip } from '../../components/tooltip';
-import { industryRm } from '../../i18n/names';
+import { industryLabel, industryRm } from '../../i18n/names';
 
 interface Props {
   cfg: IndustryConfig;
@@ -21,7 +21,7 @@ export function PricesPanel({ cfg, mod }: Props) {
   return (
     <div className="table-card" style={{ marginTop: 15 }}>
       <div className="card-header">
-        <h2>{t('industry:prices.header', { label: cfg.label })}</h2>
+        <h2>{t('industry:prices.header', { label: industryLabel(t, cfg) })}</h2>
       </div>
       <div className="card-body" style={{ padding: '8px 12px' }}>
         <div className="prices-horizontal-flow">

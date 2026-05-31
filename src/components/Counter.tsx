@@ -37,23 +37,3 @@ export function Counter({ label, value, max, hideLabel, onChange }: CounterProps
     </div>
   );
 }
-
-
-interface CounterGroupProps {
-  companies: number;
-  workers: number;
-  maxWorkers: number;
-  hideWorkers?: boolean;
-  onCompanies: (v: number) => void;
-  onWorkers: (v: number) => void;
-}
-
-// Companies + (optional) Workers, matching the legacy fwCounterGroupsHtml stack.
-export function CounterGroup({ companies, workers, maxWorkers, hideWorkers, onCompanies, onWorkers }: CounterGroupProps) {
-  return (
-    <div className="house-counters">
-      <Counter label="Companies" value={companies} max={9999} onChange={onCompanies} />
-      {!hideWorkers && <Counter label="Workers" value={workers} max={maxWorkers} onChange={onWorkers} />}
-    </div>
-  );
-}

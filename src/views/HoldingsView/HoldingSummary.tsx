@@ -14,7 +14,7 @@ interface Props {
 export function HoldingSummary({ holding }: Props) {
   const sum = useHoldingSummary(holding);
   const rows = sum.perIndustry.filter((p) => p.companies > 0);
-  const { t } = useTranslation(['common', 'holdings', 'tooltips']);
+  const { t } = useTranslation(['common', 'holdings', 'industry', 'tooltips']);
 
   return (
     <aside className="holdings-summary">

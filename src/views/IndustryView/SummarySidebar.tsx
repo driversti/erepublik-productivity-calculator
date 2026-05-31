@@ -4,6 +4,7 @@ import type { HiredView } from '../../calc/hiredView';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
 import { tip } from '../../components/tooltip';
+import { industryLabel, industryRm } from '../../i18n/names';
 
 const cc = (n: number) => `${n.toFixed(2)} CC`;
 const num = (n: number) => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -43,7 +44,7 @@ function recommendation(t: TFunction, a: number, b: number, rm: string): string 
 export function SummarySidebar(props: Props) {
   const { t } = useTranslation(['common', 'industry', 'tooltips']);
   const { cfg } = props;
-  const rm = cfg.rmName;
+  const rm = industryRm(t, cfg);
   const v = normalize(props);
   const grossProfit = v.revenue - v.rmCost;
   const buyHighlight = !v.producing && v.optionANet >= v.optionBNet;
@@ -69,7 +70,7 @@ export function SummarySidebar(props: Props) {
             <span className="kpi-value-small" data-testid="total-factories-count">{v.companies}</span>
           </div>
           <div className="kpi-block-inline" {...tip(t('tooltips:sumOutput'))}>
-            <span className="kpi-label">{t('industry:summary.output', { label: cfg.label })}</span>
+            <span className="kpi-label">{t('industry:summary.output', { label: industryLabel(t, cfg) })}</span>
             <span className="kpi-value-small" data-testid="total-output">{num(v.output)}</span>
           </div>
           <div className="kpi-block-inline" {...tip(t('tooltips:sumRmConsumed'))}>
