@@ -49,6 +49,6 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     // Only run the new TS suites; the legacy node:test file (holdingsCalc.test.mjs)
     // stays runnable via `node --test` and is removed at cutover.
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    include: ['src/**/*.{test,spec}.{ts,tsx}', 'server/**/*.test.js'],
   },
 });
