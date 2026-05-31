@@ -135,7 +135,7 @@
     grid-template-columns: 80px 180px 1fr 180px;
     align-items: center;
     border: 1px solid var(--border-color);
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     border-radius: 4px;
     padding: 12px 20px;
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
@@ -218,7 +218,7 @@
     align-items: center;
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    background-color: #f1f5f9;
+    background-color: var(--table-row-hover);
     overflow: hidden;
     height: 38px;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -238,7 +238,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #475569;
+    color: var(--text-primary);
     font-size: 18px;
     font-weight: 700;
     transition: background-color var(--transition-fast), color var(--transition-fast);
@@ -246,12 +246,12 @@
 }
 
 .btn-counter:hover {
-    background-color: #e2e8f0;
+    background-color: var(--bg-table-header);
     color: var(--text-header);
 }
 
 .btn-counter:active {
-    background-color: #cbd5e1;
+    background-color: var(--border-color);
 }
 
 .counter-input {
@@ -260,7 +260,7 @@
     border: none;
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
-    background-color: #ffffff;
+    background-color: var(--input-bg);
     text-align: center;
     font-family: var(--font-heading);
     font-size: 15px;

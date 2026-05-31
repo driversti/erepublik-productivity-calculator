@@ -1,6 +1,6 @@
 import type { IndustryConfig } from '../../data/types';
 import type { FwModule, HiredModule } from '../../state/types';
-import { useSetModuleField, useSharedFlags } from '../../state/hooks';
+import { useSharedFlags } from '../../state/hooks';
 import { countries, regions } from '../../data/travel';
 
 interface Props {
@@ -16,7 +16,6 @@ interface Props {
 // (handled in the reducer via SET_MODULE_FIELD). Uses the legacy card / form-row /
 // control-group / toggle-container / switch classes.
 export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSyncPrices, syncing }: Props) {
-  const setField = useSetModuleField();
   const shared = useSharedFlags();
   const isFw = cfg.type === 'fw';
 
@@ -31,7 +30,7 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
       <div className="control-group">
         <label className="control-label">Country</label>
         <select className="market-input" style={{ width: '130px' }} value={mod.selectedCountryId} onChange={(e) => onSelectCountry(e.target.value)}>
-          <option value="">— Select country —</option>
+          <option value="">Select country</option>
           {countryEntries.map(([id, c]) => (
             <option key={id} value={id}>{c.name}</option>
           ))}
@@ -41,7 +40,7 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
       <div className="control-group">
         <label className="control-label">Region</label>
         <select className="market-input" style={{ width: '130px' }} value={mod.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => onSelectRegion(e.target.value)}>
-          <option value="">— Select region —</option>
+          <option value="">Select region</option>
           {regionEntries.map(([id, r]) => (
             <option key={id} value={r.permalink}>{r.name}</option>
           ))}
@@ -59,19 +58,23 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
         <input type="number" className="market-input readonly-display" style={{ width: '60px' }} value={mod.regionBonus} readOnly tabIndex={-1} title="Region production bonus — set by region selection" />
       </div>
 
+      {/* Work Tax, VAT and Avg Salary are derived from the selected country's economy — display-only. */}
       {isFw && (
         <div className="control-group">
           <label className="control-label">Work Tax (%)</label>
-          <input type="number" className="market-input" style={{ width: '55px' }} step="0.5" min="0" max="25" value={mod.workTaxRate}
-            onChange={(e) => setField(cfg.key, 'workTaxRate', parseFloat(e.target.value || '0'))} />
+          <input type="number" className="market-input readonly-display" style={{ width: '55px' }} value={mod.workTaxRate} readOnly tabIndex={-1} title="Work tax — set by country selection" />
         </div>
       )}
+
+      <div className="control-group">
+        <label className="control-label">VAT (%)</label>
+        <input type="number" className="market-input readonly-display" style={{ width: '55px' }} value={mod.vat} readOnly tabIndex={-1} title="VAT — set by country selection" />
+      </div>
 
       {isFw && (
         <div className="control-group">
           <label className="control-label">Avg Salary</label>
-          <input type="number" className="market-input" style={{ width: '65px' }} step="10" min="0" value={mod.averageSalary}
-            onChange={(e) => setField(cfg.key, 'averageSalary', parseFloat(e.target.value || '0'))} />
+          <input type="number" className="market-input readonly-display" style={{ width: '65px' }} value={mod.averageSalary} readOnly tabIndex={-1} title="Average salary — set by country selection" />
         </div>
       )}
 
@@ -79,12 +82,6 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
         <label className="control-label">Offered CC</label>
         <input type="number" className="market-input" style={{ width: '65px' }} step="1" min="0" value={shared.offeredSalary}
           onChange={(e) => shared.setShared('offeredSalary', parseFloat(e.target.value || '0'))} />
-      </div>
-
-      <div className="control-group">
-        <label className="control-label">VAT (%)</label>
-        <input type="number" className="market-input" style={{ width: '55px' }} step="0.5" min="0" max="50" value={mod.vat}
-          onChange={(e) => setField(cfg.key, 'vat', parseFloat(e.target.value || '0'))} />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4, paddingLeft: 5 }}>
