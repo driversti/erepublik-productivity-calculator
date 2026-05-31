@@ -5,5 +5,8 @@ services:
     restart: unless-stopped
     ports:
       - "8085:8080"
+    volumes:
+      - ./data:/data
     environment:
       - PORT=8080
+      - DATA_DIR=/data
