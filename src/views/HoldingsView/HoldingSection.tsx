@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Holding } from '../../state/types';
 import type { IndustryConfig } from '../../data/types';
 import type { IndustryResult } from '../../calc/types';
@@ -7,6 +8,8 @@ import { holdingFactoryCell, useModule, useSharedFlags } from '../../state/hooks
 import { Counter } from '../../components/Counter';
 import { factoryIconUrl, rmIconUrl } from '../IndustryView/icons';
 import { productivityMultiplier, pollutionAt, roundNumber, gameRawProduction } from '../../calc/rounding';
+import { tip } from '../../components/tooltip';
+import { industryLabel, industryRm } from '../../i18n/names';
 
 const num = (n: number) => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -24,6 +27,7 @@ interface Props {
 // matching the main IndustryView style.
 export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCollapsed }: Props) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const { t } = useTranslation(['common', 'industry', 'holdings', 'tooltips']);
   const ind = holding.industries[cfg.key];
   const poll = (i: number) => pollutionAt(ind.qualityPollution, i);
 
@@ -37,8 +41,8 @@ export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCo
     <div className={`hld-section${collapsed ? ' collapsed' : ''}`} data-industry={cfg.key} data-testid={`hld-section-${cfg.key}`}>
       <div className="hld-section-head" onClick={() => setCollapsed((c) => !c)} style={{ cursor: 'pointer' }}>
         <span style={{ fontSize: 18 }}>{cfg.icon}</span>
-        <span className="hld-ind-name">{cfg.label}</span>
-        <span className="hld-ind-mods">Country +{ind.countryBonus}% · Region +{ind.regionBonus}% · Pollution {poll(1).toFixed(2)}%</span>
+        <span className="hld-ind-name">{industryLabel(t, cfg)}</span>
+        <span className="hld-ind-mods">{t('holdings:section.mods', { country: ind.countryBonus, region: ind.regionBonus, pollution: poll(1).toFixed(2) })}</span>
         <span className={`hld-ind-net ${result.net >= 0 ? 'text-success' : 'text-danger'}`}>
           {result.net >= 0 ? '+' : ''}{result.net.toFixed(2)} CC
         </span>
@@ -48,16 +52,16 @@ export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCo
         <div className="hld-section-body" style={{ padding: 0 }}>
           <div className="table-card" style={{ border: 'none', borderRadius: 0, boxShadow: 'none', marginBottom: 0 }}>
             <div className="card-header" style={{ background: 'var(--bg-header)', borderBottom: '1px solid var(--border-color)', padding: '6px 12px' }}>
-              <h2 style={{ fontSize: 11 }}>{cfg.label} Factories</h2>
+              <h2 style={{ fontSize: 11 }}>{t('industry:tables.factoriesHeaderShort', { label: industryLabel(t, cfg) })}</h2>
             </div>
             <table className="dense-table">
               <thead>
                 <tr>
-                  <th style={{ width: '180px' }}>Quality</th>
-                  <th className="align-center" style={{ width: '120px' }}>Companies</th>
-                  <th className="align-center" style={{ width: '120px' }}>Workers</th>
-                  <th className="align-right">Output/Session</th>
-                  <th className="align-right">Daily Net Profit</th>
+                  <th style={{ width: '180px' }} {...tip(t('tooltips:colQuality'))}>{t('industry:tables.headers.quality')}</th>
+                  <th className="align-center" style={{ width: '120px' }} {...tip(t('tooltips:colCompanies'))}>{t('industry:tables.headers.companies')}</th>
+                  <th className="align-center" style={{ width: '120px' }} {...tip(t('tooltips:colWorkers'))}>{t('industry:tables.headers.workers')}</th>
+                  <th className="align-right" {...tip(t('tooltips:colOutput'))}>{t('industry:tables.headers.output')}</th>
+                  <th className="align-right" {...tip(t('tooltips:colNetProfit'))}>{t('industry:tables.headers.netProfit')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -95,7 +99,7 @@ export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCo
                       </td>
                       <td className="align-center">
                         <Counter
-                          label="Companies"
+                          label={t('labels.companies')}
                           value={cell.companies || 0}
                           max={9999}
                           hideLabel
@@ -104,17 +108,17 @@ export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCo
                       </td>
                       <td className="align-center">
                         <Counter
-                          label="Workers"
+                          label={t('labels.workers')}
                           value={cell.workers || 0}
                           max={maxWorkers}
                           hideLabel
                           onChange={(v) => api.setCell(holding.id, cfg.key, 'factory', def.quality, 'workers', v)}
                         />
                       </td>
-                      <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }}>
-                        {num(singleOutput)} / session
+                      <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }} {...tip(t('tooltips:colOutput'))}>
+                        {t('industry:tables.outputSession', { value: num(singleOutput) })}
                       </td>
-                      <td className={`align-right ${factoryNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }}>
+                      <td className={`align-right ${factoryNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }} {...tip(t('tooltips:colNetProfit'))}>
                         {factoryNetProfit >= 0 ? '+' : ''}{num(factoryNetProfit)} CC
                       </td>
                     </tr>
@@ -126,16 +130,16 @@ export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCo
 
           <div className="table-card" style={{ border: 'none', borderRadius: 0, boxShadow: 'none', marginBottom: 0, borderTop: '1px solid var(--border-color)' }}>
             <div className="card-header" style={{ background: 'var(--bg-header)', borderBottom: '1px solid var(--border-color)', padding: '6px 12px' }}>
-              <h2 style={{ fontSize: 11 }}>{cfg.rmName} Companies</h2>
+              <h2 style={{ fontSize: 11 }}>{t('industry:tables.rmHeaderShort', { rm: industryRm(t, cfg) })}</h2>
             </div>
             <table className="dense-table">
               <thead>
                 <tr>
-                  <th style={{ width: '180px' }}>Quality</th>
-                  <th className="align-center" style={{ width: '120px' }}>Companies</th>
-                  <th className="align-center" style={{ width: '120px' }}>Workers</th>
-                  <th className="align-right">Output/Session</th>
-                  <th className="align-right">Daily Net Profit</th>
+                  <th style={{ width: '180px' }} {...tip(t('tooltips:colQuality'))}>{t('industry:tables.headers.quality')}</th>
+                  <th className="align-center" style={{ width: '120px' }} {...tip(t('tooltips:colCompanies'))}>{t('industry:tables.headers.companies')}</th>
+                  <th className="align-center" style={{ width: '120px' }} {...tip(t('tooltips:colWorkers'))}>{t('industry:tables.headers.workers')}</th>
+                  <th className="align-right" {...tip(t('tooltips:colOutput'))}>{t('industry:tables.headers.output')}</th>
+                  <th className="align-right" {...tip(t('tooltips:colNetProfit'))}>{t('industry:tables.headers.netProfit')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -171,7 +175,7 @@ export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCo
                       </td>
                       <td className="align-center">
                         <Counter
-                          label="Companies"
+                          label={t('labels.companies')}
                           value={cell.companies || 0}
                           max={9999}
                           hideLabel
@@ -181,7 +185,7 @@ export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCo
                       <td className="align-center">
                         {def.maxEmployees > 0 ? (
                           <Counter
-                            label="Workers"
+                            label={t('labels.workers')}
                             value={cell.workers || 0}
                             max={maxWorkers}
                             hideLabel
@@ -191,10 +195,10 @@ export function HoldingSection({ holding, cfg, result, hasTycoon, api, defaultCo
                           <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>—</span>
                         )}
                       </td>
-                      <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }}>
-                        {num(singleOutput)} {cfg.rmName} / session
+                      <td className="align-right" style={{ color: 'var(--erep-blue)', fontWeight: 600 }} {...tip(t('tooltips:colOutput'))}>
+                        {t('industry:tables.outputSessionRm', { value: num(singleOutput), rm: industryRm(t, cfg) })}
                       </td>
-                      <td className={`align-right ${plantNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }}>
+                      <td className={`align-right ${plantNetProfit >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }} {...tip(t('tooltips:colNetProfit'))}>
                         {plantNetProfit >= 0 ? '+' : ''}{num(plantNetProfit)} CC
                       </td>
                     </tr>

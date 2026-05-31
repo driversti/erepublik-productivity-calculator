@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Holding } from '../../state/types';
 import { useHoldingSync } from '../../state/hooks';
 import { countries, regions } from '../../data/travel';
+import { tip } from '../../components/tooltip';
 
 interface Props {
   holding: Holding;
@@ -14,6 +16,7 @@ interface Props {
 export function HoldingLocationBar({ holding }: Props) {
   const sync = useHoldingSync();
   const [syncing, setSyncing] = useState(false);
+  const { t } = useTranslation(['common', 'holdings', 'tooltips']);
 
   const selectedCountry = holding.selectedCountryId ? countries[Number(holding.selectedCountryId)] : undefined;
   const countryEntries = Object.entries(countries).sort((a, b) => a[1].name.localeCompare(b[1].name));
@@ -22,10 +25,10 @@ export function HoldingLocationBar({ holding }: Props) {
     : [];
 
   const status = holding.selectedCountryId && holding.selectedRegionPermalink
-    ? 'Auto-sync: Synced'
+    ? t('holdings:location.statusSynced')
     : holding.selectedCountryId
-      ? 'Auto-sync: Region not selected'
-      : 'Auto-sync: Not configured';
+      ? t('holdings:location.statusNoRegion')
+      : t('holdings:location.statusNotConfigured');
 
   const onSyncPrices = () => {
     setSyncing(true);
@@ -36,23 +39,23 @@ export function HoldingLocationBar({ holding }: Props) {
     <div className="card">
       <div className="card-body holdings-location-bar">
         <div className="control-group">
-          <label className="control-label">Holding Country</label>
-          <select className="market-input" value={holding.selectedCountryId} onChange={(e) => sync.selectCountry(holding.id, e.target.value)}>
-            <option value="">— Select country —</option>
+          <label className="control-label">{t('holdings:location.country')}</label>
+          <select className="market-input" value={holding.selectedCountryId} onChange={(e) => sync.selectCountry(holding.id, e.target.value)} {...tip(t('tooltips:hldCountry'))}>
+            <option value="">{t('holdings:location.selectCountry')}</option>
             {countryEntries.map(([id, c]) => (<option key={id} value={id}>{c.name}</option>))}
           </select>
         </div>
         <div className="control-group">
-          <label className="control-label">Holding Region</label>
-          <select className="market-input" value={holding.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => sync.selectRegion(holding.id, e.target.value)}>
-            <option value="">— Select region —</option>
+          <label className="control-label">{t('holdings:location.region')}</label>
+          <select className="market-input" value={holding.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => sync.selectRegion(holding.id, e.target.value)} {...tip(t('tooltips:hldRegion'))}>
+            <option value="">{t('holdings:location.selectRegion')}</option>
             {regionEntries.map(([id, r]) => (<option key={id} value={r.permalink}>{r.name}</option>))}
           </select>
         </div>
         <div className="holdings-sync-col">
-          <span className="sync-status text-muted">{status}</span>
-          <button type="button" className={`btn btn-primary${syncing ? ' loading' : ''}`} onClick={onSyncPrices} disabled={syncing}>
-            {syncing ? 'Syncing…' : 'Sync Live Prices'}
+          <span className="sync-status text-muted" {...tip(t('tooltips:hldStatus'))}>{status}</span>
+          <button type="button" className={`btn btn-primary${syncing ? ' loading' : ''}`} onClick={onSyncPrices} disabled={syncing} {...tip(t('tooltips:syncPrices'))}>
+            {syncing ? t('buttons.syncing') : t('buttons.syncLivePrices')}
           </button>
         </div>
       </div>
