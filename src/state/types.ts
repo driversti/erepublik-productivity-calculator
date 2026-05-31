@@ -1,5 +1,6 @@
 import type { Cell, Cells } from '../calc/types';
 import type { IndustryKey } from '../data/types';
+import type { RankedRegion } from '../calc/optimizer';
 
 // A food/weapons module: factory cells keyed 1..7 live directly on the object
 // (numeric keys), alongside the named fields below. This mirrors the legacy
@@ -68,7 +69,19 @@ export interface Holding {
   };
 }
 
-export type ActiveModule = IndustryKey | 'holdings' | 'regions';
+export interface OptimizerState {
+  industry: IndustryKey;
+  threshold: number;
+  maxCandidates: number;
+  topN: number;
+  results: RankedRegion[];
+  baselineNet: number | null;
+  skippedCount: number;
+  fetchedAt: string | null;
+  ownersSnapshot: string | null;
+}
+
+export type ActiveModule = IndustryKey | 'holdings' | 'regions' | 'optimizer';
 
 export interface AppState {
   activeModule: ActiveModule;
@@ -86,4 +99,5 @@ export interface AppState {
   holdings: Holding[];
   holdingSeq: number;
   activeHoldingId: string;
+  optimizer: OptimizerState;
 }

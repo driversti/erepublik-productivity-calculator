@@ -39,7 +39,41 @@
   },
   "tabs": {
     "holdings": "🗂️ Holdings",
-    "regions": "🌍 Regions"
+    "regions": "🌍 Regions",
+    "optimizer": "🎯 Optimizer"
+  },
+  "optimizer": {
+    "title": "Region Profit Optimizer",
+    "intro": "Pick an industry and scan world regions for the best estimated daily net profit using your current factory setup.",
+    "industry": "Industry",
+    "threshold": "Min region bonus (%)",
+    "maxCandidates": "Max candidates",
+    "topN": "Finalists (top N)",
+    "scan": "Scan",
+    "scanning": "Scanning…",
+    "noCandidates": "No regions match — lower the minimum region bonus.",
+    "error": "Scan failed. Please try again.",
+    "phaseEconomics": "Fetching economics {{done}}/{{total}}",
+    "phasePollution": "Refining pollution {{done}}/{{total}}",
+    "baseline": "Your current setup: {{net}} CC/day",
+    "baselineNone": "No baseline — configure your factories on an industry tab.",
+    "fetchedAt": "Data as of {{date}}",
+    "ownersSnapshot": "Region ownership snapshot: {{date}}",
+    "skipped_one": "{{count}} candidate skipped (no economics data for its country).",
+    "skipped_other": "{{count}} candidates skipped (no economics data for their country).",
+    "pollutionEstimate": "estimate",
+    "columns": {
+      "rank": "#",
+      "region": "Region",
+      "country": "Country",
+      "regionBonus": "Region bonus",
+      "countryBonus": "Country bonus",
+      "salary": "Avg salary",
+      "workTax": "Work tax",
+      "vat": "VAT",
+      "net": "Net/day",
+      "delta": "Δ vs baseline"
+    }
   },
   "regions": {
     "country": "Country",

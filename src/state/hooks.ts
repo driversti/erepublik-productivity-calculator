@@ -1,9 +1,10 @@
 // Domain facade hooks. Components use these instead of touching dispatch
 // directly — so a future swap to another store only rewrites this file.
 import { useAppState } from './StateContext';
-import type { AppState, FwModule, HiredModule, Holding } from './types';
+import type { AppState, FwModule, HiredModule, Holding, OptimizerState } from './types';
 import type { Cell, Cells } from '../calc/types';
 import type { IndustryKey } from '../data/types';
+import type { RankedRegion } from '../calc/optimizer';
 import { getIndustry, INDUSTRIES } from '../data/industries';
 import { computeIndustryView, type IndustryView } from '../calc/strategy';
 import { computeHiredView, type HiredView } from '../calc/hiredView';
@@ -43,7 +44,7 @@ export function useModule(key: IndustryKey): FwModule | HiredModule {
 }
 
 // Extract a numeric-keyed Cells map from an fw module's factory cells.
-function fwFactoryCells(mod: FwModule, maxQ: number): Cells {
+export function fwFactoryCells(mod: FwModule, maxQ: number): Cells {
   const out: Cells = {};
   for (let q = 1; q <= maxQ; q++) out[q] = mod[q] ?? { companies: 0, workers: 0 };
   return out;
@@ -284,6 +285,21 @@ export function useHoldingSummary(holding: Holding): HoldingTotals {
     result: computeHoldingIndustry(state, holding, cfg.key),
   }));
   return sumHolding(results);
+}
+
+export interface OptimizerApi {
+  optimizer: OptimizerState;
+  setParams: (partial: Partial<Pick<OptimizerState, 'industry' | 'threshold' | 'maxCandidates' | 'topN'>>) => void;
+  setResults: (payload: { results: RankedRegion[]; baselineNet: number | null; skippedCount: number; fetchedAt: string; ownersSnapshot: string }) => void;
+}
+
+export function useOptimizer(): OptimizerApi {
+  const { state, dispatch } = useAppState();
+  return {
+    optimizer: state.optimizer,
+    setParams: (partial) => dispatch({ type: 'SET_OPTIMIZER_PARAMS', payload: partial }),
+    setResults: (payload) => dispatch({ type: 'SET_OPTIMIZER_RESULTS', payload }),
+  };
 }
 
 // Read a single industry's per-quality cell out of a holding (for the view).

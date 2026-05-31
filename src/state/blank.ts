@@ -1,7 +1,7 @@
 // Blank-state builders, ported from app.js (blankFwIndustry / blankHiredIndustry
 // / createHolding) plus the top-level state literal.
 import type {
-  AppState, FwModule, HiredModule, Holding, HoldingFwIndustry, HoldingHiredIndustry,
+  AppState, FwModule, HiredModule, Holding, HoldingFwIndustry, HoldingHiredIndustry, OptimizerState,
 } from './types';
 
 export function blankFwModule(): FwModule {
@@ -64,6 +64,20 @@ function blankHoldingHired(): HoldingHiredIndustry {
   return ind;
 }
 
+export function blankOptimizer(): OptimizerState {
+  return {
+    industry: 'food',
+    threshold: 20,
+    maxCandidates: 60,
+    topN: 15,
+    results: [],
+    baselineNet: null,
+    skippedCount: 0,
+    fetchedAt: null,
+    ownersSnapshot: null,
+  };
+}
+
 // Build a holding with id "h<seq>". Caller is responsible for bumping the seq.
 export function createHolding(seq: number, name: string): Holding {
   return {
@@ -99,5 +113,6 @@ export function initialState(): AppState {
     holdings: [],
     holdingSeq: 0,
     activeHoldingId: '',
+    optimizer: blankOptimizer(),
   };
 }

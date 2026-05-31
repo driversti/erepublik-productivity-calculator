@@ -86,4 +86,62 @@ describe('reducer', () => {
     expect(b.hasTycoon).toBe(true);
     expect(a.hasTycoon).toBe(false);
   });
+
+  describe('SET_OPTIMIZER_PARAMS', () => {
+    it('merges partial params into optimizer slice', () => {
+      const a = initialState();
+      const b = reducer(a, { type: 'SET_OPTIMIZER_PARAMS', payload: { industry: 'weapons', topN: 5 } });
+      expect(b.optimizer.industry).toBe('weapons');
+      expect(b.optimizer.topN).toBe(5);
+      // untouched defaults survive
+      expect(b.optimizer.threshold).toBe(20);
+      expect(b.optimizer.maxCandidates).toBe(60);
+    });
+
+    it('is immutable: prior state object is not mutated', () => {
+      const a = initialState();
+      const b = reducer(a, { type: 'SET_OPTIMIZER_PARAMS', payload: { threshold: 50 } });
+      expect(a.optimizer.threshold).toBe(20); // prior state unchanged
+      expect(b.optimizer.threshold).toBe(50);
+      expect(b.optimizer).not.toBe(a.optimizer); // new reference
+      expect(b).not.toBe(a);
+    });
+
+    it('leaves volatile result fields intact', () => {
+      const a = initialState();
+      const b = reducer(a, { type: 'SET_OPTIMIZER_PARAMS', payload: { maxCandidates: 30 } });
+      expect(b.optimizer.results).toEqual([]);
+      expect(b.optimizer.baselineNet).toBeNull();
+      expect(b.optimizer.skippedCount).toBe(0);
+      expect(b.optimizer.fetchedAt).toBeNull();
+    });
+  });
+
+  describe('SET_OPTIMIZER_RESULTS', () => {
+    it('stores results and metadata', () => {
+      const a = initialState();
+      const fakeResults = [{ region: { id: 1, name: 'Paris', currentCountry: 'France', originalCountry: 'France', resources: [] }, regionBonus: 40, economics: { countryBonus: 120, workTaxRate: 5, averageSalary: 60, vat: 15 }, pollution: null, net: 999 }] as import('./types').OptimizerState['results'];
+      const b = reducer(a, {
+        type: 'SET_OPTIMIZER_RESULTS',
+        payload: { results: fakeResults, baselineNet: 800, skippedCount: 3, fetchedAt: '2026-01-01T00:00:00Z', ownersSnapshot: '2026-05-31' },
+      });
+      expect(b.optimizer.results).toHaveLength(1);
+      expect(b.optimizer.baselineNet).toBe(800);
+      expect(b.optimizer.skippedCount).toBe(3);
+      expect(b.optimizer.fetchedAt).toBe('2026-01-01T00:00:00Z');
+      expect(b.optimizer.ownersSnapshot).toBe('2026-05-31');
+    });
+
+    it('is immutable: prior state object is not mutated', () => {
+      const a = initialState();
+      const b = reducer(a, {
+        type: 'SET_OPTIMIZER_RESULTS',
+        payload: { results: [], baselineNet: 500, skippedCount: 1, fetchedAt: '2026-01-01T00:00:00Z', ownersSnapshot: '2026-05-31' },
+      });
+      expect(a.optimizer.baselineNet).toBeNull(); // prior state unchanged
+      expect(b.optimizer.baselineNet).toBe(500);
+      expect(b.optimizer).not.toBe(a.optimizer);
+      expect(b).not.toBe(a);
+    });
+  });
 });

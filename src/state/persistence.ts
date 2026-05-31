@@ -3,10 +3,10 @@
 import type { AppState, FwModule, HiredModule, Holding } from './types';
 import type { Cell } from '../calc/types';
 import type { FactoryDef, IndustryKey } from '../data/types';
-import { initialState, createHolding } from './blank';
+import { initialState, createHolding, blankOptimizer } from './blank';
 import { getIndustry } from '../data/industries';
 
-export const STORAGE_KEY = 'erep_calculator_food_factories_v11';
+export const STORAGE_KEY = 'erep_calculator_food_factories_v12';
 
 const MAX_COMPANIES = 9999;
 
@@ -187,6 +187,20 @@ export function loadState(): AppState {
     });
 
     loadHoldings(parsed, state);
+
+    // Optimizer params (no migration needed for older shapes — blankOptimizer()
+    // is already in state; just overwrite with any stored params).
+    const opt = asRecord(parsed.optimizer);
+    if (opt) {
+      const o = blankOptimizer();
+      if (typeof opt.industry === 'string') o.industry = opt.industry as AppState['optimizer']['industry'];
+      copyNum(opt, 'threshold', (v) => (o.threshold = v));
+      copyNum(opt, 'maxCandidates', (v) => (o.maxCandidates = v));
+      copyNum(opt, 'topN', (v) => (o.topN = v));
+      // volatile fields (results/baselineNet/skippedCount/fetchedAt) are NOT loaded —
+      // they are always re-initialised to defaults (empty/null) on startup.
+      state.optimizer = o;
+    }
   } catch (e) {
     console.error('Failed to load state from localStorage:', e);
   }
@@ -195,7 +209,11 @@ export function loadState(): AppState {
 
 export function saveState(state: AppState): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    // Persist optimizer params only; strip volatile run-time fields so
+    // localStorage stays lean (results arrays can be large).
+    const { results: _r, baselineNet: _bn, skippedCount: _sc, fetchedAt: _fa, ownersSnapshot: _os, ...optimizerParams } = state.optimizer;
+    const serialisable = { ...state, optimizer: optimizerParams };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(serialisable));
   } catch (e) {
     console.error('Failed to save state to localStorage:', e);
   }
