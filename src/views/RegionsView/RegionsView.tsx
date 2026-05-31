@@ -89,7 +89,8 @@ export function RegionsView() {
           type="button"
           className="regions-refresh-toggle"
           data-testid="regions-refresh-toggle"
-          onClick={() => setShowRefresh((s) => !s)}
+          aria-expanded={showRefresh}
+          onClick={() => { setShowRefresh((s) => !s); setStatus({ kind: 'idle' }); }}
         >
           {t('regions.updateData')}
         </button>

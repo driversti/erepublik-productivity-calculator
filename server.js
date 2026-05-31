@@ -81,6 +81,10 @@ async function handleRefresh(req, res) {
       sendJson(res, 400, { error: 'Missing erpk' });
       return;
     }
+    if (/[\r\n]/.test(erpk) || erpk.length > 4096) {
+      sendJson(res, 400, { error: 'Invalid erpk' });
+      return;
+    }
     try {
       const mapRes = await fetch(MAP_DATA_URL, {
         redirect: 'manual', // a 302 means the session was rejected — don't follow it
