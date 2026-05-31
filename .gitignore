@@ -23,6 +23,9 @@ Thumbs.db
 # Logs
 *.log
 
+# Runtime region-data cache (server-written; not source)
+data/
+
 # Local agent/tooling config
 .claude/
 

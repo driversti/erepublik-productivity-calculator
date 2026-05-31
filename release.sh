@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-REGISTRY="registry.yurii.live"
+REGISTRY="docker.io/driversti"
 PLATFORMS="linux/amd64,linux/arm64"
 IMAGE="${REGISTRY}/erep-calculator"
 
