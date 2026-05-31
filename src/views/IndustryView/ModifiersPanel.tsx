@@ -1,7 +1,8 @@
 import type { IndustryConfig } from '../../data/types';
 import type { FwModule, HiredModule } from '../../state/types';
 import { useSharedFlags } from '../../state/hooks';
-import { countries, regions } from '../../data/travel';
+import { useRegionList } from '../../state/useRegionList';
+import { countries } from '../../data/travel';
 import { useTranslation } from 'react-i18next';
 import { tip } from '../../components/tooltip';
 
@@ -24,9 +25,8 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
 
   const countryEntries = Object.entries(countries).sort((a, b) => a[1].name.localeCompare(b[1].name));
   const selectedCountry = mod.selectedCountryId ? countries[Number(mod.selectedCountryId)] : undefined;
-  const regionEntries = selectedCountry
-    ? selectedCountry.regions.map((id) => [id, regions[id]] as const).filter(([, r]) => r)
-    : [];
+  // Regions a country currently controls are fetched live from the Society page.
+  const { regions: regionEntries, loading: regionsLoading } = useRegionList(mod.selectedCountryId);
 
   return (
     <div className="modifiers-toolbar">
@@ -42,10 +42,10 @@ export function ModifiersPanel({ cfg, mod, onSelectCountry, onSelectRegion, onSy
 
       <div className="control-group">
         <label className="control-label">{t('industry:modifiers.region')}</label>
-        <select className="market-input" style={{ width: '130px' }} value={mod.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => onSelectRegion(e.target.value)} {...tip(t('tooltips:region'))}>
+        <select className="market-input" style={{ width: '130px' }} value={mod.selectedRegionPermalink} disabled={!selectedCountry || regionsLoading} onChange={(e) => onSelectRegion(e.target.value)} {...tip(t('tooltips:region'))}>
           <option value="">{t('industry:modifiers.selectRegion')}</option>
-          {regionEntries.map(([id, r]) => (
-            <option key={id} value={r.permalink}>{r.name}</option>
+          {regionEntries.map((r) => (
+            <option key={r.permalink} value={r.permalink}>{r.name}</option>
           ))}
         </select>
       </div>

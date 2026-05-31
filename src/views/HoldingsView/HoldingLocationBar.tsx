@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Holding } from '../../state/types';
 import { useHoldingSync } from '../../state/hooks';
-import { countries, regions } from '../../data/travel';
+import { useRegionList } from '../../state/useRegionList';
+import { countries } from '../../data/travel';
 import { tip } from '../../components/tooltip';
 
 interface Props {
@@ -20,9 +21,8 @@ export function HoldingLocationBar({ holding }: Props) {
 
   const selectedCountry = holding.selectedCountryId ? countries[Number(holding.selectedCountryId)] : undefined;
   const countryEntries = Object.entries(countries).sort((a, b) => a[1].name.localeCompare(b[1].name));
-  const regionEntries = selectedCountry
-    ? selectedCountry.regions.map((id) => [id, regions[id]] as const).filter(([, r]) => r)
-    : [];
+  // Regions a country currently controls are fetched live from the Society page.
+  const { regions: regionEntries, loading: regionsLoading } = useRegionList(holding.selectedCountryId);
 
   const status = holding.selectedCountryId && holding.selectedRegionPermalink
     ? t('holdings:location.statusSynced')
@@ -47,9 +47,9 @@ export function HoldingLocationBar({ holding }: Props) {
         </div>
         <div className="control-group">
           <label className="control-label">{t('holdings:location.region')}</label>
-          <select className="market-input" value={holding.selectedRegionPermalink} disabled={!selectedCountry} onChange={(e) => sync.selectRegion(holding.id, e.target.value)} {...tip(t('tooltips:hldRegion'))}>
+          <select className="market-input" value={holding.selectedRegionPermalink} disabled={!selectedCountry || regionsLoading} onChange={(e) => sync.selectRegion(holding.id, e.target.value)} {...tip(t('tooltips:hldRegion'))}>
             <option value="">{t('holdings:location.selectRegion')}</option>
-            {regionEntries.map(([id, r]) => (<option key={id} value={r.permalink}>{r.name}</option>))}
+            {regionEntries.map((r) => (<option key={r.permalink} value={r.permalink}>{r.name}</option>))}
           </select>
         </div>
         <div className="holdings-sync-col">

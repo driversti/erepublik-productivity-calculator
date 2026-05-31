@@ -1,0 +1,372 @@
+{
+  "1": {
+    "id": 1,
+    "name": "Romania",
+    "permalink": "Romania"
+  },
+  "9": {
+    "id": 9,
+    "name": "Brazil",
+    "permalink": "Brazil"
+  },
+  "10": {
+    "id": 10,
+    "name": "Italy",
+    "permalink": "Italy"
+  },
+  "11": {
+    "id": 11,
+    "name": "France",
+    "permalink": "France"
+  },
+  "12": {
+    "id": 12,
+    "name": "Germany",
+    "permalink": "Germany"
+  },
+  "13": {
+    "id": 13,
+    "name": "Hungary",
+    "permalink": "Hungary"
+  },
+  "14": {
+    "id": 14,
+    "name": "China",
+    "permalink": "China"
+  },
+  "15": {
+    "id": 15,
+    "name": "Spain",
+    "permalink": "Spain"
+  },
+  "23": {
+    "id": 23,
+    "name": "Canada",
+    "permalink": "Canada"
+  },
+  "24": {
+    "id": 24,
+    "name": "USA",
+    "permalink": "USA"
+  },
+  "26": {
+    "id": 26,
+    "name": "Mexico",
+    "permalink": "Mexico"
+  },
+  "27": {
+    "id": 27,
+    "name": "Argentina",
+    "permalink": "Argentina"
+  },
+  "28": {
+    "id": 28,
+    "name": "Venezuela",
+    "permalink": "Venezuela"
+  },
+  "29": {
+    "id": 29,
+    "name": "United Kingdom",
+    "permalink": "United-Kingdom"
+  },
+  "30": {
+    "id": 30,
+    "name": "Switzerland",
+    "permalink": "Switzerland"
+  },
+  "31": {
+    "id": 31,
+    "name": "Netherlands",
+    "permalink": "Netherlands"
+  },
+  "32": {
+    "id": 32,
+    "name": "Belgium",
+    "permalink": "Belgium"
+  },
+  "33": {
+    "id": 33,
+    "name": "Austria",
+    "permalink": "Austria"
+  },
+  "34": {
+    "id": 34,
+    "name": "Czech Republic",
+    "permalink": "Czech-Republic"
+  },
+  "35": {
+    "id": 35,
+    "name": "Poland",
+    "permalink": "Poland"
+  },
+  "36": {
+    "id": 36,
+    "name": "Slovakia",
+    "permalink": "Slovakia"
+  },
+  "37": {
+    "id": 37,
+    "name": "Norway",
+    "permalink": "Norway"
+  },
+  "38": {
+    "id": 38,
+    "name": "Sweden",
+    "permalink": "Sweden"
+  },
+  "39": {
+    "id": 39,
+    "name": "Finland",
+    "permalink": "Finland"
+  },
+  "40": {
+    "id": 40,
+    "name": "Ukraine",
+    "permalink": "Ukraine"
+  },
+  "41": {
+    "id": 41,
+    "name": "Russia",
+    "permalink": "Russia"
+  },
+  "42": {
+    "id": 42,
+    "name": "Bulgaria",
+    "permalink": "Bulgaria"
+  },
+  "43": {
+    "id": 43,
+    "name": "Turkey",
+    "permalink": "Turkey"
+  },
+  "44": {
+    "id": 44,
+    "name": "Greece",
+    "permalink": "Greece"
+  },
+  "45": {
+    "id": 45,
+    "name": "Japan",
+    "permalink": "Japan"
+  },
+  "47": {
+    "id": 47,
+    "name": "South Korea",
+    "permalink": "South-Korea"
+  },
+  "48": {
+    "id": 48,
+    "name": "India",
+    "permalink": "India"
+  },
+  "49": {
+    "id": 49,
+    "name": "Indonesia",
+    "permalink": "Indonesia"
+  },
+  "50": {
+    "id": 50,
+    "name": "Australia",
+    "permalink": "Australia"
+  },
+  "51": {
+    "id": 51,
+    "name": "South Africa",
+    "permalink": "South-Africa"
+  },
+  "52": {
+    "id": 52,
+    "name": "Republic of Moldova",
+    "permalink": "Republic-of-Moldova"
+  },
+  "53": {
+    "id": 53,
+    "name": "Portugal",
+    "permalink": "Portugal"
+  },
+  "54": {
+    "id": 54,
+    "name": "Ireland",
+    "permalink": "Ireland"
+  },
+  "55": {
+    "id": 55,
+    "name": "Denmark",
+    "permalink": "Denmark"
+  },
+  "56": {
+    "id": 56,
+    "name": "Iran",
+    "permalink": "Iran"
+  },
+  "57": {
+    "id": 57,
+    "name": "Pakistan",
+    "permalink": "Pakistan"
+  },
+  "58": {
+    "id": 58,
+    "name": "Israel",
+    "permalink": "Israel"
+  },
+  "59": {
+    "id": 59,
+    "name": "Thailand",
+    "permalink": "Thailand"
+  },
+  "61": {
+    "id": 61,
+    "name": "Slovenia",
+    "permalink": "Slovenia"
+  },
+  "63": {
+    "id": 63,
+    "name": "Croatia",
+    "permalink": "Croatia"
+  },
+  "64": {
+    "id": 64,
+    "name": "Chile",
+    "permalink": "Chile"
+  },
+  "65": {
+    "id": 65,
+    "name": "Serbia",
+    "permalink": "Serbia"
+  },
+  "66": {
+    "id": 66,
+    "name": "Malaysia",
+    "permalink": "Malaysia"
+  },
+  "67": {
+    "id": 67,
+    "name": "Philippines",
+    "permalink": "Philippines"
+  },
+  "68": {
+    "id": 68,
+    "name": "Singapore",
+    "permalink": "Singapore"
+  },
+  "69": {
+    "id": 69,
+    "name": "Bosnia and Herzegovina",
+    "permalink": "Bosnia-Herzegovina"
+  },
+  "70": {
+    "id": 70,
+    "name": "Estonia",
+    "permalink": "Estonia"
+  },
+  "71": {
+    "id": 71,
+    "name": "Latvia",
+    "permalink": "Latvia"
+  },
+  "72": {
+    "id": 72,
+    "name": "Lithuania",
+    "permalink": "Lithuania"
+  },
+  "73": {
+    "id": 73,
+    "name": "North Korea",
+    "permalink": "North-Korea"
+  },
+  "74": {
+    "id": 74,
+    "name": "Uruguay",
+    "permalink": "Uruguay"
+  },
+  "75": {
+    "id": 75,
+    "name": "Paraguay",
+    "permalink": "Paraguay"
+  },
+  "76": {
+    "id": 76,
+    "name": "Bolivia",
+    "permalink": "Bolivia"
+  },
+  "77": {
+    "id": 77,
+    "name": "Peru",
+    "permalink": "Peru"
+  },
+  "78": {
+    "id": 78,
+    "name": "Colombia",
+    "permalink": "Colombia"
+  },
+  "79": {
+    "id": 79,
+    "name": "North Macedonia",
+    "permalink": "North-Macedonia"
+  },
+  "80": {
+    "id": 80,
+    "name": "Montenegro",
+    "permalink": "Montenegro"
+  },
+  "81": {
+    "id": 81,
+    "name": "Republic of China (Taiwan)",
+    "permalink": "Republic-of-China-Taiwan"
+  },
+  "82": {
+    "id": 82,
+    "name": "Cyprus",
+    "permalink": "Cyprus"
+  },
+  "83": {
+    "id": 83,
+    "name": "Belarus",
+    "permalink": "Belarus"
+  },
+  "84": {
+    "id": 84,
+    "name": "New Zealand",
+    "permalink": "New-Zealand"
+  },
+  "164": {
+    "id": 164,
+    "name": "Saudi Arabia",
+    "permalink": "Saudi-Arabia"
+  },
+  "165": {
+    "id": 165,
+    "name": "Egypt",
+    "permalink": "Egypt"
+  },
+  "166": {
+    "id": 166,
+    "name": "United Arab Emirates",
+    "permalink": "United-Arab-Emirates"
+  },
+  "167": {
+    "id": 167,
+    "name": "Albania",
+    "permalink": "Albania"
+  },
+  "168": {
+    "id": 168,
+    "name": "Georgia",
+    "permalink": "Georgia"
+  },
+  "169": {
+    "id": 169,
+    "name": "Armenia",
+    "permalink": "Armenia"
+  },
+  "170": {
+    "id": 170,
+    "name": "Nigeria",
+    "permalink": "Nigeria"
+  },
+  "171": {
+    "id": 171,
+    "name": "Cuba",
+    "permalink": "Cuba"
+  }
+}

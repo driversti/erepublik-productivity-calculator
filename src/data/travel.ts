@@ -1,15 +1,20 @@
-// travelData.js is generated, untyped game data (countries + regions). It is
-// re-exported here with explicit types so the rest of the app stays type-safe.
-// Field shapes match the actual generated literals (verified via tsc inference):
-//   country: { id, name, permalink, regions: number[] }
+// Countries are a stable, static fact (id/name/permalink) and live in their own
+// `countries.json`. The list of regions a country *currently controls* is NOT
+// static (regions change hands in war), so it is fetched live from the Country
+// Society page instead — see `state/useRegionList.ts`. The numeric `regions`
+// map below still comes from the generated `travelData.js` because the optimizer
+// (`services/liveEconomy.getRegionDetails`) needs the region-id → permalink
+// lookup; the per-country `regions: number[]` membership array is intentionally
+// gone (it was a stale snapshot).
+//   country: { id, name, permalink }
 //   region:  { id, countryId, name, permalink }
-import { countries as rawCountries, regions as rawRegions } from '../../travelData.js';
+import countriesJson from './countries.json';
+import { regions as rawRegions } from '../../travelData.js';
 
 export interface CountryEntry {
   id: number;
   name: string;
   permalink: string;
-  regions: number[];
 }
 
 export interface RegionEntry {
@@ -19,5 +24,5 @@ export interface RegionEntry {
   permalink: string;
 }
 
-export const countries = rawCountries as unknown as Record<number, CountryEntry>;
+export const countries = countriesJson as unknown as Record<number, CountryEntry>;
 export const regions = rawRegions as unknown as Record<number, RegionEntry>;

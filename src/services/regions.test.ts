@@ -1,7 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
   SCRAPE_CONFIG, parseRegionList, parseCountryBonus, parseRegionBonus,
   parseRegionPollution, parseWorkTax, parseAverageSalary, parseVat, parseRegionModifiers,
+  fetchRegionList,
 } from './regions';
 
 // Synthetic HTML mirroring the real erepublik.com economy/region markup the
@@ -71,5 +72,34 @@ describe('region scrapers', () => {
     expect(m.averageSalary).toBe(42.5);
     expect(m.vat).toBe(3);
     expect(m.qualityPollution[0]).toBe(2.5);
+  });
+});
+
+describe('fetchRegionList', () => {
+  afterEach(() => vi.restoreAllMocks());
+
+  it('hits the country society page via /proxy and returns the parsed list', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: () => Promise.resolve(regionHtml) });
+    vi.stubGlobal('fetch', fetchMock);
+
+    // Lithuania (id 72) — permalink "Lithuania".
+    const list = await fetchRegionList('72');
+
+    const calledUrl = fetchMock.mock.calls[0][0] as string;
+    expect(calledUrl).toContain('/proxy?url=');
+    expect(decodeURIComponent(calledUrl)).toContain('/country/society/Lithuania');
+    expect(list.map((r) => r.permalink)).toEqual(['Aukstaitija', 'Samogitia']);
+  });
+
+  it('returns [] for an unknown country id (no fetch)', async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+    expect(await fetchRegionList('999999')).toEqual([]);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('throws when the society page request fails', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }));
+    await expect(fetchRegionList('72')).rejects.toThrow();
   });
 });
