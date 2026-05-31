@@ -1,0 +1,17 @@
+{
+  "header": {
+    "title": "eRepublik Productivity & Profit Calculator",
+    "subtitle": "Estimate daily profit across food, weapons, houses, aircraft & holdings"
+  },
+  "footer": "eRepublik Productivity Calculator",
+  "theme": {
+    "toggleAria": "Toggle theme",
+    "toDark": "🌙 Dark Mode",
+    "toLight": "☀️ Light Mode"
+  },
+  "language": { "label": "Language" },
+  "tabs": { "holdings": "🗂️ Holdings" },
+  "labels": { "companies": "Companies", "workers": "Workers" },
+  "counter": { "minusAria": "{{label}} minus", "plusAria": "{{label}} plus" },
+  "buttons": { "syncLivePrices": "Sync Live Prices", "syncing": "Syncing…" }
+}

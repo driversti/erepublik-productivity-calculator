@@ -1,0 +1,65 @@
+{
+  "modifiers": {
+    "country": "Country",
+    "region": "Region",
+    "selectCountry": "Select country",
+    "selectRegion": "Select region",
+    "countryBonus": "Country Bonus (%)",
+    "regionBonus": "Region Bonus (%)",
+    "workTax": "Work Tax (%)",
+    "vat": "VAT (%)",
+    "avgSalary": "Avg Salary",
+    "offeredCc": "Offered CC",
+    "tycoon": "Tycoon (+20%)",
+    "tycoonAria": "Tycoon Pack",
+    "wam": "WAM",
+    "wamAria": "Work as Manager"
+  },
+  "prices": {
+    "header": "{{label}} Market Prices (CC)",
+    "qLabel": "Q{{q}}"
+  },
+  "tables": {
+    "factoriesHeader": "Your {{label}} Factories",
+    "rmHeader": "Your {{rm}} Companies",
+    "factoriesHeaderShort": "{{label}} Factories",
+    "rmHeaderShort": "{{rm}} Companies",
+    "headers": {
+      "quality": "Quality",
+      "companies": "Companies",
+      "workers": "Workers",
+      "output": "Output/Session",
+      "netProfit": "Daily Net Profit"
+    },
+    "outputSession": "{{value}} / session",
+    "outputSessionRm": "{{value}} {{rm}} / session"
+  },
+  "summary": {
+    "title": "Summary",
+    "optionABadge": "Option A",
+    "optionBBadge": "Option B",
+    "netProfit": "Est. Daily Net Profit",
+    "totalCompanies": "Total Companies",
+    "output": "{{label}} Output",
+    "rmConsumed": "{{rm}} Consumed",
+    "revenue": "Daily Revenue",
+    "rmCost": "Daily {{rm}} Cost",
+    "grossProfit": "Gross Profit",
+    "workTax": "Daily Work Tax",
+    "salary": "Daily Salary",
+    "breakdownTitle": "Inventory breakdown:",
+    "noFactories": "No factories configured yet.",
+    "breakdownItem": "Q{{q}} ({{companies}}c / {{workers}}w)",
+    "comparisonTitle": "{{rm}} Strategy Comparison",
+    "rmProduced": "{{rm}} Produced",
+    "rmNetBalance": "{{rm}} Net Balance",
+    "optionABuyTitle": "Option A: Buy {{rm}}",
+    "optionAMarketCost": "Market Cost: {{cost}} CC",
+    "optionBProduceTitle": "Option B: Produce {{rm}}",
+    "optionBBalance": "Balance: {{balance}} {{rm}}",
+    "netProfitInline": "Net Profit:",
+    "recommendA": "Recommendation: Option A (Buy {{rm}}) is more profitable by {{delta}} CC/day",
+    "recommendB": "Recommendation: Option B (Produce) is more profitable by {{delta}} CC/day",
+    "recommendEqual": "Recommendation: Both options are equally profitable"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "tab": "🗂️ Holdings",
+  "toolbar": {
+    "holding": "Holding",
+    "none": "— none —",
+    "new": "+ New",
+    "rename": "Rename",
+    "delete": "Delete",
+    "clearCompanies": "Clear Companies",
+    "newPrompt": "New holding name:",
+    "newDefault": "Holding {{n}}",
+    "renamePrompt": "Rename holding:",
+    "deleteConfirm": "Delete holding \"{{name}}\"?",
+    "clearConfirm": "Clear all companies in this holding? Location and synced bonuses are kept."
+  },
+  "location": {
+    "country": "Holding Country",
+    "region": "Holding Region",
+    "selectCountry": "— Select country —",
+    "selectRegion": "— Select region —",
+    "statusSynced": "Auto-sync: Synced",
+    "statusNoRegion": "Auto-sync: Region not selected",
+    "statusNotConfigured": "Auto-sync: Not configured"
+  },
+  "summary": {
+    "title": "Holding Summary",
+    "netProfit": "Total Net Profit",
+    "totalCompanies": "Total Companies",
+    "revenue": "Daily Revenue",
+    "rmNet": "Raw Material (net)",
+    "workTax": "Work Tax",
+    "salaries": "Salaries",
+    "perIndustry": "Per industry",
+    "empty": "No companies in this holding yet.",
+    "breakdownItem": "{{icon}} {{label}} ({{companies}}c)"
+  },
+  "section": {
+    "mods": "Country +{{country}}% · Region +{{region}}% · Pollution {{pollution}}%"
+  }
+}
