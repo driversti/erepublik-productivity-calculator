@@ -37,7 +37,21 @@
     "be": "Беларуская"
   },
   "tabs": {
-    "holdings": "🗂️ Holdings"
+    "holdings": "🗂️ Holdings",
+    "regions": "🌍 Regions"
+  },
+  "regions": {
+    "country": "Country",
+    "allCountries": "All countries",
+    "bonusValue": "+{{value}}%",
+    "snapshotNote": "Snapshot {{date}} · current ownership may be stale (regions change hands in war).",
+    "columns": {
+      "rank": "#",
+      "region": "Region",
+      "country": "Country",
+      "bonus": "Bonus",
+      "resources": "Resources"
+    }
   },
   "labels": {
     "companies": "Companies",
