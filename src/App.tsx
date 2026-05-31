@@ -3,6 +3,7 @@ import { useActiveModule } from './state/hooks';
 import { TabBar } from './components/TabBar';
 import { IndustryView } from './views/IndustryView/IndustryView';
 import { HoldingsView } from './views/HoldingsView/HoldingsView';
+import { AppTooltip } from './components/AppTooltip';
 import { useState, useEffect } from 'react';
 
 function ActiveView() {
@@ -50,6 +51,7 @@ export default function App() {
       <footer className="game-footer">
         eRepublik Productivity Calculator
       </footer>
+      <AppTooltip />
     </StateProvider>
   );
 }

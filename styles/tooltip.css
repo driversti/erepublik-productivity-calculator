@@ -1,0 +1,20 @@
+/* Override react-tooltip v5 theme to match the app's light/dark surfaces. */
+.app-tooltip.app-tooltip {
+  background: var(--bg-header, #1f2937);
+  color: var(--text-primary, #f9fafb);
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.15));
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+  max-width: 260px;
+  padding: 7px 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  z-index: 9999;
+}
+.app-tooltip.app-tooltip .react-tooltip-arrow {
+  background: var(--bg-header, #1f2937);
+  border-right: 1px solid var(--border-color, rgba(0, 0, 0, 0.15));
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.15));
+}
