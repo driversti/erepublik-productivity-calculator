@@ -15,3 +15,6 @@ Thumbs.db
 
 # Local agent/tooling config
 .claude/
+
+# Ad-hoc screenshots at repo root (docs/screenshots/ is intentional)
+/*.png
