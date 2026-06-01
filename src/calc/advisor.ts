@@ -22,7 +22,7 @@ export interface AdvisorRow {
 
 export interface RmVerdict {
   industry: IndustryKey;
-  bestQuality: number; // quality whose conversion is evaluated
+  bestQuality: number; // quality whose conversion is evaluated; 0 when no non-excluded priced quality exists (check hasPrice first)
   sellRaw: number; // value realized per 1 RM unit sold raw (net of VAT)
   convert: number; // value added per 1 RM unit converted into finished goods
   convertIsBetter: boolean;

@@ -115,8 +115,9 @@ describe('computeAdvisor', () => {
     const report = computeAdvisor(s);
     const q7 = report.rows.find((r) => r.industry === 'food' && r.quality === 7 && r.kind === 'factory')!;
     expect(q7.excluded).toBe(true);
-    // topWam must not be the excluded Q7
-    expect(report.topWam ? `${report.topWam.industry}:${report.topWam.quality}` : '').not.toBe('food:7');
+    // topWam must be the non-excluded Q6
+    expect(report.topWam?.industry).toBe('food');
+    expect(report.topWam?.quality).toBe(6);
     // RM convert verdict must pick a non-excluded quality
     const frm = report.rmVerdicts.find((v) => v.industry === 'food')!;
     expect(frm.bestQuality).not.toBe(7);
