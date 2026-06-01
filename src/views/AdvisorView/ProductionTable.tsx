@@ -1,0 +1,86 @@
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { getIndustry } from '../../data/industries';
+import { industryLabel } from '../../i18n/names';
+import type { AdvisorRow } from '../../calc/advisor';
+
+type SortKey = 'wam' | 'hire' | 'hireTycoon' | 'roi';
+
+// null (no WAM) always sorts to the bottom regardless of direction.
+function valueOf(row: AdvisorRow, key: SortKey): number {
+  if (key === 'wam') return row.wamNet ?? -Infinity;
+  if (key === 'hire') return row.hireNet;
+  if (key === 'hireTycoon') return row.hireNetTycoon;
+  return row.roiRm;
+}
+
+function num(v: number | null): string {
+  return v === null ? '—' : (v > 0 ? '+' : '') + v.toFixed(2);
+}
+
+function cls(v: number | null): string {
+  if (v === null) return 'dim';
+  return v > 0 ? 'pos' : v < 0 ? 'neg' : 'dim';
+}
+
+export function ProductionTable({ rows }: { rows: AdvisorRow[] }) {
+  const { t } = useTranslation(['common', 'advisor']);
+  const [sortKey, setSortKey] = useState<SortKey>('wam');
+  const [desc, setDesc] = useState(true);
+
+  const sorted = [...rows].sort((a, b) => {
+    const d = valueOf(b, sortKey) - valueOf(a, sortKey);
+    return desc ? d : -d;
+  });
+
+  const onSort = (key: SortKey) => {
+    if (key === sortKey) setDesc((d) => !d);
+    else { setSortKey(key); setDesc(true); }
+  };
+
+  const header = (key: SortKey, label: string) => (
+    <th
+      data-testid={`sort-${key}`}
+      className={`sortable${sortKey === key ? ' active' : ''}`}
+      onClick={() => onSort(key)}
+    >
+      {label} <span className="ar">{sortKey === key ? (desc ? '▼' : '▲') : ''}</span>
+    </th>
+  );
+
+  return (
+    <section className="advisor-table-panel">
+      <h3>{t('advisor:table.title')}</h3>
+      <table className="advisor-table">
+        <thead>
+          <tr>
+            <th className="l">{t('advisor:table.rank')}</th>
+            <th className="l">{t('advisor:table.product')}</th>
+            {header('wam', t('advisor:table.wam'))}
+            {header('hire', t('advisor:table.hire'))}
+            {header('hireTycoon', t('advisor:table.hireTycoon'))}
+            {header('roi', t('advisor:table.roi'))}
+            <th className="l">{t('advisor:table.owned')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((r, i) => {
+            const cfg = getIndustry(r.industry);
+            return (
+              <tr key={`${r.industry}-${r.quality}`} className={r.owned ? 'own' : ''} data-testid="advisor-row">
+                <td className="l dim">{i + 1}</td>
+                <td className="l">{cfg.icon} {industryLabel(t, cfg)} Q{r.quality}</td>
+                <td className={cls(r.wamNet)}>{num(r.wamNet)}</td>
+                <td className={cls(r.hireNet)}>{num(r.hireNet)}</td>
+                <td className={cls(r.hireNetTycoon)}>{num(r.hireNetTycoon)}</td>
+                <td className="dim">{r.roiRm.toFixed(2)}</td>
+                <td className="l">{r.owned ? `×${r.owned}` : ''}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <p className="advisor-note">{t('advisor:table.noWamNote')}</p>
+    </section>
+  );
+}
