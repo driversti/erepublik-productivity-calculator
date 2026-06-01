@@ -21,7 +21,7 @@
     "hireTycoon": "net / hired (Tycoon)",
     "roi": "net / 1 CC in RM",
     "owned": "you own",
-    "noWamNote": "“—” = industry has no WAM (Houses/Aircraft use hired labour only). Your factories are highlighted.",
+    "noWamNote": "\"—\" = not applicable (Houses/Aircraft have no WAM; some plantations have no hired slots). Owned companies are highlighted.",
     "noPrice": "Prices not synced for this industry.",
     "rmBadge": "raw"
   },

@@ -32,4 +32,10 @@ describe('RecommendationHeadline', () => {
     expect(screen.getByText(/Hired workers profitable:/)).toBeTruthy();
     expect(screen.getByText(/Profitable only with Tycoon:/)).toBeTruthy();
   });
+
+  it('renders the RM name when the top WAM pick is a raw-material company', () => {
+    const top = { industry: 'food' as const, quality: 5, kind: 'rm' as const, wamNet: 99, hireNet: null, hireNetTycoon: null, roiRm: null, owned: 0, hasPrice: true };
+    render(<RecommendationHeadline report={report({ rows: [top], topWam: top })} />);
+    expect(screen.getByText(/FRM Q5/)).toBeTruthy();
+  });
 });
