@@ -85,9 +85,8 @@ function makeUniverseResponse() {
   return { fetchedAt: '2099-01-01T00:00:00Z', regions };
 }
 
-// Mock globalThis.fetch so fetchUniverse (and the flag-refresh effect) resolve
-// without hitting a real server. /api/universe returns our minimal universe;
-// everything else (e.g. /api/regions for flags) 204s so the bundled fallback is used.
+// Mock globalThis.fetch so fetchUniverse resolves without hitting a real server.
+// /api/universe returns our minimal universe; anything else returns 204.
 function setupFetchMock() {
   const universeBody = JSON.stringify(makeUniverseResponse());
   vi.spyOn(globalThis, 'fetch').mockImplementation((input: RequestInfo | URL) => {
@@ -95,7 +94,6 @@ function setupFetchMock() {
     if (url.includes('/api/universe')) {
       return Promise.resolve(new Response(universeBody, { status: 200, headers: { 'Content-Type': 'application/json' } }));
     }
-    // For all other requests (flags /api/regions, etc.) return 204 → fallback.
     return Promise.resolve(new Response(null, { status: 204 }));
   });
 }

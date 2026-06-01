@@ -6,7 +6,6 @@ import { industryLabel } from '../../i18n/names';
 import { rankRegions, allCountries } from '../../regions/ranking';
 import {
   fetchRegionData,
-  refreshRegionData,
   BUNDLED_DATASET,
   type RegionDataSet,
 } from '../../services/regionData';
@@ -15,19 +14,13 @@ import {
 const flagSrc = (url?: string): string | undefined =>
   url ? (url.startsWith('//') ? `https:${url}` : url) : undefined;
 
-type RefreshStatus = { kind: 'idle' | 'loading' | 'ok' | 'error'; message?: string };
-
 export function RegionsView() {
   const { t } = useTranslation();
   const [industry, setIndustry] = useState<IndustryKey>('food');
   const [country, setCountry] = useState<string>('');
   const [dataset, setDataset] = useState<RegionDataSet>(BUNDLED_DATASET);
 
-  const [showRefresh, setShowRefresh] = useState(false);
-  const [erpk, setErpk] = useState('');
-  const [status, setStatus] = useState<RefreshStatus>({ kind: 'idle' });
-
-  // Load the server-stored dataset on mount; falls back to the bundled seed.
+  // Load the bundled seed dataset on mount.
   useEffect(() => {
     let live = true;
     fetchRegionData().then((d) => { if (live) setDataset(d); });
@@ -36,19 +29,6 @@ export function RegionsView() {
 
   const ranked = rankRegions(dataset.regions, industry, country ? { country } : undefined);
   const countries = allCountries(dataset.regions);
-
-  const submitRefresh = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus({ kind: 'loading' });
-    try {
-      const data = await refreshRegionData(erpk);
-      setDataset(data);
-      setErpk('');
-      setStatus({ kind: 'ok', message: t('regions.refreshOk', { count: data.regions.length }) });
-    } catch (err) {
-      setStatus({ kind: 'error', message: t('regions.refreshError', { message: (err as Error).message }) });
-    }
-  };
 
   return (
     <section className="regions-view" data-testid="regions-view">
@@ -85,42 +65,7 @@ export function RegionsView() {
 
       <div className="regions-status-bar">
         <p className="regions-snapshot-note">{t('regions.updated', { date: dataset.fetchedAt })}</p>
-        <button
-          type="button"
-          className="regions-refresh-toggle"
-          data-testid="regions-refresh-toggle"
-          aria-expanded={showRefresh}
-          onClick={() => { setShowRefresh((s) => !s); setStatus({ kind: 'idle' }); }}
-        >
-          {t('regions.updateData')}
-        </button>
       </div>
-
-      {showRefresh && (
-        <form className="regions-refresh-form" onSubmit={submitRefresh}>
-          <label className="regions-erpk-label" htmlFor="regions-erpk-input">
-            {t('regions.erpkLabel')}
-          </label>
-          <input
-            id="regions-erpk-input"
-            data-testid="regions-erpk"
-            type="password"
-            autoComplete="off"
-            placeholder={t('regions.erpkPlaceholder')}
-            value={erpk}
-            onChange={(e) => setErpk(e.target.value)}
-          />
-          <button
-            type="submit"
-            data-testid="regions-refresh-submit"
-            disabled={status.kind === 'loading' || erpk.trim() === ''}
-          >
-            {status.kind === 'loading' ? t('regions.refreshing') : t('regions.refresh')}
-          </button>
-          {status.kind === 'ok' && <span className="regions-refresh-ok">{status.message}</span>}
-          {status.kind === 'error' && <span className="regions-refresh-error">{status.message}</span>}
-        </form>
-      )}
 
       {ranked.length === 0 ? (
         <p className="regions-empty" data-testid="regions-empty">

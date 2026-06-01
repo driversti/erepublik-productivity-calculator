@@ -1,19 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, within, waitFor } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-// Mock the data service: fetch returns the bundled seed; refresh is a spy.
+// Mock the data service: fetch returns the bundled seed.
 vi.mock('../../services/regionData', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../services/regionData')>();
   return {
     ...actual,
     fetchRegionData: vi.fn(async () => actual.BUNDLED_DATASET),
-    refreshRegionData: vi.fn(),
   };
 });
 
 import { RegionsView } from './RegionsView';
-import { BUNDLED_DATASET, refreshRegionData } from '../../services/regionData';
+import { BUNDLED_DATASET } from '../../services/regionData';
 import { allCountries, countriesForIndustry } from '../../regions/ranking';
 
 beforeEach(() => vi.clearAllMocks());
@@ -59,22 +58,5 @@ describe('RegionsView', () => {
     await userEvent.selectOptions(screen.getByTestId('regions-country'), missing!);
     expect(screen.getByTestId('regions-empty')).toBeInTheDocument();
     expect(screen.queryAllByTestId('regions-row')).toHaveLength(0);
-  });
-
-  it('refreshes data via the erpk form and updates the list', async () => {
-    vi.mocked(refreshRegionData).mockResolvedValue({
-      fetchedAt: '2026-06-09',
-      regions: [{ id: 1, name: 'Testland', permalink: 'Testland', originalCountry: 'Testia', currentCountry: 'Testia', resources: [{ name: 'Grain', industry: 'food', bonus: 30 }] }],
-      countryFlags: {},
-    });
-    setup();
-    await userEvent.click(screen.getByTestId('regions-refresh-toggle'));
-    await userEvent.type(screen.getByTestId('regions-erpk'), 'ERPK-XYZ');
-    await userEvent.click(screen.getByTestId('regions-refresh-submit'));
-    await waitFor(() => expect(refreshRegionData).toHaveBeenCalledWith('ERPK-XYZ'));
-    expect(await screen.findByText('Testland')).toBeInTheDocument();
-    expect(screen.getByText(/Updated 2026-06-09/)).toBeInTheDocument();
-    expect(screen.getByText(/Updated — 1 region\b/i)).toBeInTheDocument();
-    expect(screen.getByTestId('regions-erpk')).toHaveValue('');
   });
 });
