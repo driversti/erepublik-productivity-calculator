@@ -25,7 +25,7 @@ const NAMES = {
   ja: '日本語',
 };
 
-const NS = ['common', 'industry', 'holdings', 'tooltips'];
+const NS = ['common', 'industry', 'holdings', 'tooltips', 'advisor'];
 
 // 1) Normalize the language map in every common.json (keep each file's own label).
 for (const loc of LOCALES) {
@@ -72,7 +72,7 @@ i18n.use(initReactI18next).init({
   resources,
   lng: loadLocale(),
   fallbackLng: DEFAULT_LOCALE,
-  ns: ['common', 'industry', 'holdings', 'tooltips'],
+  ns: ['common', 'industry', 'holdings', 'tooltips', 'advisor'],
   defaultNS: 'common',
   interpolation: { escapeValue: false },
   react: { useSuspense: false },

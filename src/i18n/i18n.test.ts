@@ -3,16 +3,16 @@ import i18n, { resources } from './index';
 import { SUPPORTED_LOCALES } from './config';
 
 describe('i18n catalog', () => {
-  it('registers all four namespaces for English', () => {
+  it('registers all namespaces for English', () => {
     expect(Object.keys(resources.en).sort()).toEqual(
-      ['common', 'holdings', 'industry', 'tooltips'],
+      ['advisor', 'common', 'holdings', 'industry', 'tooltips'],
     );
   });
 
-  it('registers all four namespaces for every supported locale', () => {
+  it('registers all namespaces for every supported locale', () => {
     for (const loc of SUPPORTED_LOCALES) {
       expect(Object.keys(resources[loc]).sort(), `${loc} namespaces`).toEqual(
-        ['common', 'holdings', 'industry', 'tooltips'],
+        ['advisor', 'common', 'holdings', 'industry', 'tooltips'],
       );
     }
   });
@@ -37,6 +37,9 @@ describe('i18n catalog', () => {
       'tooltips:breakdownOutput',
       'tooltips:breakdownProfit',
       'industry:summary.breakdownProfitNote',
+      'advisor:title',
+      'advisor:table.title',
+      'advisor:headline.topWam',
     ];
     for (const k of keys) {
       const value = i18n.t(k as never);

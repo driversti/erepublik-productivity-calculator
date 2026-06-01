@@ -1,0 +1,35 @@
+{
+  "tab": "💡 Advisor",
+  "title": "Advisor",
+  "intro": "What is most profitable to produce right now — based on your bonuses, prices and taxes. With no hired workers the key metric is net profit per WAM session (= per company/day).",
+  "headline": {
+    "topWam": "Best for your WAM",
+    "perDay": "/ company / day",
+    "hiredViable": "Hired workers: positive only here",
+    "hiredViableTycoon": "with Tycoon",
+    "hiredNone": "Hired workers are unprofitable everywhere right now.",
+    "sellRaw": "cheaper to SELL raw",
+    "convert": "better to CONVERT"
+  },
+  "table": {
+    "title": "Production ranking — click a column to sort",
+    "rank": "#",
+    "product": "Product",
+    "wam": "net / WAM / day",
+    "hire": "net / hired (no Tycoon)",
+    "hireTycoon": "net / hired (Tycoon)",
+    "roi": "net / 1 CC in RM",
+    "owned": "you own",
+    "noWamNote": "“—” = industry has no WAM (Houses/Aircraft use hired labour only). Your factories are highlighted.",
+    "noPrice": "Prices not synced for this industry."
+  },
+  "rm": {
+    "title": "Convert raw material, or sell it raw?",
+    "sellRaw": "Sell raw",
+    "convert": "Convert",
+    "verdictSell": "SELL raw",
+    "verdictConvert": "CONVERT"
+  },
+  "syncPrices": "↻ Sync all prices",
+  "syncing": "Syncing…"
+}
