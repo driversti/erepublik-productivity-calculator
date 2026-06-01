@@ -101,6 +101,8 @@ export function OptimizerView({ source = DEFAULT_SOURCE }: Props) {
       : t('optimizer.phasePollution', { done: progress.done, total: progress.total })
     : null;
 
+  const universeWhen = relativeMinutes(universeFetchedAt, i18n.language);
+
   return (
     <section className="optimizer-view" data-testid="optimizer-view">
       <div className="optimizer-intro">
@@ -197,8 +199,8 @@ export function OptimizerView({ source = DEFAULT_SOURCE }: Props) {
               </p>
             )}
             <p className="optimizer-universe-freshness" data-testid="optimizer-universe-freshness">
-              {relativeMinutes(universeFetchedAt, i18n.language)
-                ? t('optimizer.universeFreshness', { when: relativeMinutes(universeFetchedAt, i18n.language) })
+              {universeWhen
+                ? t('optimizer.universeFreshness', { when: universeWhen })
                 : t('optimizer.universeOffline')}
             </p>
           </div>

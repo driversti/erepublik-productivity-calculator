@@ -58,7 +58,6 @@
     "baseline": "Configurația ta actuală: {{net}} CC/zi",
     "baselineNone": "Fără referință — configurează-ți fabricile pe un tab de industrie.",
     "fetchedAt": "Date la data de {{date}}",
-    "ownersSnapshot": "Instantaneu al proprietății regiunilor: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} candidat omis (fără date economice pentru țara sa).",
     "skipped_few": "{{count}} candidați omiși (fără date economice pentru țările lor).",

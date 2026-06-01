@@ -58,7 +58,6 @@
     "baseline": "A jelenlegi beállításod: {{net}} CC/nap",
     "baselineNone": "Nincs viszonyítási alap — állítsd be a gyáraidat egy iparág fülön.",
     "fetchedAt": "Adatok: {{date}}",
-    "ownersSnapshot": "Régiótulajdon-pillanatkép: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} jelölt kihagyva (nincs gazdasági adat az országához).",
     "skipped_other": "{{count}} jelölt kihagyva (nincs gazdasági adat az országukhoz).",

@@ -38,7 +38,7 @@ src/
 ├── data/                      # static game facts (typed)
 │   ├── industries.ts          # factory/plantation/RM arrays + IndustryConfig per industry
 │   ├── buildingIds.ts         # CDN icon ids
-│   └── travel.ts              # typed re-export of ../travelData.js (countries/regions)
+│   └── travel.ts              # re-exports `countries` from countries.json (region identity lives in regionResources.ts + live /api/universe)
 ├── calc/                      # PURE math — the heart; golden-parity locked
 │   ├── rounding.ts            # roundNumber, gameRawProduction, productivityMultiplier, pollutionAt
 │   ├── industry.ts            # computeFwIndustry, computeHiredIndustry
@@ -64,12 +64,10 @@ src/
     └── HoldingsView/          # holdings (toolbar, location bar, per-industry sections, summary)
 ```
 
-`server.js` is an ESM (`type: module`) ~160-line `http` server: serves `dist/`
-(falling back to the repo root for assets outside the build, e.g. `travelData.js`),
+`server.js` is an ESM (`type: module`) ~160-line `http` server: serves `dist/`,
 plus a `/proxy?url=…` GET endpoint allowlisted to `www.erepublik.com` and
 `service.erepublik.tools` over https only. Port is `process.env.PORT || 8080`.
-`travelData.js`
-lives at the repo root; styles live in `styles/` (a per-concern split imported via
+Styles live in `styles/` (a per-concern split imported via
 `styles/index.css` from `main.tsx`).
 
 ### State & module model

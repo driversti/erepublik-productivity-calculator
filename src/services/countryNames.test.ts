@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { normalizeCountryName } from './countryNames';
 
 // Grounding result: after comparing all distinct `currentCountry` values in
-// src/data/regionResources.ts against the country names in travelData.js,
+// src/data/regionResources.ts against the country names in countries.json,
 // the two sets are identical — all 70 regionResources country names appear
-// verbatim in travel.ts. No aliases are needed; ALIASES is empty {}.
+// verbatim in countries.json. No aliases are needed; ALIASES is empty {}.
 
 describe('normalizeCountryName', () => {
   it('passes through names that already match travel.ts exactly', () => {

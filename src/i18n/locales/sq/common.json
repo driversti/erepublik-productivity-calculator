@@ -58,7 +58,6 @@
     "baseline": "Konfigurimi yt aktual: {{net}} CC/ditë",
     "baselineNone": "Pa bazë — konfiguro fabrikat e tua në një skedë industrie.",
     "fetchedAt": "Të dhënat më {{date}}",
-    "ownersSnapshot": "Pamja e pronësisë së rajonit: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} kandidat u anashkalua (nuk ka të dhëna ekonomike për shtetin e tij).",
     "skipped_other": "{{count}} kandidatë u anashkaluan (nuk ka të dhëna ekonomike për shtetet e tyre).",

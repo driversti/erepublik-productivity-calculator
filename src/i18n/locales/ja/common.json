@@ -58,7 +58,6 @@
     "baseline": "現在の設定: {{net}} CC/日",
     "baselineNone": "基準なし — 産業タブで工場を設定してください。",
     "fetchedAt": "データ取得時点: {{date}}",
-    "ownersSnapshot": "地域領有状況のスナップショット: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "{{count}} 件の候補をスキップしました (その国の経済データがありません)。",
     "universeFreshness": "地域データが {{when}} 更新されました",

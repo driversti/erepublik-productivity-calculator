@@ -58,7 +58,6 @@
     "baseline": "Twoja obecna konfiguracja: {{net}} CC/dzień",
     "baselineNone": "Brak punktu odniesienia — skonfiguruj fabryki w zakładce branży.",
     "fetchedAt": "Dane na dzień {{date}}",
-    "ownersSnapshot": "Migawka własności regionów: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "Pominięto {{count}} kandydata (brak danych ekonomicznych dla jego kraju).",
     "skipped_few": "Pominięto {{count}} kandydatów (brak danych ekonomicznych dla ich krajów).",

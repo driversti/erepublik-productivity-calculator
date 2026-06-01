@@ -58,7 +58,6 @@
     "baseline": "Votre configuration actuelle : {{net}} CC/jour",
     "baselineNone": "Aucune référence — configurez vos usines dans un onglet d'industrie.",
     "fetchedAt": "Données au {{date}}",
-    "ownersSnapshot": "Instantané de propriété des régions : {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} candidat ignoré (aucune donnée économique pour son pays).",
     "skipped_other": "{{count}} candidats ignorés (aucune donnée économique pour leur pays).",

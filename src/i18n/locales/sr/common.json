@@ -58,7 +58,6 @@
     "baseline": "Ваша тренутна поставка: {{net}} CC/дан",
     "baselineNone": "Нема основе — подесите фабрике на картици индустрије.",
     "fetchedAt": "Подаци од {{date}}",
-    "ownersSnapshot": "Снимак власништва над регионима: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} кандидат прескочен (нема економских података за његову земљу).",
     "skipped_few": "{{count}} кандидата прескочена (нема економских података за њихову земљу).",

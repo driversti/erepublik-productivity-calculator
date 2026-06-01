@@ -58,7 +58,6 @@
     "baseline": "Dein aktuelles Setup: {{net}} CC/Tag",
     "baselineNone": "Keine Grundlinie – richte deine Fabriken in einem Branchen-Tab ein.",
     "fetchedAt": "Daten vom {{date}}",
-    "ownersSnapshot": "Momentaufnahme des Regionsbesitzes: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} Kandidat übersprungen (keine Wirtschaftsdaten für sein Land).",
     "skipped_other": "{{count}} Kandidaten übersprungen (keine Wirtschaftsdaten für ihr Land).",

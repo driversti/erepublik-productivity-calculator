@@ -58,7 +58,6 @@
     "baseline": "Вашы цяперашнія налады: {{net}} CC/дзень",
     "baselineNone": "Няма базавага значэння — наладзьце фабрыкі на ўкладцы галіны.",
     "fetchedAt": "Дадзеныя на {{date}}",
-    "ownersSnapshot": "Здымак уладання рэгіёнамі: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} кандыдат прапушчаны (няма дадзеных эканомікі для яго краіны).",
     "skipped_few": "{{count}} кандыдаты прапушчаны (няма дадзеных эканомікі для іх краіны).",

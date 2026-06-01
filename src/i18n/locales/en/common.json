@@ -58,7 +58,6 @@
     "baseline": "Your current setup: {{net}} CC/day",
     "baselineNone": "No baseline — configure your factories on an industry tab.",
     "fetchedAt": "Data as of {{date}}",
-    "ownersSnapshot": "Region ownership snapshot: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} candidate skipped (no economics data for its country).",
     "skipped_other": "{{count}} candidates skipped (no economics data for their country).",
