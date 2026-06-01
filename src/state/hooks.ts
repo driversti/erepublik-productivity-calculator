@@ -9,6 +9,7 @@ import { getIndustry, INDUSTRIES } from '../data/industries';
 import { computeIndustryView, type IndustryView } from '../calc/strategy';
 import { computeHiredView, type HiredView } from '../calc/hiredView';
 import { computeFwIndustry, computeHiredIndustry } from '../calc/industry';
+import { computeAdvisor, type AdvisorReport } from '../calc/advisor';
 import { sumHolding, type HoldingTotals } from '../calc/holding';
 import type { CellKind, ModuleField, SharedNumberField } from './reducer';
 import { fetchPrices } from '../services/livePrices';
@@ -313,4 +314,10 @@ export function holdingFactoryCell(holding: Holding, key: IndustryKey, kind: Cel
   const hired = ind as Holding['industries']['houses'];
   const group = kind === 'factory' ? 'factories' : 'rm';
   return hired[group][quality] ?? { companies: 0, workers: 0 };
+}
+
+// Read-only production advisor: ranks every (industry × quality) by net profit
+// per work session and gives a convert-vs-sell-raw-RM verdict per industry.
+export function useAdvisor(): AdvisorReport {
+  return computeAdvisor(useAppState().state);
 }
