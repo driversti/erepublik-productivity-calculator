@@ -126,6 +126,8 @@
   background: color-mix(in srgb, var(--erep-gold) 18%, transparent);
 }
 
+.advisor-table tr.unpriced td { opacity: 0.45; }
+
 .advisor-note {
   margin: 8px 2px 0;
   font-size: 0.8em;
@@ -133,7 +135,7 @@
 }
 
 /* Alignment helpers */
-.ar { text-align: right; }
+.advisor-table th .ar { display: inline-block; min-width: 0.8em; }
 .l { text-align: left; }
 
 /* --- RM convert-vs-sell panel --- */

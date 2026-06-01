@@ -67,13 +67,17 @@ export function ProductionTable({ rows }: { rows: AdvisorRow[] }) {
           {sorted.map((r, i) => {
             const cfg = getIndustry(r.industry);
             return (
-              <tr key={`${r.industry}-${r.quality}`} className={r.owned ? 'own' : ''} data-testid="advisor-row">
+              <tr
+                key={`${r.industry}-${r.quality}`}
+                className={[r.owned ? 'own' : '', r.hasPrice ? '' : 'unpriced'].filter(Boolean).join(' ')}
+                data-testid="advisor-row"
+              >
                 <td className="l dim">{i + 1}</td>
-                <td className="l">{cfg.icon} {industryLabel(t, cfg)} Q{r.quality}</td>
+                <td className="l" title={r.hasPrice ? undefined : t('advisor:table.noPrice')}>{cfg.icon} {industryLabel(t, cfg)} Q{r.quality}</td>
                 <td className={cls(r.wamNet)}>{num(r.wamNet)}</td>
                 <td className={cls(r.hireNet)}>{num(r.hireNet)}</td>
                 <td className={cls(r.hireNetTycoon)}>{num(r.hireNetTycoon)}</td>
-                <td className="dim">{r.roiRm.toFixed(2)}</td>
+                <td className={cls(r.roiRm)}>{num(r.roiRm)}</td>
                 <td className="l">{r.owned ? `×${r.owned}` : ''}</td>
               </tr>
             );

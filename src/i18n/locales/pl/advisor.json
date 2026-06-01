@@ -5,8 +5,9 @@
   "headline": {
     "topWam": "Best for your WAM",
     "perDay": "/ company / day",
-    "hiredViable": "Hired workers: positive only here",
-    "hiredViableTycoon": "with Tycoon",
+    "hiredProfit": "Hired workers profitable:",
+    "hiredTycoonOnly": "Profitable only with Tycoon:",
+    "syncHint": "Sync prices (button below) to see recommendations.",
     "hiredNone": "Hired workers are unprofitable everywhere right now.",
     "sellRaw": "cheaper to SELL raw",
     "convert": "better to CONVERT"
