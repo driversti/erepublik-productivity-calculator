@@ -14,6 +14,8 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 COPY dist ./dist
 COPY server.js ./
 COPY server ./server
+# server.js reads this at runtime for the Society-page universe builder.
+COPY src/data/countries.json ./src/data/countries.json
 
 RUN chown -R appuser:appgroup /app
 USER appuser

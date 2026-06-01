@@ -5,10 +5,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildUniverse } from './server/buildUniverse.js';
-import countries from './src/data/countries.json' with { type: 'json' };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Country list (id -> {id,name,permalink}) for the Society-page universe builder.
+// Read via fs (not a JSON import) so it works on any Node version and resolves
+// relative to this file in both dev (repo root) and the Docker image (/app).
+const countries = JSON.parse(fs.readFileSync(path.join(__dirname, 'src/data/countries.json'), 'utf8'));
 
 const PORT = Number(process.env.PORT) || 8080;
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
