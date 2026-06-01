@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getIndustry } from '../../data/industries';
 import { industryLabel } from '../../i18n/names';
 import type { AdvisorRow } from '../../calc/advisor';
+import type { IndustryKey } from '../../data/types';
 
 type SortKey = 'wam' | 'hire' | 'hireTycoon' | 'roi';
 
@@ -21,7 +22,7 @@ function cls(v: number | null): string {
   return v > 0 ? 'pos' : v < 0 ? 'neg' : 'dim';
 }
 
-export function ProductionTable({ rows }: { rows: AdvisorRow[] }) {
+export function ProductionTable({ rows, onToggleExclude }: { rows: AdvisorRow[]; onToggleExclude?: (industry: IndustryKey, quality: number) => void }) {
   const { t } = useTranslation(['common', 'advisor']);
   const [sortKey, setSortKey] = useState<SortKey>('wam');
   const [desc, setDesc] = useState(true);
@@ -67,14 +68,24 @@ export function ProductionTable({ rows }: { rows: AdvisorRow[] }) {
             return (
               <tr
                 key={`${r.industry}-${r.kind}-${r.quality}`}
-                className={[r.owned ? 'own' : '', r.hasPrice ? '' : 'unpriced', r.kind === 'rm' ? 'rm-row' : ''].filter(Boolean).join(' ')}
+                className={[r.owned ? 'own' : '', r.hasPrice ? '' : 'unpriced', r.kind === 'rm' ? 'rm-row' : '', r.excluded ? 'excluded' : ''].filter(Boolean).join(' ')}
                 data-testid="advisor-row"
               >
                 <td className="l dim">{i + 1}</td>
                 <td className="l" title={r.hasPrice ? undefined : t('advisor:table.noPrice')}>
                   {r.kind === 'rm'
                     ? <>{cfg.icon} {cfg.rmName} Q{r.quality} <span className="rm-badge">{t('advisor:table.rmBadge')}</span></>
-                    : <>{cfg.icon} {industryLabel(t, cfg)} Q{r.quality}</>}
+                    : <>{cfg.icon} {industryLabel(t, cfg)} Q{r.quality}
+                        <button
+                          type="button"
+                          className="exclude-toggle"
+                          data-testid={`exclude-${r.industry}-${r.quality}`}
+                          title={t('advisor:table.excludeToggle')}
+                          aria-pressed={r.excluded}
+                          onClick={() => onToggleExclude?.(r.industry, r.quality)}
+                        >🚫</button>
+                        {r.excluded && <span className="excluded-badge">{t('advisor:table.excludedBadge')}</span>}
+                      </>}
                 </td>
                 <td className={cls(r.wamNet)}>{num(r.wamNet)}</td>
                 <td className={cls(r.hireNet)}>{num(r.hireNet)}</td>
