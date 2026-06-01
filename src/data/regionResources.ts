@@ -23,6 +23,8 @@ export interface RegionEntry {
   /** eRepublik region id */
   id: number;
   name: string;
+  /** URL slug for /en/main/region/{permalink} — stable, never stale. */
+  permalink: string;
   /** Historical owner — stable, never stale. */
   originalCountry: string;
   /** Owner at snapshot time — may be stale (war). */
@@ -109,6 +111,7 @@ export const COUNTRY_FLAGS: Record<string, string> = {
 export const REGION_RESOURCES: RegionEntry[] = [
   {
     "id": 3,
+    "permalink": "Dobrogea",
     "name": "Dobrogea",
     "originalCountry": "Romania",
     "currentCountry": "Romania",
@@ -137,6 +140,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 35,
+    "permalink": "Transilvania",
     "name": "Transilvania",
     "originalCountry": "Romania",
     "currentCountry": "Romania",
@@ -165,6 +169,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 37,
+    "permalink": "Moldova",
     "name": "Moldova",
     "originalCountry": "Romania",
     "currentCountry": "Romania",
@@ -183,6 +188,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 56,
+    "permalink": "Kentucky",
     "name": "Kentucky",
     "originalCountry": "USA",
     "currentCountry": "USA",
@@ -211,6 +217,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 85,
+    "permalink": "Virginia",
     "name": "Virginia",
     "originalCountry": "USA",
     "currentCountry": "USA",
@@ -239,6 +246,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 87,
+    "permalink": "West-Virginia",
     "name": "West Virginia",
     "originalCountry": "USA",
     "currentCountry": "USA",
@@ -252,6 +260,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 90,
+    "permalink": "District-of-Columbia",
     "name": "District of Columbia",
     "originalCountry": "USA",
     "currentCountry": "USA",
@@ -265,6 +274,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 91,
+    "permalink": "Northern-Basarabia",
     "name": "Northern Basarabia",
     "originalCountry": "Republic of Moldova",
     "currentCountry": "Republic of Moldova",
@@ -283,6 +293,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 92,
+    "permalink": "Chisinau",
     "name": "Chisinau",
     "originalCountry": "Republic of Moldova",
     "currentCountry": "Croatia",
@@ -306,6 +317,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 93,
+    "permalink": "Southern-Basarabia",
     "name": "Southern Basarabia",
     "originalCountry": "Republic of Moldova",
     "currentCountry": "Latvia",
@@ -324,6 +336,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 94,
+    "permalink": "Transnistria",
     "name": "Transnistria",
     "originalCountry": "Republic of Moldova",
     "currentCountry": "Republic of Moldova",
@@ -347,6 +360,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 104,
+    "permalink": "Yukon",
     "name": "Yukon",
     "originalCountry": "Canada",
     "currentCountry": "Canada",
@@ -365,6 +379,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 106,
+    "permalink": "Northwest-Territories",
     "name": "Northwest Territories",
     "originalCountry": "Canada",
     "currentCountry": "Canada",
@@ -393,6 +408,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 107,
+    "permalink": "Nunavut",
     "name": "Nunavut",
     "originalCountry": "Canada",
     "currentCountry": "Canada",
@@ -421,6 +437,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 108,
+    "permalink": "Western-Transdanubia",
     "name": "Western Transdanubia",
     "originalCountry": "Hungary",
     "currentCountry": "Hungary",
@@ -444,6 +461,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 109,
+    "permalink": "Southern-Transdanubia",
     "name": "Southern Transdanubia",
     "originalCountry": "Hungary",
     "currentCountry": "Germany",
@@ -467,6 +485,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 110,
+    "permalink": "Central-Transdanubia",
     "name": "Central Transdanubia",
     "originalCountry": "Hungary",
     "currentCountry": "Hungary",
@@ -495,6 +514,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 115,
+    "permalink": "Valley-of-Mexico",
     "name": "Valley of Mexico",
     "originalCountry": "Mexico",
     "currentCountry": "Mexico",
@@ -513,6 +533,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 117,
+    "permalink": "Northwest-of-Mexico",
     "name": "Northwest of Mexico",
     "originalCountry": "Mexico",
     "currentCountry": "Mexico",
@@ -526,6 +547,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 118,
+    "permalink": "Pacific-Coast-of-Mexico",
     "name": "Pacific Coast of Mexico",
     "originalCountry": "Mexico",
     "currentCountry": "Mexico",
@@ -539,6 +561,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 124,
+    "permalink": "Venezuelan-Capital",
     "name": "Venezuelan Capital",
     "originalCountry": "Venezuela",
     "currentCountry": "Venezuela",
@@ -557,6 +580,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 125,
+    "permalink": "Central-Venezuela",
     "name": "Central Venezuela",
     "originalCountry": "Venezuela",
     "currentCountry": "Venezuela",
@@ -585,6 +609,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 130,
+    "permalink": "North-Eastern-Venezuela",
     "name": "North Eastern Venezuela",
     "originalCountry": "Venezuela",
     "currentCountry": "Venezuela",
@@ -608,6 +633,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 139,
+    "permalink": "Siveria",
     "name": "Siveria",
     "originalCountry": "Ukraine",
     "currentCountry": "Ukraine",
@@ -626,6 +652,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 142,
+    "permalink": "Sloboda",
     "name": "Sloboda",
     "originalCountry": "Ukraine",
     "currentCountry": "Ukraine",
@@ -654,6 +681,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 143,
+    "permalink": "Donbas",
     "name": "Donbas",
     "originalCountry": "Ukraine",
     "currentCountry": "Ukraine",
@@ -682,6 +710,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 148,
+    "permalink": "Northeast-of-Brazil",
     "name": "Northeast of Brazil",
     "originalCountry": "Brazil",
     "currentCountry": "Brazil",
@@ -700,6 +729,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 149,
+    "permalink": "Southeast-of-Brazil",
     "name": "Southeast of Brazil",
     "originalCountry": "Brazil",
     "currentCountry": "Brazil",
@@ -718,6 +748,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 150,
+    "permalink": "Parana-and-Santa-Catarina",
     "name": "Parana and Santa Catarina",
     "originalCountry": "Brazil",
     "currentCountry": "Brazil",
@@ -746,6 +777,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 151,
+    "permalink": "Pampas",
     "name": "Pampas",
     "originalCountry": "Argentina",
     "currentCountry": "Argentina",
@@ -769,6 +801,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 154,
+    "permalink": "Mesopotamia",
     "name": "Mesopotamia",
     "originalCountry": "Argentina",
     "currentCountry": "Argentina",
@@ -792,6 +825,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 156,
+    "permalink": "Patagonia",
     "name": "Patagonia",
     "originalCountry": "Argentina",
     "currentCountry": "Argentina",
@@ -820,6 +854,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 157,
+    "permalink": "Lisboa",
     "name": "Lisboa",
     "originalCountry": "Portugal",
     "currentCountry": "Portugal",
@@ -848,6 +883,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 160,
+    "permalink": "Alentejo",
     "name": "Alentejo",
     "originalCountry": "Portugal",
     "currentCountry": "Portugal",
@@ -861,6 +897,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 162,
+    "permalink": "Azores",
     "name": "Azores",
     "originalCountry": "Portugal",
     "currentCountry": "Portugal",
@@ -874,6 +911,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 163,
+    "permalink": "Madeira",
     "name": "Madeira",
     "originalCountry": "Portugal",
     "currentCountry": "Portugal",
@@ -902,6 +940,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 167,
+    "permalink": "Andalucia",
     "name": "Andalucia",
     "originalCountry": "Spain",
     "currentCountry": "Spain",
@@ -925,6 +964,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 181,
+    "permalink": "Castilla-La-Mancha",
     "name": "Castilla La Mancha",
     "originalCountry": "Spain",
     "currentCountry": "Spain",
@@ -948,6 +988,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 183,
+    "permalink": "Canary-Islands",
     "name": "Canary Islands",
     "originalCountry": "Spain",
     "currentCountry": "Spain",
@@ -976,6 +1017,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 186,
+    "permalink": "Aquitaine",
     "name": "Aquitaine",
     "originalCountry": "France",
     "currentCountry": "France",
@@ -989,6 +1031,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 188,
+    "permalink": "Brittany",
     "name": "Brittany",
     "originalCountry": "France",
     "currentCountry": "France",
@@ -1002,6 +1045,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 198,
+    "permalink": "Midi-Pyrenees",
     "name": "Midi-Pyrenees",
     "originalCountry": "France",
     "currentCountry": "France",
@@ -1030,6 +1074,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 199,
+    "permalink": "Paris-Isle-of-France",
     "name": "Paris Isle of France",
     "originalCountry": "France",
     "currentCountry": "France",
@@ -1043,6 +1088,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 200,
+    "permalink": "Pays-de-la-Loire",
     "name": "Pays de la Loire",
     "originalCountry": "France",
     "currentCountry": "Nigeria",
@@ -1056,6 +1102,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 209,
+    "permalink": "Cork",
     "name": "Cork",
     "originalCountry": "Ireland",
     "currentCountry": "Ireland",
@@ -1079,6 +1126,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 210,
+    "permalink": "Shannon",
     "name": "Shannon",
     "originalCountry": "Ireland",
     "currentCountry": "Ireland",
@@ -1107,6 +1155,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 212,
+    "permalink": "Mayo",
     "name": "Mayo",
     "originalCountry": "Ireland",
     "currentCountry": "Spain",
@@ -1120,6 +1169,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 217,
+    "permalink": "Scotland",
     "name": "Scotland",
     "originalCountry": "United Kingdom",
     "currentCountry": "United Kingdom",
@@ -1138,6 +1188,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 225,
+    "permalink": "Yorkshire-Humberside",
     "name": "Yorkshire & Humberside",
     "originalCountry": "United Kingdom",
     "currentCountry": "United Kingdom",
@@ -1166,6 +1217,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 226,
+    "permalink": "North-East-of-England",
     "name": "North East of England",
     "originalCountry": "United Kingdom",
     "currentCountry": "United Kingdom",
@@ -1194,6 +1246,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 228,
+    "permalink": "Brussels",
     "name": "Brussels",
     "originalCountry": "Belgium",
     "currentCountry": "Belgium",
@@ -1222,6 +1275,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 229,
+    "permalink": "Flanders",
     "name": "Flanders",
     "originalCountry": "Belgium",
     "currentCountry": "Republic of China (Taiwan)",
@@ -1240,6 +1294,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 230,
+    "permalink": "Wallonia",
     "name": "Wallonia",
     "originalCountry": "Belgium",
     "currentCountry": "Belgium",
@@ -1268,6 +1323,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 232,
+    "permalink": "Midtjylland",
     "name": "Midtjylland",
     "originalCountry": "Denmark",
     "currentCountry": "Bulgaria",
@@ -1281,6 +1337,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 235,
+    "permalink": "Sjaelland",
     "name": "Sjaelland",
     "originalCountry": "Denmark",
     "currentCountry": "Bulgaria",
@@ -1294,6 +1351,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 238,
+    "permalink": "Western-Finland",
     "name": "Western Finland",
     "originalCountry": "Finland",
     "currentCountry": "Finland",
@@ -1312,6 +1370,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 240,
+    "permalink": "Oulu",
     "name": "Oulu",
     "originalCountry": "Finland",
     "currentCountry": "Finland",
@@ -1340,6 +1399,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 241,
+    "permalink": "Lapland",
     "name": "Lapland",
     "originalCountry": "Finland",
     "currentCountry": "Finland",
@@ -1368,6 +1428,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 243,
+    "permalink": "Baden-Wurttemberg",
     "name": "Baden-Wurttemberg",
     "originalCountry": "Germany",
     "currentCountry": "Germany",
@@ -1396,6 +1457,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 246,
+    "permalink": "Brandenburg-and-Berlin",
     "name": "Brandenburg and Berlin",
     "originalCountry": "Germany",
     "currentCountry": "Poland",
@@ -1414,6 +1476,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 250,
+    "permalink": "Mecklenburg",
     "name": "Mecklenburg-Western Pomerania",
     "originalCountry": "Germany",
     "currentCountry": "Germany",
@@ -1432,6 +1495,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 257,
+    "permalink": "Schleswig-Holstein-and-Hamburg",
     "name": "Schleswig-Holstein and Hamburg",
     "originalCountry": "Germany",
     "currentCountry": "Germany",
@@ -1445,6 +1509,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 267,
+    "permalink": "Lazio",
     "name": "Lazio",
     "originalCountry": "Italy",
     "currentCountry": "Netherlands",
@@ -1458,6 +1523,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 273,
+    "permalink": "Sardinia",
     "name": "Sardinia",
     "originalCountry": "Italy",
     "currentCountry": "Italy",
@@ -1481,6 +1547,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 274,
+    "permalink": "Sicily",
     "name": "Sicily",
     "originalCountry": "Italy",
     "currentCountry": "Italy",
@@ -1509,6 +1576,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 291,
+    "permalink": "Nord-Norge",
     "name": "Nord-Norge",
     "originalCountry": "Norway",
     "currentCountry": "Norway",
@@ -1537,6 +1605,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 306,
+    "permalink": "Pomerania",
     "name": "Pomerania",
     "originalCountry": "Poland",
     "currentCountry": "Poland",
@@ -1565,6 +1634,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 307,
+    "permalink": "Silesia",
     "name": "Silesia",
     "originalCountry": "Poland",
     "currentCountry": "Poland",
@@ -1583,6 +1653,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 312,
+    "permalink": "Bratislava",
     "name": "Bratislava",
     "originalCountry": "Slovakia",
     "currentCountry": "Ukraine",
@@ -1606,6 +1677,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 315,
+    "permalink": "Western-Slovakia",
     "name": "Western Slovakia",
     "originalCountry": "Slovakia",
     "currentCountry": "Slovakia",
@@ -1629,6 +1701,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 316,
+    "permalink": "Central-Slovakia",
     "name": "Central Slovakia",
     "originalCountry": "Slovakia",
     "currentCountry": "United Arab Emirates",
@@ -1642,6 +1715,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 320,
+    "permalink": "Svealand",
     "name": "Svealand",
     "originalCountry": "Sweden",
     "currentCountry": "Sweden",
@@ -1665,6 +1739,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 321,
+    "permalink": "Norrland-Sameland",
     "name": "Norrland and Sameland",
     "originalCountry": "Sweden",
     "currentCountry": "Sweden",
@@ -1688,6 +1763,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 325,
+    "permalink": "Gotaland",
     "name": "Gotaland",
     "originalCountry": "Sweden",
     "currentCountry": "Sweden",
@@ -1716,6 +1792,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 330,
+    "permalink": "South-Australia",
     "name": "South Australia",
     "originalCountry": "Australia",
     "currentCountry": "Australia",
@@ -1739,6 +1816,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 331,
+    "permalink": "Tasmania",
     "name": "Tasmania",
     "originalCountry": "Australia",
     "currentCountry": "Australia",
@@ -1767,6 +1845,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 332,
+    "permalink": "Victoria",
     "name": "Victoria",
     "originalCountry": "Australia",
     "currentCountry": "Lithuania",
@@ -1780,6 +1859,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 333,
+    "permalink": "Western-Australia",
     "name": "Western Australia",
     "originalCountry": "Australia",
     "currentCountry": "Latvia",
@@ -1793,6 +1873,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 336,
+    "permalink": "Deutschschweiz",
     "name": "Deutschschweiz",
     "originalCountry": "Switzerland",
     "currentCountry": "Brazil",
@@ -1816,6 +1897,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 337,
+    "permalink": "Romandie",
     "name": "Romandie",
     "originalCountry": "Switzerland",
     "currentCountry": "Switzerland",
@@ -1839,6 +1921,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 339,
+    "permalink": "Graubunden",
     "name": "Graubunden",
     "originalCountry": "Switzerland",
     "currentCountry": "Switzerland",
@@ -1862,6 +1945,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 343,
+    "permalink": "Upper-Austria",
     "name": "Upper Austria",
     "originalCountry": "Austria",
     "currentCountry": "Austria",
@@ -1885,6 +1969,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 345,
+    "permalink": "Styria",
     "name": "Styria",
     "originalCountry": "Austria",
     "currentCountry": "Austria",
@@ -1903,6 +1988,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 346,
+    "permalink": "Tyrol",
     "name": "Tyrol",
     "originalCountry": "Austria",
     "currentCountry": "Austria",
@@ -1916,6 +2002,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 347,
+    "permalink": "Vorarlberg",
     "name": "Vorarlberg",
     "originalCountry": "Austria",
     "currentCountry": "Republic of China (Taiwan)",
@@ -1944,6 +2031,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 352,
+    "permalink": "Vidin",
     "name": "Vidin",
     "originalCountry": "Bulgaria",
     "currentCountry": "Netherlands",
@@ -1962,6 +2050,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 356,
+    "permalink": "Varna",
     "name": "Varna",
     "originalCountry": "Bulgaria",
     "currentCountry": "Bulgaria",
@@ -1990,6 +2079,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 358,
+    "permalink": "Ruse",
     "name": "Ruse",
     "originalCountry": "Bulgaria",
     "currentCountry": "Israel",
@@ -2013,6 +2103,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 380,
+    "permalink": "Sichuan",
     "name": "Sichuan",
     "originalCountry": "China",
     "currentCountry": "China",
@@ -2036,6 +2127,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 382,
+    "permalink": "Zhejiang",
     "name": "Zhejiang",
     "originalCountry": "China",
     "currentCountry": "China",
@@ -2049,6 +2141,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 394,
+    "permalink": "Tibet",
     "name": "Tibet",
     "originalCountry": "China",
     "currentCountry": "Croatia",
@@ -2062,6 +2155,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 395,
+    "permalink": "Beijing",
     "name": "Beijing",
     "originalCountry": "China",
     "currentCountry": "China",
@@ -2075,6 +2169,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 419,
+    "permalink": "Peloponnese",
     "name": "Peloponnese",
     "originalCountry": "Greece",
     "currentCountry": "Greece",
@@ -2093,6 +2188,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 422,
+    "permalink": "Crete",
     "name": "Crete",
     "originalCountry": "Greece",
     "currentCountry": "Argentina",
@@ -2111,6 +2207,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 424,
+    "permalink": "Mazovia",
     "name": "Mazovia",
     "originalCountry": "Poland",
     "currentCountry": "Poland",
@@ -2139,6 +2236,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 437,
+    "permalink": "Southern-Bohemia",
     "name": "Southern Bohemia",
     "originalCountry": "Czech Republic",
     "currentCountry": "Czech Republic",
@@ -2152,6 +2250,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 442,
+    "permalink": "Northern-Bohemia",
     "name": "Northern Bohemia",
     "originalCountry": "Czech Republic",
     "currentCountry": "Poland",
@@ -2165,6 +2264,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 449,
+    "permalink": "Maharashtra",
     "name": "Maharashtra",
     "originalCountry": "India",
     "currentCountry": "Bulgaria",
@@ -2193,6 +2293,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 451,
+    "permalink": "Karnataka",
     "name": "Karnataka",
     "originalCountry": "India",
     "currentCountry": "India",
@@ -2221,6 +2322,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 452,
+    "permalink": "Tamil-Nadu",
     "name": "Tamil Nadu",
     "originalCountry": "India",
     "currentCountry": "India",
@@ -2234,6 +2336,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 453,
+    "permalink": "Kerala",
     "name": "Kerala",
     "originalCountry": "India",
     "currentCountry": "Canada",
@@ -2247,6 +2350,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 460,
+    "permalink": "Sumatra",
     "name": "Sumatra",
     "originalCountry": "Indonesia",
     "currentCountry": "Indonesia",
@@ -2275,6 +2379,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 463,
+    "permalink": "Lesser-Sunda-Islands",
     "name": "Lesser Sunda Islands",
     "originalCountry": "Indonesia",
     "currentCountry": "Indonesia",
@@ -2293,6 +2398,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 465,
+    "permalink": "Maluku-islands",
     "name": "Maluku islands",
     "originalCountry": "Indonesia",
     "currentCountry": "Indonesia",
@@ -2321,6 +2427,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 467,
+    "permalink": "Jerusalem-district",
     "name": "Jerusalem district",
     "originalCountry": "Israel",
     "currentCountry": "Israel",
@@ -2349,6 +2456,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 468,
+    "permalink": "Nazareth-North-District",
     "name": "Nazareth North District",
     "originalCountry": "Israel",
     "currentCountry": "Estonia",
@@ -2367,6 +2475,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 471,
+    "permalink": "Beersheba-South-District",
     "name": "Beersheba South District",
     "originalCountry": "Israel",
     "currentCountry": "Israel",
@@ -2390,6 +2499,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 473,
+    "permalink": "Sistan-Baluchistan",
     "name": "Sistan and Baluchistan",
     "originalCountry": "Iran",
     "currentCountry": "Iran",
@@ -2418,6 +2528,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 477,
+    "permalink": "Semnan",
     "name": "Semnan",
     "originalCountry": "Iran",
     "currentCountry": "Iran",
@@ -2446,6 +2557,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 483,
+    "permalink": "Mazandaran-and-Golistan",
     "name": "Mazandaran and Golistan",
     "originalCountry": "Iran",
     "currentCountry": "Lithuania",
@@ -2464,6 +2576,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 486,
+    "permalink": "Kanto",
     "name": "Kanto",
     "originalCountry": "Japan",
     "currentCountry": "Japan",
@@ -2487,6 +2600,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 488,
+    "permalink": "Kinki",
     "name": "Kinki",
     "originalCountry": "Japan",
     "currentCountry": "Japan",
@@ -2510,6 +2624,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 489,
+    "permalink": "Chugoku",
     "name": "Chugoku",
     "originalCountry": "Japan",
     "currentCountry": "Finland",
@@ -2528,6 +2643,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 492,
+    "permalink": "Balochistan",
     "name": "Balochistan",
     "originalCountry": "Pakistan",
     "currentCountry": "Pakistan",
@@ -2556,6 +2672,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 493,
+    "permalink": "North-West-Frontier",
     "name": "North-West Frontier Province",
     "originalCountry": "Pakistan",
     "currentCountry": "Pakistan",
@@ -2584,6 +2701,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 494,
+    "permalink": "Punjab",
     "name": "Punjab",
     "originalCountry": "Pakistan",
     "currentCountry": "Peru",
@@ -2597,6 +2715,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 495,
+    "permalink": "Sindh",
     "name": "Sindh",
     "originalCountry": "Pakistan",
     "currentCountry": "Israel",
@@ -2610,6 +2729,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 498,
+    "permalink": "Free-State",
     "name": "Free State",
     "originalCountry": "South Africa",
     "currentCountry": "South Africa",
@@ -2628,6 +2748,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 499,
+    "permalink": "Gauteng",
     "name": "Gauteng",
     "originalCountry": "South Africa",
     "currentCountry": "South Africa",
@@ -2656,6 +2777,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 501,
+    "permalink": "Limpopo",
     "name": "Limpopo",
     "originalCountry": "South Africa",
     "currentCountry": "South Africa",
@@ -2684,6 +2806,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 507,
+    "permalink": "Central-Thailand",
     "name": "Central Thailand",
     "originalCountry": "Thailand",
     "currentCountry": "Saudi Arabia",
@@ -2707,6 +2830,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 508,
+    "permalink": "Northern-Thailand",
     "name": "Northern Thailand",
     "originalCountry": "Thailand",
     "currentCountry": "United Arab Emirates",
@@ -2730,6 +2854,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 511,
+    "permalink": "North-Eastern-Thailand",
     "name": "North-Eastern Thailand",
     "originalCountry": "Thailand",
     "currentCountry": "Thailand",
@@ -2748,6 +2873,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 512,
+    "permalink": "Aegean-Coast-of-Turkey",
     "name": "Aegean Coast of Turkey",
     "originalCountry": "Turkey",
     "currentCountry": "Bosnia and Herzegovina",
@@ -2761,6 +2887,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 522,
+    "permalink": "Chungcheongnam",
     "name": "Chungcheongnam-do",
     "originalCountry": "South Korea",
     "currentCountry": "Hungary",
@@ -2774,6 +2901,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 524,
+    "permalink": "Jeollanam",
     "name": "Jeollanam-do",
     "originalCountry": "South Korea",
     "currentCountry": "South Korea",
@@ -2797,6 +2925,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 526,
+    "permalink": "Gyeongsangnam",
     "name": "Gyeongsangnam-do",
     "originalCountry": "South Korea",
     "currentCountry": "South Korea",
@@ -2815,6 +2944,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 527,
+    "permalink": "Jeju",
     "name": "Jeju",
     "originalCountry": "South Korea",
     "currentCountry": "South Korea",
@@ -2843,6 +2973,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 528,
+    "permalink": "Western-Netherlands",
     "name": "Western Netherlands",
     "originalCountry": "Netherlands",
     "currentCountry": "Netherlands",
@@ -2871,6 +3002,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 529,
+    "permalink": "Southern-Netherlands",
     "name": "Southern Netherlands",
     "originalCountry": "Netherlands",
     "currentCountry": "Netherlands",
@@ -2899,6 +3031,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 530,
+    "permalink": "Eastern-Netherlands",
     "name": "Eastern Netherlands",
     "originalCountry": "Netherlands",
     "currentCountry": "Spain",
@@ -2917,6 +3050,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 534,
+    "permalink": "Eastern-Siberia",
     "name": "Eastern Siberia",
     "originalCountry": "Russia",
     "currentCountry": "Turkey",
@@ -2935,6 +3069,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 541,
+    "permalink": "Volga-Vyatka",
     "name": "Volga Vyatka",
     "originalCountry": "Russia",
     "currentCountry": "Russia",
@@ -2963,6 +3098,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 542,
+    "permalink": "Western-Siberia",
     "name": "Western Siberia",
     "originalCountry": "Russia",
     "currentCountry": "Russia",
@@ -2991,6 +3127,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 562,
+    "permalink": "Svalbard-Jan-Mayen",
     "name": "Svalbard & Jan Mayen",
     "originalCountry": "Norway",
     "currentCountry": "Norway",
@@ -3014,6 +3151,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 571,
+    "permalink": "Slovenian-Littoral",
     "name": "Slovenian Littoral",
     "originalCountry": "Slovenia",
     "currentCountry": "Slovenia",
@@ -3032,6 +3170,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 591,
+    "permalink": "Upper-Carniola",
     "name": "Upper Carniola",
     "originalCountry": "Slovenia",
     "currentCountry": "Bosnia and Herzegovina",
@@ -3050,6 +3189,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 601,
+    "permalink": "Styria-Carinthia",
     "name": "Styria and Carinthia",
     "originalCountry": "Slovenia",
     "currentCountry": "North Korea",
@@ -3068,6 +3208,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 611,
+    "permalink": "Lower-Carniola",
     "name": "Lower Carniola",
     "originalCountry": "Slovenia",
     "currentCountry": "Uruguay",
@@ -3081,6 +3222,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 621,
+    "permalink": "Prekmurje",
     "name": "Prekmurje",
     "originalCountry": "Slovenia",
     "currentCountry": "Slovenia",
@@ -3104,6 +3246,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 625,
+    "permalink": "Lika-Gorski-Kotar",
     "name": "Lika and Gorski Kotar",
     "originalCountry": "Croatia",
     "currentCountry": "Croatia",
@@ -3132,6 +3275,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 627,
+    "permalink": "North-Dalmatia",
     "name": "North Dalmatia",
     "originalCountry": "Croatia",
     "currentCountry": "Croatia",
@@ -3160,6 +3304,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 628,
+    "permalink": "South-Dalmatia",
     "name": "South Dalmatia",
     "originalCountry": "Croatia",
     "currentCountry": "Croatia",
@@ -3178,6 +3323,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 631,
+    "permalink": "Zona-Central",
     "name": "Zona Central",
     "originalCountry": "Chile",
     "currentCountry": "Poland",
@@ -3191,6 +3337,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 633,
+    "permalink": "Zona-Austral",
     "name": "Zona Austral",
     "originalCountry": "Chile",
     "currentCountry": "Serbia",
@@ -3204,6 +3351,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 635,
+    "permalink": "Belgrade",
     "name": "Belgrade",
     "originalCountry": "Serbia",
     "currentCountry": "Serbia",
@@ -3227,6 +3375,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 636,
+    "permalink": "Sumadija",
     "name": "Sumadija",
     "originalCountry": "Serbia",
     "currentCountry": "Serbia",
@@ -3250,6 +3399,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 639,
+    "permalink": "Raska",
     "name": "Raska",
     "originalCountry": "Serbia",
     "currentCountry": "Serbia",
@@ -3263,6 +3413,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 640,
+    "permalink": "Southern-Serbia",
     "name": "Southern Serbia",
     "originalCountry": "Serbia",
     "currentCountry": "Serbia",
@@ -3281,6 +3432,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 641,
+    "permalink": "Sabah",
     "name": "Sabah",
     "originalCountry": "Malaysia",
     "currentCountry": "Republic of China (Taiwan)",
@@ -3299,6 +3451,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 642,
+    "permalink": "Sarawak",
     "name": "Sarawak",
     "originalCountry": "Malaysia",
     "currentCountry": "Malaysia",
@@ -3322,6 +3475,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 643,
+    "permalink": "Peninsular-Malaysia",
     "name": "Peninsular Malaysia",
     "originalCountry": "Malaysia",
     "currentCountry": "Poland",
@@ -3350,6 +3504,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 644,
+    "permalink": "Luzon",
     "name": "Luzon",
     "originalCountry": "Philippines",
     "currentCountry": "Thailand",
@@ -3363,6 +3518,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 645,
+    "permalink": "Visayas",
     "name": "Visayas",
     "originalCountry": "Philippines",
     "currentCountry": "Philippines",
@@ -3386,6 +3542,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 646,
+    "permalink": "Mindanao",
     "name": "Mindanao",
     "originalCountry": "Philippines",
     "currentCountry": "Philippines",
@@ -3404,6 +3561,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 647,
+    "permalink": "Palawan",
     "name": "Palawan",
     "originalCountry": "Philippines",
     "currentCountry": "Philippines",
@@ -3432,6 +3590,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 648,
+    "permalink": "Singapore-City",
     "name": "Singapore City",
     "originalCountry": "Singapore",
     "currentCountry": "Singapore",
@@ -3460,6 +3619,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 649,
+    "permalink": "West-Srpska-Republic",
     "name": "West Srpska Republic",
     "originalCountry": "Bosnia and Herzegovina",
     "currentCountry": "Bosnia and Herzegovina",
@@ -3483,6 +3643,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 650,
+    "permalink": "East-Srpska-Republic",
     "name": "East Srpska Republic",
     "originalCountry": "Bosnia and Herzegovina",
     "currentCountry": "Bosnia and Herzegovina",
@@ -3501,6 +3662,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 652,
+    "permalink": "Federation-of-BiH",
     "name": "Federation of BiH",
     "originalCountry": "Bosnia and Herzegovina",
     "currentCountry": "Bulgaria",
@@ -3514,6 +3676,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 654,
+    "permalink": "Pohja-Eesti",
     "name": "Pohja-Eesti",
     "originalCountry": "Estonia",
     "currentCountry": "Estonia",
@@ -3542,6 +3705,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 655,
+    "permalink": "Kirde-Eesti",
     "name": "Kirde-Eesti",
     "originalCountry": "Estonia",
     "currentCountry": "Estonia",
@@ -3570,6 +3734,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 658,
+    "permalink": "Louna-Eesti",
     "name": "Louna-Eesti",
     "originalCountry": "Estonia",
     "currentCountry": "Estonia",
@@ -3588,6 +3753,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 659,
+    "permalink": "Vidzeme",
     "name": "Vidzeme",
     "originalCountry": "Latvia",
     "currentCountry": "Latvia",
@@ -3606,6 +3772,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 660,
+    "permalink": "Latgale",
     "name": "Latgale",
     "originalCountry": "Latvia",
     "currentCountry": "France",
@@ -3624,6 +3791,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 662,
+    "permalink": "Kurzeme",
     "name": "Kurzeme",
     "originalCountry": "Latvia",
     "currentCountry": "Latvia",
@@ -3647,6 +3815,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 663,
+    "permalink": "Lithuania-Minor",
     "name": "Lithuania Minor",
     "originalCountry": "Lithuania",
     "currentCountry": "Lithuania",
@@ -3670,6 +3839,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 664,
+    "permalink": "Samogitia",
     "name": "Samogitia",
     "originalCountry": "Lithuania",
     "currentCountry": "Lithuania",
@@ -3698,6 +3868,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 665,
+    "permalink": "Lithuanian-Highland",
     "name": "Lithuanian Highland",
     "originalCountry": "Lithuania",
     "currentCountry": "Lithuania",
@@ -3721,6 +3892,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 670,
+    "permalink": "Hwangae",
     "name": "Hwangae",
     "originalCountry": "North Korea",
     "currentCountry": "North Korea",
@@ -3749,6 +3921,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 671,
+    "permalink": "Kangwon",
     "name": "Kangwon",
     "originalCountry": "North Korea",
     "currentCountry": "North Korea",
@@ -3777,6 +3950,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 672,
+    "permalink": "Hamgyong",
     "name": "Hamgyong",
     "originalCountry": "North Korea",
     "currentCountry": "Saudi Arabia",
@@ -3790,6 +3964,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 674,
+    "permalink": "Charrua",
     "name": "Charrua",
     "originalCountry": "Uruguay",
     "currentCountry": "Uruguay",
@@ -3818,6 +3993,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 675,
+    "permalink": "Paranena",
     "name": "Paranena",
     "originalCountry": "Paraguay",
     "currentCountry": "Republic of Moldova",
@@ -3841,6 +4017,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 676,
+    "permalink": "Central-East-Chaco",
     "name": "Central East Chaco",
     "originalCountry": "Paraguay",
     "currentCountry": "Paraguay",
@@ -3869,6 +4046,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 685,
+    "permalink": "Chimor",
     "name": "Chimor",
     "originalCountry": "Peru",
     "currentCountry": "Peru",
@@ -3897,6 +4075,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 686,
+    "permalink": "Northern-Low-Amazon",
     "name": "Northern Low Amazon",
     "originalCountry": "Peru",
     "currentCountry": "Peru",
@@ -3925,6 +4104,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 688,
+    "permalink": "Lima",
     "name": "Lima",
     "originalCountry": "Peru",
     "currentCountry": "Peru",
@@ -3943,6 +4123,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 689,
+    "permalink": "Amazonica",
     "name": "Amazonica",
     "originalCountry": "Colombia",
     "currentCountry": "Colombia",
@@ -3956,6 +4137,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 690,
+    "permalink": "Andina",
     "name": "Andina",
     "originalCountry": "Colombia",
     "currentCountry": "Colombia",
@@ -3969,6 +4151,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 691,
+    "permalink": "Caribe-e-Insular",
     "name": "Caribe e Insular",
     "originalCountry": "Colombia",
     "currentCountry": "Latvia",
@@ -3982,6 +4165,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 692,
+    "permalink": "Orinoquia",
     "name": "Orinoquia",
     "originalCountry": "Colombia",
     "currentCountry": "Greece",
@@ -3995,6 +4179,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 694,
+    "permalink": "Cundiboyacense",
     "name": "Cundiboyacense",
     "originalCountry": "Colombia",
     "currentCountry": "Colombia",
@@ -4023,6 +4208,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 695,
+    "permalink": "Povardarie",
     "name": "Povardarie",
     "originalCountry": "North Macedonia",
     "currentCountry": "North Macedonia",
@@ -4051,6 +4237,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 696,
+    "permalink": "Western-Macedonia",
     "name": "Western Macedonia",
     "originalCountry": "North Macedonia",
     "currentCountry": "Cuba",
@@ -4079,6 +4266,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 697,
+    "permalink": "Eastern-Macedonia",
     "name": "Eastern Macedonia",
     "originalCountry": "North Macedonia",
     "currentCountry": "North Macedonia",
@@ -4097,6 +4285,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 698,
+    "permalink": "North-Montenegrin-Mountains",
     "name": "North Montenegrin Mountains",
     "originalCountry": "Montenegro",
     "currentCountry": "Montenegro",
@@ -4125,6 +4314,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 699,
+    "permalink": "Central-Montenegro",
     "name": "Central Montenegro",
     "originalCountry": "Montenegro",
     "currentCountry": "Thailand",
@@ -4148,6 +4338,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 700,
+    "permalink": "Montenegrin-Coast",
     "name": "Montenegrin Coast",
     "originalCountry": "Montenegro",
     "currentCountry": "Montenegro",
@@ -4161,6 +4352,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 701,
+    "permalink": "Northern-Taiwan",
     "name": "Northern Taiwan",
     "originalCountry": "Republic of China (Taiwan)",
     "currentCountry": "Republic of China (Taiwan)",
@@ -4189,6 +4381,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 702,
+    "permalink": "Central-Taiwan",
     "name": "Central Taiwan",
     "originalCountry": "Republic of China (Taiwan)",
     "currentCountry": "Republic of China (Taiwan)",
@@ -4207,6 +4400,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 704,
+    "permalink": "Southern-Taiwan",
     "name": "Southern Taiwan",
     "originalCountry": "Republic of China (Taiwan)",
     "currentCountry": "Republic of China (Taiwan)",
@@ -4225,6 +4419,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 705,
+    "permalink": "Southern-Cyprus",
     "name": "Southern Cyprus",
     "originalCountry": "Cyprus",
     "currentCountry": "Cyprus",
@@ -4253,6 +4448,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 706,
+    "permalink": "Northern-Cyprus",
     "name": "Northern Cyprus",
     "originalCountry": "Cyprus",
     "currentCountry": "North Korea",
@@ -4271,6 +4467,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 708,
+    "permalink": "Homelskaya",
     "name": "Homelskaya",
     "originalCountry": "Belarus",
     "currentCountry": "Belarus",
@@ -4284,6 +4481,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 709,
+    "permalink": "Hrodzienskaya",
     "name": "Hrodzienskaya",
     "originalCountry": "Belarus",
     "currentCountry": "Japan",
@@ -4307,6 +4505,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 711,
+    "permalink": "Mahilyowskaya",
     "name": "Mahilyowskaya",
     "originalCountry": "Belarus",
     "currentCountry": "Belarus",
@@ -4330,6 +4529,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 712,
+    "permalink": "Vitsebskaya",
     "name": "Vitsebskaya",
     "originalCountry": "Belarus",
     "currentCountry": "Belarus",
@@ -4353,6 +4553,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 715,
+    "permalink": "Canterbury",
     "name": "Canterbury",
     "originalCountry": "New Zealand",
     "currentCountry": "New Zealand",
@@ -4371,6 +4572,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 716,
+    "permalink": "Otago",
     "name": "Otago",
     "originalCountry": "New Zealand",
     "currentCountry": "New Zealand",
@@ -4399,6 +4601,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 720,
+    "permalink": "Al-Jawf",
     "name": "Al Jawf",
     "originalCountry": "Saudi Arabia",
     "currentCountry": "Saudi Arabia",
@@ -4417,6 +4620,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 729,
+    "permalink": "Jizan",
     "name": "Jizan",
     "originalCountry": "Saudi Arabia",
     "currentCountry": "Cyprus",
@@ -4430,6 +4634,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 731,
+    "permalink": "Lower-Egypt",
     "name": "Lower Egypt",
     "originalCountry": "Egypt",
     "currentCountry": "Japan",
@@ -4448,6 +4653,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 732,
+    "permalink": "Western-Desert",
     "name": "Western Desert",
     "originalCountry": "Egypt",
     "currentCountry": "Poland",
@@ -4471,6 +4677,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 733,
+    "permalink": "Middle-Egypt",
     "name": "Middle Egypt",
     "originalCountry": "Egypt",
     "currentCountry": "Egypt",
@@ -4484,6 +4691,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 734,
+    "permalink": "Upper-Egypt",
     "name": "Upper Egypt",
     "originalCountry": "Egypt",
     "currentCountry": "Egypt",
@@ -4507,6 +4715,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 735,
+    "permalink": "Red-Sea-Coast",
     "name": "Red Sea Coast",
     "originalCountry": "Egypt",
     "currentCountry": "Egypt",
@@ -4520,6 +4729,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 736,
+    "permalink": "Abu-Dhabi",
     "name": "Abu Dhabi",
     "originalCountry": "United Arab Emirates",
     "currentCountry": "United Arab Emirates",
@@ -4548,6 +4758,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 737,
+    "permalink": "Dubai",
     "name": "Dubai",
     "originalCountry": "United Arab Emirates",
     "currentCountry": "United Arab Emirates",
@@ -4576,6 +4787,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 739,
+    "permalink": "Ajman",
     "name": "Ajman",
     "originalCountry": "United Arab Emirates",
     "currentCountry": "Estonia",
@@ -4594,6 +4806,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 747,
+    "permalink": "Abkhazia",
     "name": "Abkhazia",
     "originalCountry": "Georgia",
     "currentCountry": "Cyprus",
@@ -4612,6 +4825,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 748,
+    "permalink": "West-Georgia",
     "name": "West Georgia",
     "originalCountry": "Georgia",
     "currentCountry": "Georgia",
@@ -4630,6 +4844,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 753,
+    "permalink": "Central-Armenia",
     "name": "Central Armenia",
     "originalCountry": "Armenia",
     "currentCountry": "Armenia",
@@ -4648,6 +4863,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 754,
+    "permalink": "Syunik",
     "name": "Syunik",
     "originalCountry": "Armenia",
     "currentCountry": "Armenia",
@@ -4676,6 +4892,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 755,
+    "permalink": "Gegharkunik",
     "name": "Gegharkunik",
     "originalCountry": "Armenia",
     "currentCountry": "Czech Republic",
@@ -4689,6 +4906,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 758,
+    "permalink": "North-Central-States",
     "name": "North Central States",
     "originalCountry": "Nigeria",
     "currentCountry": "New Zealand",
@@ -4702,6 +4920,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 759,
+    "permalink": "South-West-States",
     "name": "South West States",
     "originalCountry": "Nigeria",
     "currentCountry": "Nigeria",
@@ -4725,6 +4944,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 760,
+    "permalink": "South-South-States",
     "name": "South South States",
     "originalCountry": "Nigeria",
     "currentCountry": "Nigeria",
@@ -4748,6 +4968,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 762,
+    "permalink": "Western-Cuba",
     "name": "Western Cuba",
     "originalCountry": "Cuba",
     "currentCountry": "Cuba",
@@ -4771,6 +4992,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 763,
+    "permalink": "Las-Villas",
     "name": "Las Villas",
     "originalCountry": "Cuba",
     "currentCountry": "Greece",
@@ -4799,6 +5021,7 @@ export const REGION_RESOURCES: RegionEntry[] = [
   },
   {
     "id": 764,
+    "permalink": "Oriente",
     "name": "Oriente",
     "originalCountry": "Cuba",
     "currentCountry": "Cuba",

@@ -3,7 +3,7 @@ import { regionBonusFor, selectCandidates } from './regionBonus';
 import type { RegionEntry } from '../data/regionResources';
 
 const region = (id: number, currentCountry: string, res: Array<['food' | 'weapons' | 'houses' | 'aircraft', number]>): RegionEntry => ({
-  id, name: `R${id}`, originalCountry: currentCountry, currentCountry,
+  id, name: `R${id}`, permalink: `R${id}`, originalCountry: currentCountry, currentCountry,
   resources: res.map(([industry, bonus]) => ({ name: `${industry}-res`, industry, bonus })),
 });
 

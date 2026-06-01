@@ -6,7 +6,7 @@ afterEach(() => vi.restoreAllMocks());
 
 const PAYLOAD = {
   fetchedAt: '2026-06-01',
-  regions: [{ id: 1, name: 'R', originalCountry: 'A', currentCountry: 'A', resources: [] }],
+  regions: [{ id: 1, name: 'R', permalink: 'R', originalCountry: 'A', currentCountry: 'A', resources: [] }],
   countryFlags: { A: '//a' },
 };
 
@@ -68,7 +68,7 @@ describe('bonus normalization (÷5)', () => {
   it('fetchRegionData normalizes server JSON exactly once', async () => {
     const serverPayload = {
       fetchedAt: '2026-06-01',
-      regions: [{ id: 1, name: 'R', originalCountry: 'A', currentCountry: 'A', resources: [{ name: 'Grain', industry: 'food', bonus: 50 }] }],
+      regions: [{ id: 1, name: 'R', permalink: 'R', originalCountry: 'A', currentCountry: 'A', resources: [{ name: 'Grain', industry: 'food', bonus: 50 }] }],
       countryFlags: { A: '//a' },
     };
     vi.stubGlobal('fetch', vi.fn(async () => ({ ok: true, status: 200, json: async () => serverPayload }) as Response));
@@ -80,7 +80,7 @@ describe('bonus normalization (÷5)', () => {
   it('normalizeDataset is pure and idempotent-once (divides each bonus exactly once)', () => {
     const ds = {
       fetchedAt: 'x',
-      regions: [{ id: 9, name: 'N', originalCountry: 'C', currentCountry: 'C', resources: [{ name: 'X', industry: 'food' as const, bonus: 25 }] }],
+      regions: [{ id: 9, name: 'N', permalink: 'N', originalCountry: 'C', currentCountry: 'C', resources: [{ name: 'X', industry: 'food' as const, bonus: 25 }] }],
       countryFlags: {},
     };
     const out = normalizeDataset(ds);

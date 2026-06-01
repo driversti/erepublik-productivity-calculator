@@ -8,7 +8,7 @@ import type { RegionEntry } from '../data/regionResources';
 const foodCfg = INDUSTRIES.find(i => i.key === 'food')!;
 
 const candidate = (id: number, country: string, bonus: number): RegionCandidate => ({
-  region: { id, name: `R${id}`, originalCountry: country, currentCountry: country, resources: [] } as RegionEntry,
+  region: { id, name: `R${id}`, permalink: `R${id}`, originalCountry: country, currentCountry: country, resources: [] } as RegionEntry,
   regionBonus: bonus,
 });
 

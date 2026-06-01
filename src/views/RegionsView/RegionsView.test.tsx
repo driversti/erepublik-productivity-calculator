@@ -64,7 +64,7 @@ describe('RegionsView', () => {
   it('refreshes data via the erpk form and updates the list', async () => {
     vi.mocked(refreshRegionData).mockResolvedValue({
       fetchedAt: '2026-06-09',
-      regions: [{ id: 1, name: 'Testland', originalCountry: 'Testia', currentCountry: 'Testia', resources: [{ name: 'Grain', industry: 'food', bonus: 30 }] }],
+      regions: [{ id: 1, name: 'Testland', permalink: 'Testland', originalCountry: 'Testia', currentCountry: 'Testia', resources: [{ name: 'Grain', industry: 'food', bonus: 30 }] }],
       countryFlags: {},
     });
     setup();

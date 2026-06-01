@@ -38,4 +38,9 @@ describe('regionResources dataset', () => {
       expect(url.length).toBeGreaterThan(0);
     }
   });
+
+  it('every seed region has a non-empty permalink', () => {
+    const missing = REGION_RESOURCES.filter((r) => !r.permalink).map((r) => `${r.id} ${r.name}`);
+    expect(missing).toEqual([]);
+  });
 });
