@@ -68,7 +68,7 @@ export function InsightsPanel({ insights }: { insights: Insight[] }) {
       <h3>{t('advisor:insights.title')}</h3>
       <ul>
         {insights.map((i, idx) => (
-          <li key={idx} className={`insight insight-${i.severity}`} data-testid={`insight-${i.type}`}>
+          <li key={`${i.type}-${idx}`} className={`insight insight-${i.severity}`} data-testid={`insight-${i.type}`}>
             <span className="insight-icon">{ICON[i.severity]}</span> {line(i)}
           </li>
         ))}

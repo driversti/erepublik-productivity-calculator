@@ -250,6 +250,8 @@
 [data-theme='dark'] .insight-bad { border-left-color: #ef5350; }
 
 /* --- excluded ("can't sell") rows --- */
+/* Excluded ("won't sell") rows render uniformly greyed — this intentionally
+   overrides the per-cell .pos/.neg/.dim colours via higher specificity. */
 .advisor-table tr.excluded td { color: var(--text-secondary); opacity: 0.65; }
 .advisor-table tr.excluded td:nth-child(2) { text-decoration: line-through; }
 .excluded-badge {
