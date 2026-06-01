@@ -10,6 +10,7 @@ import { computeIndustryView, type IndustryView } from '../calc/strategy';
 import { computeHiredView, type HiredView } from '../calc/hiredView';
 import { computeFwIndustry, computeHiredIndustry } from '../calc/industry';
 import { computeAdvisor, type AdvisorReport } from '../calc/advisor';
+import { generateInsights, type Insight } from '../calc/advisorInsights';
 import { sumHolding, type HoldingTotals } from '../calc/holding';
 import type { CellKind, ModuleField, SharedNumberField } from './reducer';
 import { fetchPrices } from '../services/livePrices';
@@ -320,4 +321,14 @@ export function holdingFactoryCell(holding: Holding, key: IndustryKey, kind: Cel
 // per work session and gives a convert-vs-sell-raw-RM verdict per industry.
 export function useAdvisor(): AdvisorReport {
   return computeAdvisor(useAppState().state);
+}
+
+export function useToggleExcludedQuality(): (industry: IndustryKey, quality: number) => void {
+  const { dispatch } = useAppState();
+  return (industry, quality) => dispatch({ type: 'TOGGLE_EXCLUDED_QUALITY', industry, quality });
+}
+
+export function useAdvisorInsights(): Insight[] {
+  const { state } = useAppState();
+  return generateInsights(computeAdvisor(state), state);
 }

@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAdvisor, useHoldingSync } from '../../state/hooks';
+import { useAdvisor, useAdvisorInsights, useHoldingSync, useToggleExcludedQuality } from '../../state/hooks';
 import { RecommendationHeadline } from './RecommendationHeadline';
+import { InsightsPanel } from './InsightsPanel';
 import { ProductionTable } from './ProductionTable';
 import { RmStrategyPanel } from './RmStrategyPanel';
 
 export function AdvisorView() {
   const { t } = useTranslation('advisor');
   const report = useAdvisor();
+  const insights = useAdvisorInsights();
+  const toggleExclude = useToggleExcludedQuality();
   const { syncPrices } = useHoldingSync();
   const [syncing, setSyncing] = useState(false);
 
@@ -30,7 +33,8 @@ export function AdvisorView() {
         </button>
       </div>
       <RecommendationHeadline report={report} />
-      <ProductionTable rows={report.rows} />
+      <InsightsPanel insights={insights} />
+      <ProductionTable rows={report.rows} onToggleExclude={toggleExclude} />
       <RmStrategyPanel verdicts={report.rmVerdicts} />
     </main>
   );
