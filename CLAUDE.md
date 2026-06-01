@@ -49,7 +49,7 @@ src/
 ├── state/                     # one reducer + Context, reached only via facade hooks
 │   ├── types.ts, blank.ts     # AppState shape + initialState/blank builders
 │   ├── reducer.ts             # pure discriminated-union reducer
-│   ├── persistence.ts         # localStorage load/migrate/save (key v11)
+│   ├── persistence.ts         # localStorage load/migrate/save (key v12)
 │   ├── StateContext.tsx       # StateProvider (useReducer + persist effect)
 │   └── hooks.ts               # domain facade hooks (components never touch dispatch directly)
 ├── services/                  # live data via /proxy (pure parsers + thin fetchers)
@@ -78,7 +78,7 @@ aircraft are **hired** modules (hired workers only, no WAM, work tax always 0).
 The reducer is pure and immutable; **components dispatch only through the facade
 hooks** in `state/hooks.ts` (`useIndustryView`, `useHiredView`, `useHoldings`,
 `useIndustrySync`, …) — this keeps a future store swap (e.g. Zustand) to one file.
-Persistence uses `localStorage` key `erep_calculator_food_factories_v11`; the
+Persistence uses `localStorage` key `erep_calculator_food_factories_v12`; the
 loader migrates older shapes. Bump the version suffix on breaking state-shape
 changes.
 
