@@ -1,0 +1,197 @@
+/* Advisor view — production-profitability advisor (headline, ranking table,
+   RM convert-vs-sell panel). Reuses the shared theme tokens from variables.css. */
+
+.advisor-view {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.advisor-intro {
+  margin: 0 0 12px;
+  color: var(--text-secondary);
+  font-size: 0.9em;
+}
+
+.advisor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.btn-sync {
+  padding: 6px 14px;
+  border: 1px solid var(--erep-green-border, var(--border-color));
+  border-radius: 6px;
+  background: var(--erep-green);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-sync:hover:not(:disabled) {
+  background: var(--erep-green-hover);
+}
+
+.btn-sync:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* --- Recommendation headline card --- */
+.advisor-headline {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-top: 3px solid var(--erep-gold);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.advisor-headline-top {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: var(--text-header);
+  margin-bottom: 6px;
+}
+
+.advisor-headline-list {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  font-size: 0.9em;
+}
+
+.advisor-headline-list li {
+  margin: 2px 0;
+}
+
+/* --- Production ranking table --- */
+.advisor-table-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.advisor-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.advisor-table th,
+.advisor-table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.advisor-table th {
+  background: var(--bg-table-header);
+  color: var(--text-header);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.advisor-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.advisor-table th.sortable:hover {
+  color: var(--erep-blue);
+}
+
+.advisor-table th.sortable.active {
+  color: var(--erep-blue);
+}
+
+.advisor-table tbody tr:hover {
+  background: var(--table-row-hover);
+}
+
+.advisor-table tr.own {
+  background: color-mix(in srgb, var(--erep-gold) 12%, transparent);
+}
+
+.advisor-table tr.own:hover {
+  background: color-mix(in srgb, var(--erep-gold) 18%, transparent);
+}
+
+.advisor-note {
+  margin: 8px 2px 0;
+  font-size: 0.8em;
+  color: var(--text-secondary);
+}
+
+/* Alignment helpers */
+.ar { text-align: right; }
+.l { text-align: left; }
+
+/* --- RM convert-vs-sell panel --- */
+.advisor-rm-panel {
+  margin-bottom: 16px;
+}
+
+.advisor-rm-panel h3 {
+  margin: 0 0 8px;
+  color: var(--text-header);
+  font-size: 1.05em;
+}
+
+.advisor-rm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.advisor-rm-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.advisor-rm-head {
+  font-weight: 600;
+  color: var(--text-header);
+  margin-bottom: 6px;
+}
+
+.advisor-rm-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  margin: 2px 0;
+}
+
+.advisor-rm-row b {
+  color: var(--text-primary);
+}
+
+.advisor-rm-verdict {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-color);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Positive / negative / muted value tokens (shared across advisor) */
+.pos { color: var(--erep-green); }
+.neg { color: #c62828; }
+.dim { color: var(--text-secondary); }
+
+[data-theme='dark'] .neg { color: #ef5350; }
