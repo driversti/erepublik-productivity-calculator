@@ -4,18 +4,19 @@ import https from 'node:https';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { trimMapData } from './server/trimMapData.js';
+import { buildUniverse } from './server/buildUniverse.js';
+import countries from './src/data/countries.json' with { type: 'json' };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = Number(process.env.PORT) || 8080;
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
-const REGIONS_FILE = path.join(DATA_DIR, 'regions.json');
-const MAP_DATA_URL =
-  'https://www.erepublik.com/en/main/map-data?updated_at=2007-01-01T00%3A00%3A00-08%3A00';
-const REFRESH_COOLDOWN_MS = 10 * 60 * 1000; // one successful refresh / 10 min
-let lastRefreshOk = 0;
+const UNIVERSE_FILE = path.join(DATA_DIR, 'universe.json');
+// The optimizer scans the whole world, so we always enumerate ALL 74 countries.
+// One shared 30-min cache keeps the GCP IP at ~74 anonymous fetches per window.
+const UNIVERSE_TTL_MS = 30 * 60 * 1000;
+let universeBuilding = null; // in-flight guard: collapse concurrent rebuilds into one
 
 // Serve the Vite production build (run `npm run build` first). Falls back to the
 // repo root if dist is absent, and serves static assets referenced by the build.
@@ -46,74 +47,41 @@ function sendJson(res, status, obj) {
   res.end(JSON.stringify(obj));
 }
 
-// POST /api/regions/refresh — fetch map-data from eRepublik with the caller's
-// erpk, trim, and persist. The erpk is used for the single outbound request and
-// never stored. Debounced to one successful refresh per cooldown window.
-async function handleRefresh(req, res) {
-  const now = Date.now();
-  if (now - lastRefreshOk < REFRESH_COOLDOWN_MS) {
-    const retryIn = Math.ceil((REFRESH_COOLDOWN_MS - (now - lastRefreshOk)) / 1000);
-    sendJson(res, 429, { error: `Recently refreshed — try again in ${retryIn}s` });
-    return;
-  }
-  let body = '';
-  let aborted = false;
-  req.on('data', (chunk) => {
-    if (aborted) return;
-    body += chunk;
-    if (body.length > 1e6) {
-      aborted = true;
-      sendJson(res, 413, { error: 'Request body too large' });
-      req.destroy();
-    }
+function fetchErepText(url) {
+  return new Promise((resolve, reject) => {
+    https.get(url, { headers: {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36',
+      'Accept-Language': 'en-GB,en;q=0.9',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    } }, (r) => {
+      if (r.statusCode !== 200) { r.resume(); reject(new Error(`HTTP ${r.statusCode}`)); return; }
+      let body = ''; r.setEncoding('utf8');
+      r.on('data', (c) => { body += c; });
+      r.on('end', () => resolve(body));
+    }).on('error', reject);
   });
-  req.on('end', async () => {
-    if (aborted) return;
-    let erpk;
-    try {
-      erpk = JSON.parse(body).erpk;
-    } catch {
-      sendJson(res, 400, { error: 'Invalid JSON body' });
-      return;
+}
+
+async function getUniverse() {
+  try {
+    const stat = await fs.promises.stat(UNIVERSE_FILE);
+    if (Date.now() - stat.mtimeMs < UNIVERSE_TTL_MS) {
+      return JSON.parse(await fs.promises.readFile(UNIVERSE_FILE, 'utf8'));
     }
-    if (!erpk || typeof erpk !== 'string') {
-      sendJson(res, 400, { error: 'Missing erpk' });
-      return;
-    }
-    if (/[\r\n]/.test(erpk) || erpk.length > 4096) {
-      sendJson(res, 400, { error: 'Invalid erpk' });
-      return;
-    }
-    try {
-      const mapRes = await fetch(MAP_DATA_URL, {
-        redirect: 'manual', // a 302 means the session was rejected — don't follow it
-        headers: {
-          Cookie: `erpk=${erpk}`,
-          'X-Requested-With': 'XMLHttpRequest',
-          Accept: 'application/json, text/javascript, */*; q=0.01',
-          'User-Agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36',
-          Referer: 'https://www.erepublik.com/en/military/campaigns',
-        },
-      });
-      if (mapRes.status !== 200) {
-        sendJson(res, 401, { error: 'eRepublik rejected the session (expired or invalid erpk)' });
-        return;
-      }
-      const raw = await mapRes.json();
-      const dataset = trimMapData(raw, new Date().toISOString().slice(0, 10));
-      const tmp = `${REGIONS_FILE}.tmp`;
+  } catch { /* missing/unreadable — rebuild */ }
+  if (!universeBuilding) {
+    universeBuilding = (async () => {
+      const list = Object.values(countries);
+      const regions = await buildUniverse(fetchErepText, list);
+      const data = { fetchedAt: new Date().toISOString(), regions };
       await fs.promises.mkdir(DATA_DIR, { recursive: true });
-      await fs.promises.writeFile(tmp, JSON.stringify(dataset));
-      await fs.promises.rename(tmp, REGIONS_FILE); // atomic replace
-      lastRefreshOk = Date.now();
-      sendJson(res, 200, { ...dataset, count: dataset.regions.length });
-    } catch (err) {
-      fs.promises.unlink(`${REGIONS_FILE}.tmp`).catch(() => {}); // best-effort cleanup
-      console.error('Refresh failed:', err.message);
-      sendJson(res, 502, { error: 'Could not fetch map-data from eRepublik' });
-    }
-  });
+      const tmp = `${UNIVERSE_FILE}.tmp`;
+      await fs.promises.writeFile(tmp, JSON.stringify(data));
+      await fs.promises.rename(tmp, UNIVERSE_FILE);
+      return data;
+    })().finally(() => { universeBuilding = null; });
+  }
+  return universeBuilding;
 }
 
 const server = http.createServer((req, res) => {
@@ -186,23 +154,11 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // Serve the stored region dataset (refreshed from eRepublik), if any.
-    if (pathname === '/api/regions' && req.method === 'GET') {
-        fs.readFile(REGIONS_FILE, (err, content) => {
-            if (err) {
-                res.writeHead(204); // no stored data yet — client uses the bundled seed
-                res.end();
-                return;
-            }
-            res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' });
-            res.end(content);
-        });
-        return;
-    }
-
-    if (pathname === '/api/regions/refresh' && req.method === 'POST') {
-        handleRefresh(req, res);
-        return;
+    if (pathname === '/api/universe' && req.method === 'GET') {
+      getUniverse()
+        .then((data) => { sendJson(res, 200, data); })
+        .catch(() => { sendJson(res, 502, { error: 'Could not build region universe' }); });
+      return;
     }
 
     // Serve static files. Decode first so percent-encoded traversal
