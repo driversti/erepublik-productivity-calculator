@@ -37,6 +37,12 @@ the production build and proxies game requests around CORS.
   average salary, work tax, VAT), then refines the top finalists with their
   **actual pollution** and re-ranks. Region ownership is pulled live (so it tracks
   war), while the resource-bonus map comes from a dated snapshot.
+- **Advisor** 🧭 — answers "what should I produce to maximize profit?" for your
+  **current factories**, deterministically. It ranks every industry × quality by
+  net profit per work session — per WAM session, per hired session (shown both
+  without and with Tycoon), and per 1 CC of raw material — and gives a per-industry
+  **convert-vs-sell-raw-RM** verdict (turn raw material into finished goods, or
+  sell it raw?). Read-only, no new inputs.
 - **Live data sync** — pulls current market prices from
   `service.erepublik.tools` and scrapes country/region productivity bonuses,
   pollution, work tax, and VAT from `erepublik.com` (via the local proxy). The
@@ -105,14 +111,14 @@ math** (no DOM, no React) and the UI that renders it.
 
 | Path | Responsibility |
 |------|----------------|
-| `src/calc/` | **Pure profit math** — rounding, productivity multiplier, per-industry & summed profit, plus the optimizer ranking (`optimizer.ts`, `regionBonus.ts`, `regionJoin.ts`). Golden-parity locked (`calc/golden.test.ts`). |
+| `src/calc/` | **Pure profit math** — rounding, productivity multiplier, per-industry & summed profit, the optimizer ranking (`optimizer.ts`, `regionBonus.ts`, `regionJoin.ts`), and the Advisor ranking (`advisor.ts`). Golden-parity locked (`calc/golden.test.ts`). |
 | `src/regions/` | Pure region ranking for the Regions browser (`ranking.ts`). |
 | `src/state/` | One immutable reducer + Context, reached only via facade hooks (`state/hooks.ts`); `localStorage` load/migrate/save; live country→region dropdown list (`useRegionList.ts`). |
 | `src/data/` | Static, typed game facts (factory/plantation/RM configs, building icon ids) + the dated region resource-bonus seed (`regionResources.ts`). |
 | `src/services/` | Live data via `/proxy` and `/api/universe` — pure parsers + thin fetchers for market prices, country/region modifiers, the region universe, and per-country economics (with a bounded concurrency pool). |
 | `src/i18n/` | Synchronous `react-i18next` setup with bundled JSON catalogs for 25 locales. |
 | `src/components/` | Shared UI (Counter, IconImage, StarRating, TabBar, LanguageSwitcher, Flag). |
-| `src/views/` | `IndustryView/` (one industry tab), `HoldingsView/` (holdings mode), `RegionsView/` (region browser), `OptimizerView/` (universe scan). |
+| `src/views/` | `IndustryView/` (one industry tab), `HoldingsView/` (holdings mode), `RegionsView/` (region browser), `OptimizerView/` (universe scan), `AdvisorView/` (what-to-produce ranking). |
 | `server.js` | ESM `http` server: serves `dist/`, an allowlisted `/proxy` GET endpoint, and a server-cached `/api/universe` region feed. |
 | `styles/` | Per-concern stylesheets, composed via `styles/index.css`. |
 

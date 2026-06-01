@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-eRepublik **Productivity / Profit Calculator** — a single-page web app that estimates daily profit across four industries (food, weapons, houses, aircraft), a multi-industry **Holdings** mode, a **Regions** browser (rank regions by production bonus for an industry), and an **Optimizer** that scans the whole region universe to find the most profitable place to relocate. Built with **Vite + React 19 + TypeScript**. Calculation runs entirely client-side; the bundled Node server serves the production build, proxies game requests around CORS, and exposes a server-cached `/api/universe` region feed.
+eRepublik **Productivity / Profit Calculator** — a single-page web app that estimates daily profit across four industries (food, weapons, houses, aircraft), a multi-industry **Holdings** mode, a **Regions** browser (rank regions by production bonus for an industry), an **Optimizer** that scans the whole region universe to find the most profitable place to relocate, and an **Advisor** that ranks what is most profitable to produce with your current factories (profit per WAM/hired session, plus a convert-vs-sell-raw-RM verdict). Built with **Vite + React 19 + TypeScript**. Calculation runs entirely client-side; the bundled Node server serves the production build, proxies game requests around CORS, and exposes a server-cached `/api/universe` region feed.
 
 > Migrated from a zero-build vanilla-JS app to React (Nov 2025). The original
 > philosophy of "no build step, no dependencies" was intentionally dropped — see
@@ -34,7 +34,7 @@ The app is a single React tree under `src/`, with a strict separation between
 
 ```
 src/
-├── main.tsx, App.tsx          # bootstrap + tab router (industry tabs + Holdings + Regions + Optimizer)
+├── main.tsx, App.tsx          # bootstrap + tab router (industry tabs + Holdings + Regions + Optimizer + Advisor)
 ├── data/                      # static game facts (typed)
 │   ├── industries.ts          # factory/plantation/RM arrays + IndustryConfig per industry
 │   ├── regionResources.ts     # AUTO-GENERATED region→resource bonus seed (RegionEntry[]) + COUNTRY_FLAGS; snapshot-dated, DO NOT hand-edit rows
@@ -49,6 +49,7 @@ src/
 │   ├── optimizer.ts           # rankRegions — net profit per candidate region (Optimizer)
 │   ├── regionBonus.ts         # selectCandidates — filter/score regions by industry bonus threshold
 │   ├── regionJoin.ts          # join live /api/universe ownership with the bonus seed
+│   ├── advisor.ts             # ranks industry×quality by profit per work session (Advisor tab)
 │   └── __fixtures__/golden-snapshot.json   # frozen legacy output (parity guard)
 ├── regions/                   # ranking.ts — pure rankRegions for the Regions browser tab
 ├── state/                     # one reducer + Context, reached only via facade hooks
@@ -76,7 +77,8 @@ src/
     ├── IndustryView/          # one industry tab (Summary, Modifiers, Prices, grids)
     ├── HoldingsView/          # holdings (toolbar, location bar, per-industry sections, summary)
     ├── RegionsView/           # browse/rank regions by production bonus for an industry
-    └── OptimizerView/         # runScan.ts orchestrates the universe scan; ResultsTable renders ranked regions
+    ├── OptimizerView/         # runScan.ts orchestrates the universe scan; ResultsTable renders ranked regions
+    └── AdvisorView/           # Advisor tab: headline + ranked production table + RM convert/sell panel
 ```
 
 `server.js` is an ESM (`type: module`) ~210-line `http` server: serves `dist/`,
@@ -110,9 +112,24 @@ Two features built on the region-bonus dataset:
   to respect the API rate limit. Never re-introduce a static per-country region
   list — ownership is always live.
 
+### Advisor
+
+The **Advisor tab** (`views/AdvisorView` + pure `calc/advisor.ts`) answers "what
+should I produce to maximize profit with my *current* factories" — a read-only,
+deterministic projection over existing app state with **no new inputs and no LLM**.
+It ranks every (industry × quality) by net profit normalized per work session:
+**net / WAM session** (per company/day; food & weapons only), **net / hired
+session** shown both without and with Tycoon (so you can see whether Tycoon makes
+hired labour profitable — relevant for houses/aircraft, which have no WAM), and
+**net / 1 CC of raw material** (ROI). It also emits a per-industry
+**convert-vs-sell-raw-RM** verdict: is it better to turn raw material into finished
+goods, or sell the RM raw? All math reuses the golden-parity
+`computeFwIndustry`/`computeHiredIndustry` (no parallel formula), so it stays in
+sync with the rest of the calc.
+
 ### State & module model
 
-`state.activeModule` is one of `food | weapons | houses | aircraft | holdings | regions | optimizer`.
+`state.activeModule` is one of `food | weapons | houses | aircraft | holdings | regions | optimizer | advisor`.
 Food/weapons are **fw** modules (owner Work-as-Manager + plantations); houses/
 aircraft are **hired** modules (hired workers only, no WAM, work tax always 0).
 The reducer is pure and immutable; **components dispatch only through the facade
