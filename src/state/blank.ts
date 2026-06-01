@@ -117,5 +117,6 @@ export function initialState(): AppState {
     holdingSeq: 0,
     activeHoldingId: '',
     optimizer: blankOptimizer(),
+    excludedQualities: [],
   };
 }

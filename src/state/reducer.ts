@@ -37,7 +37,8 @@ export type Action =
   | { type: 'SET_HOLDING_LOCATION'; id: string; selectedCountryId: string; selectedRegionPermalink: string }
   | { type: 'SET_HOLDING_MODIFIERS'; id: string; workTaxRate: number; averageSalary: number; perIndustry: Record<IndustryKey, { countryBonus: number; regionBonus: number; qualityPollution: Record<number, number>; vat: number }> }
   | { type: 'SET_OPTIMIZER_PARAMS'; payload: Partial<Pick<OptimizerState, 'industry' | 'threshold' | 'maxCandidates' | 'topN'>> }
-  | { type: 'SET_OPTIMIZER_RESULTS'; payload: { results: RankedRegion[]; baselineNet: number | null; skippedCount: number; fetchedAt: string; noBonusCount: number; universeFetchedAt: string | null } };
+  | { type: 'SET_OPTIMIZER_RESULTS'; payload: { results: RankedRegion[]; baselineNet: number | null; skippedCount: number; fetchedAt: string; noBonusCount: number; universeFetchedAt: string | null } }
+  | { type: 'TOGGLE_EXCLUDED_QUALITY'; industry: IndustryKey; quality: number };
 
 function clampCompanies(v: number): number {
   return Math.max(0, Math.min(MAX_COMPANIES, Math.floor(v)));
@@ -294,6 +295,14 @@ export function reducer(state: AppState, action: Action): AppState {
           universeFetchedAt: action.payload.universeFetchedAt,
         },
       };
+
+    case 'TOGGLE_EXCLUDED_QUALITY': {
+      const key = `${action.industry}:${action.quality}`;
+      const has = state.excludedQualities.includes(key);
+      return { ...state, excludedQualities: has
+        ? state.excludedQualities.filter((k) => k !== key)
+        : [...state.excludedQualities, key] };
+    }
 
     default:
       return state;

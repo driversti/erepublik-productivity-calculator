@@ -154,6 +154,7 @@ export function loadState(): AppState {
     copyNum(parsed, 'wrmPrice', (v) => (state.wrmPrice = v));
     copyNum(parsed, 'hrmPrice', (v) => (state.hrmPrice = v));
     copyNum(parsed, 'armPrice', (v) => (state.armPrice = v));
+    if (Array.isArray(parsed.excludedQualities)) state.excludedQualities = parsed.excludedQualities.filter((k): k is string => typeof k === 'string');
 
     const food = asRecord(parsed.food);
     if (food) loadFwModule(state.food, food, 'food');

@@ -80,6 +80,14 @@ describe('reducer', () => {
     expect(h.industries.weapons.qualityPollution[1]).toBe(3);
   });
 
+  it('toggles an excluded quality on and off', () => {
+    let s = initialState();
+    s = reducer(s, { type: 'TOGGLE_EXCLUDED_QUALITY', industry: 'weapons', quality: 6 });
+    expect(s.excludedQualities).toContain('weapons:6');
+    s = reducer(s, { type: 'TOGGLE_EXCLUDED_QUALITY', industry: 'weapons', quality: 6 });
+    expect(s.excludedQualities).not.toContain('weapons:6');
+  });
+
   it('TOGGLE_TYCOON flips the flag immutably', () => {
     const a = initialState();
     const b = reducer(a, { type: 'TOGGLE_TYCOON' });

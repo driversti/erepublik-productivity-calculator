@@ -70,6 +70,22 @@ describe('persistence', () => {
     expect(s.optimizer.fetchedAt).toBeNull();
   });
 
+  it('round-trips excludedQualities through save→load', () => {
+    let s = initialState();
+    s = reducer(s, { type: 'TOGGLE_EXCLUDED_QUALITY', industry: 'weapons', quality: 6 });
+    s = reducer(s, { type: 'TOGGLE_EXCLUDED_QUALITY', industry: 'food', quality: 3 });
+    saveState(s);
+    const loaded = loadState();
+    expect(loaded.excludedQualities).toContain('weapons:6');
+    expect(loaded.excludedQualities).toContain('food:3');
+    expect(loaded.excludedQualities).toHaveLength(2);
+  });
+
+  it('defaults excludedQualities to [] for old saves without the field', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ activeModule: 'weapons' }));
+    expect(loadState().excludedQualities).toEqual([]);
+  });
+
   it('persists optimizer params but NOT volatile results', () => {
     // Simulate saving state after setting some params and results
     const s = {

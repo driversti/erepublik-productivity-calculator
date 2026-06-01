@@ -101,4 +101,5 @@ export interface AppState {
   holdingSeq: number;
   activeHoldingId: string;
   optimizer: OptimizerState;
+  excludedQualities: string[];
 }
