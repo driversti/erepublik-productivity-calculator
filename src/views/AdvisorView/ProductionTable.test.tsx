@@ -47,4 +47,22 @@ describe('ProductionTable', () => {
     render(<ProductionTable rows={fxRows} />);
     expect(screen.queryByTestId('exclude-food-5')).toBeNull();
   });
+
+  it('excluded row gets the excluded class and badge', () => {
+    const fxRows = [
+      { industry: 'food', quality: 7, kind: 'factory', wamNet: 5, hireNet: 1, hireNetTycoon: 1.5, roiRm: 0.2, owned: 2, hasPrice: true, excluded: true },
+    ] as AdvisorRow[];
+    render(<ProductionTable rows={fxRows} />);
+    const row = screen.getByTestId('advisor-row');
+    expect(row.className).toContain('excluded');
+    expect(screen.getByText("won't sell")).toBeTruthy();
+  });
+
+  it('does not throw when onToggleExclude is not provided', () => {
+    const fxRows = [
+      { industry: 'food', quality: 7, kind: 'factory', wamNet: 5, hireNet: 1, hireNetTycoon: 1.5, roiRm: 0.2, owned: 0, hasPrice: true, excluded: false },
+    ] as AdvisorRow[];
+    render(<ProductionTable rows={fxRows} />);
+    expect(() => fireEvent.click(screen.getByTestId('exclude-food-7'))).not.toThrow();
+  });
 });

@@ -81,6 +81,7 @@ export function ProductionTable({ rows, onToggleExclude }: { rows: AdvisorRow[];
                           className="exclude-toggle"
                           data-testid={`exclude-${r.industry}-${r.quality}`}
                           title={t('advisor:table.excludeToggle')}
+                          aria-label={t('advisor:table.excludeToggle')}
                           aria-pressed={r.excluded}
                           onClick={() => onToggleExclude?.(r.industry, r.quality)}
                         >🚫</button>
