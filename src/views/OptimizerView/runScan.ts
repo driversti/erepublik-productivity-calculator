@@ -66,7 +66,7 @@ export async function runScan(
   const topCandidates = top.map((r) => ({ region: r.region, regionBonus: r.regionBonus }));
   const details = await source.getRegionDetails(
     industry,
-    top.map((r) => r.region.id),
+    top.map((r) => r.region), // RegionEntry has id + permalink
     (done, total) => onProgress({ phase: 'pollution', done, total }),
   );
   const finalRanked = rankRegions(config, economics, topCandidates, details);
