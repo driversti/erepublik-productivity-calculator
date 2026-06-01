@@ -18,8 +18,7 @@ const REFRESH_COOLDOWN_MS = 10 * 60 * 1000; // one successful refresh / 10 min
 let lastRefreshOk = 0;
 
 // Serve the Vite production build (run `npm run build` first). Falls back to the
-// repo root for assets that live outside dist (e.g. travelData.js) so existing
-// references keep working, and serves from the root entirely if dist is absent.
+// repo root if dist is absent, and serves static assets referenced by the build.
 const DIST_DIR = path.join(__dirname, "dist");
 const PUBLIC_DIR = fs.existsSync(DIST_DIR) ? DIST_DIR : __dirname;
 
