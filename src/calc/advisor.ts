@@ -17,6 +17,7 @@ export interface AdvisorRow {
   roiRm: number | null; // net per 1 CC spent on RM; null for raw-material rows (they produce, not consume, RM)
   owned: number; // companies owned of this quality
   hasPrice: boolean; // finished-good price available for this quality
+  excluded: boolean; // true when user flagged this quality as illiquid (factory rows only; rm rows are always false)
 }
 
 export interface RmVerdict {
@@ -131,6 +132,9 @@ export function computeAdvisor(state: AppState): AdvisorReport {
   const rows: AdvisorRow[] = [];
   const rmVerdicts: RmVerdict[] = [];
 
+  const excludedSet = new Set(state.excludedQualities);
+  const isExcluded = (key: IndustryKey, q: number) => excludedSet.has(`${key}:${q}`);
+
   for (const cfg of INDUSTRIES) {
     const key = cfg.key;
     const rmPrice = state[cfg.rmPriceKey];
@@ -167,12 +171,12 @@ export function computeAdvisor(state: AppState): AdvisorReport {
         owned = mod.factories[q]?.companies ?? 0;
       }
 
-      rows.push({ industry: key, quality: q, kind: 'factory', wamNet, hireNet, hireNetTycoon, roiRm: roi(primary), owned, hasPrice });
+      rows.push({ industry: key, quality: q, kind: 'factory', wamNet, hireNet, hireNetTycoon, roiRm: roi(primary), owned, hasPrice, excluded: isExcluded(key, q) });
 
       // Rank fw by the WAM session, hired by the actual-Tycoon session — i.e. always
       // the user's real per-session economics (primary.net). wamNet is the fw primary.
       const metric = wamNet ?? primary.net;
-      if (hasPrice && metric > bestMetric) {
+      if (hasPrice && !isExcluded(key, q) && metric > bestMetric) {
         bestMetric = metric;
         bestQuality = q;
         bestPrimary = primary;
@@ -202,7 +206,7 @@ export function computeAdvisor(state: AppState): AdvisorReport {
         hireNetTycoon = hiredRmSession(state, key, mod, q, true).net;
         owned = mod.rm?.[q]?.companies ?? 0;
       }
-      rows.push({ industry: key, quality: q, kind: 'rm', wamNet, hireNet, hireNetTycoon, roiRm: null, owned, hasPrice: rmPriced });
+      rows.push({ industry: key, quality: q, kind: 'rm', wamNet, hireNet, hireNetTycoon, roiRm: null, owned, hasPrice: rmPriced, excluded: false });
     }
 
     const hasPrice = bestPrimary !== null && rmPrice > 0;
@@ -223,7 +227,7 @@ export function computeAdvisor(state: AppState): AdvisorReport {
   }
 
   const topWam = rows
-    .filter((r) => r.hasPrice && r.wamNet !== null)
+    .filter((r) => r.hasPrice && r.wamNet !== null && !r.excluded)
     .sort((a, b) => (b.wamNet as number) - (a.wamNet as number))[0] ?? null;
 
   return { rows, rmVerdicts, topWam };

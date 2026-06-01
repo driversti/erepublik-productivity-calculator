@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { RecommendationHeadline } from './RecommendationHeadline';
 import type { AdvisorReport } from '../../calc/advisor';
 
-const baseRow = { kind: 'factory' as const, hireNet: -1, hireNetTycoon: -1, roiRm: 0, owned: 0, hasPrice: true };
+const baseRow = { kind: 'factory' as const, hireNet: -1, hireNetTycoon: -1, roiRm: 0, owned: 0, hasPrice: true, excluded: false };
 
 function report(partial: Partial<AdvisorReport>): AdvisorReport {
   return { rows: [], rmVerdicts: [], topWam: null, ...partial };
@@ -34,7 +34,7 @@ describe('RecommendationHeadline', () => {
   });
 
   it('renders the RM name when the top WAM pick is a raw-material company', () => {
-    const top = { industry: 'food' as const, quality: 5, kind: 'rm' as const, wamNet: 99, hireNet: null, hireNetTycoon: null, roiRm: null, owned: 0, hasPrice: true };
+    const top = { industry: 'food' as const, quality: 5, kind: 'rm' as const, wamNet: 99, hireNet: null, hireNetTycoon: null, roiRm: null, owned: 0, hasPrice: true, excluded: false };
     render(<RecommendationHeadline report={report({ rows: [top], topWam: top })} />);
     expect(screen.getByText(/FRM Q5/)).toBeTruthy();
   });

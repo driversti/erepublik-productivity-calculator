@@ -107,4 +107,18 @@ describe('computeAdvisor', () => {
     // 24 factory rows (7+7+5+5) + 20 rm rows (5 per industry × 4).
     expect(report.rows).toHaveLength(7 + 7 + 5 + 5 + (5 * 4));
   });
+
+  it('drops excluded finished qualities from topWam and rm bestQuality', () => {
+    const s = stateForTest();
+    s.food.prices = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 2, 7: 1 }; // Q6 & Q7 priced
+    s.excludedQualities = ['food:7'];
+    const report = computeAdvisor(s);
+    const q7 = report.rows.find((r) => r.industry === 'food' && r.quality === 7 && r.kind === 'factory')!;
+    expect(q7.excluded).toBe(true);
+    // topWam must not be the excluded Q7
+    expect(report.topWam ? `${report.topWam.industry}:${report.topWam.quality}` : '').not.toBe('food:7');
+    // RM convert verdict must pick a non-excluded quality
+    const frm = report.rmVerdicts.find((v) => v.industry === 'food')!;
+    expect(frm.bestQuality).not.toBe(7);
+  });
 });
