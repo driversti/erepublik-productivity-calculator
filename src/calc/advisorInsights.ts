@@ -18,6 +18,10 @@ function achievable(row: AdvisorRow, state: AppState): { net: number; mode: Mode
   if (cfg.type === 'fw' && state.wamEnabled && row.wamNet !== null) {
     return { net: row.wamNet, mode: 'wam' };
   }
+  // Not WAM (either a hired industry — wamNet is null for houses/aircraft — or the
+  // player runs WAM-disabled): fall back to the hire economics. For a WAM-only player
+  // this is how houses/aircraft surface as dead capital. fw rows always have a non-null
+  // wamNet from computeAdvisor, so an fw row never reaches this branch while wamEnabled.
   const hire = state.hasTycoon ? row.hireNetTycoon : row.hireNet;
   if (hire !== null) return { net: hire, mode: 'hire' };
   return { net: 0, mode: 'idle' };
@@ -58,6 +62,9 @@ export function generateInsights(report: AdvisorReport, state: AppState): Insigh
   }
 
   // lossMakers (owned, WAM mode, negative) — worst first, max 3.
+  // By design this is WAM-mode only: an fw company losing under WAM is an actionable
+  // loss-maker (switch quality / sell RM). Owned hired/idle companies that lose money
+  // are reported as deadCapital below instead.
   const losers = rows
     .filter((r) => r.owned > 0)
     .map((r) => ({ r, a: achievable(r, state) }))

@@ -62,3 +62,15 @@ describe('generateInsights — magnate (hires + Tycoon)', () => {
     expect(ba.params.mode).toBe('hire');
   });
 });
+
+describe('generateInsights — hiring pays only with Tycoon', () => {
+  it("reports hiring mode 'tycoon' when only the Tycoon hire net is positive", () => {
+    const s = initialState(); s.wamEnabled = false; s.hasTycoon = true; s.offeredSalary = 100;
+    const rows = [
+      row({ industry:'houses', quality:5, kind:'factory', wamNet:null, hireNet:-5, hireNetTycoon:40, roiRm:0.3, owned:0 }),
+    ];
+    const ins = generateInsights(report(rows), s);
+    const h = ins.find(i => i.type === 'hiring')!;
+    expect(h.params.mode).toBe('tycoon');
+  });
+});
