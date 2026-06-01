@@ -86,6 +86,7 @@ export function SummarySidebar(props: Props) {
             <span className="kpi-label">{t('industry:summary.rmCost', { rm })}</span>
             <span className={`kpi-value-small ${v.rmCost === 0 ? 'text-muted' : v.rmCost < 0 ? 'text-success' : 'kpi-gold'}`} data-testid="total-rm-cost">{cc(v.rmCost)}</span>
           </div>
+          <hr className="kpi-divider" />
           <div className="kpi-block-inline" {...tip(t('tooltips:sumGrossProfit'))}>
             <span className="kpi-label">{t('industry:summary.grossProfit')}</span>
             <span className={`kpi-value-small ${grossProfit === 0 ? 'text-muted' : grossProfit >= 0 ? 'text-success' : 'text-danger'}`} data-testid="total-gross-profit">{cc(grossProfit)}</span>
@@ -97,6 +98,12 @@ export function SummarySidebar(props: Props) {
           <div className="kpi-block-inline" {...tip(t('tooltips:sumSalary'))}>
             <span className="kpi-label">{t('industry:summary.salary')}</span>
             <span className={`kpi-value-small ${v.salary === 0 ? 'text-muted' : 'kpi-red'}`} data-testid="total-salary">{v.salary === 0 ? cc(0) : `-${cc(v.salary)}`}</span>
+          </div>
+          <hr className="kpi-divider" />
+          {/* Closing subtotal of the waterfall — mirrors the headline net at the top of the card. */}
+          <div className="kpi-block-inline" {...tip(t('tooltips:sumNetProfit'))}>
+            <span className="kpi-label">{t('industry:summary.netProfit')}</span>
+            <span className={`kpi-value-small ${v.companies === 0 ? 'text-muted' : v.net >= 0 ? 'text-success' : 'text-danger'}`} style={{ fontWeight: 700 }}>{cc(v.net)}</span>
           </div>
         </div>
 
