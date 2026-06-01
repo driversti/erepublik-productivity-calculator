@@ -112,8 +112,8 @@ export function SummarySidebar(props: Props) {
                 <li className="breakdown-item" key={b.quality}>
                   <span className="breakdown-label">{t('industry:summary.breakdownItem', { q: b.quality, companies: b.companies, workers: b.workers })}</span>
                   <span className="breakdown-count" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <span>+{num(b.output)}</span>
-                    <span className={b.profit >= 0 ? 'text-success' : 'text-danger'} style={{ fontSize: 11, fontWeight: 700 }}>
+                    <span {...tip(t('tooltips:breakdownOutput'))}>+{num(b.output)}</span>
+                    <span className={b.profit >= 0 ? 'text-success' : 'text-danger'} style={{ fontSize: 11, fontWeight: 700 }} {...tip(t('tooltips:breakdownProfit'))}>
                       {b.profit >= 0 ? '+' : ''}{b.profit.toFixed(2)} CC
                     </span>
                   </span>

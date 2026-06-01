@@ -34,6 +34,8 @@ describe('i18n catalog', () => {
       'industry:tables.headers.quality',
       'holdings:summary.title',
       'tooltips:offeredCc',
+      'tooltips:breakdownOutput',
+      'tooltips:breakdownProfit',
     ];
     for (const k of keys) {
       const value = i18n.t(k as never);

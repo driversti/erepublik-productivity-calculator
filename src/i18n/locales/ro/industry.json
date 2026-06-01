@@ -65,7 +65,7 @@
     "grossProfit": "Profit brut",
     "workTax": "Taxă pe muncă zilnică",
     "salary": "Salariu zilnic",
-    "breakdownTitle": "Detalierea inventarului:",
+    "breakdownTitle": "Producție și profit pe calitate:",
     "noFactories": "Nicio fabrică configurată încă.",
     "breakdownItem": "Q{{q}} ({{companies}}c / {{workers}}m)",
     "comparisonTitle": "Comparația strategiilor {{rm}}",

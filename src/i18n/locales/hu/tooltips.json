@@ -39,5 +39,7 @@
   "hldRevenue": "Kombinált napi értékesítési bevétel a holdingban, ÁFA után.",
   "hldRmNet": "Nettó nyersanyagköltség a holdingban. A negatív érték eladott nettó felesleget jelent.",
   "hldWorkTax": "Teljes napi munkaadó a holdingban.",
-  "hldSalary": "Teljes napi bérek a holdingban."
+  "hldSalary": "Teljes napi bérek a holdingban.",
+  "breakdownOutput": "Naponta előállított késztermék ezen a minőségen (alaptermelés × termelékenység × munkamenetek).",
+  "breakdownProfit": "Bruttó napi nyereség ezen a minőségen: értékesítési bevétel mínusz nyersanyagköltség. A munkaadó és a bér itt nincs benne — a fenti összegekben szerepelnek."
 }

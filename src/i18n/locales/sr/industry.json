@@ -65,7 +65,7 @@
     "grossProfit": "Бруто профит",
     "workTax": "Дневни порез на рад",
     "salary": "Дневна плата",
-    "breakdownTitle": "Преглед инвентара:",
+    "breakdownTitle": "Производња и профит по квалитету:",
     "noFactories": "Још нема подешених фабрика.",
     "breakdownItem": "Q{{q}} ({{companies}}к / {{workers}}р)",
     "comparisonTitle": "Поређење стратегија за {{rm}}",

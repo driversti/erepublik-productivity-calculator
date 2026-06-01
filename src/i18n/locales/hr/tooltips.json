@@ -39,5 +39,7 @@
   "hldRevenue": "Kombinirani dnevni prihod od prodaje u holdingu, nakon PDV-a.",
   "hldRmNet": "Neto trošak sirovine u holdingu. Negativno znači prodani neto višak.",
   "hldWorkTax": "Ukupni dnevni porez na rad u holdingu.",
-  "hldSalary": "Ukupne dnevne plaće u holdingu."
+  "hldSalary": "Ukupne dnevne plaće u holdingu.",
+  "breakdownOutput": "Gotovih jedinica dnevno za ovu kvalitetu (osnovni učinak × produktivnost × sesije).",
+  "breakdownProfit": "Bruto profit dnevno za ovu kvalitetu: prihod od prodaje minus trošak sirovine. Porez na rad i plaća nisu uključeni ovdje — nalaze se u zbrojevima iznad."
 }

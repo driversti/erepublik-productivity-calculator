@@ -65,7 +65,7 @@
     "grossProfit": "毛利",
     "workTax": "每日工作稅",
     "salary": "每日薪資",
-    "breakdownTitle": "存貨明細：",
+    "breakdownTitle": "各品質產量與利潤：",
     "noFactories": "尚未設定任何工廠。",
     "breakdownItem": "Q{{q}}（{{companies}}間／{{workers}}人）",
     "comparisonTitle": "{{rm}} 策略比較",

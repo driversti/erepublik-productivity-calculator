@@ -22,7 +22,7 @@
     "title": "Özet", "optionABadge": "Seçenek A", "optionBBadge": "Seçenek B", "netProfit": "Tahmini Günlük Net Kâr",
     "totalCompanies": "Toplam Şirket", "output": "{{label}} Üretimi", "rmConsumed": "Tüketilen {{rm}}",
     "revenue": "Günlük Gelir", "rmCost": "Günlük {{rm}} Maliyeti", "grossProfit": "Brüt Kâr", "workTax": "Günlük Çalışma Vergisi",
-    "salary": "Günlük Maaş", "breakdownTitle": "Envanter dökümü:", "noFactories": "Henüz fabrika yapılandırılmadı.",
+    "salary": "Günlük Maaş", "breakdownTitle": "Kaliteye göre üretim ve kâr:", "noFactories": "Henüz fabrika yapılandırılmadı.",
     "breakdownItem": "Q{{q}} ({{companies}}ş / {{workers}}i)", "comparisonTitle": "{{rm}} Strateji Karşılaştırması",
     "rmProduced": "Üretilen {{rm}}", "rmNetBalance": "{{rm}} Net Bakiye", "optionABuyTitle": "Seçenek A: {{rm}} Satın Al",
     "optionAMarketCost": "Piyasa Maliyeti: {{cost}} CC", "optionBProduceTitle": "Seçenek B: {{rm}} Üret",

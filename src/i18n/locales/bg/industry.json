@@ -65,7 +65,7 @@
     "grossProfit": "Брутна печалба",
     "workTax": "Дневен данък върху труда",
     "salary": "Дневна заплата",
-    "breakdownTitle": "Разбивка на инвентара:",
+    "breakdownTitle": "Производство и печалба по качество:",
     "noFactories": "Все още няма конфигурирани фабрики.",
     "breakdownItem": "Q{{q}} ({{companies}}к / {{workers}}р)",
     "comparisonTitle": "Сравнение на стратегии за {{rm}}",

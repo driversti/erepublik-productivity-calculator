@@ -39,5 +39,7 @@
   "hldRevenue": "Gabungan pendapatan penjualan harian di seluruh holding, setelah PPN.",
   "hldRmNet": "Biaya bahan baku bersih di seluruh holding. Negatif berarti surplus bersih yang dijual.",
   "hldWorkTax": "Total pajak kerja harian di seluruh holding.",
-  "hldSalary": "Total upah harian di seluruh holding."
+  "hldSalary": "Total upah harian di seluruh holding.",
+  "breakdownOutput": "Unit jadi yang diproduksi per hari pada kualitas ini (output dasar × produktivitas × sesi).",
+  "breakdownProfit": "Keuntungan kotor per hari untuk kualitas ini: pendapatan penjualan dikurangi biaya bahan baku. Pajak kerja dan gaji tidak termasuk di sini — keduanya ada di total di atas."
 }

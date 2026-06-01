@@ -22,7 +22,7 @@
     "title": "Resumo", "optionABadge": "Opção A", "optionBBadge": "Opção B", "netProfit": "Lucro Líquido Diário Est.",
     "totalCompanies": "Total de Empresas", "output": "Produção de {{label}}", "rmConsumed": "{{rm}} Consumido",
     "revenue": "Receita Diária", "rmCost": "Custo Diário de {{rm}}", "grossProfit": "Lucro Bruto", "workTax": "Imposto de Trabalho Diário",
-    "salary": "Salário Diário", "breakdownTitle": "Detalhamento do inventário:", "noFactories": "Nenhuma fábrica configurada ainda.",
+    "salary": "Salário Diário", "breakdownTitle": "Produção e lucro por qualidade:", "noFactories": "Nenhuma fábrica configurada ainda.",
     "breakdownItem": "Q{{q}} ({{companies}}e / {{workers}}t)", "comparisonTitle": "Comparação de Estratégia de {{rm}}",
     "rmProduced": "{{rm}} Produzido", "rmNetBalance": "Saldo Líquido de {{rm}}", "optionABuyTitle": "Opção A: Comprar {{rm}}",
     "optionAMarketCost": "Custo de Mercado: {{cost}} CC", "optionBProduceTitle": "Opção B: Produzir {{rm}}",

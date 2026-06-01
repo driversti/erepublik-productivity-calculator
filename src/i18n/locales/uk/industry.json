@@ -65,7 +65,7 @@
     "grossProfit": "Валовий прибуток",
     "workTax": "Податок на працю за день",
     "salary": "Зарплати за день",
-    "breakdownTitle": "Розподіл інвентарю:",
+    "breakdownTitle": "Виробництво та прибуток за якістю:",
     "noFactories": "Фабрики ще не налаштовані.",
     "breakdownItem": "Q{{q}} ({{companies}}к / {{workers}}п)",
     "comparisonTitle": "Порівняння стратегій {{rm}}",

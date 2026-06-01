@@ -39,5 +39,7 @@
   "hldRevenue": "Ingresos diarios combinados por ventas del holding, después del IVA.",
   "hldRmNet": "Coste neto de materia prima del holding. Negativo significa un excedente neto vendido.",
   "hldWorkTax": "Impuesto laboral diario total del holding.",
-  "hldSalary": "Salarios diarios totales del holding."
+  "hldSalary": "Salarios diarios totales del holding.",
+  "breakdownOutput": "Unidades terminadas por día de esta calidad (producción base × productividad × sesiones).",
+  "breakdownProfit": "Beneficio bruto por día de esta calidad: ingresos por ventas menos coste de materia prima. El impuesto laboral y el salario no se incluyen aquí — están en los totales de arriba."
 }

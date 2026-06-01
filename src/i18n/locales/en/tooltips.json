@@ -39,5 +39,7 @@
   "hldRevenue": "Combined daily sales revenue across the holding, after VAT.",
   "hldRmNet": "Net raw-material cost across the holding. Negative means a net surplus sold.",
   "hldWorkTax": "Total daily work tax across the holding.",
-  "hldSalary": "Total daily wages across the holding."
+  "hldSalary": "Total daily wages across the holding.",
+  "breakdownOutput": "Finished units produced per day at this quality (base output × productivity × sessions).",
+  "breakdownProfit": "Gross profit per day for this quality: sale revenue minus raw-material cost. Work tax and salary aren't included here — they're in the totals above."
 }

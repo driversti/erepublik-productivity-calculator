@@ -39,5 +39,7 @@
   "hldRevenue": "Të ardhurat ditore të kombinuara nga shitjet për pronën, pas TVSH-së.",
   "hldRmNet": "Kostoja neto e lëndës së parë për pronën. Negative do të thotë një tepricë neto e shitur.",
   "hldWorkTax": "Taksa totale ditore e punës për pronën.",
-  "hldSalary": "Pagat totale ditore për pronën."
+  "hldSalary": "Pagat totale ditore për pronën.",
+  "breakdownOutput": "Njësi të gatshme të prodhuara në ditë për këtë cilësi (prodhimi bazë × produktiviteti × seancat).",
+  "breakdownProfit": "Fitimi bruto në ditë për këtë cilësi: të ardhurat nga shitja minus koston e lëndës së parë. Taksa e punës dhe paga nuk përfshihen këtu — janë te totalet më sipër."
 }

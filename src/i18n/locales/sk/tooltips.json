@@ -39,5 +39,7 @@
   "hldRevenue": "Kombinované denné tržby z predaja naprieč holdingom, po DPH.",
   "hldRmNet": "Čisté náklady na suroviny naprieč holdingom. Záporná hodnota znamená predaný čistý prebytok.",
   "hldWorkTax": "Celková denná daň z práce naprieč holdingom.",
-  "hldSalary": "Celkové denné mzdy naprieč holdingom."
+  "hldSalary": "Celkové denné mzdy naprieč holdingom.",
+  "breakdownOutput": "Hotové jednotky vyrobené za deň pri tejto kvalite (základná produkcia × produktivita × relácie).",
+  "breakdownProfit": "Hrubý zisk za deň pri tejto kvalite: tržby z predaja mínus náklady na surovinu. Daň z práce a mzda tu nie sú zahrnuté — sú v súčtoch vyššie."
 }

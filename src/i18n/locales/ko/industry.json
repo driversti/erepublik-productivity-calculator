@@ -65,7 +65,7 @@
     "grossProfit": "총 이익",
     "workTax": "일일 근로세",
     "salary": "일일 임금",
-    "breakdownTitle": "보유 내역:",
+    "breakdownTitle": "품질별 생산량 및 이익:",
     "noFactories": "아직 구성된 공장이 없습니다.",
     "breakdownItem": "Q{{q}} ({{companies}}개 / {{workers}}명)",
     "comparisonTitle": "{{rm}} 전략 비교",

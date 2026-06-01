@@ -39,5 +39,7 @@
   "hldRevenue": "Receita diária combinada de vendas no holding, após o IVA.",
   "hldRmNet": "Custo líquido de matéria-prima no holding. Negativo significa um excedente líquido vendido.",
   "hldWorkTax": "Imposto de trabalho diário total no holding.",
-  "hldSalary": "Salários diários totais no holding."
+  "hldSalary": "Salários diários totais no holding.",
+  "breakdownOutput": "Unidades acabadas produzidas por dia nesta qualidade (produção base × produtividade × sessões).",
+  "breakdownProfit": "Lucro bruto por dia nesta qualidade: receita de vendas menos custo de matéria-prima. O imposto de trabalho e o salário não estão incluídos aqui — estão nos totais acima."
 }

@@ -39,5 +39,7 @@
   "hldRevenue": "Revenu quotidien combiné des ventes du holding, après TVA.",
   "hldRmNet": "Coût net de la matière première sur l'ensemble du holding. Un montant négatif signifie un surplus net vendu.",
   "hldWorkTax": "Taxe sur le travail quotidienne totale sur l'ensemble du holding.",
-  "hldSalary": "Salaires quotidiens totaux sur l'ensemble du holding."
+  "hldSalary": "Salaires quotidiens totaux sur l'ensemble du holding.",
+  "breakdownOutput": "Unités finies produites par jour pour cette qualité (production de base × productivité × sessions).",
+  "breakdownProfit": "Profit brut par jour pour cette qualité : recettes de vente moins coût des matières premières. La taxe sur le travail et le salaire ne sont pas inclus ici — ils figurent dans les totaux ci-dessus."
 }

@@ -65,7 +65,7 @@
     "grossProfit": "Beneficio Bruto",
     "workTax": "Impuesto Laboral Diario",
     "salary": "Salario Diario",
-    "breakdownTitle": "Desglose del inventario:",
+    "breakdownTitle": "Producción y beneficio por calidad:",
     "noFactories": "Aún no hay fábricas configuradas.",
     "breakdownItem": "Q{{q}} ({{companies}}e / {{workers}}t)",
     "comparisonTitle": "Comparación de Estrategias de {{rm}}",

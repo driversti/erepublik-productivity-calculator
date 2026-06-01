@@ -22,7 +22,7 @@
     "title": "Ringkasan", "optionABadge": "Opsi A", "optionBBadge": "Opsi B", "netProfit": "Perk. Keuntungan Bersih Harian",
     "totalCompanies": "Total Perusahaan", "output": "Output {{label}}", "rmConsumed": "{{rm}} Dikonsumsi",
     "revenue": "Pendapatan Harian", "rmCost": "Biaya {{rm}} Harian", "grossProfit": "Keuntungan Kotor", "workTax": "Pajak Kerja Harian",
-    "salary": "Gaji Harian", "breakdownTitle": "Rincian inventaris:", "noFactories": "Belum ada pabrik yang dikonfigurasi.",
+    "salary": "Gaji Harian", "breakdownTitle": "Produksi & laba per kualitas:", "noFactories": "Belum ada pabrik yang dikonfigurasi.",
     "breakdownItem": "Q{{q}} ({{companies}}p / {{workers}}k)", "comparisonTitle": "Perbandingan Strategi {{rm}}",
     "rmProduced": "{{rm}} Diproduksi", "rmNetBalance": "Saldo Bersih {{rm}}", "optionABuyTitle": "Opsi A: Beli {{rm}}",
     "optionAMarketCost": "Biaya Pasar: {{cost}} CC", "optionBProduceTitle": "Opsi B: Produksi {{rm}}",

@@ -65,7 +65,7 @@
     "grossProfit": "Profitto lordo",
     "workTax": "Tassa sul Lavoro giornaliera",
     "salary": "Salario giornaliero",
-    "breakdownTitle": "Dettaglio inventario:",
+    "breakdownTitle": "Produzione e profitto per qualità:",
     "noFactories": "Nessuna fabbrica ancora configurata.",
     "breakdownItem": "Q{{q}} ({{companies}}a / {{workers}}l)",
     "comparisonTitle": "Confronto strategia {{rm}}",

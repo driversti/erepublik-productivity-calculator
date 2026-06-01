@@ -65,7 +65,7 @@
     "grossProfit": "毛利润",
     "workTax": "每日工作税",
     "salary": "每日工资",
-    "breakdownTitle": "库存明细：",
+    "breakdownTitle": "各品质产量与利润：",
     "noFactories": "尚未配置任何工厂。",
     "breakdownItem": "Q{{q}} ({{companies}}司 / {{workers}}工)",
     "comparisonTitle": "{{rm}}策略对比",

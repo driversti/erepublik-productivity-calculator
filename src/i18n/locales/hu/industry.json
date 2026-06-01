@@ -22,7 +22,7 @@
     "title": "Összegzés", "optionABadge": "A lehetőség", "optionBBadge": "B lehetőség", "netProfit": "Becsült napi nettó nyereség",
     "totalCompanies": "Cégek összesen", "output": "{{label}} termelés", "rmConsumed": "{{rm}} felhasználva",
     "revenue": "Napi bevétel", "rmCost": "Napi {{rm}} költség", "grossProfit": "Bruttó nyereség", "workTax": "Napi munkaadó",
-    "salary": "Napi bér", "breakdownTitle": "Készlet részletezése:", "noFactories": "Még nincsenek gyárak beállítva.",
+    "salary": "Napi bér", "breakdownTitle": "Termelés és nyereség minőségenként:", "noFactories": "Még nincsenek gyárak beállítva.",
     "breakdownItem": "Q{{q}} ({{companies}}c / {{workers}}m)", "comparisonTitle": "{{rm}} stratégia összehasonlítása",
     "rmProduced": "{{rm}} megtermelve", "rmNetBalance": "{{rm}} nettó egyenleg", "optionABuyTitle": "A lehetőség: {{rm}} vásárlása",
     "optionAMarketCost": "Piaci költség: {{cost}} CC", "optionBProduceTitle": "B lehetőség: {{rm}} termelése",

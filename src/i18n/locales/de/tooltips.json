@@ -39,5 +39,7 @@
   "hldRevenue": "Kombinierter täglicher Umsatz über die Holding, nach MwSt.",
   "hldRmNet": "Netto-Rohstoffkosten über die Holding. Negativ bedeutet einen verkauften Nettoüberschuss.",
   "hldWorkTax": "Tägliche Arbeitssteuer gesamt über die Holding.",
-  "hldSalary": "Tägliche Löhne gesamt über die Holding."
+  "hldSalary": "Tägliche Löhne gesamt über die Holding.",
+  "breakdownOutput": "Pro Tag produzierte Fertigwaren dieser Qualität (Basisproduktion × Produktivität × Sitzungen).",
+  "breakdownProfit": "Bruttogewinn pro Tag für diese Qualität: Verkaufserlös minus Rohstoffkosten. Arbeitssteuer und Gehalt sind hier nicht enthalten — sie stehen in den Summen oben."
 }

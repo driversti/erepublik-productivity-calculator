@@ -39,5 +39,7 @@
   "hldRevenue": "Łączny dzienny przychód ze sprzedaży w holdingu, po VAT.",
   "hldRmNet": "Koszt surowca netto w holdingu. Wartość ujemna oznacza sprzedaną nadwyżkę netto.",
   "hldWorkTax": "Łączny dzienny podatek od pracy w holdingu.",
-  "hldSalary": "Łączne dzienne płace w holdingu."
+  "hldSalary": "Łączne dzienne płace w holdingu.",
+  "breakdownOutput": "Gotowe jednostki produkowane dziennie dla tej jakości (produkcja bazowa × produktywność × sesje).",
+  "breakdownProfit": "Zysk brutto dziennie dla tej jakości: przychód ze sprzedaży minus koszt surowca. Podatek od pracy i pensja nie są tu wliczone — znajdują się w sumach powyżej."
 }

@@ -39,5 +39,7 @@
   "hldRevenue": "Venit zilnic combinat din vânzări pentru holding, după TVA.",
   "hldRmNet": "Cost net al materiei prime pentru holding. Negativ înseamnă un surplus net vândut.",
   "hldWorkTax": "Taxă pe muncă zilnică totală pentru holding.",
-  "hldSalary": "Salarii zilnice totale pentru holding."
+  "hldSalary": "Salarii zilnice totale pentru holding.",
+  "breakdownOutput": "Unități finite produse pe zi la această calitate (producție de bază × productivitate × sesiuni).",
+  "breakdownProfit": "Profit brut pe zi la această calitate: venitul din vânzări minus costul materiei prime. Taxa pe muncă și salariul nu sunt incluse aici — se află în totalurile de mai sus."
 }
