@@ -6,12 +6,10 @@ import type { AdvisorRow } from '../../calc/advisor';
 
 type SortKey = 'wam' | 'hire' | 'hireTycoon' | 'roi';
 
-// null (no WAM) always sorts to the bottom regardless of direction.
+// null (not applicable) always sorts to the bottom regardless of direction.
 function valueOf(row: AdvisorRow, key: SortKey): number {
-  if (key === 'wam') return row.wamNet ?? -Infinity;
-  if (key === 'hire') return row.hireNet;
-  if (key === 'hireTycoon') return row.hireNetTycoon;
-  return row.roiRm;
+  const v = key === 'wam' ? row.wamNet : key === 'hire' ? row.hireNet : key === 'hireTycoon' ? row.hireNetTycoon : row.roiRm;
+  return v ?? -Infinity;
 }
 
 function num(v: number | null): string {
@@ -68,12 +66,16 @@ export function ProductionTable({ rows }: { rows: AdvisorRow[] }) {
             const cfg = getIndustry(r.industry);
             return (
               <tr
-                key={`${r.industry}-${r.quality}`}
-                className={[r.owned ? 'own' : '', r.hasPrice ? '' : 'unpriced'].filter(Boolean).join(' ')}
+                key={`${r.industry}-${r.kind}-${r.quality}`}
+                className={[r.owned ? 'own' : '', r.hasPrice ? '' : 'unpriced', r.kind === 'rm' ? 'rm-row' : ''].filter(Boolean).join(' ')}
                 data-testid="advisor-row"
               >
                 <td className="l dim">{i + 1}</td>
-                <td className="l" title={r.hasPrice ? undefined : t('advisor:table.noPrice')}>{cfg.icon} {industryLabel(t, cfg)} Q{r.quality}</td>
+                <td className="l" title={r.hasPrice ? undefined : t('advisor:table.noPrice')}>
+                  {r.kind === 'rm'
+                    ? <>{cfg.icon} {cfg.rmName} Q{r.quality} <span className="rm-badge">{t('advisor:table.rmBadge')}</span></>
+                    : <>{cfg.icon} {industryLabel(t, cfg)} Q{r.quality}</>}
+                </td>
                 <td className={cls(r.wamNet)}>{num(r.wamNet)}</td>
                 <td className={cls(r.hireNet)}>{num(r.hireNet)}</td>
                 <td className={cls(r.hireNetTycoon)}>{num(r.hireNetTycoon)}</td>

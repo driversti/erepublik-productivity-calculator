@@ -22,7 +22,8 @@
     "roi": "net / 1 CC in RM",
     "owned": "you own",
     "noWamNote": "“—” = industry has no WAM (Houses/Aircraft use hired labour only). Your factories are highlighted.",
-    "noPrice": "Prices not synced for this industry."
+    "noPrice": "Prices not synced for this industry.",
+    "rmBadge": "raw"
   },
   "rm": {
     "title": "Convert raw material, or sell it raw?",

@@ -88,8 +88,23 @@ describe('computeAdvisor', () => {
     expect(row.roiRm).toBeCloseTo(2, 5); // 20 / 10
   });
 
-  it('emits a row for every quality of every industry (24 total)', () => {
+  it('includes raw-material companies as rm rows', () => {
     const report = computeAdvisor(stateForTest());
-    expect(report.rows).toHaveLength(7 + 7 + 5 + 5);
+    // Food plantation Q5 (Hunting Lodge): baseOutput 250 → 2.5 marketplace units at x1.0.
+    // WAM net = 2.5 × frmPrice(1) × (1 − vat 0) − workTax 0 = 2.5. No RM consumed → roiRm null.
+    const farm = report.rows.find((r) => r.industry === 'food' && r.kind === 'rm' && r.quality === 5)!;
+    expect(farm.wamNet).toBeCloseTo(2.5, 5);
+    expect(farm.roiRm).toBeNull();
+    expect(farm.hasPrice).toBe(true); // frmPrice = 1 > 0
+    // Grain Farm Q1 has maxEmployees 0 → cannot hire.
+    const q1 = report.rows.find((r) => r.industry === 'food' && r.kind === 'rm' && r.quality === 1)!;
+    expect(q1.hireNet).toBeNull();
+    expect(q1.wamNet).toBeCloseTo(0.35, 5); // 35/100 = 0.35 at x1.0
+  });
+
+  it('emits factory + rm rows for every quality of every industry (44 total)', () => {
+    const report = computeAdvisor(stateForTest());
+    // 24 factory rows (7+7+5+5) + 20 rm rows (5 per industry × 4).
+    expect(report.rows).toHaveLength(7 + 7 + 5 + 5 + (5 * 4));
   });
 });

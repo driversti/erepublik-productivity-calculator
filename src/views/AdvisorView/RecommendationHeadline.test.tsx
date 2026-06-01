@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { RecommendationHeadline } from './RecommendationHeadline';
 import type { AdvisorReport } from '../../calc/advisor';
 
-const baseRow = { hireNet: -1, hireNetTycoon: -1, roiRm: 0, owned: 0, hasPrice: true };
+const baseRow = { kind: 'factory' as const, hireNet: -1, hireNetTycoon: -1, roiRm: 0, owned: 0, hasPrice: true };
 
 function report(partial: Partial<AdvisorReport>): AdvisorReport {
   return { rows: [], rmVerdicts: [], topWam: null, ...partial };

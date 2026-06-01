@@ -10,10 +10,11 @@ import { computeFwIndustry, computeHiredIndustry } from './industry';
 export interface AdvisorRow {
   industry: IndustryKey;
   quality: number;
-  wamNet: number | null; // net per WAM session (= per company/day); null for hired industries
-  hireNet: number; // net per hired worker-session, Tycoon OFF
-  hireNetTycoon: number; // net per hired worker-session, Tycoon ON
-  roiRm: number; // net per 1 CC spent on raw material (primary session); 0 if no RM cost
+  kind: 'factory' | 'rm'; // finished-good factory, or a raw-material company
+  wamNet: number | null; // net per WAM session (= per company/day); null when WAM not possible
+  hireNet: number | null; // net per hired worker-session, Tycoon OFF; null when hiring not possible
+  hireNetTycoon: number | null; // net per hired worker-session, Tycoon ON; null when hiring not possible
+  roiRm: number | null; // net per 1 CC spent on RM; null for raw-material rows (they produce, not consume, RM)
   owned: number; // companies owned of this quality
   hasPrice: boolean; // finished-good price available for this quality
 }
@@ -78,6 +79,50 @@ function hiredSession(state: AppState, key: IndustryKey, mod: HiredModule, quali
   });
 }
 
+// One isolated session of a single fw raw-material company (plantation/mine).
+// Only the RM company is staffed, so the result's net is RM sale income − tax/salary.
+function fwRmSession(state: AppState, key: IndustryKey, mod: FwModule, quality: number, wam: boolean, hasTycoon: boolean): IndustryResult {
+  const cfg = getIndustry(key);
+  const plantationCells: Cells = { [quality]: { companies: 1, workers: wam ? 0 : 1 } };
+  return computeFwIndustry({
+    factoriesData: cfg.factoriesData,
+    plantationsData: cfg.rmData,
+    factoryCells: {},
+    plantationCells,
+    countryBonus: mod.countryBonus,
+    regionBonus: mod.regionBonus,
+    qualityPollution: mod.qualityPollution,
+    vat: mod.vat,
+    prices: mod.prices,
+    rmPrice: state[cfg.rmPriceKey],
+    hasTycoon,
+    wamEnabled: wam,
+    offeredSalary: state.offeredSalary,
+    workTaxRate: mod.workTaxRate,
+    averageSalary: mod.averageSalary,
+  });
+}
+
+// One isolated hired session of a single hired (houses/aircraft) raw-material company.
+function hiredRmSession(state: AppState, key: IndustryKey, mod: HiredModule, quality: number, hasTycoon: boolean): IndustryResult {
+  const cfg = getIndustry(key);
+  const rmCells: Cells = { [quality]: { companies: 1, workers: 1 } };
+  return computeHiredIndustry({
+    factoriesData: cfg.factoriesData,
+    rmData: cfg.rmData,
+    factoryCells: {},
+    rmCells,
+    countryBonus: mod.countryBonus,
+    regionBonus: mod.regionBonus,
+    qualityPollution: mod.qualityPollution,
+    vat: mod.vat,
+    prices: mod.prices,
+    rmPrice: state[cfg.rmPriceKey],
+    hasTycoon,
+    offeredSalary: state.offeredSalary,
+  });
+}
+
 function roi(primary: IndustryResult): number {
   return primary.rmNetCost > 0 ? primary.net / primary.rmNetCost : 0;
 }
@@ -122,7 +167,7 @@ export function computeAdvisor(state: AppState): AdvisorReport {
         owned = mod.factories[q]?.companies ?? 0;
       }
 
-      rows.push({ industry: key, quality: q, wamNet, hireNet, hireNetTycoon, roiRm: roi(primary), owned, hasPrice });
+      rows.push({ industry: key, quality: q, kind: 'factory', wamNet, hireNet, hireNetTycoon, roiRm: roi(primary), owned, hasPrice });
 
       // Rank fw by the WAM session, hired by the actual-Tycoon session — i.e. always
       // the user's real per-session economics (primary.net). wamNet is the fw primary.
@@ -132,6 +177,32 @@ export function computeAdvisor(state: AppState): AdvisorReport {
         bestQuality = q;
         bestPrimary = primary;
       }
+    }
+
+    // Raw-material companies as their own rankable rows. Net comes from staffing
+    // only the RM company (sale income − tax/salary); they consume no RM, so roiRm is null.
+    const rmPriced = rmPrice > 0;
+    for (let q = 1; q <= cfg.rmData.length; q++) {
+      const rmDef = cfg.rmData[q - 1];
+      let wamNet: number | null;
+      let hireNet: number | null;
+      let hireNetTycoon: number | null;
+      let owned: number;
+      if (cfg.type === 'fw') {
+        const mod = state[key] as FwModule;
+        wamNet = fwRmSession(state, key, mod, q, true, state.hasTycoon).net;
+        const canHire = rmDef.maxEmployees > 0;
+        hireNet = canHire ? fwRmSession(state, key, mod, q, false, false).net : null;
+        hireNetTycoon = canHire ? fwRmSession(state, key, mod, q, false, true).net : null;
+        owned = mod.plantations?.[q]?.companies ?? 0;
+      } else {
+        const mod = state[key] as HiredModule;
+        wamNet = null;
+        hireNet = hiredRmSession(state, key, mod, q, false).net;
+        hireNetTycoon = hiredRmSession(state, key, mod, q, true).net;
+        owned = mod.rm?.[q]?.companies ?? 0;
+      }
+      rows.push({ industry: key, quality: q, kind: 'rm', wamNet, hireNet, hireNetTycoon, roiRm: null, owned, hasPrice: rmPriced });
     }
 
     const hasPrice = bestPrimary !== null && rmPrice > 0;

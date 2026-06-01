@@ -128,6 +128,20 @@
 
 .advisor-table tr.unpriced td { opacity: 0.45; }
 
+.advisor-table tr.rm-row td:nth-child(2) { font-style: italic; }
+.rm-badge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--bg-table-header);
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+
 .advisor-note {
   margin: 8px 2px 0;
   font-size: 0.8em;

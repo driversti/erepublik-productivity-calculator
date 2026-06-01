@@ -5,9 +5,10 @@ import { industryLabel } from '../../i18n/names';
 import type { IndustryKey } from '../../data/types';
 import type { AdvisorReport } from '../../calc/advisor';
 
-function productName(t: TFunction, industry: IndustryKey, quality: number): string {
-  const cfg = getIndustry(industry);
-  return `${cfg.icon} ${industryLabel(t, cfg)} Q${quality}`;
+function productName(t: TFunction, row: { industry: IndustryKey; quality: number; kind: 'factory' | 'rm' }): string {
+  const cfg = getIndustry(row.industry);
+  const label = row.kind === 'rm' ? cfg.rmName : industryLabel(t, cfg);
+  return `${cfg.icon} ${label} Q${row.quality}`;
 }
 
 export function RecommendationHeadline({ report }: { report: AdvisorReport }) {
@@ -20,10 +21,10 @@ export function RecommendationHeadline({ report }: { report: AdvisorReport }) {
   const showTop = top !== null && top.wamNet !== null && top.wamNet > 0;
 
   // Hired viability, split: profitable already vs profitable only once Tycoon is on.
-  const hiredPlain = report.rows.filter((r) => r.hasPrice && r.hireNet > 0);
-  const hiredTycoonOnly = report.rows.filter((r) => r.hasPrice && r.hireNet <= 0 && r.hireNetTycoon > 0);
+  const hiredPlain = report.rows.filter((r) => r.hasPrice && (r.hireNet ?? 0) > 0);
+  const hiredTycoonOnly = report.rows.filter((r) => r.hasPrice && (r.hireNet ?? 0) <= 0 && (r.hireNetTycoon ?? 0) > 0);
 
-  const names = (rows: typeof report.rows) => rows.map((r) => productName(t, r.industry, r.quality)).join(', ');
+  const names = (rows: typeof report.rows) => rows.map((r) => productName(t, r)).join(', ');
 
   return (
     <section className="advisor-headline">
@@ -31,7 +32,7 @@ export function RecommendationHeadline({ report }: { report: AdvisorReport }) {
       {showTop && (
         <div className="advisor-headline-top">
           🏆 {t('advisor:headline.topWam')}:&nbsp;
-          <strong>{productName(t, top.industry, top.quality)}</strong>
+          <strong>{productName(t, top)}</strong>
           &nbsp;→&nbsp;
           <span className="pos">+{(top.wamNet as number).toFixed(2)} CC</span> {t('advisor:headline.perDay')}
         </div>
