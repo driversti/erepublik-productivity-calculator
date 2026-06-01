@@ -23,7 +23,9 @@
     "owned": "you own",
     "noWamNote": "\"—\" = not applicable (Houses/Aircraft have no WAM; some plantations have no hired slots). Owned companies are highlighted.",
     "noPrice": "Prices not synced for this industry.",
-    "rmBadge": "raw"
+    "rmBadge": "raw",
+    "excludeToggle": "Toggle: I can't sell this quality",
+    "excludedBadge": "won't sell"
   },
   "rm": {
     "title": "Convert raw material, or sell it raw?",
@@ -31,6 +33,19 @@
     "convert": "Convert",
     "verdictSell": "SELL raw",
     "verdictConvert": "CONVERT"
+  },
+  "insights": {
+    "title": "Bottom line",
+    "bestAction": "Most profitable to run/build: {{product}} — {{net}} CC/company/day.",
+    "mainEarner": "Your main income: {{product}} ×{{count}} — {{total}} CC/day.",
+    "lossMaker": "Your {{count}}× {{product}} lose {{total}} CC/day — you'd earn more selling the raw material.",
+    "deadCapital": "You own {{count}} companies that can't be worked profitably (no WAM, and hiring loses money) — idle/dead capital.",
+    "rmStrategySell": "Your {{rm}}: better to SELL raw (Δ {{delta}}).",
+    "rmStrategyConvert": "Your {{rm}}: better to CONVERT into Q{{quality}} (Δ {{delta}}).",
+    "hiringNone": "Hiring is unprofitable everywhere at salary {{salary}} — play WAM-only.",
+    "hiringSome": "Hiring is profitable in some companies — see the hire columns.",
+    "hiringTycoon": "Hiring only pays with the Tycoon pack — see the Tycoon column.",
+    "caveat": "Figures use the prices you entered; mark qualities you can't sell (🚫) to drop them from advice."
   },
   "syncPrices": "↻ Sync all prices",
   "syncing": "Syncing…"
