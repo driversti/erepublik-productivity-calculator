@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-eRepublik **Productivity / Profit Calculator** — a single-page web app that estimates daily profit across four industries (food, weapons, houses, aircraft) plus a multi-industry **Holdings** mode. Built with **Vite + React 19 + TypeScript**. Calculation runs entirely client-side; the bundled Node server serves the production build and proxies game requests around CORS.
+eRepublik **Productivity / Profit Calculator** — a single-page web app that estimates daily profit across four industries (food, weapons, houses, aircraft), a multi-industry **Holdings** mode, a **Regions** browser (rank regions by production bonus for an industry), and an **Optimizer** that scans the whole region universe to find the most profitable place to relocate. Built with **Vite + React 19 + TypeScript**. Calculation runs entirely client-side; the bundled Node server serves the production build, proxies game requests around CORS, and exposes a server-cached `/api/universe` region feed.
 
 > Migrated from a zero-build vanilla-JS app to React (Nov 2025). The original
 > philosophy of "no build step, no dependencies" was intentionally dropped — see
@@ -34,9 +34,10 @@ The app is a single React tree under `src/`, with a strict separation between
 
 ```
 src/
-├── main.tsx, App.tsx          # bootstrap + tab router (industry tabs + Holdings)
+├── main.tsx, App.tsx          # bootstrap + tab router (industry tabs + Holdings + Regions + Optimizer)
 ├── data/                      # static game facts (typed)
 │   ├── industries.ts          # factory/plantation/RM arrays + IndustryConfig per industry
+│   ├── regionResources.ts     # AUTO-GENERATED region→resource bonus seed (RegionEntry[]) + COUNTRY_FLAGS; snapshot-dated, DO NOT hand-edit rows
 │   ├── buildingIds.ts         # CDN icon ids
 │   └── travel.ts              # re-exports `countries` from countries.json (region identity lives in regionResources.ts + live /api/universe)
 ├── calc/                      # PURE math — the heart; golden-parity locked
@@ -45,34 +46,73 @@ src/
 │   ├── strategy.ts            # computeIndustryView (food/weapons buy-vs-produce)
 │   ├── hiredView.ts           # computeHiredView (houses/aircraft tab)
 │   ├── holding.ts             # sumHolding
+│   ├── optimizer.ts           # rankRegions — net profit per candidate region (Optimizer)
+│   ├── regionBonus.ts         # selectCandidates — filter/score regions by industry bonus threshold
+│   ├── regionJoin.ts          # join live /api/universe ownership with the bonus seed
 │   └── __fixtures__/golden-snapshot.json   # frozen legacy output (parity guard)
+├── regions/                   # ranking.ts — pure rankRegions for the Regions browser tab
 ├── state/                     # one reducer + Context, reached only via facade hooks
 │   ├── types.ts, blank.ts     # AppState shape + initialState/blank builders
 │   ├── reducer.ts             # pure discriminated-union reducer
 │   ├── persistence.ts         # localStorage load/migrate/save (key v12)
 │   ├── StateContext.tsx       # StateProvider (useReducer + persist effect)
+│   ├── useRegionList.ts       # live country→region dropdown list (Society page, permalink-keyed)
 │   └── hooks.ts               # domain facade hooks (components never touch dispatch directly)
-├── services/                  # live data via /proxy (pure parsers + thin fetchers)
+├── services/                  # live data via /proxy + /api/universe (pure parsers + thin fetchers)
 │   ├── proxy.ts, livePrices.ts, regions.ts
+│   ├── universe.ts            # /api/universe region feed (live ownership), seed fallback
+│   ├── economySource.ts       # CountryEconomics / RegionLiveDetails interfaces for the optimizer scan
+│   ├── liveEconomy.ts         # per-country economics (bonus/salary/tax/VAT) from region pages
+│   ├── regionData.ts          # BUNDLED_DATASET + region-bonus dataset access
+│   ├── countryNames.ts        # game country id/name mapping
+│   ├── concurrency.ts         # bounded parallel fetch pool (rate-limit safe)
+│   └── freshness.ts           # "updated N min ago" relative-time helper
 ├── i18n/                      # react-i18next: synchronous init, bundled JSON catalogs
 │   ├── index.ts, config.ts    # global instance + SUPPORTED_LOCALES/loadLocale
 │   ├── names.ts               # localized country/region/industry name helpers
 │   └── locales/en/*.json      # 4 namespaces: common, industry, holdings, tooltips
-├── components/                # shared: Counter, IconImage, StarRating, TabBar, LanguageSwitcher, AppTooltip
+├── components/                # shared: Counter, IconImage, StarRating, TabBar, LanguageSwitcher, AppTooltip, Flag
 └── views/
     ├── IndustryView/          # one industry tab (Summary, Modifiers, Prices, grids)
-    └── HoldingsView/          # holdings (toolbar, location bar, per-industry sections, summary)
+    ├── HoldingsView/          # holdings (toolbar, location bar, per-industry sections, summary)
+    ├── RegionsView/           # browse/rank regions by production bonus for an industry
+    └── OptimizerView/         # runScan.ts orchestrates the universe scan; ResultsTable renders ranked regions
 ```
 
-`server.js` is an ESM (`type: module`) ~160-line `http` server: serves `dist/`,
-plus a `/proxy?url=…` GET endpoint allowlisted to `www.erepublik.com` and
-`service.erepublik.tools` over https only. Port is `process.env.PORT || 8080`.
-Styles live in `styles/` (a per-concern split imported via
-`styles/index.css` from `main.tsx`).
+`server.js` is an ESM (`type: module`) ~210-line `http` server: serves `dist/`,
+a `/proxy?url=…` GET endpoint allowlisted to **exact** hosts `www.erepublik.com`
+and `service.erepublik.tools` over https only (exact-hostname match, not prefix —
+to block look-alike/userinfo tricks), and `GET /api/universe` which enumerates
+the eRepublik Society pages server-side and serves the result from one shared
+**30-min file cache** (`UNIVERSE_TTL_MS`) so the GCP IP makes ~74 anonymous
+fetches per window instead of per-client. It reads `src/data/countries.json` at
+startup (must be bundled into the image — see Deployment). Port is
+`process.env.PORT || 8080`. Styles live in `styles/` (a per-concern split
+imported via `styles/index.css` from `main.tsx`).
+
+### Regions & Optimizer
+
+Two features built on the region-bonus dataset:
+
+- **Regions tab** (`views/RegionsView` + `regions/ranking.ts`): pure ranking of
+  regions containing an industry's resources, by summed bonus, optionally scoped
+  to one country. Read-only browser.
+- **Optimizer tab** (`views/OptimizerView/runScan.ts`): a three-phase scan that
+  finds the best region to relocate to for the current industry config —
+  (1) `selectCandidates` filters the universe by a bonus threshold;
+  (2) fetch per-country economics (bonus/salary/tax/VAT) and rank with
+  pollution=0 via `calc/optimizer.rankRegions`; (3) fetch real pollution for the
+  `topN` finalists from their region pages and re-rank. Region **identity +
+  bonuses** come from the bundled seed (`data/regionResources.ts`, snapshot-dated);
+  region **ownership** comes live from `/api/universe` and is joined onto the seed
+  by `calc/regionJoin` (so a region's `currentCountry` tracks war, while bonuses
+  stay stable). Live fetches go through `services/concurrency.ts`'s bounded pool
+  to respect the API rate limit. Never re-introduce a static per-country region
+  list — ownership is always live.
 
 ### State & module model
 
-`state.activeModule` is one of `food | weapons | houses | aircraft | holdings`.
+`state.activeModule` is one of `food | weapons | houses | aircraft | holdings | regions | optimizer`.
 Food/weapons are **fw** modules (owner Work-as-Manager + plantations); houses/
 aircraft are **hired** modules (hired workers only, no WAM, work tax always 0).
 The reducer is pure and immutable; **components dispatch only through the facade
@@ -126,6 +166,12 @@ canary when changing any math.
   plus thin `fetch*` wrappers. These regexes are brittle by nature — when the
   game's markup changes, update them and their tests against a freshly captured
   page.
+- **`services/universe.ts`** → `GET /api/universe` (server-cached) for live region
+  ownership; falls back to the bundled `regionResources` seed when the server is
+  unreachable (`fetchedAt: null` signals the fallback for the freshness note).
+- **`services/liveEconomy.ts`** → per-country economics for the optimizer
+  (productivity bonus, average salary, work-tax, VAT). All optimizer fetches run
+  through **`services/concurrency.ts`**'s bounded pool to stay under the rate limit.
 
 Manually editing any modifier input **de-syncs** the location selection (clears
 country/region) — this is intentional (`SET_MODULE_FIELD` in the reducer);
@@ -141,7 +187,7 @@ maps raw game country/region/industry codes to display names. Tooltips use
 `react-tooltip` via the global `AppTooltip` + the `tip()` helper in
 `components/tooltip.ts`.
 
-There are 24 locales. `src/i18n/index.ts` and `src/components/flagUrls.ts` are both
+There are 25 locales. `src/i18n/index.ts` and `src/components/flagUrls.ts` are both
 **generated** — don't hand-edit them. To add a locale: (1) create
 `locales/<code>/{common,industry,holdings,tooltips}.json` (the non-English
 `industry.json` prepends a `names` block overriding industry/RM labels; EN omits it
@@ -167,8 +213,12 @@ the host** (`npm ci && npm run build`) — esbuild is fragile inside buildkit/QE
 then `docker buildx` builds a multi-arch (`amd64,arm64`) image that just *copies*
 `dist/` + `server.js` (no node_modules, no in-image compile) and pushes
 `registry.yurii.live/erep-calculator:{version,latest}`. Version comes from
-`package.json`. `docker-compose.yml` runs it as `erep-calculator`, host `:8085` →
-container `:8080`. `server.js` honors `PORT` (defaults 8080).
+`package.json`. The image must also bundle `src/data/countries.json` — `server.js`
+reads it at runtime for `/api/universe` (fixed in v1.6.0; a missing file crashes
+startup). `docker-compose.yml` runs it as `erep-calculator`, host `:8085` →
+container `:8080`. `server.js` honors `PORT` (defaults 8080). The live deployment
+runs on a GCP VM (Docker Hub image `driversti/erep-calculator`) behind a
+`cloudflared` tunnel at `epc.yurii.live`, not the home server.
 
 ## Conventions
 
