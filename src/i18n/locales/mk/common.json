@@ -62,6 +62,8 @@
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} кандидат е прескокнат (нема економски податоци за неговата земја).",
     "skipped_other": "{{count}} кандидати се прескокнати (нема економски податоци за нивната земја).",
+    "universeFreshness": "Податоци за региони ажурирани {{when}}",
+    "universeOffline": "Се користи офлајн снимка на регионите",
     "pollutionEstimate": "процена",
     "columns": {
       "rank": "#",

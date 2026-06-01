@@ -61,6 +61,8 @@
     "ownersSnapshot": "Snapshot kepemilikan region: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "{{count}} kandidat dilewati (tidak ada data ekonomi untuk negaranya).",
+    "universeFreshness": "Data wilayah diperbarui {{when}}",
+    "universeOffline": "Menggunakan snapshot wilayah offline",
     "pollutionEstimate": "estimasi",
     "columns": {
       "rank": "#",

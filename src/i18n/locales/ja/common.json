@@ -61,6 +61,8 @@
     "ownersSnapshot": "地域領有状況のスナップショット: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "{{count}} 件の候補をスキップしました (その国の経済データがありません)。",
+    "universeFreshness": "地域データが {{when}} 更新されました",
+    "universeOffline": "オフラインの地域スナップショットを使用中",
     "pollutionEstimate": "推定",
     "columns": {
       "rank": "#",

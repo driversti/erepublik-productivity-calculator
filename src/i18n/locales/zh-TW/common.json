@@ -61,6 +61,8 @@
     "ownersSnapshot": "地區歸屬快照：{{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "已略過 {{count}} 個候選地區（其所屬國家沒有經濟數據）。",
+    "universeFreshness": "地區數據更新於 {{when}}",
+    "universeOffline": "使用離線地區快照",
     "pollutionEstimate": "估計值",
     "columns": {
       "rank": "#",

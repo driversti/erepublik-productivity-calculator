@@ -62,6 +62,8 @@
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} candidato saltato (nessun dato economico per il suo paese).",
     "skipped_other": "{{count}} candidati saltati (nessun dato economico per i loro paesi).",
+    "universeFreshness": "Dati regionali aggiornati {{when}}",
+    "universeOffline": "Utilizzo snapshot offline delle regioni",
     "pollutionEstimate": "stima",
     "columns": {
       "rank": "#",

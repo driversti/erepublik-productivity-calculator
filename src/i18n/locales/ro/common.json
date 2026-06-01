@@ -63,6 +63,8 @@
     "skipped_one": "{{count}} candidat omis (fără date economice pentru țara sa).",
     "skipped_few": "{{count}} candidați omiși (fără date economice pentru țările lor).",
     "skipped_other": "{{count}} de candidați omiși (fără date economice pentru țările lor).",
+    "universeFreshness": "Date despre regiuni actualizate {{when}}",
+    "universeOffline": "Se utilizează instantaneul offline al regiunilor",
     "pollutionEstimate": "estimare",
     "columns": {
       "rank": "#",

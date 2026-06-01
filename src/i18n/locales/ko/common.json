@@ -61,6 +61,8 @@
     "ownersSnapshot": "지역 소유 현황: {{date}}",
     "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "{{count}}개 후보를 건너뛰었습니다 (해당 국가의 경제 데이터 없음).",
+    "universeFreshness": "지역 데이터 {{when}} 업데이트됨",
+    "universeOffline": "오프라인 지역 스냅샷 사용 중",
     "pollutionEstimate": "추정치",
     "columns": {
       "rank": "#",

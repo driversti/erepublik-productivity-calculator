@@ -63,6 +63,8 @@
     "skipped_one": "Pominięto {{count}} kandydata (brak danych ekonomicznych dla jego kraju).",
     "skipped_few": "Pominięto {{count}} kandydatów (brak danych ekonomicznych dla ich krajów).",
     "skipped_many": "Pominięto {{count}} kandydatów (brak danych ekonomicznych dla ich krajów).",
+    "universeFreshness": "Dane regionów zaktualizowane {{when}}",
+    "universeOffline": "Używany jest offline zrzut regionów",
     "pollutionEstimate": "szacunek",
     "columns": {
       "rank": "#",

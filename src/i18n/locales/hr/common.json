@@ -63,6 +63,8 @@
     "skipped_one": "{{count}} kandidat preskočen (nema ekonomskih podataka za njegovu državu).",
     "skipped_few": "{{count}} kandidata preskočena (nema ekonomskih podataka za njihovu državu).",
     "skipped_other": "{{count}} kandidata preskočeno (nema ekonomskih podataka za njihovu državu).",
+    "universeFreshness": "Podaci o regijama ažurirani {{when}}",
+    "universeOffline": "Koristi se izvanmrežna snimka regija",
     "pollutionEstimate": "procjena",
     "columns": {
       "rank": "#",

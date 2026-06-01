@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { relativeMinutes } from '../../services/freshness';
 import { INDUSTRIES, getIndustry } from '../../data/industries';
 import type { IndustryKey } from '../../data/types';
 import { industryLabel } from '../../i18n/names';
@@ -27,9 +28,9 @@ interface Props {
 }
 
 export function OptimizerView({ source = DEFAULT_SOURCE }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { optimizer, setParams, setResults } = useOptimizer();
-  const { industry, threshold, maxCandidates, topN, results, baselineNet, skippedCount, fetchedAt, noBonusCount } = optimizer;
+  const { industry, threshold, maxCandidates, topN, results, baselineNet, skippedCount, fetchedAt, noBonusCount, universeFetchedAt } = optimizer;
 
   const cfg = getIndustry(industry);
   const mod = useModule(industry);
@@ -195,6 +196,11 @@ export function OptimizerView({ source = DEFAULT_SOURCE }: Props) {
                 {t('optimizer.noBonusRegions', { count: noBonusCount })}
               </p>
             )}
+            <p className="optimizer-universe-freshness" data-testid="optimizer-universe-freshness">
+              {relativeMinutes(universeFetchedAt, i18n.language)
+                ? t('optimizer.universeFreshness', { when: relativeMinutes(universeFetchedAt, i18n.language) })
+                : t('optimizer.universeOffline')}
+            </p>
           </div>
           <ResultsTable results={results} baselineNet={baselineNet} countryFlags={countryFlags} />
         </>
