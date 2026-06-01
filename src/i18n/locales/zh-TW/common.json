@@ -59,6 +59,7 @@
     "baselineNone": "沒有基準——請先在產業分頁中設定你的工廠。",
     "fetchedAt": "數據截至 {{date}}",
     "ownersSnapshot": "地區歸屬快照：{{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "已略過 {{count}} 個候選地區（其所屬國家沒有經濟數據）。",
     "pollutionEstimate": "估計值",
     "columns": {

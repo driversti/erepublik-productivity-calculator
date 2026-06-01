@@ -59,6 +59,7 @@
     "baselineNone": "Tidak ada baseline — atur pabrik Anda di tab industri.",
     "fetchedAt": "Data per {{date}}",
     "ownersSnapshot": "Snapshot kepemilikan region: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "{{count}} kandidat dilewati (tidak ada data ekonomi untuk negaranya).",
     "pollutionEstimate": "estimasi",
     "columns": {

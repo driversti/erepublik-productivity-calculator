@@ -59,6 +59,7 @@
     "baselineNone": "Нема основна вредност — конфигурирајте ги фабриките во картичка за индустрија.",
     "fetchedAt": "Податоци од {{date}}",
     "ownersSnapshot": "Снимка на сопственоста на региони: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} кандидат е прескокнат (нема економски податоци за неговата земја).",
     "skipped_other": "{{count}} кандидати се прескокнати (нема економски податоци за нивната земја).",
     "pollutionEstimate": "процена",

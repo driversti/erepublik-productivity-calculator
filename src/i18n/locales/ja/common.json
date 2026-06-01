@@ -59,6 +59,7 @@
     "baselineNone": "基準なし — 産業タブで工場を設定してください。",
     "fetchedAt": "データ取得時点: {{date}}",
     "ownersSnapshot": "地域領有状況のスナップショット: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "{{count}} 件の候補をスキップしました (その国の経済データがありません)。",
     "pollutionEstimate": "推定",
     "columns": {

@@ -2,7 +2,9 @@ import type { IndustryKey } from '../../data/types';
 import { getIndustry } from '../../data/industries';
 import { selectCandidates } from '../../calc/regionBonus';
 import { rankRegions, type OptimizerConfig, type RankedRegion } from '../../calc/optimizer';
-import { fetchRegionData } from '../../services/regionData';
+import { fetchUniverse } from '../../services/universe';
+import { joinUniverseWithSeed } from '../../calc/regionJoin';
+import { BUNDLED_DATASET } from '../../services/regionData';
 import type { CountryEconomySource } from '../../services/economySource';
 
 export type ScanPhase = 'economics' | 'pollution';
@@ -27,7 +29,8 @@ export interface ScanOutcome {
   baselineNet: number | null;
   skippedCount: number;
   fetchedAt: string;
-  ownersSnapshot: string;
+  noBonusCount: number;
+  universeFetchedAt: string | null;
 }
 
 /**
@@ -45,8 +48,10 @@ export async function runScan(
 ): Promise<ScanOutcome | null> {
   void getIndustry(industry); // validate key early
 
-  const dataset = await fetchRegionData();
-  const candidates = selectCandidates(dataset.regions, industry, { threshold, maxCandidates });
+  const universe = await fetchUniverse();
+  // BUNDLED_DATASET.regions = normalized seed (resource bonuses, by permalink).
+  const { regions, skipped: noBonusCount } = joinUniverseWithSeed(universe.regions, BUNDLED_DATASET.regions);
+  const candidates = selectCandidates(regions, industry, { threshold, maxCandidates });
   if (candidates.length === 0) return null;
 
   const owners = [...new Set(candidates.map((c) => c.region.currentCountry))];
@@ -76,6 +81,7 @@ export async function runScan(
     baselineNet,
     skippedCount,
     fetchedAt: new Date().toISOString(),
-    ownersSnapshot: dataset.fetchedAt,
+    noBonusCount,
+    universeFetchedAt: universe.fetchedAt,
   };
 }

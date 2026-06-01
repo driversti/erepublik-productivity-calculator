@@ -59,6 +59,7 @@
     "baselineNone": "Sin referencia: configura tus fábricas en una pestaña de industria.",
     "fetchedAt": "Datos del {{date}}",
     "ownersSnapshot": "Instantánea de propiedad de regiones: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} candidata omitida (sin datos económicos de su país).",
     "skipped_other": "{{count}} candidatas omitidas (sin datos económicos de su país).",
     "pollutionEstimate": "estimación",

@@ -59,6 +59,7 @@
     "baselineNone": "Žiadny základ — nastavte svoje továrne na karte odvetvia.",
     "fetchedAt": "Údaje k {{date}}",
     "ownersSnapshot": "Snímka vlastníctva regiónov: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} kandidát preskočený (žiadne ekonomické údaje pre jeho krajinu).",
     "skipped_few": "{{count}} kandidáti preskočení (žiadne ekonomické údaje pre ich krajinu).",
     "skipped_other": "{{count}} kandidátov preskočených (žiadne ekonomické údaje pre ich krajinu).",

@@ -59,6 +59,7 @@
     "baselineNone": "기준값 없음 — 산업 탭에서 공장을 설정하세요.",
     "fetchedAt": "{{date}} 기준 데이터",
     "ownersSnapshot": "지역 소유 현황: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "{{count}}개 후보를 건너뛰었습니다 (해당 국가의 경제 데이터 없음).",
     "pollutionEstimate": "추정치",
     "columns": {

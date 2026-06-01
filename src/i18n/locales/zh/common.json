@@ -59,6 +59,7 @@
     "baselineNone": "无基准——请在行业标签页中配置你的工厂。",
     "fetchedAt": "数据截至 {{date}}",
     "ownersSnapshot": "地区归属快照：{{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_other": "已跳过 {{count}} 个候选地区（其所属国家无经济数据）。",
     "pollutionEstimate": "预估",
     "columns": {

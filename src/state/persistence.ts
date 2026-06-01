@@ -211,7 +211,7 @@ export function saveState(state: AppState): void {
   try {
     // Persist optimizer params only; strip volatile run-time fields so
     // localStorage stays lean (results arrays can be large).
-    const { results: _r, baselineNet: _bn, skippedCount: _sc, fetchedAt: _fa, ownersSnapshot: _os, ...optimizerParams } = state.optimizer;
+    const { results: _r, baselineNet: _bn, skippedCount: _sc, fetchedAt: _fa, noBonusCount: _nbc, universeFetchedAt: _ufa, ...optimizerParams } = state.optimizer;
     const serialisable = { ...state, optimizer: optimizerParams };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(serialisable));
   } catch (e) {

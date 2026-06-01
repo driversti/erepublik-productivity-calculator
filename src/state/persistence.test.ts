@@ -83,7 +83,8 @@ describe('persistence', () => {
         baselineNet: 800,
         skippedCount: 2,
         fetchedAt: '2026-01-01T00:00:00Z',
-        ownersSnapshot: '2026-05-31',
+        noBonusCount: 3,
+        universeFetchedAt: '2026-05-31T00:00:00Z',
       },
     };
     saveState(s);
@@ -100,6 +101,7 @@ describe('persistence', () => {
     expect(opt.baselineNet).toBeUndefined();
     expect(opt.skippedCount).toBeUndefined();
     expect(opt.fetchedAt).toBeUndefined();
-    expect(opt.ownersSnapshot).toBeUndefined();
+    expect(opt.noBonusCount).toBeUndefined();
+    expect(opt.universeFetchedAt).toBeUndefined();
   });
 });

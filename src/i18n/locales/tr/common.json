@@ -59,6 +59,7 @@
     "baselineNone": "Temel değer yok — bir sektör sekmesinde fabrikalarınızı yapılandırın.",
     "fetchedAt": "Veri tarihi: {{date}}",
     "ownersSnapshot": "Bölge sahipliği anlık görüntüsü: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} aday atlandı (ülkesi için ekonomi verisi yok).",
     "skipped_other": "{{count}} aday atlandı (ülkeleri için ekonomi verisi yok).",
     "pollutionEstimate": "tahmini",

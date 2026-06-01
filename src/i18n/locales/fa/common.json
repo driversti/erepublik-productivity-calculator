@@ -59,6 +59,7 @@
     "baselineNone": "بدون مبنا — کارخانه‌های خود را در یک تب صنعت پیکربندی کنید.",
     "fetchedAt": "داده‌ها تا تاریخ {{date}}",
     "ownersSnapshot": "تصویر لحظه‌ای مالکیت منطقه: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} نامزد رد شد (داده اقتصادی برای کشورش موجود نیست).",
     "skipped_other": "{{count}} نامزد رد شدند (داده اقتصادی برای کشورشان موجود نیست).",
     "pollutionEstimate": "تخمین",

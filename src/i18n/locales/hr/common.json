@@ -59,6 +59,7 @@
     "baselineNone": "Nema osnovice — postavite svoje tvornice na kartici industrije.",
     "fetchedAt": "Podaci na dan {{date}}",
     "ownersSnapshot": "Snimka vlasništva regija: {{date}}",
+    "noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)",
     "skipped_one": "{{count}} kandidat preskočen (nema ekonomskih podataka za njegovu državu).",
     "skipped_few": "{{count}} kandidata preskočena (nema ekonomskih podataka za njihovu državu).",
     "skipped_other": "{{count}} kandidata preskočeno (nema ekonomskih podataka za njihovu državu).",
