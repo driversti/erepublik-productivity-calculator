@@ -152,8 +152,8 @@ describe('LiveEconomySource.getRegionDetails', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(makeOkResponse(REGION_HTML));
 
     const source = new LiveEconomySource();
-    // Region 38 exists in travelData.js (Oltenia, Romania, permalink "Oltenia")
-    const result = await source.getRegionDetails('food', [38]);
+    // Region 38 = Oltenia, Romania
+    const result = await source.getRegionDetails('food', [{ id: 38, permalink: 'Oltenia' }]);
 
     expect(result.size).toBe(1);
     const details = result.get(38);
@@ -171,17 +171,16 @@ describe('LiveEconomySource.getRegionDetails', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(makeFailResponse());
 
     const source = new LiveEconomySource();
-    const result = await source.getRegionDetails('food', [38]);
+    const result = await source.getRegionDetails('food', [{ id: 38, permalink: 'Oltenia' }]);
 
     expect(result.size).toBe(0);
   });
 
-  it('skips an unknown region id without calling fetch', async () => {
+  it('skips a region with an empty permalink without calling fetch', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(makeOkResponse(REGION_HTML));
 
     const source = new LiveEconomySource();
-    // 999999 does not exist in travelData.js
-    const result = await source.getRegionDetails('food', [999999]);
+    const result = await source.getRegionDetails('food', [{ id: 999999, permalink: '' }]);
 
     expect(result.size).toBe(0);
     expect(fetchMock).not.toHaveBeenCalled();
@@ -193,7 +192,7 @@ describe('LiveEconomySource.getRegionDetails', () => {
     const source = new LiveEconomySource();
     const progressCalls: [number, number][] = [];
 
-    await source.getRegionDetails('food', [38, 39], (done, total) => {
+    await source.getRegionDetails('food', [{ id: 38, permalink: 'Oltenia' }, { id: 39, permalink: 'Muntenia' }], (done, total) => {
       progressCalls.push([done, total]);
     });
 
@@ -218,7 +217,7 @@ describe('LiveEconomySource.getRegionDetails', () => {
 
     const source = new LiveEconomySource();
     // Must not throw
-    const result = await source.getRegionDetails('food', [38, 39]);
+    const result = await source.getRegionDetails('food', [{ id: 38, permalink: 'Oltenia' }, { id: 39, permalink: 'Muntenia' }]);
 
     // Throwing region is omitted
     expect(result.has(38)).toBe(false);

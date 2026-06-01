@@ -13,8 +13,8 @@
  * with a different strategy; the fallback is not part of the public interface.
  */
 import type { IndustryKey } from '../data/types';
-import type { CountryEconomics, CountryEconomySource, RegionLiveDetails } from './economySource';
-import { countries, regions } from '../data/travel';
+import type { CountryEconomics, CountryEconomySource, RegionLiveDetails, RegionRef } from './economySource';
+import { countries } from '../data/travel';
 import { getProxyUrl, erepUrl } from './proxy';
 import { normalizeCountryName } from './countryNames';
 import {
@@ -100,30 +100,28 @@ export class LiveEconomySource implements CountryEconomySource {
    */
   async getRegionDetails(
     industry: IndustryKey,
-    regionIds: number[],
+    regions: RegionRef[],
     onProgress?: (done: number, total: number) => void,
   ): Promise<Map<number, RegionLiveDetails>> {
     const cfg = SCRAPE_CONFIG[industry];
     const result = new Map<number, RegionLiveDetails>();
-    const total = regionIds.length;
+    const total = regions.length;
     let done = 0;
 
-    await mapWithLimit(regionIds, CONCURRENCY, async (regionId) => {
+    await mapWithLimit(regions, CONCURRENCY, async (region) => {
       try {
-        const regionEntry = regions[regionId];
-        if (!regionEntry) return; // unknown region id — skip
-
-        const url = getProxyUrl(erepUrl.region(regionEntry.permalink));
+        if (!region.permalink) return; // no slug — cannot build the URL
+        const url = getProxyUrl(erepUrl.region(region.permalink));
         const res = await fetch(url);
         if (!res.ok) return; // server error — skip
 
         const html = await res.text();
-        result.set(regionId, {
+        result.set(region.id, {
           regionBonus: parseRegionBonus(html, cfg),
           pollution: parseRegionPollution(html, cfg),
         });
       } catch {
-        // skip this item on any network or parse error
+        // skip on any network or parse error
       } finally {
         done++;
         onProgress?.(done, total);

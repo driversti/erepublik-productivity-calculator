@@ -1,5 +1,11 @@
 import type { IndustryKey } from '../data/types';
 
+/** Minimal region reference for fetching its live page. */
+export interface RegionRef {
+  id: number;
+  permalink: string;
+}
+
 export interface CountryEconomics {
   countryBonus: number;   // per-industry productivity bonus (e.g. 20 for +20%)
   averageSalary: number;
@@ -26,7 +32,7 @@ export interface CountryEconomySource {
   /** real region bonus + quality-indexed pollution for specific regions (Phase 3) */
   getRegionDetails(
     industry: IndustryKey,
-    regionIds: number[],
+    regions: RegionRef[],
     onProgress?: (done: number, total: number) => void,
   ): Promise<Map<number, RegionLiveDetails>>;
 }
