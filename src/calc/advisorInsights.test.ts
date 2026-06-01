@@ -47,6 +47,12 @@ describe('generateInsights — WAM-only player', () => {
     expect(types).toContain('bestAction');
     expect(types[types.length - 1]).toBe('caveat');
   });
+  it('emits an rmStrategy insight (convert) for owned RM when converting wins', () => {
+    const rm = ins.find(i => i.type === 'rmStrategy');
+    expect(rm).toBeTruthy();
+    expect(rm!.params.industry).toBe('weapons');
+    expect(rm!.params.convert).toBe(1);
+  });
 });
 
 describe('generateInsights — magnate (hires + Tycoon)', () => {
@@ -60,6 +66,23 @@ describe('generateInsights — magnate (hires + Tycoon)', () => {
     expect(['some','tycoon']).toContain(h.params.mode);
     const ba = ins.find(i => i.type === 'bestAction')!;
     expect(ba.params.mode).toBe('hire');
+  });
+});
+
+describe('generateInsights — RM strategy flips to sell raw when conversion loses', () => {
+  it('emits rmStrategy with convert=0 (sell raw) for an owned RM whose verdict says sell', () => {
+    const s = initialState(); s.wamEnabled = true; s.hasTycoon = false; s.offeredSalary = 7800;
+    const rows = [
+      row({ industry: 'weapons', quality: 5, kind: 'rm', wamNet: 139.78, owned: 200 }),
+    ];
+    // Pass the rmVerdict inline so it's contextually typed as AdvisorReport['rmVerdicts'].
+    const ins = generateInsights(
+      report(rows, [{ industry: 'weapons', bestQuality: 7, sellRaw: 46, convert: 30, convertIsBetter: false, delta: 16, hasPrice: true }]),
+      s,
+    );
+    const rm = ins.find(i => i.type === 'rmStrategy')!;
+    expect(rm.params.industry).toBe('weapons');
+    expect(rm.params.convert).toBe(0);
   });
 });
 

@@ -42,8 +42,13 @@ export function InsightsPanel({ insights }: { insights: Insight[] }) {
           count: p.count,
           total: int(Math.abs(Number(p.total))),
         });
-      case 'deadCapital':
-        return t('advisor:insights.deadCapital', { count: p.count });
+      case 'deadCapital': {
+        const names = String(p.industries).split(',').filter(Boolean).map((key) => {
+          const cfg = getIndustry(key as IndustryKey);
+          return `${cfg.icon} ${industryLabel(t, cfg)}`;
+        }).join(' & ');
+        return t('advisor:insights.deadCapital', { industries: names, count: p.count });
+      }
       case 'rmStrategy': {
         const cfg = getIndustry(p.industry as IndustryKey);
         return Number(p.convert)

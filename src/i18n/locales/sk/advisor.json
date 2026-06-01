@@ -39,7 +39,7 @@
     "bestAction": "Most profitable to run/build: {{product}} — {{net}} CC/company/day.",
     "mainEarner": "Your main income: {{product}} ×{{count}} — {{total}} CC/day.",
     "lossMaker": "Your {{count}}× {{product}} lose {{total}} CC/day — you'd earn more selling the raw material.",
-    "deadCapital": "You own {{count}} companies that can't be worked profitably (no WAM, and hiring loses money) — idle/dead capital.",
+    "deadCapital": "{{industries}} can't be worked profitably (no WAM, and hiring loses money) — {{count}} idle/dead-capital companies.",
     "rmStrategySell": "Your {{rm}}: better to SELL raw (Δ {{delta}}).",
     "rmStrategyConvert": "Your {{rm}}: better to CONVERT into Q{{quality}} (Δ {{delta}}).",
     "hiringNone": "Hiring is unprofitable everywhere at salary {{salary}} — play WAM-only.",

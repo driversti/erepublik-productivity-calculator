@@ -21,8 +21,8 @@ export function RecommendationHeadline({ report }: { report: AdvisorReport }) {
   const showTop = top !== null && top.wamNet !== null && top.wamNet > 0;
 
   // Hired viability, split: profitable already vs profitable only once Tycoon is on.
-  const hiredPlain = report.rows.filter((r) => r.hasPrice && (r.hireNet ?? 0) > 0);
-  const hiredTycoonOnly = report.rows.filter((r) => r.hasPrice && (r.hireNet ?? 0) <= 0 && (r.hireNetTycoon ?? 0) > 0);
+  const hiredPlain = report.rows.filter((r) => r.hasPrice && !r.excluded && (r.hireNet ?? 0) > 0);
+  const hiredTycoonOnly = report.rows.filter((r) => r.hasPrice && !r.excluded && (r.hireNet ?? 0) <= 0 && (r.hireNetTycoon ?? 0) > 0);
 
   const names = (rows: typeof report.rows) => rows.map((r) => productName(t, r)).join(', ');
 
