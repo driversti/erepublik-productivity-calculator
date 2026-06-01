@@ -16,9 +16,10 @@ export function InsightsPanel({ insights }: { insights: Insight[] }) {
   const { t } = useTranslation(['common', 'advisor']);
   if (!insights.length) return null;
 
-  const product = (industry: unknown, quality: unknown) => {
+  const product = (industry: unknown, quality: unknown, kind?: unknown) => {
     const cfg = getIndustry(industry as IndustryKey);
-    return `${cfg.icon} ${industryLabel(t, cfg)} Q${quality}`;
+    const label = kind === 'rm' ? cfg.rmName : industryLabel(t, cfg);
+    return `${cfg.icon} ${label} Q${quality}`;
   };
 
   const line = (i: Insight): string => {
@@ -26,12 +27,12 @@ export function InsightsPanel({ insights }: { insights: Insight[] }) {
     switch (i.type) {
       case 'bestAction':
         return t('advisor:insights.bestAction', {
-          product: product(p.industry, p.quality),
+          product: product(p.industry, p.quality, p.kind),
           net: fmt(p.net),
         });
       case 'mainEarner':
         return t('advisor:insights.mainEarner', {
-          product: product(p.industry, p.quality),
+          product: product(p.industry, p.quality, p.kind),
           count: p.count,
           total: int(p.total),
         });
@@ -55,8 +56,10 @@ export function InsightsPanel({ insights }: { insights: Insight[] }) {
           : p.mode === 'tycoon'
           ? t('advisor:insights.hiringTycoon')
           : t('advisor:insights.hiringSome');
-      default:
+      case 'caveat':
         return t('advisor:insights.caveat');
+      default:
+        return '';
     }
   };
 

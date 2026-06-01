@@ -13,5 +13,6 @@ describe('InsightsPanel', () => {
     render(<InsightsPanel insights={insights} />);
     expect(screen.getByText(/Weapons Q7/)).toBeTruthy();
     expect(screen.getByText(/mark qualities you can't sell/i)).toBeTruthy();
+    expect(screen.getByTestId('insight-hiring').textContent).toMatch(/7800/);
   });
 });
