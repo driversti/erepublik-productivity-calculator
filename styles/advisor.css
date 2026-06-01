@@ -104,6 +104,14 @@
 .advisor-table th.sortable {
   cursor: pointer;
   user-select: none;
+  /* Metric labels (e.g. "net / hired (no Tycoon)") are long, especially once
+     localized. Let them wrap to two lines instead of forcing the column wider
+     than its short numeric data and overflowing the panel. */
+  white-space: normal;
+  vertical-align: bottom;
+  min-width: 5.5em;
+  max-width: 8em;
+  line-height: 1.25;
 }
 
 .advisor-table th.sortable:hover {
