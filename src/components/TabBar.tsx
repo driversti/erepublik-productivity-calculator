@@ -7,7 +7,7 @@ import { industryLabel } from '../i18n/names';
 export function TabBar() {
   const active = useActiveModule();
   const switchTo = useSwitchModule();
-  const { t } = useTranslation();
+  const { t } = useTranslation(['common', 'advisor']);
   return (
     <nav className="module-nav">
       <div className="nav-container">
@@ -45,6 +45,14 @@ export function TabBar() {
           onClick={() => switchTo('optimizer')}
         >
           {t('tabs.optimizer')}
+        </button>
+        <button
+          type="button"
+          className={`nav-tab${active === 'advisor' ? ' active' : ''}`}
+          data-testid="tab-advisor"
+          onClick={() => switchTo('advisor')}
+        >
+          {t('advisor:tab')}
         </button>
       </div>
     </nav>

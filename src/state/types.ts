@@ -82,7 +82,7 @@ export interface OptimizerState {
   universeFetchedAt: string | null;
 }
 
-export type ActiveModule = IndustryKey | 'holdings' | 'regions' | 'optimizer';
+export type ActiveModule = IndustryKey | 'holdings' | 'regions' | 'optimizer' | 'advisor';
 
 export interface AppState {
   activeModule: ActiveModule;

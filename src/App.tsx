@@ -5,6 +5,7 @@ import { IndustryView } from './views/IndustryView/IndustryView';
 import { HoldingsView } from './views/HoldingsView/HoldingsView';
 import { RegionsView } from './views/RegionsView/RegionsView';
 import { OptimizerView } from './views/OptimizerView';
+import { AdvisorView } from './views/AdvisorView';
 import { AppTooltip } from './components/AppTooltip';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { useState, useEffect } from 'react';
@@ -16,6 +17,7 @@ function ActiveView() {
   if (active === 'optimizer') return <OptimizerView />;
   if (active === 'holdings') return <HoldingsView />;
   if (active === 'regions') return <RegionsView />;
+  if (active === 'advisor') return <AdvisorView />;
   return <IndustryView industryKey={active} />;
 }
 
