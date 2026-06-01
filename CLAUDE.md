@@ -49,7 +49,8 @@ src/
 │   ├── optimizer.ts           # rankRegions — net profit per candidate region (Optimizer)
 │   ├── regionBonus.ts         # selectCandidates — filter/score regions by industry bonus threshold
 │   ├── regionJoin.ts          # join live /api/universe ownership with the bonus seed
-│   ├── advisor.ts             # ranks industry×quality by profit per work session (Advisor tab)
+│   ├── advisor.ts             # ranks industry×quality by profit per work session; liquidity-aware (Advisor tab)
+│   ├── advisorInsights.ts     # deterministic plain-language "Bottom line" insight generator over AdvisorReport
 │   └── __fixtures__/golden-snapshot.json   # frozen legacy output (parity guard)
 ├── regions/                   # ranking.ts — pure rankRegions for the Regions browser tab
 ├── state/                     # one reducer + Context, reached only via facade hooks
@@ -78,7 +79,7 @@ src/
     ├── HoldingsView/          # holdings (toolbar, location bar, per-industry sections, summary)
     ├── RegionsView/           # browse/rank regions by production bonus for an industry
     ├── OptimizerView/         # runScan.ts orchestrates the universe scan; ResultsTable renders ranked regions
-    └── AdvisorView/           # Advisor tab: headline + ranked production table + RM convert/sell panel
+    └── AdvisorView/           # Advisor tab: headline + InsightsPanel ("Bottom line") + ranked production table (per-quality exclude toggle) + RM convert/sell panel
 ```
 
 `server.js` is an ESM (`type: module`) ~210-line `http` server: serves `dist/`,
@@ -126,6 +127,23 @@ hired labour profitable — relevant for houses/aircraft, which have no WAM), an
 goods, or sell the RM raw? All math reuses the golden-parity
 `computeFwIndustry`/`computeHiredIndustry` (no parallel formula), so it stays in
 sync with the rest of the calc.
+
+Two additions sit on top of the ranking, both deterministic (no LLM):
+
+- **Insights panel ("Bottom line")** — pure `calc/advisorInsights.ts` turns the
+  `AdvisorReport` + `AppState` into structured, colour-coded `Insight[]` findings
+  (best action, main earner, loss-makers, dead capital, per-RM sell-vs-convert
+  strategy, hiring viability, caveat). It adapts to play-style purely from the data
+  via an `achievable()` helper that keys off `wamEnabled`/`hasTycoon` — a WAM-only
+  player sees WAM economics and "hiring unprofitable everywhere"; a magnate
+  (hires + Tycoon) sees viable hire rows. The generator returns raw values; the
+  `InsightsPanel` component maps each `type` to an i18n template and formats numbers.
+- **Liquidity / "can't sell" flag** — `state.excludedQualities: string[]` (keys
+  `"${industry}:${quality}"`, finished goods only; toggled from the table via
+  `useToggleExcludedQuality`, persisted, additive — no version bump). `computeAdvisor`
+  sets `AdvisorRow.excluded` and drops excluded qualities from `topWam`, each
+  `RmVerdict.bestQuality`, and the insights — while still rendering them greyed +
+  struck-through with a 🚫 toggle to re-include.
 
 ### State & module model
 
