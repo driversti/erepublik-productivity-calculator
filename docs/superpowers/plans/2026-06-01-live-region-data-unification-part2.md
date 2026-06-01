@@ -259,21 +259,22 @@ import { fetchUniverse } from './universe';
 afterEach(() => vi.restoreAllMocks());
 
 describe('fetchUniverse', () => {
-  it('returns the server universe on 200', async () => {
+  it('returns the server universe + fetchedAt on 200', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(
-      JSON.stringify({ fetchedAt: 'd', regions: [{ permalink: 'Samogitia', name: 'Samogitia', currentCountry: 'Lithuania' }] }),
+      JSON.stringify({ fetchedAt: '2026-06-01T07:00:00.000Z', regions: [{ permalink: 'Samogitia', name: 'Samogitia', currentCountry: 'Lithuania' }] }),
       { status: 200 },
     ));
     const out = await fetchUniverse();
-    expect(out.find((r) => r.permalink === 'Samogitia')?.currentCountry).toBe('Lithuania');
+    expect(out.fetchedAt).toBe('2026-06-01T07:00:00.000Z');
+    expect(out.regions.find((r) => r.permalink === 'Samogitia')?.currentCountry).toBe('Lithuania');
   });
 
-  it('falls back to a seed-derived universe on failure', async () => {
+  it('falls back to a seed-derived universe with fetchedAt=null on failure', async () => {
     vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('down'));
     const out = await fetchUniverse();
-    // seed has many regions, each with a permalink + currentCountry
-    expect(out.length).toBeGreaterThan(0);
-    expect(out.every((r) => typeof r.permalink === 'string' && r.permalink.length > 0)).toBe(true);
+    expect(out.fetchedAt).toBeNull(); // null => UI shows the "offline snapshot" note
+    expect(out.regions.length).toBeGreaterThan(0);
+    expect(out.regions.every((r) => typeof r.permalink === 'string' && r.permalink.length > 0)).toBe(true);
   });
 });
 ```
@@ -291,19 +292,30 @@ export interface UniverseRegion {
   currentCountry: string;
 }
 
-function seedUniverse(): UniverseRegion[] {
-  return REGION_RESOURCES.map((r) => ({ permalink: r.permalink, name: r.name, currentCountry: r.currentCountry }));
+export interface Universe {
+  regions: UniverseRegion[];
+  /** ISO timestamp the server last enumerated the Society pages; null when the
+   *  seed fallback is used (server unreachable). Drives the UI freshness note. */
+  fetchedAt: string | null;
+}
+
+function seedUniverse(): Universe {
+  return {
+    regions: REGION_RESOURCES.map((r) => ({ permalink: r.permalink, name: r.name, currentCountry: r.currentCountry })),
+    fetchedAt: null,
+  };
 }
 
 /** Live region universe from the server; seed-derived fallback on any failure. */
-export async function fetchUniverse(): Promise<UniverseRegion[]> {
+export async function fetchUniverse(): Promise<Universe> {
   try {
     const res = await fetch('/api/universe');
     if (!res.ok) return seedUniverse();
     const data: unknown = await res.json();
     const regions = (data as { regions?: unknown }).regions;
+    const fetchedAt = (data as { fetchedAt?: unknown }).fetchedAt;
     if (!Array.isArray(regions)) return seedUniverse();
-    return regions as UniverseRegion[];
+    return { regions: regions as UniverseRegion[], fetchedAt: typeof fetchedAt === 'string' ? fetchedAt : null };
   } catch {
     return seedUniverse();
   }
@@ -407,14 +419,12 @@ Replace the candidate-sourcing lines (currently `const dataset = await fetchRegi
 ```ts
   const universe = await fetchUniverse();
   // BUNDLED_DATASET.regions is the normalized seed (resource bonuses by permalink).
-  const { regions, skipped: noBonusCount } = joinUniverseWithSeed(universe, BUNDLED_DATASET.regions);
+  const { regions, skipped: noBonusCount } = joinUniverseWithSeed(universe.regions, BUNDLED_DATASET.regions);
   const candidates = selectCandidates(regions, industry, { threshold, maxCandidates });
   if (candidates.length === 0) return null;
 ```
 
-Where the function currently computes `skippedCount` (candidates filtered out by rank) and `ownersSnapshot`, fold in the no-bonus count and drop the map-data `fetchedAt`/`ownersSnapshot` sourcing (the universe has its own freshness, but the optimizer's `fetchedAt` is already stamped from `new Date()`). Keep `skippedCount` for below-threshold candidates; report `noBonusCount` separately in the returned `ScanOutcome` (add a field `noBonusCount: number`).
-
-Concretely, change the `return` to include it and set `ownersSnapshot` to an empty string (or remove it from the type — see Step 2):
+Where the function currently computes `skippedCount` (candidates filtered out by rank) and `ownersSnapshot`, fold in the no-bonus count and thread the universe freshness through. Keep `skippedCount` for below-threshold candidates; report `noBonusCount` and `universeFetchedAt` in the returned `ScanOutcome`:
 
 ```ts
   return {
@@ -422,11 +432,12 @@ Concretely, change the `return` to include it and set `ownersSnapshot` to an emp
     baselineNet,
     skippedCount,
     noBonusCount,
-    fetchedAt: new Date().toISOString(),
+    fetchedAt: new Date().toISOString(),     // when this scan ran
+    universeFetchedAt: universe.fetchedAt,    // when the cached universe was last built (null = seed fallback)
   };
 ```
 
-- [ ] **Step 2: Update the `ScanOutcome` type** in `runScan.ts`: add `noBonusCount: number;` and remove `ownersSnapshot: string;` (the snapshot date concept came from map-data). Update `useOptimizer`/state and `OptimizerView` references to `ownersSnapshot` accordingly — remove them.
+- [ ] **Step 2: Update the `ScanOutcome` type** in `runScan.ts`: add `noBonusCount: number;` and `universeFetchedAt: string | null;`, and remove `ownersSnapshot: string;` (the snapshot-date concept came from map-data). Update `useOptimizer`/state (`src/state/...`) and `OptimizerView` references to `ownersSnapshot` accordingly — remove them; persist/pass `universeFetchedAt` + `noBonusCount` the same way `skippedCount`/`fetchedAt` are.
 
 - [ ] **Step 3: Surface the no-bonus count in `OptimizerView.tsx`.** Where `skippedCount` is shown, add a sibling line when `noBonusCount > 0`:
 
@@ -470,9 +481,83 @@ Run: `grep -rn "fetchRegionData\|refreshRegionData\|/api/regions" src/`
 
 ---
 
+### Task 8: Localized cache-freshness note in the optimizer
+
+**Files:** Create `src/services/freshness.ts` + `src/services/freshness.test.ts`; modify `src/views/OptimizerView/OptimizerView.tsx`; add an i18n key to all 24 `src/i18n/locales/*/common.json`.
+
+Shows, in the active interface language, that region data is cached and when it was last enumerated — e.g. "Region data updated 12 minutes ago" / «Дані регіонів оновлено 12 хвилин тому». Relative wording comes from `Intl.RelativeTimeFormat(locale)` (locale-aware, no per-locale number strings); only the surrounding label is translated.
+
+- [ ] **Step 1: Write the failing test** — `src/services/freshness.test.ts`:
+
+```ts
+import { describe, it, expect } from 'vitest';
+import { relativeMinutes } from './freshness';
+
+describe('relativeMinutes', () => {
+  it('formats minutes-ago in the given locale via Intl', () => {
+    const now = new Date('2026-06-01T07:12:00.000Z').getTime();
+    const then = '2026-06-01T07:00:00.000Z'; // 12 min earlier
+    // en uses "12 minutes ago"; just assert it mentions 12 and is a non-empty string
+    const en = relativeMinutes(then, 'en', now);
+    expect(en).toMatch(/12/);
+    // unknown/garbage timestamp → null (caller shows the offline note)
+    expect(relativeMinutes(null, 'en', now)).toBeNull();
+  });
+});
+```
+
+- [ ] **Step 2: Run it, watch it fail** — `npx vitest run src/services/freshness.test.ts` → FAIL.
+
+- [ ] **Step 3: Implement** — `src/services/freshness.ts`:
+
+```ts
+/** Locale-aware "N minutes ago" for an ISO timestamp; null when absent/invalid.
+ *  `now` is injectable for tests. */
+export function relativeMinutes(iso: string | null, locale: string, now: number = Date.now()): string | null {
+  if (!iso) return null;
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return null;
+  const minutes = Math.max(0, Math.round((now - t) / 60000));
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+  return rtf.format(-minutes, 'minute');
+}
+```
+
+- [ ] **Step 4: Run it, watch it pass** — `npx vitest run src/services/freshness.test.ts` → PASS.
+
+- [ ] **Step 5: Render the note in `OptimizerView.tsx`.** Near the existing `fetchedAt`/baseline summary, add (the scan result already carries `universeFetchedAt`):
+
+```tsx
+import { useTranslation } from 'react-i18next';
+import { relativeMinutes } from '../../services/freshness';
+// ...
+const { i18n } = useTranslation(); // or reuse the existing t/i18n from the component
+const when = relativeMinutes(universeFetchedAt, i18n.language);
+// ...in the summary block:
+<p className="optimizer-universe-freshness" data-testid="optimizer-universe-freshness">
+  {when
+    ? t('optimizer.universeFreshness', { when })
+    : t('optimizer.universeOffline')}
+</p>
+```
+
+- [ ] **Step 6: Add i18n keys to every locale.** In each `src/i18n/locales/<code>/common.json`, under the `optimizer` object, add:
+  - `"universeFreshness": "Region data updated {{when}}"`
+  - `"universeOffline": "Using offline region snapshot"`
+  - `"noBonusRegions": "{{count}} live regions not in the resource snapshot (skipped)"` (from Task 6)
+
+Translate for locales you can; English is an acceptable placeholder otherwise (matches existing practice). Provide proper Ukrainian (`uk`): `"universeFreshness": "Дані регіонів оновлено {{when}}"`, `"universeOffline": "Використовується офлайн-знімок регіонів"`, `"noBonusRegions": "{{count}} живих регіонів немає у знімку ресурсів (пропущено)"`.
+
+- [ ] **Step 7: Typecheck, i18n test, suite.**
+`npx tsc --noEmit` → clean. `npx vitest run src/i18n` → keys resolve for every locale. `npx vitest run` → all pass.
+
+- [ ] **Step 8: Commit** — `git add -A && git commit -m "feat(optimizer): localized cache-freshness note (updated N min ago)"`
+
+---
+
 ## Self-review notes
 
-- **Spec coverage:** universe from Society (Tasks 1-4), seed bonus join (Task 5), optimizer rewiring + skipped surfacing (Task 6), map-data/erpk removal (Tasks 3, 7). Anonymous throughout. Industry tab untouched (already Society-based).
+- **Spec coverage:** universe from Society (Tasks 1-4), seed bonus join (Task 5), optimizer rewiring + skipped surfacing (Task 6), map-data/erpk removal (Tasks 3, 7), localized cache-freshness note (Task 8). Anonymous throughout. Industry tab untouched (already Society-based).
 - **Type consistency:** `UniverseRegion {permalink,name,currentCountry}` (Task 4) is consumed by `joinUniverseWithSeed` (Task 5) and produced by the server route (Task 3). `joinUniverseWithSeed` returns `RegionEntry[]` (with `permalink` from Part 1) feeding `selectCandidates` unchanged. `ScanOutcome` gains `noBonusCount`, drops `ownersSnapshot` — update all references (Task 6 Step 2).
 - **Open risk:** Task 3's `import ... json with { type: 'json' }` requires a Node version supporting JSON import attributes (Node 22 — repo standard). If unavailable, read `countries.json` via `fs.readFileSync` + `JSON.parse` at startup instead.
 - **No placeholders.**
