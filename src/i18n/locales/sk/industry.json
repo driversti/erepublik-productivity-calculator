@@ -22,7 +22,7 @@
     "title": "Súhrn", "optionABadge": "Možnosť A", "optionBBadge": "Možnosť B", "netProfit": "Odhad. denný čistý zisk",
     "totalCompanies": "Spoločnosti spolu", "output": "Výstup: {{label}}", "rmConsumed": "Spotrebované {{rm}}",
     "revenue": "Denné tržby", "rmCost": "Denné náklady na {{rm}}", "grossProfit": "Hrubý zisk", "workTax": "Denná daň z práce",
-    "salary": "Denná mzda", "breakdownTitle": "Produkcia a zisk podľa kvality:", "noFactories": "Zatiaľ nie sú nakonfigurované žiadne továrne.",
+    "salary": "Denná mzda", "breakdownTitle": "Produkcia a zisk podľa kvality:", "breakdownProfitNote": "Zisk predpokladá nákup suroviny na trhu (Možnosť A).", "noFactories": "Zatiaľ nie sú nakonfigurované žiadne továrne.",
     "breakdownItem": "Q{{q}} ({{companies}}s / {{workers}}p)", "comparisonTitle": "Porovnanie stratégií: {{rm}}",
     "rmProduced": "Vyrobené {{rm}}", "rmNetBalance": "Čistá bilancia {{rm}}", "optionABuyTitle": "Možnosť A: Kúpiť {{rm}}",
     "optionAMarketCost": "Trhové náklady: {{cost}} CC", "optionBProduceTitle": "Možnosť B: Vyrobiť {{rm}}",

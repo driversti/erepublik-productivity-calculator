@@ -41,5 +41,5 @@
   "hldWorkTax": "Total pajak kerja harian di seluruh holding.",
   "hldSalary": "Total upah harian di seluruh holding.",
   "breakdownOutput": "Unit jadi yang diproduksi per hari pada kualitas ini (output dasar × produktivitas × sesi).",
-  "breakdownProfit": "Keuntungan kotor per hari untuk kualitas ini: pendapatan penjualan dikurangi biaya bahan baku. Pajak kerja dan gaji tidak termasuk di sini — keduanya ada di total di atas."
+  "breakdownProfit": "Laba per kualitas dengan bahan baku dinilai pada harga pasar (Opsi A). Laba bersih di atas justru memakai produksi bahan baku milikmu sendiri (Opsi B) — itulah sebabnya suatu kualitas bisa menunjukkan rugi di sini sementara total keseluruhan positif."
 }

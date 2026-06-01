@@ -41,5 +41,5 @@
   "hldWorkTax": "Tägliche Arbeitssteuer gesamt über die Holding.",
   "hldSalary": "Tägliche Löhne gesamt über die Holding.",
   "breakdownOutput": "Pro Tag produzierte Fertigwaren dieser Qualität (Basisproduktion × Produktivität × Sitzungen).",
-  "breakdownProfit": "Bruttogewinn pro Tag für diese Qualität: Verkaufserlös minus Rohstoffkosten. Arbeitssteuer und Gehalt sind hier nicht enthalten — sie stehen in den Summen oben."
+  "breakdownProfit": "Gewinn dieser Qualität mit Rohstoff zu Marktpreisen (Option A). Der Nettogewinn oben nutzt stattdessen deine eigene Rohstoffproduktion (Option B) — deshalb kann eine Qualität hier ein Minus zeigen, während die Gesamtsumme positiv ist."
 }

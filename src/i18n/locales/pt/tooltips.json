@@ -41,5 +41,5 @@
   "hldWorkTax": "Imposto de trabalho diário total no holding.",
   "hldSalary": "Salários diários totais no holding.",
   "breakdownOutput": "Unidades acabadas produzidas por dia nesta qualidade (produção base × produtividade × sessões).",
-  "breakdownProfit": "Lucro bruto por dia nesta qualidade: receita de vendas menos custo de matéria-prima. O imposto de trabalho e o salário não estão incluídos aqui — estão nos totais acima."
+  "breakdownProfit": "Lucro por qualidade com a matéria-prima avaliada a preço de mercado (Opção A). O lucro líquido acima usa, em vez disso, a tua própria produção (Opção B) — por isso uma qualidade pode mostrar prejuízo aqui enquanto o total é positivo."
 }

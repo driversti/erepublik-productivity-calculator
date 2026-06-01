@@ -22,7 +22,7 @@
     "title": "Përmbledhje", "optionABadge": "Opsioni A", "optionBBadge": "Opsioni B", "netProfit": "Fitimi neto ditor i vlerësuar",
     "totalCompanies": "Totali i kompanive", "output": "Prodhimi i {{label}}", "rmConsumed": "{{rm}} e konsumuar",
     "revenue": "Të ardhurat ditore", "rmCost": "Kostoja ditore e {{rm}}", "grossProfit": "Fitimi bruto", "workTax": "Taksa ditore e punës",
-    "salary": "Paga ditore", "breakdownTitle": "Prodhimi & fitimi sipas cilësisë:", "noFactories": "Ende nuk ka fabrika të konfiguruara.",
+    "salary": "Paga ditore", "breakdownTitle": "Prodhimi & fitimi sipas cilësisë:", "breakdownProfitNote": "Fitimi supozon blerjen e lëndës së parë në treg (Opsioni A).", "noFactories": "Ende nuk ka fabrika të konfiguruara.",
     "breakdownItem": "Q{{q}} ({{companies}}k / {{workers}}p)", "comparisonTitle": "Krahasimi i strategjisë për {{rm}}",
     "rmProduced": "{{rm}} e prodhuar", "rmNetBalance": "Bilanci neto i {{rm}}", "optionABuyTitle": "Opsioni A: Bli {{rm}}",
     "optionAMarketCost": "Kostoja e tregut: {{cost}} CC", "optionBProduceTitle": "Opsioni B: Prodho {{rm}}",

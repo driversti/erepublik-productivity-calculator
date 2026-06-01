@@ -22,7 +22,7 @@
     "title": "Zusammenfassung", "optionABadge": "Option A", "optionBBadge": "Option B", "netProfit": "Gesch. täglicher Nettogewinn",
     "totalCompanies": "Firmen gesamt", "output": "{{label}}-Produktion", "rmConsumed": "{{rm}} verbraucht",
     "revenue": "Täglicher Umsatz", "rmCost": "Tägliche {{rm}}-Kosten", "grossProfit": "Bruttogewinn", "workTax": "Tägliche Arbeitssteuer",
-    "salary": "Tägliches Gehalt", "breakdownTitle": "Produktion & Gewinn pro Qualität:", "noFactories": "Noch keine Fabriken konfiguriert.",
+    "salary": "Tägliches Gehalt", "breakdownTitle": "Produktion & Gewinn pro Qualität:", "breakdownProfitNote": "Gewinn unter der Annahme, dass Rohstoff am Markt gekauft wird (Option A).", "noFactories": "Noch keine Fabriken konfiguriert.",
     "breakdownItem": "Q{{q}} ({{companies}}F / {{workers}}A)", "comparisonTitle": "{{rm}}-Strategievergleich",
     "rmProduced": "{{rm}} produziert", "rmNetBalance": "{{rm}}-Nettobilanz", "optionABuyTitle": "Option A: {{rm}} kaufen",
     "optionAMarketCost": "Marktkosten: {{cost}} CC", "optionBProduceTitle": "Option B: {{rm}} produzieren",

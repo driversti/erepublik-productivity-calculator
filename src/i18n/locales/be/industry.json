@@ -22,7 +22,7 @@
     "title": "Зводка", "optionABadge": "Варыянт A", "optionBBadge": "Варыянт B", "netProfit": "Прыбл. штодзённы чысты прыбытак",
     "totalCompanies": "Усяго кампаній", "output": "Выпуск {{label}}", "rmConsumed": "Спажыта {{rm}}",
     "revenue": "Штодзённы даход", "rmCost": "Штодзённы кошт {{rm}}", "grossProfit": "Валавы прыбытак", "workTax": "Штодзённы падатак на працу",
-    "salary": "Штодзённы заробак", "breakdownTitle": "Вытворчасць і прыбытак па якасці:", "noFactories": "Фабрыкі яшчэ не наладжаны.",
+    "salary": "Штодзённы заробак", "breakdownTitle": "Вытворчасць і прыбытак па якасці:", "breakdownProfitNote": "Прыбытак разлічаны з улікам куплі сыравіны на рынку (Варыянт A).", "noFactories": "Фабрыкі яшчэ не наладжаны.",
     "breakdownItem": "Q{{q}} ({{companies}}к / {{workers}}р)", "comparisonTitle": "Параўнанне стратэгій {{rm}}",
     "rmProduced": "Выраблена {{rm}}", "rmNetBalance": "Чысты баланс {{rm}}", "optionABuyTitle": "Варыянт A: Купіць {{rm}}",
     "optionAMarketCost": "Рынкавы кошт: {{cost}} CC", "optionBProduceTitle": "Варыянт B: Вырабіць {{rm}}",

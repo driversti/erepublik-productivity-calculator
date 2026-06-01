@@ -65,7 +65,7 @@
     "grossProfit": "Zysk brutto",
     "workTax": "Dzienny podatek od pracy",
     "salary": "Dzienna pensja",
-    "breakdownTitle": "Produkcja i zysk wg jakości:",
+    "breakdownTitle": "Produkcja i zysk wg jakości:", "breakdownProfitNote": "Zysk zakłada zakup surowca na rynku (Opcja A).",
     "noFactories": "Nie skonfigurowano jeszcze żadnych fabryk.",
     "breakdownItem": "Q{{q}} ({{companies}}f / {{workers}}p)",
     "comparisonTitle": "Porównanie strategii {{rm}}",

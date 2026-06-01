@@ -22,7 +22,7 @@
     "title": "خلاصه", "optionABadge": "گزینه A", "optionBBadge": "گزینه B", "netProfit": "سود خالص روزانه تخمینی",
     "totalCompanies": "مجموع شرکت‌ها", "output": "تولید {{label}}", "rmConsumed": "{{rm}} مصرف‌شده",
     "revenue": "درآمد روزانه", "rmCost": "هزینه روزانه {{rm}}", "grossProfit": "سود ناخالص", "workTax": "مالیات کار روزانه",
-    "salary": "دستمزد روزانه", "breakdownTitle": "تولید و سود بر اساس کیفیت:", "noFactories": "هنوز هیچ کارخانه‌ای پیکربندی نشده است.",
+    "salary": "دستمزد روزانه", "breakdownTitle": "تولید و سود بر اساس کیفیت:", "breakdownProfitNote": "سود با فرض خرید مواد اولیه از بازار محاسبه شده است (گزینه A).", "noFactories": "هنوز هیچ کارخانه‌ای پیکربندی نشده است.",
     "breakdownItem": "Q{{q}} ({{companies}}ش / {{workers}}ک)", "comparisonTitle": "مقایسه راهبرد {{rm}}",
     "rmProduced": "{{rm}} تولیدشده", "rmNetBalance": "موازنه خالص {{rm}}", "optionABuyTitle": "گزینه A: خرید {{rm}}",
     "optionAMarketCost": "هزینه بازار: {{cost}} CC", "optionBProduceTitle": "گزینه B: تولید {{rm}}",

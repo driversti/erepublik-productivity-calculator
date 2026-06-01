@@ -41,5 +41,5 @@
   "hldWorkTax": "Ukupni dnevni porez na rad u holdingu.",
   "hldSalary": "Ukupne dnevne plaće u holdingu.",
   "breakdownOutput": "Gotovih jedinica dnevno za ovu kvalitetu (osnovni učinak × produktivnost × sesije).",
-  "breakdownProfit": "Bruto profit dnevno za ovu kvalitetu: prihod od prodaje minus trošak sirovine. Porez na rad i plaća nisu uključeni ovdje — nalaze se u zbrojevima iznad."
+  "breakdownProfit": "Dobit po kvaliteti sa sirovinom vrednovanom po tržišnoj cijeni (Opcija A). Neto dobit iznad umjesto toga koristi tvoju vlastitu proizvodnju sirovine (Opcija B) — zato kvaliteta ovdje može pokazati gubitak dok je ukupni zbroj pozitivan."
 }

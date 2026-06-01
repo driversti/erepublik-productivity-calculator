@@ -111,6 +111,8 @@ export function SummarySidebar(props: Props) {
 
         <div className="summary-details">
           <h3 className="details-title">{t('industry:summary.breakdownTitle')}</h3>
+          {/* The per-quality profit values RM at market price (Option A); the headline net uses own production (Option B). Flag it so the two aren't confused. */}
+          <p className="info-text" style={{ margin: '0 0 6px', fontSize: 10, fontStyle: 'italic' }}>{t('industry:summary.breakdownProfitNote')}</p>
           <ul className="breakdown-list" data-testid="breakdown-list">
             {v.breakdown.length === 0 ? (
               <li className="info-text" style={{ textAlign: 'center', fontStyle: 'italic' }}>{t('industry:summary.noFactories')}</li>

@@ -41,5 +41,5 @@
   "hldWorkTax": "Taxă pe muncă zilnică totală pentru holding.",
   "hldSalary": "Salarii zilnice totale pentru holding.",
   "breakdownOutput": "Unități finite produse pe zi la această calitate (producție de bază × productivitate × sesiuni).",
-  "breakdownProfit": "Profit brut pe zi la această calitate: venitul din vânzări minus costul materiei prime. Taxa pe muncă și salariul nu sunt incluse aici — se află în totalurile de mai sus."
+  "breakdownProfit": "Profit pe calitate cu materia primă evaluată la prețul pieței (Opțiunea A). Profitul net de mai sus folosește în schimb propria ta producție (Opțiunea B) — de aceea o calitate poate arăta pierdere aici, în timp ce totalul este pozitiv."
 }

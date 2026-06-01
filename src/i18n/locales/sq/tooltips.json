@@ -41,5 +41,5 @@
   "hldWorkTax": "Taksa totale ditore e punës për pronën.",
   "hldSalary": "Pagat totale ditore për pronën.",
   "breakdownOutput": "Njësi të gatshme të prodhuara në ditë për këtë cilësi (prodhimi bazë × produktiviteti × seancat).",
-  "breakdownProfit": "Fitimi bruto në ditë për këtë cilësi: të ardhurat nga shitja minus koston e lëndës së parë. Taksa e punës dhe paga nuk përfshihen këtu — janë te totalet më sipër."
+  "breakdownProfit": "Fitimi sipas cilësisë me lëndën e parë të vlerësuar me çmim tregu (Opsioni A). Fitimi neto më sipër përdor në vend të tij prodhimin tënd të lëndës së parë (Opsioni B) — prandaj një cilësi mund të shfaqë humbje këtu ndërsa totali është pozitiv."
 }

@@ -65,7 +65,7 @@
     "grossProfit": "Beneficio Bruto",
     "workTax": "Impuesto Laboral Diario",
     "salary": "Salario Diario",
-    "breakdownTitle": "Producción y beneficio por calidad:",
+    "breakdownTitle": "Producción y beneficio por calidad:", "breakdownProfitNote": "El beneficio supone comprar la materia prima en el mercado (Opción A).",
     "noFactories": "Aún no hay fábricas configuradas.",
     "breakdownItem": "Q{{q}} ({{companies}}e / {{workers}}t)",
     "comparisonTitle": "Comparación de Estrategias de {{rm}}",

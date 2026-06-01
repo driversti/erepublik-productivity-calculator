@@ -41,5 +41,5 @@
   "hldWorkTax": "Holding genelinde toplam günlük çalışma vergisi.",
   "hldSalary": "Holding genelinde toplam günlük ücretler.",
   "breakdownOutput": "Bu kalitede günde üretilen bitmiş ürün adedi (temel üretim × verimlilik × oturum sayısı).",
-  "breakdownProfit": "Bu kalite için günlük brüt kâr: satış geliri eksi hammadde maliyeti. Çalışma vergisi ve maaş buraya dahil değildir — yukarıdaki toplamlarda yer alır."
+  "breakdownProfit": "Hammaddesi piyasa fiyatıyla değerlenen kaliteye göre kâr (Seçenek A). Yukarıdaki net kâr ise kendi hammadde üretimini kullanır (Seçenek B) — bu yüzden toplam pozitifken bir kalite burada zarar gösterebilir."
 }

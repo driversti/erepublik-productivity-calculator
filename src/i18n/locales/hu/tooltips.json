@@ -41,5 +41,5 @@
   "hldWorkTax": "Teljes napi munkaadó a holdingban.",
   "hldSalary": "Teljes napi bérek a holdingban.",
   "breakdownOutput": "Naponta előállított késztermék ezen a minőségen (alaptermelés × termelékenység × munkamenetek).",
-  "breakdownProfit": "Bruttó napi nyereség ezen a minőségen: értékesítési bevétel mínusz nyersanyagköltség. A munkaadó és a bér itt nincs benne — a fenti összegekben szerepelnek."
+  "breakdownProfit": "Minőségenkénti nyereség a nyersanyag piaci áron számolva (A lehetőség). A fenti nettó nyereség ezzel szemben a saját nyersanyag-termelésedet használja (B lehetőség) — ezért egy minőség itt veszteséget mutathat, miközben a teljes összeg pozitív."
 }

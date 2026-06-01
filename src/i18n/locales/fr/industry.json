@@ -65,7 +65,7 @@
     "grossProfit": "Profit brut",
     "workTax": "Taxe sur le travail quotidienne",
     "salary": "Salaire quotidien",
-    "breakdownTitle": "Production et profit par qualité :",
+    "breakdownTitle": "Production et profit par qualité :", "breakdownProfitNote": "Le profit suppose l'achat de la matière première au marché (Option A).",
     "noFactories": "Aucune usine configurée pour le moment.",
     "breakdownItem": "Q{{q}} ({{companies}}e / {{workers}}t)",
     "comparisonTitle": "Comparaison des stratégies {{rm}}",

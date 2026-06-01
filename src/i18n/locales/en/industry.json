@@ -47,7 +47,7 @@
     "grossProfit": "Gross Profit",
     "workTax": "Daily Work Tax",
     "salary": "Daily Salary",
-    "breakdownTitle": "Output & profit per quality:",
+    "breakdownTitle": "Output & profit per quality:", "breakdownProfitNote": "Profit assumes raw material bought at market (Option A).",
     "noFactories": "No factories configured yet.",
     "breakdownItem": "Q{{q}} ({{companies}}c / {{workers}}w)",
     "comparisonTitle": "{{rm}} Strategy Comparison",

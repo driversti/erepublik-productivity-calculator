@@ -65,7 +65,7 @@
     "grossProfit": "총 이익",
     "workTax": "일일 근로세",
     "salary": "일일 임금",
-    "breakdownTitle": "품질별 생산량 및 이익:",
+    "breakdownTitle": "품질별 생산량 및 이익:", "breakdownProfitNote": "이익은 원자재를 시장에서 구매한다고 가정합니다 (옵션 A).",
     "noFactories": "아직 구성된 공장이 없습니다.",
     "breakdownItem": "Q{{q}} ({{companies}}개 / {{workers}}명)",
     "comparisonTitle": "{{rm}} 전략 비교",

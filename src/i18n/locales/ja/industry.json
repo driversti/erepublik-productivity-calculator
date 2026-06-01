@@ -65,7 +65,7 @@
     "grossProfit": "粗利益",
     "workTax": "日次労働税",
     "salary": "日次給与",
-    "breakdownTitle": "品質別の生産量と利益:",
+    "breakdownTitle": "品質別の生産量と利益:", "breakdownProfitNote": "利益は原材料を市場で購入する前提です（オプション A）。",
     "noFactories": "まだ工場が設定されていません。",
     "breakdownItem": "Q{{q}} ({{companies}}社 / {{workers}}人)",
     "comparisonTitle": "{{rm}} 戦略比較",

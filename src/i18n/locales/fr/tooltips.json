@@ -41,5 +41,5 @@
   "hldWorkTax": "Taxe sur le travail quotidienne totale sur l'ensemble du holding.",
   "hldSalary": "Salaires quotidiens totaux sur l'ensemble du holding.",
   "breakdownOutput": "Unités finies produites par jour pour cette qualité (production de base × productivité × sessions).",
-  "breakdownProfit": "Profit brut par jour pour cette qualité : recettes de vente moins coût des matières premières. La taxe sur le travail et le salaire ne sont pas inclus ici — ils figurent dans les totaux ci-dessus."
+  "breakdownProfit": "Profit par qualité avec la matière première valorisée au prix du marché (Option A). Le profit net ci-dessus utilise plutôt votre propre production (Option B) — c'est pourquoi une qualité peut afficher une perte ici alors que le total est positif."
 }

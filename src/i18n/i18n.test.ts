@@ -36,6 +36,7 @@ describe('i18n catalog', () => {
       'tooltips:offeredCc',
       'tooltips:breakdownOutput',
       'tooltips:breakdownProfit',
+      'industry:summary.breakdownProfitNote',
     ];
     for (const k of keys) {
       const value = i18n.t(k as never);

@@ -22,7 +22,7 @@
     "title": "Σύνοψη", "optionABadge": "Επιλογή Α", "optionBBadge": "Επιλογή Β", "netProfit": "Εκτ. ημερήσιο καθαρό κέρδος",
     "totalCompanies": "Σύνολο επιχειρήσεων", "output": "Παραγωγή {{label}}", "rmConsumed": "Κατανάλωση {{rm}}",
     "revenue": "Ημερήσια έσοδα", "rmCost": "Ημερήσιο κόστος {{rm}}", "grossProfit": "Μικτό κέρδος", "workTax": "Ημερήσιος φόρος εργασίας",
-    "salary": "Ημερήσιος μισθός", "breakdownTitle": "Παραγωγή & κέρδος ανά ποιότητα:", "noFactories": "Δεν έχουν ρυθμιστεί ακόμη εργοστάσια.",
+    "salary": "Ημερήσιος μισθός", "breakdownTitle": "Παραγωγή & κέρδος ανά ποιότητα:", "breakdownProfitNote": "Το κέρδος υποθέτει αγορά πρώτης ύλης στην αγορά (Επιλογή Α).", "noFactories": "Δεν έχουν ρυθμιστεί ακόμη εργοστάσια.",
     "breakdownItem": "Q{{q}} ({{companies}}επ / {{workers}}ερ)", "comparisonTitle": "Σύγκριση στρατηγικής {{rm}}",
     "rmProduced": "Παραγωγή {{rm}}", "rmNetBalance": "Καθαρό υπόλοιπο {{rm}}", "optionABuyTitle": "Επιλογή Α: Αγορά {{rm}}",
     "optionAMarketCost": "Κόστος αγοράς: {{cost}} CC", "optionBProduceTitle": "Επιλογή Β: Παραγωγή {{rm}}",

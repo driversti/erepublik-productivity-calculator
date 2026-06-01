@@ -65,7 +65,7 @@
     "grossProfit": "Bruto profit",
     "workTax": "Dnevni porez na rad",
     "salary": "Dnevna plaća",
-    "breakdownTitle": "Proizvodnja i profit po kvaliteti:",
+    "breakdownTitle": "Proizvodnja i profit po kvaliteti:", "breakdownProfitNote": "Dobit pretpostavlja kupnju sirovine na tržištu (Opcija A).",
     "noFactories": "Još nema konfiguriranih tvornica.",
     "breakdownItem": "Q{{q}} ({{companies}}t / {{workers}}r)",
     "comparisonTitle": "Usporedba strategija za {{rm}}",

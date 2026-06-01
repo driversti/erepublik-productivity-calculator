@@ -41,5 +41,5 @@
   "hldWorkTax": "Celková denná daň z práce naprieč holdingom.",
   "hldSalary": "Celkové denné mzdy naprieč holdingom.",
   "breakdownOutput": "Hotové jednotky vyrobené za deň pri tejto kvalite (základná produkcia × produktivita × relácie).",
-  "breakdownProfit": "Hrubý zisk za deň pri tejto kvalite: tržby z predaja mínus náklady na surovinu. Daň z práce a mzda tu nie sú zahrnuté — sú v súčtoch vyššie."
+  "breakdownProfit": "Zisk podľa kvality so surovinou ocenenou trhovou cenou (Možnosť A). Čistý zisk vyššie namiesto toho používa tvoju vlastnú výrobu suroviny (Možnosť B) — preto môže kvalita tu vykazovať stratu, kým celkový súčet je kladný."
 }
