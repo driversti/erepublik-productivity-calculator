@@ -63,6 +63,31 @@ describe('computeAdvisor', () => {
     expect(food.bestQuality).toBe(7);
   });
 
+  it('gives a convert-vs-sell verdict for a priced hired industry', () => {
+    const s = initialState();
+    s.hasTycoon = false;
+    s.offeredSalary = 20;
+    s.armPrice = 2;
+    s.aircraft.countryBonus = 0;
+    s.aircraft.regionBonus = 0;
+    s.aircraft.vat = 0;
+    s.aircraft.prices = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 10 };
+    const report = computeAdvisor(s);
+    const air = report.rmVerdicts.find((v) => v.industry === 'aircraft')!;
+    // Aircraft Q5 at x1.0: output 5, RM consumed 5, price 10, armPrice 2, salary 20.
+    // hired net = 50 − 10 − 20 = 20. convert = (20 + 10)/5 = 6. sellRaw = 2.
+    expect(air.bestQuality).toBe(5);
+    expect(air.sellRaw).toBeCloseTo(2, 5);
+    expect(air.convert).toBeCloseTo(6, 5);
+    expect(air.convertIsBetter).toBe(true);
+    expect(air.delta).toBeCloseTo(4, 5);
+    expect(air.hasPrice).toBe(true);
+    const row = report.rows.find((r) => r.industry === 'aircraft' && r.quality === 5)!;
+    expect(row.wamNet).toBeNull();
+    expect(row.hireNet).toBeCloseTo(20, 5);
+    expect(row.roiRm).toBeCloseTo(2, 5); // 20 / 10
+  });
+
   it('emits a row for every quality of every industry (24 total)', () => {
     const report = computeAdvisor(stateForTest());
     expect(report.rows).toHaveLength(7 + 7 + 5 + 5);

@@ -113,16 +113,20 @@ export function computeAdvisor(state: AppState): AdvisorReport {
         owned = mod[q]?.companies ?? 0;
       } else {
         const mod = state[key] as HiredModule;
+        const hireFalse = hiredSession(state, key, mod, q, false);
+        const hireTrue = hiredSession(state, key, mod, q, true);
         wamNet = null;
-        hireNet = hiredSession(state, key, mod, q, false).net;
-        hireNetTycoon = hiredSession(state, key, mod, q, true).net;
-        primary = hiredSession(state, key, mod, q, state.hasTycoon);
+        hireNet = hireFalse.net;
+        hireNetTycoon = hireTrue.net;
+        primary = state.hasTycoon ? hireTrue : hireFalse;
         owned = mod.factories[q]?.companies ?? 0;
       }
 
       rows.push({ industry: key, quality: q, wamNet, hireNet, hireNetTycoon, roiRm: roi(primary), owned, hasPrice });
 
-      const metric = cfg.type === 'fw' ? (wamNet ?? -Infinity) : hireNetTycoon;
+      // Rank fw by the WAM session, hired by the actual-Tycoon session — i.e. always
+      // the user's real per-session economics (primary.net). wamNet is the fw primary.
+      const metric = wamNet ?? primary.net;
       if (hasPrice && metric > bestMetric) {
         bestMetric = metric;
         bestQuality = q;
