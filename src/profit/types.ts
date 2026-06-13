@@ -112,11 +112,12 @@ export interface DamageCostRow {
 }
 
 export interface DamageCostBlock {
+  label: string; // e.g. "Ground" / "Aircraft"
   strength: number;
   rankValue: number;
   energyPerHit: number;
   energyCostPerUnit: number; // CC per 1 energy (cheapest food); 0 if no food price
-  targetDamage: number; // normalization, e.g. 100_000_000
+  targetDamage: number; // normalization, e.g. 100_000_000 (ground) or 30_000 (air)
   rows: DamageCostRow[];
 }
 
@@ -141,7 +142,7 @@ export interface ReportModel {
   breakeven: BreakevenRow[];
   produceVsBuy: ProduceVsBuyRow[];
   rmVerdicts: RmVerdictRow[];
-  damageCost: DamageCostBlock | null;
+  damageCost: DamageCostBlock[]; // one block per combat type (ground, air); empty if no combat config
   relocation: RelocationRow[] | null;
   dailyTotalNoTycoon: number;
   dailyTotalTycoon: number;

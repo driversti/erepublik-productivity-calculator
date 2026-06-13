@@ -24,7 +24,7 @@ import { renderReport } from '../../src/profit/render';
 import { computeBreakeven } from '../../src/profit/breakeven';
 import { rmUnitCost } from '../../src/profit/ownCost';
 import { unitProductionCost } from '../../src/profit/produceVsBuy';
-import { damagePerHit, cheapestEnergyCost, WEAPON_COMBAT, ENERGY_PER_HIT } from '../../src/profit/damageCost';
+import { damagePerHit, cheapestEnergyCost, WEAPON_COMBAT, AIRCRAFT_WEAPON_COMBAT, ENERGY_PER_HIT } from '../../src/profit/damageCost';
 import { stripJsonComments } from '../../src/profit/jsonc';
 import type {
   ReportModel, IndustryBlock, CompanyBreakdown, RankRow, BreakevenRow, ProduceVsBuyRow, RmVerdictRow, RelocationRow, DamageCostBlock, DamageCostRow,
@@ -47,7 +47,7 @@ interface UserConfig {
   hasTycoon: boolean;
   wamEnabled: boolean;
   offeredSalary: number;
-  combat?: { strength: number; rankValue: number };
+  combat?: { strength: number; rankValue?: number; airRankValue?: number; groundTarget?: number; airTarget?: number };
   industries: Partial<Record<IndustryKey, IndustryConfigEntry>>;
 }
 
@@ -334,28 +334,41 @@ async function main() {
     .map((v) => ({ industry: v.industry, label: getIndustry(v.industry).label, bestQuality: v.bestQuality, sellRaw: v.sellRaw, convert: v.convert, convertIsBetter: v.convertIsBetter, hasPrice: v.hasPrice }));
 
   // Cost of damage (only when combat stats are configured). Full cost = weapons + energy/food.
-  let damageCost: DamageCostBlock | null = null;
+  // One block per combat type: ground (military rank + strength) and air (aircraft rank, no strength).
+  const damageCost: DamageCostBlock[] = [];
   if (cfg.combat) {
-    const { strength, rankValue } = cfg.combat;
     const foodCfg = getIndustry('food');
     const foodEnergy: Record<number, number> = {};
     foodCfg.factoriesData.forEach((f) => { foodEnergy[f.quality] = f.energyPerItem ?? 0; });
     const energyCostPerUnit = cheapestEnergyCost((state.food as FwModule).prices, foodEnergy) ?? 0;
-    const weaponPrices = (state.weapons as FwModule).prices;
-    const TARGET = 100_000_000;
-    const rows: DamageCostRow[] = [];
-    for (let q = 1; q <= 7; q++) {
-      const price = weaponPrices[q] ?? 0;
-      if (price <= 0) continue;
-      const { firepower, durability } = WEAPON_COMBAT[q];
-      const dph = damagePerHit(strength, rankValue, firepower);
-      const hits = TARGET / dph;
-      const weapons = hits / durability;
-      const weaponCost = weapons * price;
-      const foodCost = hits * ENERGY_PER_HIT * energyCostPerUnit;
-      rows.push({ quality: q, firepower, damagePerHit: dph, hitsPer100M: hits, weaponsPer100M: weapons, weaponCost, foodCost, totalCost: weaponCost + foodCost });
+
+    const buildBlock = (
+      label: string, strength: number, rankValue: number,
+      prices: Record<number, number>, combat: Record<number, { firepower: number; durability: number }>, target: number,
+    ): DamageCostBlock | null => {
+      const rows: DamageCostRow[] = [];
+      for (const q of Object.keys(combat).map(Number)) {
+        const price = prices[q] ?? 0;
+        if (price <= 0) continue;
+        const { firepower, durability } = combat[q];
+        const dph = damagePerHit(strength, rankValue, firepower);
+        const hits = target / dph;
+        const weapons = hits / durability;
+        const weaponCost = weapons * price;
+        const foodCost = hits * ENERGY_PER_HIT * energyCostPerUnit;
+        rows.push({ quality: q, firepower, damagePerHit: dph, hitsPer100M: hits, weaponsPer100M: weapons, weaponCost, foodCost, totalCost: weaponCost + foodCost });
+      }
+      return rows.length ? { label, strength, rankValue, energyPerHit: ENERGY_PER_HIT, energyCostPerUnit, targetDamage: target, rows } : null;
+    };
+
+    if (cfg.combat.rankValue != null) {
+      const b = buildBlock('Наземна', cfg.combat.strength, cfg.combat.rankValue, (state.weapons as FwModule).prices, WEAPON_COMBAT, cfg.combat.groundTarget ?? 100_000_000);
+      if (b) damageCost.push(b);
     }
-    if (rows.length) damageCost = { strength, rankValue, energyPerHit: ENERGY_PER_HIT, energyCostPerUnit, targetDamage: TARGET, rows };
+    if (cfg.combat.airRankValue != null) {
+      const b = buildBlock('Авіа', 0, cfg.combat.airRankValue, (state.aircraft as HiredModule).prices, AIRCRAFT_WEAPON_COMBAT, cfg.combat.airTarget ?? 30_000);
+      if (b) damageCost.push(b);
+    }
   }
 
   // Relocation (productivity lever = region bonus; country bonus is often already maxed).

@@ -16,6 +16,16 @@ export const WEAPON_COMBAT: Record<number, { firepower: number; durability: numb
   7: { firepower: 200, durability: 10 },
 };
 
+// Aircraft weapons (Q1-Q5 only) — firepower (%) and durability, from the
+// Aircraft weapon wiki. Air damage uses the same formula with strength = 0.
+export const AIRCRAFT_WEAPON_COMBAT: Record<number, { firepower: number; durability: number }> = {
+  1: { firepower: 20, durability: 1 },
+  2: { firepower: 40, durability: 2 },
+  3: { firepower: 60, durability: 3 },
+  4: { firepower: 80, durability: 4 },
+  5: { firepower: 100, durability: 5 },
+};
+
 export const ENERGY_PER_HIT = 10;
 
 export function damagePerHit(strength: number, rankValue: number, firepower: number): number {

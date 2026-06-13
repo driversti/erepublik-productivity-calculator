@@ -52,7 +52,7 @@ function sampleModel(overrides: Partial<ReportModel> = {}): ReportModel {
     rmVerdicts: [
       { industry: 'weapons', label: 'Weapons', bestQuality: 7, sellRaw: 0.099, convert: 0.45, convertIsBetter: true, hasPrice: true },
     ],
-    damageCost: null,
+    damageCost: [],
     relocation: null,
     dailyTotalNoTycoon: 2869.68,
     dailyTotalTycoon: 3364.8,
@@ -127,22 +127,32 @@ describe('renderReport', () => {
   });
 
   it('shows the cost-of-damage section only when combat data is present', () => {
-    const without = renderReport(sampleModel({ damageCost: null }));
+    const without = renderReport(sampleModel({ damageCost: [] }));
     expect(without.toLowerCase()).not.toContain('вартість шкоди');
     const withDmg = renderReport(
       sampleModel({
-        damageCost: {
-          strength: 425000, rankValue: 89, energyPerHit: 10, energyCostPerUnit: 0.4, targetDamage: 100_000_000,
-          rows: [
-            { quality: 7, firepower: 200, damagePerHit: 599814, hitsPer100M: 166.7, weaponsPer100M: 16.7, weaponCost: 1250, foodCost: 668, totalCost: 1918 },
-            { quality: 1, firepower: 20, damagePerHit: 239926, hitsPer100M: 416.8, weaponsPer100M: 416.8, weaponCost: 709, foodCost: 1667, totalCost: 2376 },
-          ],
-        },
+        damageCost: [
+          {
+            label: 'Наземна', strength: 425000, rankValue: 89, energyPerHit: 10, energyCostPerUnit: 0.4, targetDamage: 100_000_000,
+            rows: [
+              { quality: 7, firepower: 200, damagePerHit: 599814, hitsPer100M: 166.7, weaponsPer100M: 16.7, weaponCost: 1250, foodCost: 668, totalCost: 1918 },
+              { quality: 1, firepower: 20, damagePerHit: 239926, hitsPer100M: 416.8, weaponsPer100M: 416.8, weaponCost: 709, foodCost: 1667, totalCost: 2376 },
+            ],
+          },
+          {
+            label: 'Авіа', strength: 0, rankValue: 61, energyPerHit: 10, energyCostPerUnit: 0.4, targetDamage: 30_000,
+            rows: [
+              { quality: 4, firepower: 80, damagePerHit: 237.6, hitsPer100M: 126.3, weaponsPer100M: 31.6, weaponCost: 41035, foodCost: 505, totalCost: 41540 },
+            ],
+          },
+        ],
       }),
     );
     expect(withDmg.toLowerCase()).toContain('вартість шкоди');
-    expect(withDmg).toContain('599'); // damage per hit shown
-    expect(withDmg).toContain('1918'); // total cost shown (no thousands separator)
+    expect(withDmg).toContain('Наземна');
+    expect(withDmg).toContain('Авіа');
+    expect(withDmg).toContain('599'); // ground damage per hit
+    expect(withDmg).toContain('41540'); // air total cost (no thousands separator)
   });
 
   it('shows a relocation section only when relocation data is present', () => {

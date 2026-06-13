@@ -54,10 +54,12 @@ you hire (the report says so explicitly).
 - **Hiring break-even** — for hired industries, the max salary at which producing
   beats buying (self-use) or still nets ≥ 0 (resale), vs the country average salary.
 - **Convert vs sell raw** — per industry, per raw-material unit.
-- **Cost of damage** (only when `combat: { strength, rankValue }` is in the config) — cost in
-  CC to deal 100M damage at each weapon quality, split into weapon cost + energy/food cost
-  (10 energy/hit, cheapest food as the energy source). Uses the eRepublik damage formula
-  `10×(1+S/400)×(1+R/5)×(1+FP/100)`; rankValue is the rank's ordinal (Recruit 1 … max 89).
+- **Cost of damage** (only when a `combat` block is in the config) — CC to deal a target amount
+  of damage at each weapon quality, split into weapon cost + energy/food cost (10 energy/hit,
+  cheapest food as the energy source). Uses the eRepublik damage formula
+  `10×(1+S/400)×(1+R/5)×(1+FP/100)` (rank value = rank ordinal). Two blocks: **ground** (set
+  `rankValue`, uses `strength` + weapons, default target 100M) and **air** (set `airRankValue`,
+  strength forced to 0, uses aircraft weapons, default target 30000). Override `groundTarget`/`airTarget`.
 - **Relocation** (`--relocate`) — top region-bonus regions per industry. For a full
   profit-based scan of the whole universe, use the app's **Optimizer** tab.
 

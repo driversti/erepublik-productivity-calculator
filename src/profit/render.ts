@@ -174,8 +174,12 @@ function rmSection(rows: RmVerdictRow[]): string {
   </table></div>`;
 }
 
-function damageCostSection(d: DamageCostBlock): string {
-  const target = Math.round(d.targetDamage / 1_000_000);
+function damageTargetLabel(t: number): string {
+  return t >= 1_000_000 ? `${Math.round(t / 1_000_000)}М` : t.toLocaleString('uk');
+}
+
+function damageBlock(d: DamageCostBlock): string {
+  const target = damageTargetLabel(d.targetDamage);
   const sorted = [...d.rows].sort((a, b) => a.totalCost - b.totalCost);
   const minHits = Math.min(...d.rows.map((r) => r.hitsPer100M));
   const body = sorted
@@ -190,12 +194,19 @@ function damageCostSection(d: DamageCostBlock): string {
     </tr>`,
     )
     .join('');
-  return `<h2>⚔️ Вартість шкоди (на ${target}М)</h2>
-  ${explain(`Скільки коштує завдати ${target}М шкоди різними якостями зброї. Шкода/хіт = 10×(1+сила/400)×(1+ранг/5)×(1+вогнева/100), сила <b>${d.strength.toLocaleString('uk')}</b>, ранг <b>${d.rankValue}</b>. Кожен хіт = <b>−${d.energyPerHit} енергії</b>, енергія з їжі по <b>${d.energyCostPerUnit.toFixed(3)} CC/од.</b> «Вартість зброї» + «вартість їжі/енергії» = <b>повна вартість</b>. Зелений рядок — найдешевший сумарно; зелена колонка хітів — найменше натисків (= найменше енергії). Без natural enemy / бустерів (вони множники, рейтинг не міняють).`)}
-  <div class="card"><table>
+  const strengthNote = d.strength > 0 ? `сила <b>${d.strength.toLocaleString('uk')}</b>, ` : 'сила не діє, ';
+  return `<h3>${esc(d.label)} — на ${target} шкоди</h3>
+  ${explain(`${strengthNote}ранг <b>${d.rankValue}</b>; шкода/хіт = 10×(1+сила/400)×(1+ранг/5)×(1+вогнева/100). Хіт = <b>−${d.energyPerHit} енергії</b> по <b>${d.energyCostPerUnit.toFixed(3)} CC/од.</b> Зелений рядок — найдешевший сумарно; зелена колонка хітів — найменше натисків.`)}
+  <table>
     <thead><tr><th>Якість</th><th>Шкода/хіт</th><th>Хітів</th><th>Зброя (CC)</th><th>Їжа (CC)</th><th>Разом (CC)</th></tr></thead>
     <tbody>${body}</tbody>
-  </table></div>`;
+  </table>`;
+}
+
+function damageCostSection(blocks: DamageCostBlock[]): string {
+  return `<h2>⚔️ Вартість шкоди</h2>
+  ${explain('Скільки CC коштує завдати цільову шкоду різними якостями зброї: «вартість зброї» + «вартість їжі/енергії на хіти» = повна вартість. Без natural enemy / бустерів (вони множники — рейтинг не міняють).')}
+  <div class="card">${blocks.map(damageBlock).join('')}</div>`;
 }
 
 function relocationSection(rows: RelocationRow[]): string {
@@ -234,7 +245,7 @@ function guide(m: ReportModel): string {
 }
 
 export function renderReport(m: ReportModel): string {
-  const dmg = m.damageCost && m.damageCost.rows.length ? damageCostSection(m.damageCost) : '';
+  const dmg = m.damageCost.length ? damageCostSection(m.damageCost) : '';
   const reloc = m.relocation && m.relocation.length ? relocationSection(m.relocation) : '';
   return `<!DOCTYPE html>
 <html lang="uk">

@@ -23,11 +23,14 @@
   "offeredSalary": 0,
 
   // OPTIONAL — combat stats. Add this block to get the "Cost of damage" section
-  // (how much CC it costs to deal 100M damage at each weapon quality).
-  //   strength  → your Strength stat.
-  //   rankValue → your military rank's ORDINAL number (Recruit = 1 … max rank = 89).
-  // Remove the whole block if you don't want the damage section.
-  "combat": { "strength": 100000, "rankValue": 50 },
+  // (how much CC it costs to deal a target amount of damage at each weapon quality).
+  //   strength     → your Strength stat (ground only; air ignores it).
+  //   rankValue    → military rank ORDINAL (Recruit = 1 … max 89). Enables GROUND analysis.
+  //   airRankValue → aircraft rank ORDINAL. Enables AIR analysis (strength is forced to 0).
+  //   groundTarget → target damage for ground (optional, default 100000000 = 100M).
+  //   airTarget    → target damage for air (optional, default 30000).
+  // Omit rankValue/airRankValue to skip that combat type; remove the block for no damage section.
+  "combat": { "strength": 100000, "rankValue": 50, "airRankValue": 40 },
 
   // Your companies, per industry. Omit an industry you don't own.
   //   country  → country permalink (see src/data/countries.json, usually the English

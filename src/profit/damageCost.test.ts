@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { damagePerHit, cheapestEnergyCost, WEAPON_COMBAT } from './damageCost';
+import { damagePerHit, cheapestEnergyCost, WEAPON_COMBAT, AIRCRAFT_WEAPON_COMBAT } from './damageCost';
 
 // Damage per hit: D = 10 × (1 + S/400) × (1 + R/5) × (1 + FP/100)
 // (eRepublik Military_formulas; verified by the wiki's worked example).
@@ -15,6 +15,20 @@ describe('damagePerHit', () => {
 
   it('firepower 0 (unarmed) drops the weapon term to 1', () => {
     expect(damagePerHit(425000, 89, 0)).toBeCloseTo(199938, 0);
+  });
+
+  it('air hits ignore strength (S=0): rank 61, FP 100 → 264', () => {
+    // 10 × 1 × (1+61/5) × (1+100/100) = 10 × 13.2 × 2 = 264
+    expect(damagePerHit(0, 61, 100)).toBeCloseTo(264, 4);
+  });
+});
+
+describe('AIRCRAFT_WEAPON_COMBAT', () => {
+  it('has Q1..Q5 firepower/durability and no Q6/Q7', () => {
+    expect(AIRCRAFT_WEAPON_COMBAT[1]).toEqual({ firepower: 20, durability: 1 });
+    expect(AIRCRAFT_WEAPON_COMBAT[5]).toEqual({ firepower: 100, durability: 5 });
+    expect(AIRCRAFT_WEAPON_COMBAT[6]).toBeUndefined();
+    expect(AIRCRAFT_WEAPON_COMBAT[7]).toBeUndefined();
   });
 });
 
