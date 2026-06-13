@@ -30,6 +30,14 @@ Output: `reports/profit-YYYY-MM-DD-HHMM.html` (git-ignored).
 
 ## Inventory config
 
+Start from the committed template — copy it to the git-ignored working file:
+
+```bash
+cp scripts/profit/my-companies.example.jsonc scripts/profit/my-companies.json
+```
+
+The config is **JSONC**: `//` and `/* */` comments are allowed (stripped before
+parsing), so you can annotate it. The `.example.jsonc` documents every field.
 Edit `scripts/profit/my-companies.json` (git-ignored) whenever your companies change.
 `factories`/`plantations`/`rm` map **quality → company count**; omit what you don't own.
 `country` is a permalink from `src/data/countries.json`; `region` is a region permalink

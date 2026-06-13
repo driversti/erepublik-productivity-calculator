@@ -1,0 +1,70 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// erep-profit — inventory config TEMPLATE
+//
+// HOW TO USE:
+//   1. Copy this file to "my-companies.json" in the same folder:
+//        cp scripts/profit/my-companies.example.jsonc scripts/profit/my-companies.json
+//   2. Edit it with YOUR companies (it is git-ignored, so your data stays private).
+//   3. Run:  npx vite-node scripts/profit/run.mts
+//
+// Comments (// and /* */) are allowed — they are stripped before parsing.
+// All numbers are plain JSON (no thousands separators, no trailing commas).
+// ─────────────────────────────────────────────────────────────────────────────
+{
+  // Premium Tycoon bonus (+20% production). false = you don't have it.
+  "hasTycoon": false,
+
+  // true = you Work-as-Manager your own companies (food/weapons only).
+  "wamEnabled": true,
+
+  // Salary you would pay a hired worker, per work session.
+  //   0      → WAM-only; hiring analysis falls back to each country's average salary.
+  //   > 0    → drives the hiring break-even verdict against THIS salary.
+  "offeredSalary": 0,
+
+  // OPTIONAL — combat stats. Add this block to get the "Cost of damage" section
+  // (how much CC it costs to deal 100M damage at each weapon quality).
+  //   strength  → your Strength stat.
+  //   rankValue → your military rank's ORDINAL number (Recruit = 1 … max rank = 89).
+  // Remove the whole block if you don't want the damage section.
+  "combat": { "strength": 100000, "rankValue": 50 },
+
+  // Your companies, per industry. Omit an industry you don't own.
+  //   country  → country permalink (see src/data/countries.json, usually the English
+  //              name, e.g. "Lithuania", "Poland", "Romania", "USA").
+  //   region   → region permalink (the slug in the eRepublik region-page URL
+  //              /en/main/region/<permalink>; see src/data/regionResources.ts —
+  //              e.g. "Samogitia", "Lithuania-Minor", "Mazovia", "Dobrogea").
+  //              Tip: the app's location dropdowns list valid country/region names.
+  //   factories / plantations / rm → maps of  "quality": company_count.
+  //              Leave a map empty ({}) or omit it if you own none.
+  //
+  // Food & weapons use { factories, plantations }  (Work-as-Manager possible).
+  // Houses & aircraft use { factories, rm }         (hired workers only — no WAM).
+  "industries": {
+    "food": {
+      "country": "Lithuania",
+      "region": "Samogitia",
+      "factories": {},                  // food factories you own, e.g. { "5": 10 }
+      "plantations": { "5": 30, "4": 29 } // raw-food producers (FRM), by quality
+    },
+    "weapons": {
+      "country": "Lithuania",
+      "region": "Lithuania-Minor",
+      "factories": { "7": 24 },         // weapon factories, by quality
+      "plantations": { "5": 200 }       // raw-weapon producers (WRM/rubber etc.)
+    },
+    "houses": {
+      "country": "Poland",
+      "region": "Mazovia",
+      "factories": { "1": 1, "5": 1 },  // house factories (hired only)
+      "rm": { "5": 10 }                 // house raw-material producers (HRM)
+    },
+    "aircraft": {
+      "country": "Romania",
+      "region": "Dobrogea",
+      "factories": { "5": 2 },          // aircraft-weapon factories (hired only)
+      "rm": { "5": 10 }                 // aircraft raw-material producers (ARM)
+    }
+  }
+}

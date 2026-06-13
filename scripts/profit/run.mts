@@ -25,6 +25,7 @@ import { computeBreakeven } from '../../src/profit/breakeven';
 import { rmUnitCost } from '../../src/profit/ownCost';
 import { unitProductionCost } from '../../src/profit/produceVsBuy';
 import { damagePerHit, cheapestEnergyCost, WEAPON_COMBAT, ENERGY_PER_HIT } from '../../src/profit/damageCost';
+import { stripJsonComments } from '../../src/profit/jsonc';
 import type {
   ReportModel, IndustryBlock, CompanyBreakdown, RankRow, BreakevenRow, ProduceVsBuyRow, RmVerdictRow, RelocationRow, DamageCostBlock, DamageCostRow,
 } from '../../src/profit/types';
@@ -55,7 +56,11 @@ const RM_PRICE_KEY: Record<IndustryKey, 'frmPrice' | 'wrmPrice' | 'hrmPrice' | '
 };
 
 function loadConfig(path: string): UserConfig {
-  return JSON.parse(readFileSync(path, 'utf8')) as UserConfig;
+  if (!existsSync(path)) {
+    throw new Error(`Config not found: ${path}\nCopy scripts/profit/my-companies.example.jsonc to ${path} and fill in your companies.`);
+  }
+  // JSONC: comments (// and /* */) are stripped so the config can carry guidance.
+  return JSON.parse(stripJsonComments(readFileSync(path, 'utf8'))) as UserConfig;
 }
 
 function pad2(n: number): string {
