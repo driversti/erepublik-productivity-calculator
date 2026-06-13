@@ -100,6 +100,26 @@ export interface RelocationCandidate {
   isCurrent: boolean; // true = the region you are already in
 }
 
+export interface DamageCostRow {
+  quality: number;
+  firepower: number;
+  damagePerHit: number;
+  hitsPer100M: number;
+  weaponsPer100M: number;
+  weaponCost: number; // CC of weapons per target damage
+  foodCost: number; // CC of energy/food per target damage
+  totalCost: number; // weaponCost + foodCost
+}
+
+export interface DamageCostBlock {
+  strength: number;
+  rankValue: number;
+  energyPerHit: number;
+  energyCostPerUnit: number; // CC per 1 energy (cheapest food); 0 if no food price
+  targetDamage: number; // normalization, e.g. 100_000_000
+  rows: DamageCostRow[];
+}
+
 export interface RelocationRow {
   industry: string;
   label: string;
@@ -121,6 +141,7 @@ export interface ReportModel {
   breakeven: BreakevenRow[];
   produceVsBuy: ProduceVsBuyRow[];
   rmVerdicts: RmVerdictRow[];
+  damageCost: DamageCostBlock | null;
   relocation: RelocationRow[] | null;
   dailyTotalNoTycoon: number;
   dailyTotalTycoon: number;

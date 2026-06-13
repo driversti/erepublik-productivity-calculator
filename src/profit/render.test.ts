@@ -52,6 +52,7 @@ function sampleModel(overrides: Partial<ReportModel> = {}): ReportModel {
     rmVerdicts: [
       { industry: 'weapons', label: 'Weapons', bestQuality: 7, sellRaw: 0.099, convert: 0.45, convertIsBetter: true, hasPrice: true },
     ],
+    damageCost: null,
     relocation: null,
     dailyTotalNoTycoon: 2869.68,
     dailyTotalTycoon: 3364.8,
@@ -123,6 +124,25 @@ describe('renderReport', () => {
     const html = renderReport(sampleModel());
     expect(html).toContain('2869.68');
     expect(html).toContain('3364.80');
+  });
+
+  it('shows the cost-of-damage section only when combat data is present', () => {
+    const without = renderReport(sampleModel({ damageCost: null }));
+    expect(without.toLowerCase()).not.toContain('вартість шкоди');
+    const withDmg = renderReport(
+      sampleModel({
+        damageCost: {
+          strength: 425000, rankValue: 89, energyPerHit: 10, energyCostPerUnit: 0.4, targetDamage: 100_000_000,
+          rows: [
+            { quality: 7, firepower: 200, damagePerHit: 599814, hitsPer100M: 166.7, weaponsPer100M: 16.7, weaponCost: 1250, foodCost: 668, totalCost: 1918 },
+            { quality: 1, firepower: 20, damagePerHit: 239926, hitsPer100M: 416.8, weaponsPer100M: 416.8, weaponCost: 709, foodCost: 1667, totalCost: 2376 },
+          ],
+        },
+      }),
+    );
+    expect(withDmg.toLowerCase()).toContain('вартість шкоди');
+    expect(withDmg).toContain('599'); // damage per hit shown
+    expect(withDmg).toContain('1918'); // total cost shown (no thousands separator)
   });
 
   it('shows a relocation section only when relocation data is present', () => {

@@ -24,8 +24,9 @@ import { renderReport } from '../../src/profit/render';
 import { computeBreakeven } from '../../src/profit/breakeven';
 import { rmUnitCost } from '../../src/profit/ownCost';
 import { unitProductionCost } from '../../src/profit/produceVsBuy';
+import { damagePerHit, cheapestEnergyCost, WEAPON_COMBAT, ENERGY_PER_HIT } from '../../src/profit/damageCost';
 import type {
-  ReportModel, IndustryBlock, CompanyBreakdown, RankRow, BreakevenRow, ProduceVsBuyRow, RmVerdictRow, RelocationRow,
+  ReportModel, IndustryBlock, CompanyBreakdown, RankRow, BreakevenRow, ProduceVsBuyRow, RmVerdictRow, RelocationRow, DamageCostBlock, DamageCostRow,
 } from '../../src/profit/types';
 import { rankRegions } from '../../src/regions/ranking';
 import { BUNDLED_DATASET } from '../../src/services/regionData';
@@ -45,6 +46,7 @@ interface UserConfig {
   hasTycoon: boolean;
   wamEnabled: boolean;
   offeredSalary: number;
+  combat?: { strength: number; rankValue: number };
   industries: Partial<Record<IndustryKey, IndustryConfigEntry>>;
 }
 
@@ -326,6 +328,31 @@ async function main() {
     .filter((v) => cfg.industries[v.industry])
     .map((v) => ({ industry: v.industry, label: getIndustry(v.industry).label, bestQuality: v.bestQuality, sellRaw: v.sellRaw, convert: v.convert, convertIsBetter: v.convertIsBetter, hasPrice: v.hasPrice }));
 
+  // Cost of damage (only when combat stats are configured). Full cost = weapons + energy/food.
+  let damageCost: DamageCostBlock | null = null;
+  if (cfg.combat) {
+    const { strength, rankValue } = cfg.combat;
+    const foodCfg = getIndustry('food');
+    const foodEnergy: Record<number, number> = {};
+    foodCfg.factoriesData.forEach((f) => { foodEnergy[f.quality] = f.energyPerItem ?? 0; });
+    const energyCostPerUnit = cheapestEnergyCost((state.food as FwModule).prices, foodEnergy) ?? 0;
+    const weaponPrices = (state.weapons as FwModule).prices;
+    const TARGET = 100_000_000;
+    const rows: DamageCostRow[] = [];
+    for (let q = 1; q <= 7; q++) {
+      const price = weaponPrices[q] ?? 0;
+      if (price <= 0) continue;
+      const { firepower, durability } = WEAPON_COMBAT[q];
+      const dph = damagePerHit(strength, rankValue, firepower);
+      const hits = TARGET / dph;
+      const weapons = hits / durability;
+      const weaponCost = weapons * price;
+      const foodCost = hits * ENERGY_PER_HIT * energyCostPerUnit;
+      rows.push({ quality: q, firepower, damagePerHit: dph, hitsPer100M: hits, weaponsPer100M: weapons, weaponCost, foodCost, totalCost: weaponCost + foodCost });
+    }
+    if (rows.length) damageCost = { strength, rankValue, energyPerHit: ENERGY_PER_HIT, energyCostPerUnit, targetDamage: TARGET, rows };
+  }
+
   // Relocation (productivity lever = region bonus; country bonus is often already maxed).
   let relocation: RelocationRow[] | null = null;
   if (flags.has('--relocate')) {
@@ -355,7 +382,7 @@ async function main() {
     generatedAt: now.human,
     hasTycoon: cfg.hasTycoon, wamEnabled: cfg.wamEnabled, offeredSalary: cfg.offeredSalary,
     rmBasis, salaryBasis,
-    industries, ranking, breakeven, produceVsBuy, rmVerdicts, relocation,
+    industries, ranking, breakeven, produceVsBuy, rmVerdicts, damageCost, relocation,
     dailyTotalNoTycoon: sumDaily(reportNoTyc), dailyTotalTycoon: sumDaily(reportTyc),
   };
 

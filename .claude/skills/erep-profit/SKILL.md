@@ -46,6 +46,10 @@ you hire (the report says so explicitly).
 - **Hiring break-even** — for hired industries, the max salary at which producing
   beats buying (self-use) or still nets ≥ 0 (resale), vs the country average salary.
 - **Convert vs sell raw** — per industry, per raw-material unit.
+- **Cost of damage** (only when `combat: { strength, rankValue }` is in the config) — cost in
+  CC to deal 100M damage at each weapon quality, split into weapon cost + energy/food cost
+  (10 energy/hit, cheapest food as the energy source). Uses the eRepublik damage formula
+  `10×(1+S/400)×(1+R/5)×(1+FP/100)`; rankValue is the rank's ordinal (Recruit 1 … max 89).
 - **Relocation** (`--relocate`) — top region-bonus regions per industry. For a full
   profit-based scan of the whole universe, use the app's **Optimizer** tab.
 
