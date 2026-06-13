@@ -35,3 +35,7 @@ Thumbs.db
 
 # Visual brainstorming companion
 .superpowers/
+
+# erep-profit skill: generated reports + private inventory
+/reports/
+scripts/profit/my-companies.json
