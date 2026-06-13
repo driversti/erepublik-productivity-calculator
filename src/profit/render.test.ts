@@ -44,7 +44,7 @@ function sampleModel(overrides: Partial<ReportModel> = {}): ReportModel {
       { industry: 'weapons', label: 'Weapons', quality: 7, kind: 'factory', basis: 'wam', netNoTycoon: 119.57, netTycoon: 140.2, hasPrice: true },
     ],
     breakeven: [
-      { industry: 'aircraft', label: 'Aircraft', quality: 5, name: 'Aircraft Weapons Factory (Q5)', selfUseCap: 16.1, resaleCap: 15.93, avgSalary: 12, userSalary: 12 },
+      { industry: 'aircraft', label: 'Aircraft', quality: 5, name: 'Aircraft Weapons Factory (Q5)', selfUseCapNoTyc: 6738, selfUseCapTyc: 7451, resaleCapNoTyc: 6548, resaleCapTyc: 7240, userSalary: 7200 },
     ],
     produceVsBuy: [
       { industry: 'weapons', label: 'Weapons', quality: 7, name: 'Weapons Factory (Q7)', produceCost: 78.61, buyPrice: 75, produceIsCheaper: false },
@@ -109,10 +109,11 @@ describe('renderReport', () => {
     expect(html).toContain('Aircraft Weapons Factory (Q5)');
   });
 
-  it('renders the hiring break-even caps', () => {
+  it('renders the hiring break-even caps for both Tycoon states', () => {
     const html = renderReport(sampleModel());
-    expect(html).toContain('16.10'); // selfUseCap formatted to 2dp
-    expect(html).toContain('15.93'); // resaleCap
+    expect(html).toContain('6738.00'); // self-use cap without Tycoon
+    expect(html).toContain('7451.00'); // self-use cap with Tycoon (higher)
+    expect(html).toContain('7240.00'); // resale cap with Tycoon
   });
 
   it('renders the convert-vs-sell verdict', () => {

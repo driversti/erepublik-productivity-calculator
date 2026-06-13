@@ -67,10 +67,12 @@ export interface BreakevenRow {
   label: string;
   quality: number;
   name: string;
-  selfUseCap: number;
-  resaleCap: number;
-  avgSalary: number; // country average salary (reference)
-  userSalary: number; // the salary actually used for the verdict (your offeredSalary, else avg)
+  // Max salary to beat buying, for both Tycoon states (production scales with the bonus).
+  selfUseCapNoTyc: number;
+  selfUseCapTyc: number;
+  resaleCapNoTyc: number;
+  resaleCapTyc: number;
+  userSalary: number; // the salary the verdict compares against (your offeredSalary, else country avg)
 }
 
 export interface ProduceVsBuyRow {

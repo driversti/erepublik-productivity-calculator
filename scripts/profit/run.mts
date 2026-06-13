@@ -306,9 +306,18 @@ async function main() {
       const price = mod.prices[q] ?? 0;
       if (price <= 0) continue;
       const def = c.factoriesData[q - 1];
-      const m = productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon: cfg.hasTycoon, pollutionRate: pollutionAt(mod.qualityPollution, q) });
-      const be = computeBreakeven({ unitsPerSession: def.baseOutput * m, rmPerSession: (def.baseRM ?? 0) * m, finishedPrice: price, rmPrice: state[c.rmPriceKey], vat: mod.vat });
-      breakeven.push({ industry: c.key, label: c.label, quality: q, name: def.name, selfUseCap: be.selfUseSalaryCap, resaleCap: be.resaleSalaryCap, avgSalary: mod.averageSalary, userSalary: salaryFor(c.key) });
+      const beFor = (hasTycoon: boolean) => {
+        const m = productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon, pollutionRate: pollutionAt(mod.qualityPollution, q) });
+        return computeBreakeven({ unitsPerSession: def.baseOutput * m, rmPerSession: (def.baseRM ?? 0) * m, finishedPrice: price, rmPrice: state[c.rmPriceKey], vat: mod.vat });
+      };
+      const no = beFor(false);
+      const yes = beFor(true);
+      breakeven.push({
+        industry: c.key, label: c.label, quality: q, name: def.name,
+        selfUseCapNoTyc: no.selfUseSalaryCap, selfUseCapTyc: yes.selfUseSalaryCap,
+        resaleCapNoTyc: no.resaleSalaryCap, resaleCapTyc: yes.resaleSalaryCap,
+        userSalary: salaryFor(c.key),
+      });
     }
   }
 

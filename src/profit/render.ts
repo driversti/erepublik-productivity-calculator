@@ -109,26 +109,24 @@ function rankingSection(rows: RankRow[], rmBasis: 'market' | 'own'): string {
 
 function breakevenSection(rows: BreakevenRow[], salaryBasis: 'country-avg' | 'user'): string {
   if (!rows.length) return '';
+  // A cap ≥ your salary means producing beats buying (green); below means buy (red).
+  const cap = (value: number, salary: number) => `<td class="${salary <= value ? 'pos' : 'neg'}">${value.toFixed(2)}</td>`;
   const body = rows
-    .map((r) => {
-      const selfOk = r.userSalary <= r.selfUseCap;
-      const resaleOk = r.userSalary <= r.resaleCap;
-      return `<tr>
+    .map((r) => `<tr>
       <td>${esc(r.label)} Q${r.quality}</td>
-      <td>${r.selfUseCap.toFixed(2)}</td>
-      <td>${r.resaleCap.toFixed(2)}</td>
+      ${cap(r.selfUseCapNoTyc, r.userSalary)}
+      ${cap(r.selfUseCapTyc, r.userSalary)}
+      ${cap(r.resaleCapNoTyc, r.userSalary)}
+      ${cap(r.resaleCapTyc, r.userSalary)}
       <td>${cc(r.userSalary)}</td>
-      <td class="${selfOk ? 'pos' : 'neg'}">${selfOk ? 'виробляти' : 'купувати'}</td>
-      <td class="${resaleOk ? 'pos' : 'neg'}">${resaleOk ? 'прибутково' : 'збиток'}</td>
-    </tr>`;
-    })
+    </tr>`)
     .join('');
   const salaryLabel = salaryBasis === 'user' ? 'твоя зарплата' : 'середня зарплата країни';
   return `<h2>👷 Поріг найму — максимальна зарплата, щоб виробляти вигідніше за купівлю</h2>
-  ${explain(`Будинки й авіа-зброю <b>не можна</b> робити самому (WAM) — лише найманцями. «Поріг» — найбільша зарплата за сесію, за якої виробництво ще б'є купівлю. <b>Self-use</b> = робити для себе дешевше, ніж купити готове. <b>Resale</b> = робити на продаж з прибутком. Якщо твоя ставка ≤ порогу → «виробляти», інакше → «купувати». Вердикт рахується проти: <b>${salaryLabel}</b>.`)}
+  ${explain(`Будинки й авіа-зброю <b>не можна</b> робити самому (WAM) — лише найманцями. «Поріг» — найбільша зарплата за сесію, за якої виробництво ще б'є купівлю. <b>Self-use</b> = робити для себе дешевше, ніж купити; <b>resale</b> = робити на продаж з прибутком. Показано <b>без Tycoon і з ним</b> (+20% виробництва піднімає поріг). 🟢 зелене = твоя зарплата ≤ порогу → <b>виробляти</b>; 🔴 червоне → <b>купувати</b>. Вердикт проти: <b>${salaryLabel}</b>.`)}
   <div class="card">
     <table>
-      <thead><tr><th>Якість</th><th>Поріг self-use</th><th>Поріг resale</th><th>Зарплата (${salaryLabel})</th><th>Для себе</th><th>На продаж</th></tr></thead>
+      <thead><tr><th>Якість</th><th>Self-use без Tyc</th><th>Self-use з Tyc</th><th>Resale без Tyc</th><th>Resale з Tyc</th><th>Зарплата (${salaryLabel})</th></tr></thead>
       <tbody>${body}</tbody>
     </table>
   </div>`;
