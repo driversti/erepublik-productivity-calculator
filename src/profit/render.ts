@@ -8,8 +8,8 @@ import type {
 const esc = (s: string): string =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-const cc = (n: number | null): string => (n === null ? '—' : n.toFixed(2));
-const pct = (n: number): string => `${n >= 0 ? '+' : ''}${n}%`;
+const cc = (n: number | null): string => (n === null || !Number.isFinite(n) ? '—' : n.toFixed(2));
+const pct = (n: number): string => (Number.isFinite(n) ? `${n >= 0 ? '+' : ''}${n}%` : '—');
 const explain = (text: string): string => `<div class="explain">${text}</div>`;
 
 const STYLE = `
@@ -48,7 +48,7 @@ footer { margin-top: 32px; color: #9ca3af; font-size: 12px; }
 `;
 
 function netClass(n: number | null): string {
-  if (n === null) return '';
+  if (n === null || !Number.isFinite(n)) return '';
   return n >= 0 ? 'pos' : 'neg';
 }
 

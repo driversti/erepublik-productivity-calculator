@@ -29,3 +29,29 @@ export function stripJsonComments(input: string): string {
   }
   return out;
 }
+
+// Drop trailing commas (a "," whose next non-whitespace char is } or ]) so JSON.parse
+// accepts them. String-aware: commas inside string values are left untouched. Run
+// AFTER stripJsonComments (assumes comments already removed).
+export function stripTrailingCommas(input: string): string {
+  let out = '';
+  let inStr = false, esc = false;
+  for (let i = 0; i < input.length; i++) {
+    const c = input[i];
+    if (inStr) {
+      out += c;
+      if (esc) esc = false;
+      else if (c === '\\') esc = true;
+      else if (c === '"') inStr = false;
+      continue;
+    }
+    if (c === '"') { inStr = true; out += c; continue; }
+    if (c === ',') {
+      let j = i + 1;
+      while (j < input.length && /\s/.test(input[j])) j++;
+      if (input[j] === '}' || input[j] === ']') continue; // trailing comma → drop
+    }
+    out += c;
+  }
+  return out;
+}

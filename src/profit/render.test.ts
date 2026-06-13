@@ -60,6 +60,12 @@ function sampleModel(overrides: Partial<ReportModel> = {}): ReportModel {
 }
 
 describe('renderReport', () => {
+  it('renders a non-finite number as the — sentinel, never the literal "NaN"', () => {
+    const html = renderReport(sampleModel({ dailyTotalNoTycoon: NaN }));
+    expect(html).not.toContain('NaN');
+    expect(html).toContain('—');
+  });
+
   it('produces a self-contained light-theme HTML document', () => {
     const html = renderReport(sampleModel());
     expect(html.startsWith('<!DOCTYPE html>')).toBe(true);

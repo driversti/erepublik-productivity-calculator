@@ -25,9 +25,9 @@ import { computeBreakeven } from '../../src/profit/breakeven';
 import { rmUnitCost } from '../../src/profit/ownCost';
 import { unitProductionCost } from '../../src/profit/produceVsBuy';
 import { damagePerHit, cheapestEnergyCost, WEAPON_COMBAT, AIRCRAFT_WEAPON_COMBAT, ENERGY_PER_HIT } from '../../src/profit/damageCost';
-import { stripJsonComments } from '../../src/profit/jsonc';
+import { stripJsonComments, stripTrailingCommas } from '../../src/profit/jsonc';
 import type {
-  ReportModel, IndustryBlock, CompanyBreakdown, RankRow, BreakevenRow, ProduceVsBuyRow, RmVerdictRow, RelocationRow, DamageCostBlock, DamageCostRow,
+  ReportModel, IndustryBlock, CompanyBreakdown, RankRow, BreakevenRow, ProduceVsBuyRow, RmVerdictRow, RelocationRow, DamageCostBlock, DamageCostRow, MultiplierTerms,
 } from '../../src/profit/types';
 import { rankRegions } from '../../src/regions/ranking';
 import { BUNDLED_DATASET } from '../../src/services/regionData';
@@ -51,16 +51,17 @@ interface UserConfig {
   industries: Partial<Record<IndustryKey, IndustryConfigEntry>>;
 }
 
-const RM_PRICE_KEY: Record<IndustryKey, 'frmPrice' | 'wrmPrice' | 'hrmPrice' | 'armPrice'> = {
-  food: 'frmPrice', weapons: 'wrmPrice', houses: 'hrmPrice', aircraft: 'armPrice',
-};
-
 function loadConfig(path: string): UserConfig {
   if (!existsSync(path)) {
     throw new Error(`Config not found: ${path}\nCopy scripts/profit/my-companies.example.jsonc to ${path} and fill in your companies.`);
   }
-  // JSONC: comments (// and /* */) are stripped so the config can carry guidance.
-  return JSON.parse(stripJsonComments(readFileSync(path, 'utf8'))) as UserConfig;
+  // JSONC: strip // and /* */ comments and trailing commas so the config can carry guidance.
+  const text = stripTrailingCommas(stripJsonComments(readFileSync(path, 'utf8')));
+  try {
+    return JSON.parse(text) as UserConfig;
+  } catch (e) {
+    throw new Error(`Invalid config ${path}: ${(e as Error).message}\nCheck for a syntax error (unmatched brace/bracket or a missing comma between entries).`);
+  }
 }
 
 function pad2(n: number): string {
@@ -82,7 +83,7 @@ function applyIndustry(state: AppState, key: IndustryKey, cfg: IndustryConfigEnt
   m.workTaxRate = mods.workTaxRate;
   m.averageSalary = mods.averageSalary;
   m.prices = prices;
-  state[RM_PRICE_KEY[key]] = rmPrice;
+  state[getIndustry(key).rmPriceKey] = rmPrice;
 
   const icfg = getIndustry(key);
   if (icfg.type === 'fw') {
@@ -121,9 +122,9 @@ function hiredSingle(state: AppState, key: IndustryKey, q: number, kind: 'factor
   });
 }
 
-function mult(state: AppState, key: IndustryKey, polIndex: number, hasTycoon: boolean): { value: number; terms: any } {
+function mult(state: AppState, key: IndustryKey, polIndex: number, hasTycoon: boolean): { value: number; terms: MultiplierTerms } {
   const mod = state[key] as any;
-  const terms = { countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, tycoon: hasTycoon ? 20 : 0, pollution: pollutionAt(mod.qualityPollution, polIndex) };
+  const terms: MultiplierTerms = { countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, tycoon: hasTycoon ? 20 : 0, pollution: pollutionAt(mod.qualityPollution, polIndex) };
   return { value: productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon, pollutionRate: terms.pollution }), terms };
 }
 
@@ -267,9 +268,10 @@ async function main() {
     buildIndustryBlock(state, c, cfg.industries[c.key]!, cfg.hasTycoon, salaryFor(c.key), ownCost[c.key] ?? null),
   );
 
-  // Current daily total: MARKET basis, runnable (fw WAM) rows only.
+  // Current daily total: MARKET basis, runnable (fw WAM) rows only. With WAM disabled
+  // the owner works nothing, so fw income is 0 (hired fw is not modelled here).
   const sumDaily = (rep: ReturnType<typeof computeAdvisor>) =>
-    rep.rows
+    !cfg.wamEnabled ? 0 : rep.rows
       .filter((r) => cfg.industries[r.industry] && getIndustry(r.industry).type === 'fw' && r.wamNet !== null)
       .reduce((s, r) => s + (r.wamNet as number) * r.owned, 0);
 
@@ -305,8 +307,10 @@ async function main() {
       if (price <= 0) continue;
       const def = c.factoriesData[q - 1];
       const beFor = (hasTycoon: boolean) => {
-        const m = productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon, pollutionRate: pollutionAt(mod.qualityPollution, q) });
-        return computeBreakeven({ unitsPerSession: def.baseOutput * m, rmPerSession: (def.baseRM ?? 0) * m, finishedPrice: price, rmPrice: state[c.rmPriceKey], vat: mod.vat });
+        // Pull per-worker output/RM from the golden-parity engine (1 worker session)
+        // instead of re-expressing output = baseOutput × multiplier here.
+        const r = hiredSingle(state, c.key, q, 'factory', hasTycoon, 0);
+        return computeBreakeven({ unitsPerSession: r.output, rmPerSession: r.rmConsumed, finishedPrice: price, rmPrice: state[c.rmPriceKey], vat: mod.vat });
       };
       const no = beFor(false);
       const yes = beFor(true);
