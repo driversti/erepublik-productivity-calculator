@@ -47,7 +47,7 @@ interface UserConfig {
   hasTycoon: boolean;
   wamEnabled: boolean;
   offeredSalary: number;
-  combat?: { strength: number; rankValue?: number; airRankValue?: number; groundTarget?: number; airTarget?: number };
+  combat?: { strength?: number; rankValue?: number; airRankValue?: number; groundTarget?: number; airTarget?: number };
   industries: Partial<Record<IndustryKey, IndustryConfigEntry>>;
 }
 
@@ -127,10 +127,9 @@ function mult(state: AppState, key: IndustryKey, polIndex: number, hasTycoon: bo
   return { value: productivityMultiplier({ countryBonus: mod.countryBonus, regionBonus: mod.regionBonus, hasTycoon, pollutionRate: terms.pollution }), terms };
 }
 
-// `state` prices RM at market (used for producer/plantation rows that SELL it);
-// `factoryState` prices RM for factories that CONSUME it (own-cost when that mode
-// is on, else market). hiredSalary is the salary modelled for hired sessions.
-function buildIndustryBlock(state: AppState, factoryState: AppState, cfg: IndustryConfig, entry: IndustryConfigEntry, hasTycoon: boolean, hiredSalary: number, ownRmCost: number | null): IndustryBlock {
+// RM is valued at market everywhere (the correct opportunity cost of self-produced
+// RM); hiredSalary is the salary modelled for hired (houses/aircraft) sessions.
+function buildIndustryBlock(state: AppState, cfg: IndustryConfig, entry: IndustryConfigEntry, hasTycoon: boolean, hiredSalary: number, ownRmCost: number | null): IndustryBlock {
   const key = cfg.key;
   const mod = state[key] as any;
   const companies: CompanyBreakdown[] = [];
@@ -140,7 +139,7 @@ function buildIndustryBlock(state: AppState, factoryState: AppState, cfg: Indust
     const polIndex = q;
     const mu = mult(state, key, polIndex, hasTycoon);
     if (cfg.type === 'fw') {
-      const r = fwSingle(factoryState, key, q, 'factory', hasTycoon);
+      const r = fwSingle(state, key, q, 'factory', hasTycoon);
       companies.push({
         quality: q, kind: 'factory', name: def.name, count, basis: 'wam',
         multiplier: mu.value, terms: mu.terms, produces: false,
@@ -150,7 +149,7 @@ function buildIndustryBlock(state: AppState, factoryState: AppState, cfg: Indust
       });
     } else {
       // hired industry: idle under WAM-only. Show units it WOULD make, net=null.
-      const r = hiredSingle(factoryState, key, q, 'factory', hasTycoon, hiredSalary);
+      const r = hiredSingle(state, key, q, 'factory', hasTycoon, hiredSalary);
       companies.push({
         quality: q, kind: 'factory', name: def.name, count, basis: 'hired',
         multiplier: mu.value, terms: mu.terms, produces: false,
@@ -252,7 +251,6 @@ async function main() {
   // only — charging factories that cost would double-count the plantation's margin.
   const effSalary = cfg.offeredSalary > 0 ? cfg.offeredSalary : null; // null → use country avg
   const salaryFor = (key: IndustryKey) => effSalary ?? modsByKey[key].averageSalary;
-  const rmBasis: 'market' | 'own' = 'market';
   const salaryBasis: 'country-avg' | 'user' = effSalary != null ? 'user' : 'country-avg';
 
   // Informational only: your WAM/hire production cost per RM unit (собівартість).
@@ -266,7 +264,7 @@ async function main() {
 
   // Industry blocks (market RM basis; собівартість shown for reference).
   const industries: IndustryBlock[] = INDUSTRIES.filter((c) => cfg.industries[c.key]).map((c) =>
-    buildIndustryBlock(state, state, c, cfg.industries[c.key]!, cfg.hasTycoon, salaryFor(c.key), ownCost[c.key] ?? null),
+    buildIndustryBlock(state, c, cfg.industries[c.key]!, cfg.hasTycoon, salaryFor(c.key), ownCost[c.key] ?? null),
   );
 
   // Current daily total: MARKET basis, runnable (fw WAM) rows only.
@@ -336,11 +334,19 @@ async function main() {
     }
   }
 
-  // Convert vs sell raw — at the user's Tycoon setting.
+  // Convert vs sell raw — at the user's Tycoon setting. fw uses salary 0 (WAM has no
+  // hired cost); hired industries must use the effective salary, else `convert` would
+  // value hired labour as free and overstate conversion.
   const primary = cfg.hasTycoon ? reportTyc : reportNoTyc;
-  const rmVerdicts: RmVerdictRow[] = primary.rmVerdicts
-    .filter((v) => cfg.industries[v.industry])
-    .map((v) => ({ industry: v.industry, label: getIndustry(v.industry).label, bestQuality: v.bestQuality, sellRaw: v.sellRaw, convert: v.convert, convertIsBetter: v.convertIsBetter, hasPrice: v.hasPrice }));
+  const rmVerdicts: RmVerdictRow[] = [];
+  for (const c of INDUSTRIES) {
+    if (!cfg.industries[c.key]) continue;
+    const src = c.type === 'fw'
+      ? primary
+      : computeAdvisor({ ...state, hasTycoon: cfg.hasTycoon, offeredSalary: salaryFor(c.key) });
+    const v = src.rmVerdicts.find((x) => x.industry === c.key);
+    if (v) rmVerdicts.push({ industry: v.industry, label: c.label, bestQuality: v.bestQuality, sellRaw: v.sellRaw, convert: v.convert, convertIsBetter: v.convertIsBetter, hasPrice: v.hasPrice });
+  }
 
   // Cost of damage (only when combat stats are configured). Full cost = weapons + energy/food.
   // One block per combat type: ground (military rank + strength) and air (aircraft rank, no strength).
@@ -371,7 +377,7 @@ async function main() {
     };
 
     if (cfg.combat.rankValue != null) {
-      const b = buildBlock('Наземна', cfg.combat.strength, cfg.combat.rankValue, (state.weapons as FwModule).prices, WEAPON_COMBAT, cfg.combat.groundTarget ?? 100_000_000);
+      const b = buildBlock('Наземна', cfg.combat.strength ?? 0, cfg.combat.rankValue, (state.weapons as FwModule).prices, WEAPON_COMBAT, cfg.combat.groundTarget ?? 100_000_000);
       if (b) damageCost.push(b);
     }
     if (cfg.combat.airRankValue != null) {
@@ -408,7 +414,7 @@ async function main() {
   const model: ReportModel = {
     generatedAt: now.human,
     hasTycoon: cfg.hasTycoon, wamEnabled: cfg.wamEnabled, offeredSalary: cfg.offeredSalary,
-    rmBasis, salaryBasis,
+    salaryBasis,
     industries, ranking, breakeven, produceVsBuy, rmVerdicts, damageCost, relocation,
     dailyTotalNoTycoon: sumDaily(reportNoTyc), dailyTotalTycoon: sumDaily(reportTyc),
   };

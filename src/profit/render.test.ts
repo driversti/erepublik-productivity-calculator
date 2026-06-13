@@ -8,7 +8,6 @@ function sampleModel(overrides: Partial<ReportModel> = {}): ReportModel {
     hasTycoon: false,
     wamEnabled: true,
     offeredSalary: 0,
-    rmBasis: 'market',
     salaryBasis: 'country-avg',
     industries: [
       {

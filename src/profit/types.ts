@@ -137,7 +137,6 @@ export interface ReportModel {
   hasTycoon: boolean;
   wamEnabled: boolean;
   offeredSalary: number;
-  rmBasis: 'market' | 'own'; // how factory RM is priced: market vs your own production cost
   salaryBasis: 'country-avg' | 'user'; // salary used for hired analysis
   industries: IndustryBlock[];
   ranking: RankRow[];
